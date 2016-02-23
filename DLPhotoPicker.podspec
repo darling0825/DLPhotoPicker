@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                  = 'DLPhotoPicker'
-  s.version               = '0.2'
+  s.version               = '0.3'
   s.summary               = 'iOS control that allows picking or displaying photos and videos from user\'s photo library.'
 
   s.description           = <<-DESC
@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
   s.source                = { :git => 'https://github.com/darling0825/DLPhotoPicker.git', :tag => s.version }
   s.public_header_files   = 'DLPhotoPicker/**/*.h'
   s.source_files          = 'DLPhotoPicker/**/*.{h,m}'
-  s.resource_bundles      = { 'DLPhotoPicker' => ['**/Resources/DLPhotoPicker.xcassets/**/*.png', '**/Resources/Localizations/*.lproj'] }
+  s.resource_bundles      = { 'DLPhotoPicker' => ['DLPhotoPicker/Resources/DLPhotoPicker.xcassets/**/*.png', 'DLPhotoPicker/Resources/Localizations/*.lproj'] }
   s.ios.frameworks        = 'Photos','AssetsLibrary'
   s.requires_arc          = true
   s.dependency            'PureLayout', '~> 3.0.0'
