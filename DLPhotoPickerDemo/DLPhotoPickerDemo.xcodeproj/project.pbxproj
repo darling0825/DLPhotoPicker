@@ -13,6 +13,32 @@
 		595178BB1C7C225D00000BDE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 595178B91C7C225D00000BDE /* Main.storyboard */; };
 		595178BD1C7C225D00000BDE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 595178BC1C7C225D00000BDE /* Assets.xcassets */; };
 		595178C01C7C225D00000BDE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 595178BE1C7C225D00000BDE /* LaunchScreen.storyboard */; };
+		5958B1D51C7C438900A8B1F6 /* NSBundle+DLPhotoPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5958B1821C7C438900A8B1F6 /* NSBundle+DLPhotoPicker.m */; };
+		5958B1D61C7C438900A8B1F6 /* NSDateFormatter+DLPhotoPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5958B1841C7C438900A8B1F6 /* NSDateFormatter+DLPhotoPicker.m */; };
+		5958B1D71C7C438900A8B1F6 /* NSNumberFormatter+DLPhotoPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5958B1861C7C438900A8B1F6 /* NSNumberFormatter+DLPhotoPicker.m */; };
+		5958B1D81C7C438900A8B1F6 /* PHAsset+DLPhotoPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5958B1881C7C438900A8B1F6 /* PHAsset+DLPhotoPicker.m */; };
+		5958B1D91C7C438900A8B1F6 /* PHAssetCollection+DLPhotoPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5958B18A1C7C438900A8B1F6 /* PHAssetCollection+DLPhotoPicker.m */; };
+		5958B1DA1C7C438900A8B1F6 /* UIImage+DLPhotoPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 5958B18C1C7C438900A8B1F6 /* UIImage+DLPhotoPicker.m */; };
+		5958B1DB1C7C438900A8B1F6 /* DLPhotoCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5958B1911C7C438900A8B1F6 /* DLPhotoCollectionViewController.m */; };
+		5958B1DC1C7C438900A8B1F6 /* DLPhotoPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5958B1931C7C438900A8B1F6 /* DLPhotoPickerViewController.m */; };
+		5958B1DD1C7C438900A8B1F6 /* DLPhotoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5958B1951C7C438900A8B1F6 /* DLPhotoTableViewController.m */; };
+		5958B1DE1C7C438900A8B1F6 /* DLPhotoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5958B1971C7C438900A8B1F6 /* DLPhotoManager.m */; };
+		5958B1DF1C7C438900A8B1F6 /* DLPhotoAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = 5958B19B1C7C438900A8B1F6 /* DLPhotoAsset.m */; };
+		5958B1E01C7C438900A8B1F6 /* DLPhotoCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 5958B19D1C7C438900A8B1F6 /* DLPhotoCollection.m */; };
+		5958B1E11C7C438900A8B1F6 /* DLPhotoPicker.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5958B19F1C7C438900A8B1F6 /* DLPhotoPicker.xcassets */; };
+		5958B1E21C7C438900A8B1F6 /* DLPhotoPicker.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5958B1A11C7C438900A8B1F6 /* DLPhotoPicker.strings */; };
+		5958B1E31C7C438900A8B1F6 /* DLPhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5958B1BC1C7C438900A8B1F6 /* DLPhotoCollectionViewCell.m */; };
+		5958B1E41C7C438900A8B1F6 /* DLPhotoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5958B1BE1C7C438900A8B1F6 /* DLPhotoTableViewCell.m */; };
+		5958B1E51C7C438900A8B1F6 /* DLPhotoCheckmark.m in Sources */ = {isa = PBXBuildFile; fileRef = 5958B1C11C7C438900A8B1F6 /* DLPhotoCheckmark.m */; };
+		5958B1E61C7C438900A8B1F6 /* DLPhotoCollectionSelectedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5958B1C31C7C438900A8B1F6 /* DLPhotoCollectionSelectedView.m */; };
+		5958B1E71C7C438900A8B1F6 /* DLPhotoCollectionViewFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5958B1C51C7C438900A8B1F6 /* DLPhotoCollectionViewFooter.m */; };
+		5958B1E81C7C438900A8B1F6 /* DLPhotoCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 5958B1C71C7C438900A8B1F6 /* DLPhotoCollectionViewLayout.m */; };
+		5958B1E91C7C438900A8B1F6 /* DLPhotoBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5958B1C91C7C438900A8B1F6 /* DLPhotoBackgroundView.m */; };
+		5958B1EA1C7C438900A8B1F6 /* DLPhotoPickerAccessDeniedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5958B1CB1C7C438900A8B1F6 /* DLPhotoPickerAccessDeniedView.m */; };
+		5958B1EB1C7C438900A8B1F6 /* DLPhotoPickerNoAssetsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5958B1CD1C7C438900A8B1F6 /* DLPhotoPickerNoAssetsView.m */; };
+		5958B1EC1C7C438900A8B1F6 /* DLPhotoThumbnailOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 5958B1D01C7C438900A8B1F6 /* DLPhotoThumbnailOverlay.m */; };
+		5958B1ED1C7C438900A8B1F6 /* DLPhotoThumbnailStacks.m in Sources */ = {isa = PBXBuildFile; fileRef = 5958B1D21C7C438900A8B1F6 /* DLPhotoThumbnailStacks.m */; };
+		5958B1EE1C7C438900A8B1F6 /* DLPhotoThumbnailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5958B1D41C7C438900A8B1F6 /* DLPhotoThumbnailView.m */; };
 		A43579880FAFFB196C9152C9 /* libPods-DLPhotoPickerDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D4973DD88E6077CA4E512163 /* libPods-DLPhotoPickerDemo.a */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +53,80 @@
 		595178BC1C7C225D00000BDE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		595178BF1C7C225D00000BDE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		595178C11C7C225D00000BDE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5958B1811C7C438900A8B1F6 /* NSBundle+DLPhotoPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+DLPhotoPicker.h"; sourceTree = "<group>"; };
+		5958B1821C7C438900A8B1F6 /* NSBundle+DLPhotoPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+DLPhotoPicker.m"; sourceTree = "<group>"; };
+		5958B1831C7C438900A8B1F6 /* NSDateFormatter+DLPhotoPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDateFormatter+DLPhotoPicker.h"; sourceTree = "<group>"; };
+		5958B1841C7C438900A8B1F6 /* NSDateFormatter+DLPhotoPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDateFormatter+DLPhotoPicker.m"; sourceTree = "<group>"; };
+		5958B1851C7C438900A8B1F6 /* NSNumberFormatter+DLPhotoPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumberFormatter+DLPhotoPicker.h"; sourceTree = "<group>"; };
+		5958B1861C7C438900A8B1F6 /* NSNumberFormatter+DLPhotoPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumberFormatter+DLPhotoPicker.m"; sourceTree = "<group>"; };
+		5958B1871C7C438900A8B1F6 /* PHAsset+DLPhotoPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PHAsset+DLPhotoPicker.h"; sourceTree = "<group>"; };
+		5958B1881C7C438900A8B1F6 /* PHAsset+DLPhotoPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PHAsset+DLPhotoPicker.m"; sourceTree = "<group>"; };
+		5958B1891C7C438900A8B1F6 /* PHAssetCollection+DLPhotoPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PHAssetCollection+DLPhotoPicker.h"; sourceTree = "<group>"; };
+		5958B18A1C7C438900A8B1F6 /* PHAssetCollection+DLPhotoPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PHAssetCollection+DLPhotoPicker.m"; sourceTree = "<group>"; };
+		5958B18B1C7C438900A8B1F6 /* UIImage+DLPhotoPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+DLPhotoPicker.h"; sourceTree = "<group>"; };
+		5958B18C1C7C438900A8B1F6 /* UIImage+DLPhotoPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+DLPhotoPicker.m"; sourceTree = "<group>"; };
+		5958B18E1C7C438900A8B1F6 /* DLPhotoPickerDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoPickerDefines.h; sourceTree = "<group>"; };
+		5958B1901C7C438900A8B1F6 /* DLPhotoCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoCollectionViewController.h; sourceTree = "<group>"; };
+		5958B1911C7C438900A8B1F6 /* DLPhotoCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPhotoCollectionViewController.m; sourceTree = "<group>"; };
+		5958B1921C7C438900A8B1F6 /* DLPhotoPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoPickerViewController.h; sourceTree = "<group>"; };
+		5958B1931C7C438900A8B1F6 /* DLPhotoPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPhotoPickerViewController.m; sourceTree = "<group>"; };
+		5958B1941C7C438900A8B1F6 /* DLPhotoTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoTableViewController.h; sourceTree = "<group>"; };
+		5958B1951C7C438900A8B1F6 /* DLPhotoTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPhotoTableViewController.m; sourceTree = "<group>"; };
+		5958B1961C7C438900A8B1F6 /* DLPhotoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoManager.h; sourceTree = "<group>"; };
+		5958B1971C7C438900A8B1F6 /* DLPhotoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPhotoManager.m; sourceTree = "<group>"; };
+		5958B1981C7C438900A8B1F6 /* DLPhotoPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoPicker.h; sourceTree = "<group>"; };
+		5958B19A1C7C438900A8B1F6 /* DLPhotoAsset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoAsset.h; sourceTree = "<group>"; };
+		5958B19B1C7C438900A8B1F6 /* DLPhotoAsset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPhotoAsset.m; sourceTree = "<group>"; };
+		5958B19C1C7C438900A8B1F6 /* DLPhotoCollection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoCollection.h; sourceTree = "<group>"; };
+		5958B19D1C7C438900A8B1F6 /* DLPhotoCollection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPhotoCollection.m; sourceTree = "<group>"; };
+		5958B19F1C7C438900A8B1F6 /* DLPhotoPicker.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = DLPhotoPicker.xcassets; sourceTree = "<group>"; };
+		5958B1A21C7C438900A8B1F6 /* ar */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ar; path = ar.lproj/DLPhotoPicker.strings; sourceTree = "<group>"; };
+		5958B1A31C7C438900A8B1F6 /* da */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = da; path = da.lproj/DLPhotoPicker.strings; sourceTree = "<group>"; };
+		5958B1A41C7C438900A8B1F6 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/DLPhotoPicker.strings; sourceTree = "<group>"; };
+		5958B1A51C7C438900A8B1F6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/DLPhotoPicker.strings; sourceTree = "<group>"; };
+		5958B1A61C7C438900A8B1F6 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/DLPhotoPicker.strings"; sourceTree = "<group>"; };
+		5958B1A71C7C438900A8B1F6 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/DLPhotoPicker.strings; sourceTree = "<group>"; };
+		5958B1A81C7C438900A8B1F6 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/DLPhotoPicker.strings; sourceTree = "<group>"; };
+		5958B1A91C7C438900A8B1F6 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/DLPhotoPicker.strings; sourceTree = "<group>"; };
+		5958B1AA1C7C438900A8B1F6 /* he */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = he; path = he.lproj/DLPhotoPicker.strings; sourceTree = "<group>"; };
+		5958B1AB1C7C438900A8B1F6 /* hi-IN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "hi-IN"; path = "hi-IN.lproj/DLPhotoPicker.strings"; sourceTree = "<group>"; };
+		5958B1AC1C7C438900A8B1F6 /* hu */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hu; path = hu.lproj/DLPhotoPicker.strings; sourceTree = "<group>"; };
+		5958B1AD1C7C438900A8B1F6 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/DLPhotoPicker.strings; sourceTree = "<group>"; };
+		5958B1AE1C7C438900A8B1F6 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/DLPhotoPicker.strings; sourceTree = "<group>"; };
+		5958B1AF1C7C438900A8B1F6 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/DLPhotoPicker.strings; sourceTree = "<group>"; };
+		5958B1B01C7C438900A8B1F6 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/DLPhotoPicker.strings; sourceTree = "<group>"; };
+		5958B1B11C7C438900A8B1F6 /* nl-NL */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "nl-NL"; path = "nl-NL.lproj/DLPhotoPicker.strings"; sourceTree = "<group>"; };
+		5958B1B21C7C438900A8B1F6 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/DLPhotoPicker.strings; sourceTree = "<group>"; };
+		5958B1B31C7C438900A8B1F6 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/DLPhotoPicker.strings"; sourceTree = "<group>"; };
+		5958B1B41C7C438900A8B1F6 /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = pt.lproj/DLPhotoPicker.strings; sourceTree = "<group>"; };
+		5958B1B51C7C438900A8B1F6 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/DLPhotoPicker.strings; sourceTree = "<group>"; };
+		5958B1B61C7C438900A8B1F6 /* sv */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = sv; path = sv.lproj/DLPhotoPicker.strings; sourceTree = "<group>"; };
+		5958B1B71C7C438900A8B1F6 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/DLPhotoPicker.strings"; sourceTree = "<group>"; };
+		5958B1B81C7C438900A8B1F6 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/DLPhotoPicker.strings"; sourceTree = "<group>"; };
+		5958B1BB1C7C438900A8B1F6 /* DLPhotoCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoCollectionViewCell.h; sourceTree = "<group>"; };
+		5958B1BC1C7C438900A8B1F6 /* DLPhotoCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPhotoCollectionViewCell.m; sourceTree = "<group>"; };
+		5958B1BD1C7C438900A8B1F6 /* DLPhotoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoTableViewCell.h; sourceTree = "<group>"; };
+		5958B1BE1C7C438900A8B1F6 /* DLPhotoTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPhotoTableViewCell.m; sourceTree = "<group>"; };
+		5958B1C01C7C438900A8B1F6 /* DLPhotoCheckmark.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoCheckmark.h; sourceTree = "<group>"; };
+		5958B1C11C7C438900A8B1F6 /* DLPhotoCheckmark.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPhotoCheckmark.m; sourceTree = "<group>"; };
+		5958B1C21C7C438900A8B1F6 /* DLPhotoCollectionSelectedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoCollectionSelectedView.h; sourceTree = "<group>"; };
+		5958B1C31C7C438900A8B1F6 /* DLPhotoCollectionSelectedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPhotoCollectionSelectedView.m; sourceTree = "<group>"; };
+		5958B1C41C7C438900A8B1F6 /* DLPhotoCollectionViewFooter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoCollectionViewFooter.h; sourceTree = "<group>"; };
+		5958B1C51C7C438900A8B1F6 /* DLPhotoCollectionViewFooter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPhotoCollectionViewFooter.m; sourceTree = "<group>"; };
+		5958B1C61C7C438900A8B1F6 /* DLPhotoCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoCollectionViewLayout.h; sourceTree = "<group>"; };
+		5958B1C71C7C438900A8B1F6 /* DLPhotoCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPhotoCollectionViewLayout.m; sourceTree = "<group>"; };
+		5958B1C81C7C438900A8B1F6 /* DLPhotoBackgroundView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoBackgroundView.h; sourceTree = "<group>"; };
+		5958B1C91C7C438900A8B1F6 /* DLPhotoBackgroundView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPhotoBackgroundView.m; sourceTree = "<group>"; };
+		5958B1CA1C7C438900A8B1F6 /* DLPhotoPickerAccessDeniedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoPickerAccessDeniedView.h; sourceTree = "<group>"; };
+		5958B1CB1C7C438900A8B1F6 /* DLPhotoPickerAccessDeniedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPhotoPickerAccessDeniedView.m; sourceTree = "<group>"; };
+		5958B1CC1C7C438900A8B1F6 /* DLPhotoPickerNoAssetsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoPickerNoAssetsView.h; sourceTree = "<group>"; };
+		5958B1CD1C7C438900A8B1F6 /* DLPhotoPickerNoAssetsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPhotoPickerNoAssetsView.m; sourceTree = "<group>"; };
+		5958B1CF1C7C438900A8B1F6 /* DLPhotoThumbnailOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoThumbnailOverlay.h; sourceTree = "<group>"; };
+		5958B1D01C7C438900A8B1F6 /* DLPhotoThumbnailOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPhotoThumbnailOverlay.m; sourceTree = "<group>"; };
+		5958B1D11C7C438900A8B1F6 /* DLPhotoThumbnailStacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoThumbnailStacks.h; sourceTree = "<group>"; };
+		5958B1D21C7C438900A8B1F6 /* DLPhotoThumbnailStacks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPhotoThumbnailStacks.m; sourceTree = "<group>"; };
+		5958B1D31C7C438900A8B1F6 /* DLPhotoThumbnailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoThumbnailView.h; sourceTree = "<group>"; };
+		5958B1D41C7C438900A8B1F6 /* DLPhotoThumbnailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPhotoThumbnailView.m; sourceTree = "<group>"; };
 		858D99B433ECC6DC3B7E4022 /* Pods-DLPhotoPickerDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DLPhotoPickerDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DLPhotoPickerDemo/Pods-DLPhotoPickerDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		9DC496B897984591D0E6D28D /* Pods-DLPhotoPickerDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DLPhotoPickerDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-DLPhotoPickerDemo/Pods-DLPhotoPickerDemo.release.xcconfig"; sourceTree = "<group>"; };
 		D4973DD88E6077CA4E512163 /* libPods-DLPhotoPickerDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DLPhotoPickerDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -47,6 +147,7 @@
 		595178A41C7C225D00000BDE = {
 			isa = PBXGroup;
 			children = (
+				5958B17F1C7C438900A8B1F6 /* DLPhotoPicker */,
 				595178AF1C7C225D00000BDE /* DLPhotoPickerDemo */,
 				595178AE1C7C225D00000BDE /* Products */,
 				EEB51D61AA8E6458A4D211E3 /* Pods */,
@@ -84,6 +185,146 @@
 				595178B11C7C225D00000BDE /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		5958B17F1C7C438900A8B1F6 /* DLPhotoPicker */ = {
+			isa = PBXGroup;
+			children = (
+				5958B1801C7C438900A8B1F6 /* Categories */,
+				5958B18D1C7C438900A8B1F6 /* Common */,
+				5958B18F1C7C438900A8B1F6 /* Controller */,
+				5958B1961C7C438900A8B1F6 /* DLPhotoManager.h */,
+				5958B1971C7C438900A8B1F6 /* DLPhotoManager.m */,
+				5958B1981C7C438900A8B1F6 /* DLPhotoPicker.h */,
+				5958B1991C7C438900A8B1F6 /* Model */,
+				5958B19E1C7C438900A8B1F6 /* Resources */,
+				5958B1B91C7C438900A8B1F6 /* View */,
+			);
+			name = DLPhotoPicker;
+			path = ../DLPhotoPicker;
+			sourceTree = "<group>";
+		};
+		5958B1801C7C438900A8B1F6 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				5958B1811C7C438900A8B1F6 /* NSBundle+DLPhotoPicker.h */,
+				5958B1821C7C438900A8B1F6 /* NSBundle+DLPhotoPicker.m */,
+				5958B1831C7C438900A8B1F6 /* NSDateFormatter+DLPhotoPicker.h */,
+				5958B1841C7C438900A8B1F6 /* NSDateFormatter+DLPhotoPicker.m */,
+				5958B1851C7C438900A8B1F6 /* NSNumberFormatter+DLPhotoPicker.h */,
+				5958B1861C7C438900A8B1F6 /* NSNumberFormatter+DLPhotoPicker.m */,
+				5958B1871C7C438900A8B1F6 /* PHAsset+DLPhotoPicker.h */,
+				5958B1881C7C438900A8B1F6 /* PHAsset+DLPhotoPicker.m */,
+				5958B1891C7C438900A8B1F6 /* PHAssetCollection+DLPhotoPicker.h */,
+				5958B18A1C7C438900A8B1F6 /* PHAssetCollection+DLPhotoPicker.m */,
+				5958B18B1C7C438900A8B1F6 /* UIImage+DLPhotoPicker.h */,
+				5958B18C1C7C438900A8B1F6 /* UIImage+DLPhotoPicker.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		5958B18D1C7C438900A8B1F6 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				5958B18E1C7C438900A8B1F6 /* DLPhotoPickerDefines.h */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		5958B18F1C7C438900A8B1F6 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				5958B1901C7C438900A8B1F6 /* DLPhotoCollectionViewController.h */,
+				5958B1911C7C438900A8B1F6 /* DLPhotoCollectionViewController.m */,
+				5958B1921C7C438900A8B1F6 /* DLPhotoPickerViewController.h */,
+				5958B1931C7C438900A8B1F6 /* DLPhotoPickerViewController.m */,
+				5958B1941C7C438900A8B1F6 /* DLPhotoTableViewController.h */,
+				5958B1951C7C438900A8B1F6 /* DLPhotoTableViewController.m */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		5958B1991C7C438900A8B1F6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				5958B19A1C7C438900A8B1F6 /* DLPhotoAsset.h */,
+				5958B19B1C7C438900A8B1F6 /* DLPhotoAsset.m */,
+				5958B19C1C7C438900A8B1F6 /* DLPhotoCollection.h */,
+				5958B19D1C7C438900A8B1F6 /* DLPhotoCollection.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		5958B19E1C7C438900A8B1F6 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5958B19F1C7C438900A8B1F6 /* DLPhotoPicker.xcassets */,
+				5958B1A01C7C438900A8B1F6 /* Localizations */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		5958B1A01C7C438900A8B1F6 /* Localizations */ = {
+			isa = PBXGroup;
+			children = (
+				5958B1A11C7C438900A8B1F6 /* DLPhotoPicker.strings */,
+			);
+			path = Localizations;
+			sourceTree = "<group>";
+		};
+		5958B1B91C7C438900A8B1F6 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				5958B1BA1C7C438900A8B1F6 /* Cell */,
+				5958B1BF1C7C438900A8B1F6 /* Collection */,
+				5958B1C81C7C438900A8B1F6 /* DLPhotoBackgroundView.h */,
+				5958B1C91C7C438900A8B1F6 /* DLPhotoBackgroundView.m */,
+				5958B1CA1C7C438900A8B1F6 /* DLPhotoPickerAccessDeniedView.h */,
+				5958B1CB1C7C438900A8B1F6 /* DLPhotoPickerAccessDeniedView.m */,
+				5958B1CC1C7C438900A8B1F6 /* DLPhotoPickerNoAssetsView.h */,
+				5958B1CD1C7C438900A8B1F6 /* DLPhotoPickerNoAssetsView.m */,
+				5958B1CE1C7C438900A8B1F6 /* ThumbnailView */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		5958B1BA1C7C438900A8B1F6 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				5958B1BB1C7C438900A8B1F6 /* DLPhotoCollectionViewCell.h */,
+				5958B1BC1C7C438900A8B1F6 /* DLPhotoCollectionViewCell.m */,
+				5958B1BD1C7C438900A8B1F6 /* DLPhotoTableViewCell.h */,
+				5958B1BE1C7C438900A8B1F6 /* DLPhotoTableViewCell.m */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		5958B1BF1C7C438900A8B1F6 /* Collection */ = {
+			isa = PBXGroup;
+			children = (
+				5958B1C01C7C438900A8B1F6 /* DLPhotoCheckmark.h */,
+				5958B1C11C7C438900A8B1F6 /* DLPhotoCheckmark.m */,
+				5958B1C21C7C438900A8B1F6 /* DLPhotoCollectionSelectedView.h */,
+				5958B1C31C7C438900A8B1F6 /* DLPhotoCollectionSelectedView.m */,
+				5958B1C41C7C438900A8B1F6 /* DLPhotoCollectionViewFooter.h */,
+				5958B1C51C7C438900A8B1F6 /* DLPhotoCollectionViewFooter.m */,
+				5958B1C61C7C438900A8B1F6 /* DLPhotoCollectionViewLayout.h */,
+				5958B1C71C7C438900A8B1F6 /* DLPhotoCollectionViewLayout.m */,
+			);
+			path = Collection;
+			sourceTree = "<group>";
+		};
+		5958B1CE1C7C438900A8B1F6 /* ThumbnailView */ = {
+			isa = PBXGroup;
+			children = (
+				5958B1CF1C7C438900A8B1F6 /* DLPhotoThumbnailOverlay.h */,
+				5958B1D01C7C438900A8B1F6 /* DLPhotoThumbnailOverlay.m */,
+				5958B1D11C7C438900A8B1F6 /* DLPhotoThumbnailStacks.h */,
+				5958B1D21C7C438900A8B1F6 /* DLPhotoThumbnailStacks.m */,
+				5958B1D31C7C438900A8B1F6 /* DLPhotoThumbnailView.h */,
+				5958B1D41C7C438900A8B1F6 /* DLPhotoThumbnailView.m */,
+			);
+			path = ThumbnailView;
 			sourceTree = "<group>";
 		};
 		8400D35598898F8245B38B2A /* Frameworks */ = {
@@ -147,6 +388,28 @@
 			knownRegions = (
 				en,
 				Base,
+				ar,
+				da,
+				de,
+				"es-MX",
+				es,
+				fi,
+				fr,
+				he,
+				"hi-IN",
+				hu,
+				id,
+				it,
+				ja,
+				ko,
+				"nl-NL",
+				nl,
+				"pt-PT",
+				pt,
+				ru,
+				sv,
+				"zh-Hans",
+				"zh-Hant",
 			);
 			mainGroup = 595178A41C7C225D00000BDE;
 			productRefGroup = 595178AE1C7C225D00000BDE /* Products */;
@@ -165,7 +428,9 @@
 			files = (
 				595178C01C7C225D00000BDE /* LaunchScreen.storyboard in Resources */,
 				595178BD1C7C225D00000BDE /* Assets.xcassets in Resources */,
+				5958B1E11C7C438900A8B1F6 /* DLPhotoPicker.xcassets in Resources */,
 				595178BB1C7C225D00000BDE /* Main.storyboard in Resources */,
+				5958B1E21C7C438900A8B1F6 /* DLPhotoPicker.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -224,9 +489,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5958B1DA1C7C438900A8B1F6 /* UIImage+DLPhotoPicker.m in Sources */,
+				5958B1EB1C7C438900A8B1F6 /* DLPhotoPickerNoAssetsView.m in Sources */,
+				5958B1E41C7C438900A8B1F6 /* DLPhotoTableViewCell.m in Sources */,
+				5958B1DC1C7C438900A8B1F6 /* DLPhotoPickerViewController.m in Sources */,
+				5958B1E91C7C438900A8B1F6 /* DLPhotoBackgroundView.m in Sources */,
+				5958B1E01C7C438900A8B1F6 /* DLPhotoCollection.m in Sources */,
+				5958B1E71C7C438900A8B1F6 /* DLPhotoCollectionViewFooter.m in Sources */,
 				595178B81C7C225D00000BDE /* ViewController.m in Sources */,
+				5958B1ED1C7C438900A8B1F6 /* DLPhotoThumbnailStacks.m in Sources */,
+				5958B1D91C7C438900A8B1F6 /* PHAssetCollection+DLPhotoPicker.m in Sources */,
+				5958B1D71C7C438900A8B1F6 /* NSNumberFormatter+DLPhotoPicker.m in Sources */,
+				5958B1EA1C7C438900A8B1F6 /* DLPhotoPickerAccessDeniedView.m in Sources */,
+				5958B1D51C7C438900A8B1F6 /* NSBundle+DLPhotoPicker.m in Sources */,
+				5958B1EE1C7C438900A8B1F6 /* DLPhotoThumbnailView.m in Sources */,
+				5958B1E31C7C438900A8B1F6 /* DLPhotoCollectionViewCell.m in Sources */,
+				5958B1D61C7C438900A8B1F6 /* NSDateFormatter+DLPhotoPicker.m in Sources */,
+				5958B1E61C7C438900A8B1F6 /* DLPhotoCollectionSelectedView.m in Sources */,
+				5958B1E81C7C438900A8B1F6 /* DLPhotoCollectionViewLayout.m in Sources */,
+				5958B1DF1C7C438900A8B1F6 /* DLPhotoAsset.m in Sources */,
 				595178B51C7C225D00000BDE /* AppDelegate.m in Sources */,
+				5958B1DD1C7C438900A8B1F6 /* DLPhotoTableViewController.m in Sources */,
 				595178B21C7C225D00000BDE /* main.m in Sources */,
+				5958B1E51C7C438900A8B1F6 /* DLPhotoCheckmark.m in Sources */,
+				5958B1EC1C7C438900A8B1F6 /* DLPhotoThumbnailOverlay.m in Sources */,
+				5958B1DE1C7C438900A8B1F6 /* DLPhotoManager.m in Sources */,
+				5958B1D81C7C438900A8B1F6 /* PHAsset+DLPhotoPicker.m in Sources */,
+				5958B1DB1C7C438900A8B1F6 /* DLPhotoCollectionViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,6 +536,36 @@
 				595178BF1C7C225D00000BDE /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		5958B1A11C7C438900A8B1F6 /* DLPhotoPicker.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5958B1A21C7C438900A8B1F6 /* ar */,
+				5958B1A31C7C438900A8B1F6 /* da */,
+				5958B1A41C7C438900A8B1F6 /* de */,
+				5958B1A51C7C438900A8B1F6 /* en */,
+				5958B1A61C7C438900A8B1F6 /* es-MX */,
+				5958B1A71C7C438900A8B1F6 /* es */,
+				5958B1A81C7C438900A8B1F6 /* fi */,
+				5958B1A91C7C438900A8B1F6 /* fr */,
+				5958B1AA1C7C438900A8B1F6 /* he */,
+				5958B1AB1C7C438900A8B1F6 /* hi-IN */,
+				5958B1AC1C7C438900A8B1F6 /* hu */,
+				5958B1AD1C7C438900A8B1F6 /* id */,
+				5958B1AE1C7C438900A8B1F6 /* it */,
+				5958B1AF1C7C438900A8B1F6 /* ja */,
+				5958B1B01C7C438900A8B1F6 /* ko */,
+				5958B1B11C7C438900A8B1F6 /* nl-NL */,
+				5958B1B21C7C438900A8B1F6 /* nl */,
+				5958B1B31C7C438900A8B1F6 /* pt-PT */,
+				5958B1B41C7C438900A8B1F6 /* pt */,
+				5958B1B51C7C438900A8B1F6 /* ru */,
+				5958B1B61C7C438900A8B1F6 /* sv */,
+				5958B1B71C7C438900A8B1F6 /* zh-Hans */,
+				5958B1B81C7C438900A8B1F6 /* zh-Hant */,
+			);
+			name = DLPhotoPicker.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
