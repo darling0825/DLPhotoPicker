@@ -16,9 +16,9 @@ Pod::Spec.new do |s|
   s.platform              = :ios, '7.0'
   s.ios.deployment_target = '7.0'
   s.source                = { :git => 'https://github.com/darling0825/DLPhotoPicker.git', :tag => s.version }
-  s.public_header_files   = 'DLPhotoPicker/*.h', 'DLPhotoPicker/**/*.h', 'DLPhotoPicker/**/**/*.h'
+  s.public_header_files   = 'DLPhotoPicker/**/*.h'
   s.source_files          = 'DLPhotoPicker/**/*.{h,m}'
-  s.resource_bundles      = { 'DLPhotoPicker' => ['**/DLPhotoPicker.xcassets/**/*.png', '**/Localizations/*.lproj'] }
+  s.resource_bundles      = { 'DLPhotoPicker' => ['**/Resources/DLPhotoPicker.xcassets/**/*.png', '**/Resources/Localizations/*.lproj'] }
   s.ios.frameworks        = 'Photos','AssetsLibrary'
   s.requires_arc          = true
   s.dependency            'PureLayout', '~> 3.0.0'
