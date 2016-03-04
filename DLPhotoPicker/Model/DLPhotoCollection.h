@@ -8,15 +8,23 @@
 
 #import <Foundation/Foundation.h>
 #import <Photos/Photos.h>
+#import <AssetsLibrary/AssetsLibrary.h>
 
 @interface DLPhotoCollection : NSObject
 
 @property (nonatomic, strong) PHAssetCollection *assetCollection;
+@property (nonatomic, strong) ALAssetsGroup *assetGroup;
+@property (nonatomic, strong) PHFetchResult *fetchResult;
+
 @property (nonatomic, readonly) NSUInteger count;
 @property (nonatomic, readwrite) NSUInteger countOfAssetsWithVideoType;
 @property (nonatomic, readwrite) NSUInteger countOfAssetsWithImageType;
 @property (nonatomic, readonly, copy)NSString *title;
 
-- (id)initWithAssetCollection:(PHAssetCollection *)assetCollection;
+- (id)initWithAssetCollection:(id)assetCollection;
+
+- (UIImage *)badgeImage;
+- (BOOL)isSmartAlbum;
+- (BOOL)deletable;
 
 @end

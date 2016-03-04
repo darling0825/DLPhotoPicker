@@ -47,3 +47,9 @@
 /* Error message of playing stream video */
 "Cannot Play Stream Video" = "Video kann nicht wiedergegeben werden";
 "OK" = "OK";
+
+/*New Add*/
+"Select All" = "Select All";
+"Deselect All" = "Deselect All";
+"Copy to" = "Copy to";
+"Select Item" = "Select Item";

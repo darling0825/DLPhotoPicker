@@ -2,7 +2,7 @@
  
  MIT License (MIT)
  
- Copyright (c) 2015 Clement CN Tsang
+ Copyright (c) 2016 DarlingCoder
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -29,12 +29,12 @@
 
 @implementation NSBundle (DLPhotoPicker)
 
-+ (NSBundle *)ctassetsPickerBundle
++ (NSBundle *)assetPickerBundle
 {
-    return [NSBundle bundleWithPath:[NSBundle ctassetsPickerBundlePath]];
+    return [NSBundle bundleWithPath:[NSBundle assetBundlePath]];
 }
 
-+ (NSString *)ctassetsPickerBundlePath
++ (NSString *)assetBundlePath
 {
     return [[NSBundle bundleForClass:[DLPhotoPickerViewController class]]
             pathForResource:@"DLPhotoPicker" ofType:@"bundle"];

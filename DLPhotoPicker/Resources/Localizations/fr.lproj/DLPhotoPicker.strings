@@ -47,3 +47,10 @@
 /* Error message of playing stream video */
 "Cannot Play Stream Video" = "Impossible de lire le flux vidéo";
 "OK" = "OK";
+
+/*New Add*/
+"Select All" = "Select All";
+"Deselect All" = "Deselect All";
+"Copy to" = "Copy to";
+"Select Item" = "Select Item";
+

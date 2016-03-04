@@ -12,7 +12,27 @@
 @class DLPhotoAsset;
 @protocol DLPhotoPickerViewControllerDelegate;
 
+
+/**
+ *  Sent when the assets selected or deselected
+ *
+ *  The notification’s `object` is an `NSArray` object of selected assets
+ */
+extern NSString * const DLPhotoPickerSelectedAssetsDidChangeNotification;
+
+
+typedef NS_ENUM(NSInteger, DLPhotoPickerType) {
+    DLPhotoPickerTypeDefault    = 0,
+    DLPhotoPickerTypePicker     = DLPhotoPickerTypeDefault,
+    DLPhotoPickerTypeDisplay
+};
+
 @interface DLPhotoPickerViewController : UIViewController
+
+/**
+ *  To display or pick photo and video from photo library.
+ */
+@property (nonatomic, assign) DLPhotoPickerType pickerType;
 
 /**
  *  The assets picker’s delegate object.
@@ -32,7 +52,22 @@
  */
 @property (nonatomic, assign) BOOL showsNumberOfAssets;
 
+@property (nonatomic, strong) NSMutableArray *selectedAssets;
+
+- (BOOL)isSelectedForAsset:(DLPhotoAsset *)asset;
+- (void)selectAsset:(DLPhotoAsset *)asset;
+- (void)deselectAsset:(DLPhotoAsset *)asset;
+- (void)removeAllSelectedAssets;
+
 @end
+
+
+
+@interface UIViewController (DLPhotoPickerViewController)
+@property (nonatomic, weak)DLPhotoPickerViewController *picker;
+@end
+
+
 
 @protocol DLPhotoPickerViewControllerDelegate <NSObject>
 

@@ -16,23 +16,31 @@
 #import "DLPhotoBackgroundView.h"
 #import "DLPhotoPickerDefines.h"
 #import "NSBundle+DLPhotoPicker.h"
+#import "UIImage+DLPhotoPicker.h"
 #import "NSNumberFormatter+DLPhotoPicker.h"
+#import "NSIndexSet+DLPhotoPicker.h"
+#import "UICollectionView+DLPhotoPicker.h"
+#import "DLPhotoPageViewController.h"
+#import "DLPhotoItemViewController.h"
 
 NSString * const DLPhotoCollectionViewCellIdentifier = @"DLPhotoCollectionViewCellIdentifier";
 NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionViewFooterIdentifier";
 
 
-@interface DLPhotoCollectionViewController ()
+@interface DLPhotoCollectionViewController ()<PHPhotoLibraryChangeObserver, ALAssetsLibraryChangeObserver>
 
-@property (nonatomic, strong) NSArray *assets;
+@property (nonatomic, strong) NSMutableArray *assets;
 
 @property (nonatomic, strong) DLPhotoCollectionViewFooter *footer;
 @property (nonatomic, strong) DLPhotoPickerNoAssetsView *noAssetsView;
 
+@property (nonatomic, assign) CGRect previousPreheatRect;
 @property (nonatomic, assign) CGRect previousBounds;
 @property (nonatomic, assign) BOOL didLayoutSubviews;
 
 @property (nonatomic, strong) UIBarButtonItem *selectButton;
+
+@property (nonatomic, strong) UIBarButtonItem *confirmButton;
 
 @end
 
@@ -43,7 +51,6 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     DLPhotoCollectionViewLayout *layout = [DLPhotoCollectionViewLayout new];
     
     if (self = [super initWithCollectionViewLayout:layout]){
-        _selectedAssets = [@[] mutableCopy];
     }
     
     return self;
@@ -53,23 +60,36 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     [super viewDidLoad];
     
     [self setupViews];
+    [self setupButtons];
+    
+    [self setEditingStatus];
+    
     [self updateNavigationTitle];
-    [self createEditButton];
-    [self addKeyValueObserver];
+    
+    [self registerChangeObserver];
+    [self addNotificationObserver];
+    
+    [self resetCachedAssetImages];
+    
+    [self resetAssetsAndReload];
 }
 
-- (void)viewWillAppear:(BOOL)animated
+-(void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
-    [self setupAssets];
+    
+    if (self.picker.pickerType == DLPhotoPickerTypeDisplay){
+        if (self.isEditing) {
+            [self editAction:nil];
+        }
+    }
 }
 
--(void)viewDidDisappear:(BOOL)animated
+-(void)viewDidAppear:(BOOL)animated
 {
-    [super viewDidDisappear:animated];
+    [super viewDidAppear:animated];
     
-    [self removeKeyValueObserver];
+    [self updateCachedAssetImages];
 }
 
 - (void)viewWillLayoutSubviews
@@ -98,10 +118,16 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     [super didReceiveMemoryWarning];
 }
 
+- (void)dealloc
+{
+    [self unregisterChangeObserver];
+    [self removeNotificationObserver];
+}
+
 #pragma mark
 - (void)setupViews
 {
-    self.extendedLayoutIncludesOpaqueBars = YES;
+    //self.extendedLayoutIncludesOpaqueBars = YES;
     
     self.collectionView.backgroundColor = DLPhotoCollectionViewBackgroundColor;
     self.collectionView.allowsMultipleSelection = YES;
@@ -118,16 +144,393 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     [self.view setNeedsUpdateConstraints];
 }
 
-- (void)setupAssets
+- (void)setupButtons
 {
-    self.assets = [[DLPhotoManager sharedInstance] assetsForPhotoCollection:self.photoCollection];
-    
+    if (self.picker.pickerType == DLPhotoPickerTypePicker) {
+        [self createCancelPickButton];
+        [self createPickerToolBar];
+    }else if (self.picker.pickerType == DLPhotoPickerTypeDisplay){
+        [self createEditButton];
+        [self createBackButton];
+    }else{
+    }
+}
+
+- (void)setEditingStatus
+{
+    if (self.picker.pickerType == DLPhotoPickerTypePicker) {
+        [self setEditing:YES animated:YES];
+    }else if (self.picker.pickerType == DLPhotoPickerTypeDisplay){
+        [self setEditing:NO animated:YES];
+    }else{
+    }
+}
+
+- (void)resetAssetsAndReload
+{
+    self.assets = [[[DLPhotoManager sharedInstance] assetsForPhotoCollection:self.photoCollection] mutableCopy];
     [self reloadData];
+    
+    [self updateToolBarStatus];
 }
 
 - (DLPhotoAsset *)assetAtIndexPath:(NSIndexPath *)indexPath
 {
     return (self.assets.count > 0) ? self.assets[indexPath.row] : nil;
+}
+
+- (NSIndexPath *)indexPathForAsset:(DLPhotoAsset *)asset
+{
+    if (asset) {
+        NSUInteger index = [self.assets indexOfObject:asset];
+        if (index < self.assets.count) {
+            return [NSIndexPath indexPathForRow:index inSection:0];
+        }
+    }
+    
+    return nil;
+}
+
+- (NSArray *)selectedAssets
+{
+    return self.picker.selectedAssets;
+}
+
+#pragma mark - Notifications
+
+- (void)addNotificationObserver
+{
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+
+    [center addObserver:self
+               selector:@selector(photoPickerSelectedAssetsDidChange:)
+                   name:DLPhotoPickerSelectedAssetsDidChangeNotification
+                 object:nil];
+    
+    [center addObserver:self
+               selector:@selector(photoPickerEnterEditMode:)
+                   name:DLPhotoPickerDidEnterEditModeNotification
+                 object:nil];
+    
+    [center addObserver:self
+               selector:@selector(photoPickerExitEditMode:)
+                   name:DLPhotoPickerDidExitEditModeNotification
+                 object:nil];
+    
+}
+
+- (void)removeNotificationObserver
+{
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    
+    [center removeObserver:self name:DLPhotoPickerSelectedAssetsDidChangeNotification object:nil];
+    [center removeObserver:self name:DLPhotoPickerDidEnterEditModeNotification object:nil];
+    [center removeObserver:self name:DLPhotoPickerDidExitEditModeNotification object:nil];
+}
+
+#pragma mark - Photo library change observer
+- (void)registerChangeObserver
+{
+    [[DLPhotoManager sharedInstance] registerChangeObserver:self];
+}
+
+- (void)unregisterChangeObserver
+{
+    [[DLPhotoManager sharedInstance] unregisterChangeObserver:self];
+}
+
+#pragma mark - Photo library changed
+- (void)photoLibraryDidChange:(PHChange *)changeInstance
+{
+    // Call might come on any background queue. Re-dispatch to the main queue to handle it.
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        PHFetchResultChangeDetails *changeDetails = [changeInstance changeDetailsForFetchResult:self.photoCollection.fetchResult];
+        
+        if (changeDetails)
+        {
+            PHFetchResult *fetchResult = [changeDetails fetchResultAfterChanges];
+            self.photoCollection.fetchResult = fetchResult;
+            
+            UICollectionView *collectionView = self.collectionView;
+            
+            //  Only has moves
+            if (![changeDetails hasIncrementalChanges] || [changeDetails hasMoves]){
+                [collectionView reloadData];
+                [self resetCachedAssetImages];
+            }
+            else{
+                NSIndexSet *removedIndexes = [changeDetails removedIndexes];
+                NSArray *removedPaths = [removedIndexes indexPathsFromIndexesWithSection:0];
+                
+                NSIndexSet *insertedIndexes = [changeDetails insertedIndexes];
+                NSArray *insertedPaths = [insertedIndexes indexPathsFromIndexesWithSection:0];
+                
+                NSIndexSet *changedIndexes = [changeDetails changedIndexes];
+                NSArray *changedPaths = [changedIndexes indexPathsFromIndexesWithSection:0];
+                
+                BOOL shouldReload = NO;
+                
+                //  Has removed
+//                if (changedPaths != nil && removedPaths != nil)
+//                {
+//                    for (NSIndexPath *changedPath in changedPaths)
+//                    {
+//                        if ([removedPaths containsObject:changedPath])
+//                        {
+//                            shouldReload = YES;
+//                            break;
+//                        }
+//                    }
+//                }
+//                
+//                //
+//                if (removedPaths.lastObject && ((NSIndexPath *)removedPaths.lastObject).item >= self.photoCollection.fetchResult.count)
+//                {
+//                    shouldReload = YES;
+//                }
+                
+                if (shouldReload){
+                    [self reloadData];
+                }
+                else{
+                    // if we have incremental diffs, tell the collection view to animate insertions and deletions
+                    [collectionView performBatchUpdates:^{
+                        if ([removedPaths count]){
+                            [self.assets removeObjectsAtIndexes:removedIndexes];
+                            [collectionView deleteItemsAtIndexPaths:removedPaths];
+                        }
+                        
+                        if ([insertedPaths count]){
+                            NSMutableArray *insertAssets = [NSMutableArray arrayWithCapacity:insertedIndexes.count];
+                            for (NSIndexPath *indexPath in insertedPaths) {
+                                [insertAssets addObject:[[DLPhotoAsset alloc] initWithAsset:fetchResult[indexPath.row]]];
+                            }
+                            [self.assets insertObjects:insertAssets atIndexes:insertedIndexes];
+                            [collectionView insertItemsAtIndexPaths:insertedPaths];
+                        }
+                        
+                        if ([changedPaths count]){
+                            NSMutableArray *changedAssets = [NSMutableArray arrayWithCapacity:changedIndexes.count];
+                            for (NSIndexPath *indexPath in changedPaths) {
+                                [changedAssets addObject:[[DLPhotoAsset alloc] initWithAsset:fetchResult[indexPath.row]]];
+                            }
+                            [self.assets replaceObjectsAtIndexes:changedIndexes withObjects:changedAssets];
+                            [collectionView reloadItemsAtIndexPaths:changedPaths];
+                        }
+                    } completion:^(BOOL finished){
+                        if (finished){
+                            [self resetCachedAssetImages];
+                            [self updateToolBarStatus];
+                        }
+                    }];
+                }
+            }
+            
+            [self.footer bind:self.photoCollection];
+            
+            if (fetchResult.count == 0){
+                [self showNoAssets];
+            }
+            else{
+                [self hideNoAssets];
+            }
+        }
+        
+        if ([self.delegate respondsToSelector:@selector(collectionViewController:photoLibraryDidChangeForPhotoCollection:)]){
+            [self.delegate collectionViewController:self photoLibraryDidChangeForPhotoCollection:self.photoCollection];
+        }
+    });
+}
+
+- (void)assetsLibraryChanged:(NSNotification *)notification
+{
+    /*
+     *
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_main_queue(), ^{
+        __strong typeof(self) strongSelf = weakSelf;
+
+        NSDictionary *info = [notification userInfo];
+        NSSet *updatedAssets = [info objectForKey:ALAssetLibraryUpdatedAssetsKey];
+        NSSet *updatedAssetGroup = [info objectForKey:ALAssetLibraryUpdatedAssetGroupsKey];
+        NSSet *deletedAssetGroup = [info objectForKey:ALAssetLibraryDeletedAssetGroupsKey];
+        NSSet *insertedAssetGroup = [info objectForKey:ALAssetLibraryInsertedAssetGroupsKey];
+        
+         NSLog(@"---------------------");
+         NSLog(@"      updated assets:%@", updatedAssets);
+         NSLog(@" updated asset group:%@", updatedAssetGroup);
+         NSLog(@" deleted asset group:%@", deletedAssetGroup);
+         NSLog(@"inserted asset group:%@", insertedAssetGroup);
+         NSLog(@"---------------------");
+         
+        if(info == nil){
+            //All Clear
+            [strongSelf setupAssets];
+            return;
+        }
+        
+        if(info.count == 0){
+            return;
+        }
+        
+        if (updatedAssets.count >0){
+            for (NSURL *assetUrl in updatedAssets) {
+                [[[DLPhotoManager sharedInstance] assetsLibrary] assetForURL:assetUrl resultBlock:^(ALAsset *asset) {
+                    if (asset) {
+                        DLPhotoAsset *newAsset = [[DLPhotoAsset alloc] initWithAsset:asset];
+                        NSUInteger index = [strongSelf indexOfAsset:newAsset inAssets:strongSelf.assets];
+                        if (index < self.assets.count) {
+                            [strongSelf.assets replaceObjectAtIndex:index withObject:newAsset];
+                        }
+                    }
+                } failureBlock:^(NSError *error) {
+                    NSLog(@">>> %@",error);
+                }];
+            }
+        }
+    });
+     */
+}
+
+/*
+#pragma mark - Helper methods
+- (NSDictionary *)queryStringToDictionaryOfNSURL:(NSURL *)url
+{
+    NSArray *urlComponents = [url.query componentsSeparatedByString:@"&"];
+    if (urlComponents.count <= 0)
+    {
+        return nil;
+    }
+    NSMutableDictionary *queryDict = [NSMutableDictionary dictionary];
+    for (NSString *keyValuePair in urlComponents)
+    {
+        NSArray *pairComponents = [keyValuePair componentsSeparatedByString:@"="];
+        [queryDict setObject:pairComponents[1] forKey:pairComponents[0]];
+    }
+    return [queryDict copy];
+}
+
+- (NSUInteger)indexOfAsset:(DLPhotoAsset *)asset inAssets:(NSArray *)groups
+{
+    NSString *targetAssetId = [self queryStringToDictionaryOfNSURL:asset.url][@"id"];
+    __block NSUInteger index = NSNotFound;
+    [groups enumerateObjectsUsingBlock:^(DLPhotoAsset *obj, NSUInteger idx, BOOL *stop) {
+        NSString *id = [self queryStringToDictionaryOfNSURL:obj.url][@"id"];
+        if ([id isEqualToString:targetAssetId]){
+            index = idx;
+            *stop = YES;
+        }
+    }];
+    return index;
+}
+*/
+
+#pragma mark - Asset images caching
+- (void)resetCachedAssetImages
+{
+    [[DLPhotoManager sharedInstance] stopCachingImagesForAllAssets];
+    self.previousPreheatRect = CGRectZero;
+}
+
+- (void)updateCachedAssetImages
+{
+    BOOL isViewVisible = [self isViewLoaded] && [[self view] window] != nil;
+    
+    if (!isViewVisible)
+        return;
+    
+    // The preheat window is twice the height of the visible rect
+    CGRect preheatRect = self.collectionView.bounds;
+    preheatRect = CGRectInset(preheatRect, 0.0f, -0.5f * CGRectGetHeight(preheatRect));
+    
+    // If scrolled by a "reasonable" amount...
+    CGFloat delta = ABS(CGRectGetMidY(preheatRect) - CGRectGetMidY(self.previousPreheatRect));
+    
+    if (delta > CGRectGetHeight(self.collectionView.bounds) / 3.0f)
+    {
+        // Compute the assets to start caching and to stop caching.
+        NSMutableArray *addedIndexPaths = [NSMutableArray array];
+        NSMutableArray *removedIndexPaths = [NSMutableArray array];
+        
+        [self computeDifferenceBetweenRect:self.previousPreheatRect
+                                   andRect:preheatRect
+                            removedHandler:^(CGRect removedRect) {
+                                NSArray *indexPaths = [self.collectionView indexPathsForElementsInRect:removedRect];
+                                [removedIndexPaths addObjectsFromArray:indexPaths];
+                            } addedHandler:^(CGRect addedRect) {
+                                NSArray *indexPaths = [self.collectionView indexPathsForElementsInRect:addedRect];
+                                [addedIndexPaths addObjectsFromArray:indexPaths];
+                            }];
+        
+        [self startCachingThumbnailsForIndexPaths:addedIndexPaths];
+        [self stopCachingThumbnailsForIndexPaths:removedIndexPaths];
+        
+        self.previousPreheatRect = preheatRect;
+    }
+}
+
+- (void)startCachingThumbnailsForIndexPaths:(NSArray *)indexPaths
+{
+    for (NSIndexPath *indexPath in indexPaths)
+    {
+        DLPhotoAsset *asset = [self assetAtIndexPath:indexPath];
+        
+        if (!asset) break;
+        
+        UICollectionViewLayoutAttributes *attributes =
+        [self.collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:indexPath];
+        
+        CGSize targetSize = CGSizeMake(attributes.size.width * ScreenScale, attributes.size.height * ScreenScale);
+        
+        [[DLPhotoManager sharedInstance] startCachingImagesForAssets:asset targetSize:targetSize];
+    }
+}
+
+- (void)stopCachingThumbnailsForIndexPaths:(NSArray *)indexPaths
+{
+    for (NSIndexPath *indexPath in indexPaths)
+    {
+        DLPhotoAsset *asset = [self assetAtIndexPath:indexPath];
+        
+        if (!asset) break;
+
+        UICollectionViewLayoutAttributes *attributes =
+        [self.collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:indexPath];
+        
+        CGSize targetSize = CGSizeMake(attributes.size.width * ScreenScale, attributes.size.height * ScreenScale);
+        
+        [[DLPhotoManager sharedInstance] stopCachingImagesForAssets:asset targetSize:targetSize];
+    }
+}
+
+- (void)computeDifferenceBetweenRect:(CGRect)oldRect andRect:(CGRect)newRect removedHandler:(void (^)(CGRect removedRect))removedHandler addedHandler:(void (^)(CGRect addedRect))addedHandler
+{
+    if (CGRectIntersectsRect(newRect, oldRect)) {
+        CGFloat oldMaxY = CGRectGetMaxY(oldRect);
+        CGFloat oldMinY = CGRectGetMinY(oldRect);
+        CGFloat newMaxY = CGRectGetMaxY(newRect);
+        CGFloat newMinY = CGRectGetMinY(newRect);
+        if (newMaxY > oldMaxY) {
+            CGRect rectToAdd = CGRectMake(newRect.origin.x, oldMaxY, newRect.size.width, (newMaxY - oldMaxY));
+            addedHandler(rectToAdd);
+        }
+        if (oldMinY > newMinY) {
+            CGRect rectToAdd = CGRectMake(newRect.origin.x, newMinY, newRect.size.width, (oldMinY - newMinY));
+            addedHandler(rectToAdd);
+        }
+        if (newMaxY < oldMaxY) {
+            CGRect rectToRemove = CGRectMake(newRect.origin.x, newMaxY, newRect.size.width, (oldMaxY - newMaxY));
+            removedHandler(rectToRemove);
+        }
+        if (oldMinY < newMinY) {
+            CGRect rectToRemove = CGRectMake(newRect.origin.x, oldMinY, newRect.size.width, (newMinY - oldMinY));
+            removedHandler(rectToRemove);
+        }
+    } else {
+        addedHandler(newRect);
+        removedHandler(oldRect);
+    }
 }
 
 #pragma mark - Collection view layout
@@ -150,6 +553,12 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     }];
 }
 
+#pragma mark - Scroll view delegate
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self updateCachedAssetImages];
+}
+
 #pragma mark - Scroll to bottom
 - (void)scrollToBottomIfNeeded
 {
@@ -162,7 +571,7 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
         shouldScrollToBottom = YES;
     }
     
-    if (shouldScrollToBottom){
+    if (shouldScrollToBottom && self.assets.count > 0){
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.assets.count-1 inSection:0];
         [self.collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionTop animated:NO];
     }
@@ -179,52 +588,86 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     }
 }
 
-
 #pragma mark - Navigation Item
 - (void)createEditButton{
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editAction)];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(editAction:)];
+}
+
+- (void)createBackButton{
+    self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain target:nil action:nil];
 }
 
 - (void)createSelectButton{
-    _selectButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Select All",nil) style:UIBarButtonItemStylePlain target:self action:@selector(selectAction:)];
-    self.navigationItem.leftBarButtonItem = _selectButton;
+    self.selectButton = [[UIBarButtonItem alloc] initWithTitle:DLPhotoPickerLocalizedString(@"Select All",nil) style:UIBarButtonItemStylePlain target:self action:@selector(selectAction:)];
+    self.navigationItem.leftBarButtonItem = self.selectButton;
 }
 
-- (void)createCancelButton{
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelAction)];
+- (void)createCancelEditButton{
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel target:self action:@selector(cancelEditAction:)];
 }
 
-- (void)createToolBar{
-    UIBarButtonItem *leftSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+- (void)createCancelPickButton{
+    self.navigationItem.rightBarButtonItem =
+    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                                  target:self
+                                                  action:@selector(cancelPickAction:)];
+}
+
+- (void)createDisplayToolBar{
+    UIBarButtonItem *shareButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(photoShareAction:)];
     
-    UIBarButtonItem *copyButton = [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Copy to",nil) style:UIBarButtonItemStylePlain target:self action:@selector(copyAction:)];
-    copyButton.enabled = NO;
+    UIBarButtonItem *toCopyButton = [[UIBarButtonItem alloc] initWithTitle:DLPhotoPickerLocalizedString(@"Copy to",nil) style:UIBarButtonItemStylePlain target:self action:@selector(finishPickAction:)];
     
-    UIBarButtonItem *rightSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+    UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(photoDeleteAction:)];
     
-    self.toolbarItems = @[leftSpace,copyButton,rightSpace];
+    NSArray *toolItems = @[shareButton, self.toolbarSpace, toCopyButton, self.toolbarSpace, deleteButton];
+    if (__IPHONE_OS_VERSION_MAX_ALLOWED < __IPHONE_8_0) {
+        toolItems = @[shareButton, self.toolbarSpace, toCopyButton];
+    }
+    
+    for (UITabBarItem *item in toolItems) {
+        item.enabled = NO;
+    }
+    
+    [self.navigationController setToolbarHidden:NO animated:YES];
+    self.toolbarItems = toolItems;
     [self setToolbarItems:self.toolbarItems animated:YES];
 }
 
-#pragma mark - Navigation Action
-- (void)editAction{
-    self.modifying = YES;
-    [self createCancelButton];
-    [self createSelectButton];
+- (void)createPickerToolBar{
+    self.selectButton = [[UIBarButtonItem alloc] initWithTitle:DLPhotoPickerLocalizedString(@"Select All",nil) style:UIBarButtonItemStylePlain target:self action:@selector(selectAction:)];
+
+    self.confirmButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone target:self action:@selector(finishPickAction:)];
     
-    //TabBar
-//    [self.rdv_tabBarController setTabBarHidden:YES animated:YES];
+    [self.navigationController setToolbarHidden:NO animated:YES];
+    
+    self.toolbarItems = @[self.selectButton, self.toolbarSpace, self.confirmButton];
+    [self setToolbarItems:self.toolbarItems animated:YES];
+}
+
+- (UIBarButtonItem *)toolbarSpace
+{
+    return [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
+}
+
+#pragma mark - Button Action
+- (void)editAction:(UIBarButtonItem *)sender{
+    [self setEditing:YES animated:YES];
+    
+    //Nav Button
+    [self createCancelEditButton];
+    [self createSelectButton];
+    [self updateNavigationTitle];
     
     //ToolBar
-    [self.navigationController setToolbarHidden:NO animated:YES];
-    [self createToolBar];
-    [self updateEditToolBarStatus];
+    [self createDisplayToolBar];
+    [self updateToolBarStatus];
     
     [self reloadData];
 }
 
-- (void)cancelAction{
-    self.modifying = NO;
+- (void)cancelEditAction:(UIBarButtonItem *)sender{
+    [self setEditing:NO animated:YES];
     
     // Unselect all
     [self setAssetSelected:NO];
@@ -234,13 +677,17 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     
     self.navigationItem.leftBarButtonItem = nil;
     
-    //TabBar
-//    [self.rdv_tabBarController setTabBarHidden:NO animated:YES];
-    
     //ToolBar
     [self.navigationController setToolbarHidden:YES animated:YES];
     
     [self reloadData];
+}
+
+-(void)cancelPickAction:(UIBarButtonItem *)sender
+{
+    if ([self.picker.delegate respondsToSelector:@selector(pickerControllerDidCancel:)]){
+        [self.picker.delegate pickerControllerDidCancel:self.picker];
+    }
 }
 
 - (void)selectAction:(UIBarButtonItem *)sender{
@@ -252,17 +699,31 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
         [self setAssetSelected: YES];
     }
     
-    [self updateEditToolBarStatus];
+    [self updateToolBarStatus];
     [self updateNavigationTitle];
     
     [self reloadData];
 }
 
-- (void)copyAction:(UIBarButtonItem *)sender{
-
+- (void)finishPickAction:(UIBarButtonItem *)sender{
+    if ([self.picker.delegate respondsToSelector:@selector(pickerController:didFinishPickingAssets:)]){
+        [self.picker.delegate pickerController:self.picker didFinishPickingAssets:self.selectedAssets];
+    }
+}
+- (void)photoShareAction:(UIBarButtonItem *)sender{
+    
 }
 
-- (void)updateEditToolBarStatus
+- (void)photoDeleteAction:(UIBarButtonItem *)sender{
+    [[DLPhotoManager sharedInstance] removeAsset:self.selectedAssets completion:^(BOOL success) {
+        [self cancelEditAction:nil];
+    } failure:^(NSError *error) {
+        NSLog(@">>> %@",error);
+    }];
+}
+
+#pragma mark - Update status
+- (void)updateToolBarStatus
 {
     NSInteger selectedCount = self.selectedAssets.count;
     NSInteger numberOfAsset = self.assets.count;
@@ -278,15 +739,25 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     }
     
     //
-    self.toolbarItems[1].enabled = selectedCount > 0;
-    [self setToolbarItems:self.toolbarItems animated:YES];
+    if (self.picker.pickerType == DLPhotoPickerTypeDisplay) {
+        for (UITabBarItem *item in self.toolbarItems) {
+            item.enabled = selectedCount > 0;
+        }
+    }else if (self.picker.pickerType == DLPhotoPickerTypePicker){
+        self.confirmButton.enabled = selectedCount > 0;
+    }else{
+    }
 }
 
 - (void)updateNavigationTitle
 {
-    if (self.selectedAssets.count > 0) {
-        self.title = [self selectedAssetsString];
-    }else {
+    if (self.isEditing) {
+        if (self.selectedAssets.count > 0) {
+            self.title = [self selectedAssetsString];
+        }else {
+            self.title = DLPhotoPickerLocalizedString(@"Select Item", nil);
+        }
+    }else{
         self.title = self.photoCollection.title;
     }
 }
@@ -303,22 +774,20 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     
     NSString *format;
     
-    if (photoSelected && videoSelected)
+    if (photoSelected && videoSelected){
         format = DLPhotoPickerLocalizedString(@"%@ Items Selected", nil);
-    
-    else if (photoSelected)
+    }else if (photoSelected){
         format = (self.selectedAssets.count > 1) ?
         DLPhotoPickerLocalizedString(@"%@ Photos Selected", nil) :
         DLPhotoPickerLocalizedString(@"%@ Photo Selected", nil);
-    
-    else if (videoSelected)
+    }else if (videoSelected){
         format = (self.selectedAssets.count > 1) ?
         DLPhotoPickerLocalizedString(@"%@ Videos Selected", nil) :
         DLPhotoPickerLocalizedString(@"%@ Video Selected", nil);
+    }
     
     NSNumberFormatter *nf = [NSNumberFormatter new];
-    
-    return [NSString stringWithFormat:format, [nf ctassetsPickerStringFromAssetsCount:self.selectedAssets.count]];
+    return [NSString stringWithFormat:format, [nf assetStringFromAssetCount:self.selectedAssets.count]];
 }
 
 - (NSPredicate *)predicateOfMediaType:(DLPhotoMediaType)type
@@ -328,70 +797,39 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     }];
 }
 
-- (void)setAssetSelected:(BOOL)selectAll
+- (void)setAssetSelected:(BOOL)selected
 {
-    [self.selectedAssets removeAllObjects];
+    [self.picker removeAllSelectedAssets];
     
-    if (selectAll) {
-        for (DLPhotoAsset *asset in self.assets) {
-            [self.selectedAssets addObject:asset];
+    for (DLPhotoAsset *asset in self.assets) {
+        if (selected) {
+            [self.picker selectAsset:asset];
         }
     }
 }
 
-#pragma mark - Add/Remove selectedAsset
-- (void)selectAsset:(DLPhotoAsset *)asset
+#pragma mark - Scroll view selected assets changed
+- (void)photoPickerSelectedAssetsDidChange:(NSNotification *)notification
 {
-    [self insertObject:asset inSelectedAssetsAtIndex:self.selectedAssets.count];
+    //NSArray *selectedAssets = (NSArray *)notification.object;
+    [self updateToolBarStatus];
+    [self updateNavigationTitle];
 }
 
-- (void)deselectAsset:(DLPhotoAsset *)asset
+- (void)photoPickerEnterEditMode:(NSNotification *)notification
 {
-    [self removeObjectFromSelectedAssetsAtIndex:[self.selectedAssets indexOfObject:asset]];
-}
-
-#pragma mark - Key-Value observer
-- (void)addKeyValueObserver
-{
-    [self addObserver:self
-           forKeyPath:@"selectedAssets"
-              options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
-              context:nil];
-}
-
-- (void)removeKeyValueObserver
-{
-    @try {
-        [self removeObserver:self forKeyPath:@"selectedAssets"];
-    }
-    @catch (NSException *exception) {
-        // do nothing
+    //Select mode
+    if (!self.isEditing) {
+        [self setEditing:YES];
     }
 }
 
-#pragma mark - Key-Value changed
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+- (void)photoPickerExitEditMode:(NSNotification *)notification
 {
-    if ([keyPath isEqual:@"selectedAssets"]){
-        [self updateEditToolBarStatus];
-        [self updateNavigationTitle];
+    //Select mode
+    if (self.isEditing) {
+        [self setEditing:NO];
     }
-}
-
-#pragma mark - KVO Implementation For NSArray
-- (void)insertObject:(id)object inSelectedAssetsAtIndex:(NSUInteger)index
-{
-    [self.selectedAssets insertObject:object atIndex:index];
-}
-
-- (void)removeObjectFromSelectedAssetsAtIndex:(NSUInteger)index
-{
-    [self.selectedAssets removeObjectAtIndex:index];
-}
-
-- (void)replaceObjectInSelectedAssetsAtIndex:(NSUInteger)index withObject:(DLPhotoAsset *)object
-{
-    [self.selectedAssets replaceObjectAtIndex:index withObject:object];
 }
 
 #pragma mark - No assets
@@ -428,10 +866,14 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     DLPhotoCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:DLPhotoCollectionViewCellIdentifier forIndexPath:indexPath];
 
     DLPhotoAsset *asset = [self assetAtIndexPath:indexPath];
+    if (asset == nil) {
+        return cell;
+    }
     
+    //  object maybe different in selectedAssets, but they are same asset.
     BOOL isSelected = [self.selectedAssets containsObject:asset];
     
-    if (self.isModifying) {
+    if (self.isEditing) {
         [cell setShowCheckMark:YES];
         [cell setSelected:isSelected];
         
@@ -456,19 +898,14 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     NSInteger tag = cell.tag + 1;
     cell.tag = tag;
     UICollectionViewLayoutAttributes *attributes = [collectionView.collectionViewLayout layoutAttributesForItemAtIndexPath:indexPath];
-    [[DLPhotoManager sharedInstance] requestThumbnailsForPhotoAsset:asset containerSize:attributes.size completion:^(UIImage *thumbnailImage) {
+    
+    [asset requestThumbnailImageWithSize:attributes.size completion:^(UIImage *image, NSDictionary *info) {
         if (cell.tag == tag){
-            [(DLPhotoThumbnailView *)cell.backgroundView bind:thumbnailImage asset:asset];
+            [(DLPhotoThumbnailView *)cell.backgroundView bind:image asset:asset];
         }
     }];
     
     return cell;
-}
-
-- (CGSize)imageSizeForContainerSize:(CGSize)size
-{
-    CGFloat scale = UIScreen.mainScreen.scale;
-    return CGSizeMake(size.width * scale, size.height * scale);
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath
@@ -490,13 +927,19 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
 {
     DLPhotoAsset *asset = [self assetAtIndexPath:indexPath];
     
-    if (self.isModifying) {
-        [self selectAsset:asset];
+    if (self.isEditing) {
+        [self.picker selectAsset:asset];
         [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
-    }
-    
-    if ([self.picker.delegate respondsToSelector:@selector(pickerController:didSelectAsset:)]){
-        [self.picker.delegate pickerController:self.picker didSelectAsset:asset];
+        
+        if ([self.picker.delegate respondsToSelector:@selector(pickerController:didSelectAsset:)]){
+            [self.picker.delegate pickerController:self.picker didSelectAsset:asset];
+        }
+    }else{
+        DLPhotoPageViewController *vc = [[DLPhotoPageViewController alloc] initWithAssets:self.assets];
+        vc.pageIndex = indexPath.row;
+        vc.allowsSelection = YES;
+        
+        [self.navigationController pushViewController:vc animated:YES];
     }
 }
 
@@ -504,13 +947,13 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
 {
     DLPhotoAsset *asset = [self assetAtIndexPath:indexPath];
     
-    if (self.isModifying) {
-        [self deselectAsset:asset];
+    if (self.isEditing) {
+        [self.picker deselectAsset:asset];
         [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
-    }
-    
-    if ([self.picker.delegate respondsToSelector:@selector(pickerController:didDeselectAsset:)]){
-        [self.picker.delegate pickerController:self.picker didDeselectAsset:asset];
+        
+        if ([self.picker.delegate respondsToSelector:@selector(pickerController:didDeselectAsset:)]){
+            [self.picker.delegate pickerController:self.picker didDeselectAsset:asset];
+        }
     }
 }
 

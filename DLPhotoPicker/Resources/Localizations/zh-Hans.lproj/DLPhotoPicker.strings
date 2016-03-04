@@ -47,3 +47,9 @@
 /* Error message of playing stream video */
 "Cannot Play Stream Video" = "无法播放影片";
 "OK" = "好";
+
+/*New Add*/
+"Select All" = "全选";
+"Deselect All" = "取消全选";
+"Copy to" = "复制到...";
+"Select Item" = "选择项目";

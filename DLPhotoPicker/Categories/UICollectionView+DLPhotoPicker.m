@@ -24,12 +24,26 @@
  
  */
 
-#import <Photos/Photos.h>
+#import "UICollectionView+DLPhotoPicker.h"
 
-@interface PHAssetCollection (DLPhotoPicker)
+@implementation UICollectionView (DLPhotoPicker)
 
-+ (PHAssetCollectionType)ctassetPickerAssetCollectionTypeOfSubtype:(PHAssetCollectionSubtype)subtype;
-- (NSUInteger)ctassetPikcerCountOfAssetsFetchedWithOptions:(PHFetchOptions *)fetchOptions;
-- (UIImage *)badgeImage;
+- (NSArray *)indexPathsForElementsInRect:(CGRect)rect
+{
+    NSArray *allAttributes = [self.collectionViewLayout layoutAttributesForElementsInRect:rect];
+    
+    if (allAttributes.count == 0)
+        return nil;
+    
+    NSMutableArray *indexPaths = [NSMutableArray arrayWithCapacity:allAttributes.count];
+    
+    for (UICollectionViewLayoutAttributes *attributes in allAttributes)
+    {
+        NSIndexPath *indexPath = attributes.indexPath;
+        [indexPaths addObject:indexPath];
+    }
+    
+    return indexPaths;
+}
 
 @end

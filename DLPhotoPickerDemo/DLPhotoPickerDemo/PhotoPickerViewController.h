@@ -2,7 +2,7 @@
  
  MIT License (MIT)
  
- Copyright (c) 2015 Clement CN Tsang
+ Copyright (c) 2016 DarlingCoder
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -24,16 +24,14 @@
  
  */
 
-#import <Photos/Photos.h>
+#import <UIKit/UIKit.h>
+#import <DLPhotoPicker/DLPhotoPicker.h>
 
-@interface PHAsset (DLPhotoPicker)
 
-- (BOOL)ctassetsPickerIsPhoto;
-- (BOOL)ctassetsPickerIsVideo;
-- (BOOL)ctassetsPickerIsHighFrameRateVideo;
-- (BOOL)ctassetsPickerIsTimelapseVideo;
+@interface PhotoPickerViewController : UITableViewController<DLPhotoPickerViewControllerDelegate>
 
-- (UIImage *)badgeImage;
-- (NSString *)ctassetsPickerAccessibilityLabel;
+@property (nonatomic, copy) NSArray *assets;
+@property (nonatomic, strong) NSDateFormatter *dateFormatter;
+
 
 @end

@@ -2,7 +2,7 @@
  
  MIT License (MIT)
  
- Copyright (c) 2015 Clement CN Tsang
+ Copyright (c) 2016 DarlingCoder
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -99,13 +99,13 @@
  */
 - (void)setupViews
 {
-    UIImage *shadowImage = [UIImage ctassetsPickerImageNamed:@"CheckmarkShadow"];
+    UIImage *shadowImage = [UIImage assetImageNamed:@"CheckmarkShadow"];
     UIImageView *shadowImageView = [[UIImageView alloc] initWithImage:shadowImage];
     shadowImageView.userInteractionEnabled = NO;
     self.shadowImageView = shadowImageView;
     [self addSubview:self.shadowImageView];
     
-    UIImage *checkmarkImage = [UIImage ctassetsPickerImageNamed:@"Checkmark"];
+    UIImage *checkmarkImage = [UIImage assetImageNamed:@"Checkmark"];
     checkmarkImage = [checkmarkImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     UIImageView *checkmarkImageView = [[UIImageView alloc] initWithImage:checkmarkImage];
     checkmarkImageView.userInteractionEnabled = NO;
@@ -143,7 +143,7 @@
 {
     if (!self.didSetupConstraints)
     {
-        CGSize size = [UIImage ctassetsPickerImageNamed:@"CheckmarkShadow"].size;
+        CGSize size = [UIImage assetImageNamed:@"CheckmarkShadow"].size;
         
         [NSLayoutConstraint autoSetPriority:UILayoutPriorityRequired forConstraints:^{
             [self autoSetDimensionsToSize:size];

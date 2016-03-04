@@ -10,21 +10,28 @@
 		41747234B0D98F5DDAB108C8 /* libPods-DLPhotoPickerDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B91ADF680AF6DE2DA6E0FD9D /* libPods-DLPhotoPickerDemo.a */; };
 		595178B21C7C225D00000BDE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 595178B11C7C225D00000BDE /* main.m */; };
 		595178B51C7C225D00000BDE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 595178B41C7C225D00000BDE /* AppDelegate.m */; };
-		595178B81C7C225D00000BDE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 595178B71C7C225D00000BDE /* ViewController.m */; };
+		595178B81C7C225D00000BDE /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 595178B71C7C225D00000BDE /* PhotoViewController.m */; };
 		595178BB1C7C225D00000BDE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 595178B91C7C225D00000BDE /* Main.storyboard */; };
 		595178BD1C7C225D00000BDE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 595178BC1C7C225D00000BDE /* Assets.xcassets */; };
 		595178C01C7C225D00000BDE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 595178BE1C7C225D00000BDE /* LaunchScreen.storyboard */; };
 		5958B1E11C7C438900A8B1F6 /* DLPhotoPicker.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5958B19F1C7C438900A8B1F6 /* DLPhotoPicker.xcassets */; };
 		5958B1E21C7C438900A8B1F6 /* DLPhotoPicker.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5958B1A11C7C438900A8B1F6 /* DLPhotoPicker.strings */; };
+		59604B041C804F3C00339DDE /* PhotoPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59604B031C804F3C00339DDE /* PhotoPickerViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5924FA721C8967C000B82A18 /* DLPhotoBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoBarButtonItem.h; sourceTree = "<group>"; };
+		5924FA731C8967C000B82A18 /* DLPhotoBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPhotoBarButtonItem.m; sourceTree = "<group>"; };
+		59505B941C82C0F900E025D6 /* NSIndexSet+DLPhotoPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSIndexSet+DLPhotoPicker.h"; sourceTree = "<group>"; };
+		59505B951C82C0F900E025D6 /* NSIndexSet+DLPhotoPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSIndexSet+DLPhotoPicker.m"; sourceTree = "<group>"; };
+		59505B971C82C1E000E025D6 /* UICollectionView+DLPhotoPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UICollectionView+DLPhotoPicker.h"; sourceTree = "<group>"; };
+		59505B981C82C1E000E025D6 /* UICollectionView+DLPhotoPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+DLPhotoPicker.m"; sourceTree = "<group>"; };
 		595178AD1C7C225D00000BDE /* DLPhotoPickerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DLPhotoPickerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		595178B11C7C225D00000BDE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		595178B31C7C225D00000BDE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		595178B41C7C225D00000BDE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		595178B61C7C225D00000BDE /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		595178B71C7C225D00000BDE /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		595178B61C7C225D00000BDE /* PhotoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PhotoViewController.h; sourceTree = "<group>"; };
+		595178B71C7C225D00000BDE /* PhotoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotoViewController.m; sourceTree = "<group>"; };
 		595178BA1C7C225D00000BDE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		595178BC1C7C225D00000BDE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		595178BF1C7C225D00000BDE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -35,10 +42,6 @@
 		5958B1841C7C438900A8B1F6 /* NSDateFormatter+DLPhotoPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDateFormatter+DLPhotoPicker.m"; sourceTree = "<group>"; };
 		5958B1851C7C438900A8B1F6 /* NSNumberFormatter+DLPhotoPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSNumberFormatter+DLPhotoPicker.h"; sourceTree = "<group>"; };
 		5958B1861C7C438900A8B1F6 /* NSNumberFormatter+DLPhotoPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSNumberFormatter+DLPhotoPicker.m"; sourceTree = "<group>"; };
-		5958B1871C7C438900A8B1F6 /* PHAsset+DLPhotoPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PHAsset+DLPhotoPicker.h"; sourceTree = "<group>"; };
-		5958B1881C7C438900A8B1F6 /* PHAsset+DLPhotoPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PHAsset+DLPhotoPicker.m"; sourceTree = "<group>"; };
-		5958B1891C7C438900A8B1F6 /* PHAssetCollection+DLPhotoPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PHAssetCollection+DLPhotoPicker.h"; sourceTree = "<group>"; };
-		5958B18A1C7C438900A8B1F6 /* PHAssetCollection+DLPhotoPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "PHAssetCollection+DLPhotoPicker.m"; sourceTree = "<group>"; };
 		5958B18B1C7C438900A8B1F6 /* UIImage+DLPhotoPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+DLPhotoPicker.h"; sourceTree = "<group>"; };
 		5958B18C1C7C438900A8B1F6 /* UIImage+DLPhotoPicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+DLPhotoPicker.m"; sourceTree = "<group>"; };
 		5958B18E1C7C438900A8B1F6 /* DLPhotoPickerDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoPickerDefines.h; sourceTree = "<group>"; };
@@ -103,6 +106,18 @@
 		5958B1D21C7C438900A8B1F6 /* DLPhotoThumbnailStacks.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPhotoThumbnailStacks.m; sourceTree = "<group>"; };
 		5958B1D31C7C438900A8B1F6 /* DLPhotoThumbnailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoThumbnailView.h; sourceTree = "<group>"; };
 		5958B1D41C7C438900A8B1F6 /* DLPhotoThumbnailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPhotoThumbnailView.m; sourceTree = "<group>"; };
+		5958B1F01C7C512300A8B1F6 /* DLPhotoPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoPageView.h; sourceTree = "<group>"; };
+		5958B1F11C7C512300A8B1F6 /* DLPhotoPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPhotoPageView.m; sourceTree = "<group>"; };
+		5958B1F21C7C512300A8B1F6 /* DLPhotoScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoScrollView.h; sourceTree = "<group>"; };
+		5958B1F31C7C512300A8B1F6 /* DLPhotoScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPhotoScrollView.m; sourceTree = "<group>"; };
+		5958B1F71C7C513C00A8B1F6 /* DLPhotoItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoItemViewController.h; sourceTree = "<group>"; };
+		5958B1F81C7C513C00A8B1F6 /* DLPhotoItemViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPhotoItemViewController.m; sourceTree = "<group>"; };
+		5958B1F91C7C513C00A8B1F6 /* DLPhotoPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoPageViewController.h; sourceTree = "<group>"; };
+		5958B1FA1C7C513C00A8B1F6 /* DLPhotoPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPhotoPageViewController.m; sourceTree = "<group>"; };
+		5958B1FD1C7C527B00A8B1F6 /* DLPhotoPlayButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoPlayButton.h; sourceTree = "<group>"; };
+		5958B1FE1C7C527B00A8B1F6 /* DLPhotoPlayButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPhotoPlayButton.m; sourceTree = "<group>"; };
+		59604B021C804F3C00339DDE /* PhotoPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoPickerViewController.h; sourceTree = "<group>"; };
+		59604B031C804F3C00339DDE /* PhotoPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoPickerViewController.m; sourceTree = "<group>"; };
 		858D99B433ECC6DC3B7E4022 /* Pods-DLPhotoPickerDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DLPhotoPickerDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DLPhotoPickerDemo/Pods-DLPhotoPickerDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		9DC496B897984591D0E6D28D /* Pods-DLPhotoPickerDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DLPhotoPickerDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-DLPhotoPickerDemo/Pods-DLPhotoPickerDemo.release.xcconfig"; sourceTree = "<group>"; };
 		B91ADF680AF6DE2DA6E0FD9D /* libPods-DLPhotoPickerDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DLPhotoPickerDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -144,8 +159,10 @@
 			children = (
 				595178B31C7C225D00000BDE /* AppDelegate.h */,
 				595178B41C7C225D00000BDE /* AppDelegate.m */,
-				595178B61C7C225D00000BDE /* ViewController.h */,
-				595178B71C7C225D00000BDE /* ViewController.m */,
+				595178B61C7C225D00000BDE /* PhotoViewController.h */,
+				595178B71C7C225D00000BDE /* PhotoViewController.m */,
+				59604B021C804F3C00339DDE /* PhotoPickerViewController.h */,
+				59604B031C804F3C00339DDE /* PhotoPickerViewController.m */,
 				595178B91C7C225D00000BDE /* Main.storyboard */,
 				595178BC1C7C225D00000BDE /* Assets.xcassets */,
 				595178BE1C7C225D00000BDE /* LaunchScreen.storyboard */,
@@ -168,13 +185,13 @@
 			children = (
 				5958B1801C7C438900A8B1F6 /* Categories */,
 				5958B18D1C7C438900A8B1F6 /* Common */,
+				5958B1991C7C438900A8B1F6 /* Model */,
+				5958B1B91C7C438900A8B1F6 /* View */,
 				5958B18F1C7C438900A8B1F6 /* Controller */,
+				5958B19E1C7C438900A8B1F6 /* Resources */,
 				5958B1961C7C438900A8B1F6 /* DLPhotoManager.h */,
 				5958B1971C7C438900A8B1F6 /* DLPhotoManager.m */,
 				5958B1981C7C438900A8B1F6 /* DLPhotoPicker.h */,
-				5958B1991C7C438900A8B1F6 /* Model */,
-				5958B19E1C7C438900A8B1F6 /* Resources */,
-				5958B1B91C7C438900A8B1F6 /* View */,
 			);
 			name = DLPhotoPicker;
 			path = ../DLPhotoPicker;
@@ -183,16 +200,16 @@
 		5958B1801C7C438900A8B1F6 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				59505B971C82C1E000E025D6 /* UICollectionView+DLPhotoPicker.h */,
+				59505B981C82C1E000E025D6 /* UICollectionView+DLPhotoPicker.m */,
+				59505B941C82C0F900E025D6 /* NSIndexSet+DLPhotoPicker.h */,
+				59505B951C82C0F900E025D6 /* NSIndexSet+DLPhotoPicker.m */,
 				5958B1811C7C438900A8B1F6 /* NSBundle+DLPhotoPicker.h */,
 				5958B1821C7C438900A8B1F6 /* NSBundle+DLPhotoPicker.m */,
 				5958B1831C7C438900A8B1F6 /* NSDateFormatter+DLPhotoPicker.h */,
 				5958B1841C7C438900A8B1F6 /* NSDateFormatter+DLPhotoPicker.m */,
 				5958B1851C7C438900A8B1F6 /* NSNumberFormatter+DLPhotoPicker.h */,
 				5958B1861C7C438900A8B1F6 /* NSNumberFormatter+DLPhotoPicker.m */,
-				5958B1871C7C438900A8B1F6 /* PHAsset+DLPhotoPicker.h */,
-				5958B1881C7C438900A8B1F6 /* PHAsset+DLPhotoPicker.m */,
-				5958B1891C7C438900A8B1F6 /* PHAssetCollection+DLPhotoPicker.h */,
-				5958B18A1C7C438900A8B1F6 /* PHAssetCollection+DLPhotoPicker.m */,
 				5958B18B1C7C438900A8B1F6 /* UIImage+DLPhotoPicker.h */,
 				5958B18C1C7C438900A8B1F6 /* UIImage+DLPhotoPicker.m */,
 			);
@@ -210,10 +227,11 @@
 		5958B18F1C7C438900A8B1F6 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				5958B1901C7C438900A8B1F6 /* DLPhotoCollectionViewController.h */,
-				5958B1911C7C438900A8B1F6 /* DLPhotoCollectionViewController.m */,
+				5958B1F61C7C513C00A8B1F6 /* PageViewController */,
 				5958B1921C7C438900A8B1F6 /* DLPhotoPickerViewController.h */,
 				5958B1931C7C438900A8B1F6 /* DLPhotoPickerViewController.m */,
+				5958B1901C7C438900A8B1F6 /* DLPhotoCollectionViewController.h */,
+				5958B1911C7C438900A8B1F6 /* DLPhotoCollectionViewController.m */,
 				5958B1941C7C438900A8B1F6 /* DLPhotoTableViewController.h */,
 				5958B1951C7C438900A8B1F6 /* DLPhotoTableViewController.m */,
 			);
@@ -251,6 +269,7 @@
 		5958B1B91C7C438900A8B1F6 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				5958B1EF1C7C512300A8B1F6 /* PageView */,
 				5958B1BA1C7C438900A8B1F6 /* Cell */,
 				5958B1BF1C7C438900A8B1F6 /* Collection */,
 				5958B1C81C7C438900A8B1F6 /* DLPhotoBackgroundView.h */,
@@ -301,6 +320,32 @@
 				5958B1D41C7C438900A8B1F6 /* DLPhotoThumbnailView.m */,
 			);
 			path = ThumbnailView;
+			sourceTree = "<group>";
+		};
+		5958B1EF1C7C512300A8B1F6 /* PageView */ = {
+			isa = PBXGroup;
+			children = (
+				5924FA721C8967C000B82A18 /* DLPhotoBarButtonItem.h */,
+				5924FA731C8967C000B82A18 /* DLPhotoBarButtonItem.m */,
+				5958B1FD1C7C527B00A8B1F6 /* DLPhotoPlayButton.h */,
+				5958B1FE1C7C527B00A8B1F6 /* DLPhotoPlayButton.m */,
+				5958B1F01C7C512300A8B1F6 /* DLPhotoPageView.h */,
+				5958B1F11C7C512300A8B1F6 /* DLPhotoPageView.m */,
+				5958B1F21C7C512300A8B1F6 /* DLPhotoScrollView.h */,
+				5958B1F31C7C512300A8B1F6 /* DLPhotoScrollView.m */,
+			);
+			path = PageView;
+			sourceTree = "<group>";
+		};
+		5958B1F61C7C513C00A8B1F6 /* PageViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5958B1F71C7C513C00A8B1F6 /* DLPhotoItemViewController.h */,
+				5958B1F81C7C513C00A8B1F6 /* DLPhotoItemViewController.m */,
+				5958B1F91C7C513C00A8B1F6 /* DLPhotoPageViewController.h */,
+				5958B1FA1C7C513C00A8B1F6 /* DLPhotoPageViewController.m */,
+			);
+			path = PageViewController;
 			sourceTree = "<group>";
 		};
 		8400D35598898F8245B38B2A /* Frameworks */ = {
@@ -465,7 +510,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				595178B81C7C225D00000BDE /* ViewController.m in Sources */,
+				59604B041C804F3C00339DDE /* PhotoPickerViewController.m in Sources */,
+				595178B81C7C225D00000BDE /* PhotoViewController.m in Sources */,
 				595178B51C7C225D00000BDE /* AppDelegate.m in Sources */,
 				595178B21C7C225D00000BDE /* main.m in Sources */,
 			);

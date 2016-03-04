@@ -2,7 +2,7 @@
  
  MIT License (MIT)
  
- Copyright (c) 2015 Clement CN Tsang
+ Copyright (c) 2016 DarlingCoder
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -29,9 +29,9 @@
 
 @implementation UIImage (DLPhotoPicker)
 
-+ (UIImage *)ctassetsPickerImageNamed:(NSString *)name
++ (UIImage *)assetImageNamed:(NSString *)name
 {
-    return [UIImage imageNamed:name inBundle:[NSBundle ctassetsPickerBundle] compatibleWithTraitCollection:nil];
+    return [UIImage imageNamed:name inBundle:[NSBundle assetPickerBundle] compatibleWithTraitCollection:nil];
 }
 
 @end

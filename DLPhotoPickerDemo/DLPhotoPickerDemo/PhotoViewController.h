@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  PhotoViewController.h
 //  DLPhotoPickerDemo
 //
 //  Created by 沧海无际 on 16/2/23.
@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UIViewController
+@interface PhotoViewController : UIViewController
 
 
 @end

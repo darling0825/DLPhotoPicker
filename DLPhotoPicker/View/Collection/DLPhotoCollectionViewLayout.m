@@ -2,7 +2,7 @@
  
  MIT License (MIT)
  
- Copyright (c) 2015 Clement CN Tsang
+ Copyright (c) 2016 DarlingCoder
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -84,7 +84,7 @@
     switch (traits.userInterfaceIdiom) {
         case UIUserInterfaceIdiomPad:
         {
-            return 6;
+            return 8;
             break;
         }
         case UIUserInterfaceIdiomPhone:
@@ -94,7 +94,7 @@
                 return 4;
             // iPhone landscape
             else if (traits.verticalSizeClass == UIUserInterfaceSizeClassCompact)
-                return 6;
+                return 7;
             // iPhone portrait
             else
                 return 4;

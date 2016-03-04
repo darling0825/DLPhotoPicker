@@ -8,13 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-//! Project version number for DLPhotoPicker.
-FOUNDATION_EXPORT double DLPhotoPickerVersionNumber;
-
-//! Project version string for DLPhotoPicker.
-FOUNDATION_EXPORT const unsigned char DLPhotoPickerVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <DLPhotoPicker/PublicHeader.h>
 
 #import "DLPhotoPickerViewController.h"
 #import "DLPhotoManager.h"
@@ -36,9 +29,6 @@ FOUNDATION_EXPORT const unsigned char DLPhotoPickerVersionString[];
 #import "NSNumberFormatter+DLPhotoPicker.h"
 #import "NSDateFormatter+DLPhotoPicker.h"
 
-#import "PHAsset+DLPhotoPicker.h"
-#import "PHAssetCollection+DLPhotoPicker.h"
-
 #import "DLPhotoCheckmark.h"
 #import "DLPhotoBackgroundView.h"
 
@@ -52,3 +42,8 @@ FOUNDATION_EXPORT const unsigned char DLPhotoPickerVersionString[];
 #import "DLPhotoThumbnailStacks.h"
 #import "DLPhotoThumbnailView.h"
 #import "DLPhotoThumbnailOverlay.h"
+
+#import "DLPhotoItemViewController.h"
+#import "DLPhotoPageViewController.h"
+#import "DLPhotoPageView.h"
+#import "DLPhotoScrollView.h"

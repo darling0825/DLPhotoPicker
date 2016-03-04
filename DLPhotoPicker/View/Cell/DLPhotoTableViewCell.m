@@ -2,7 +2,7 @@
  
  MIT License (MIT)
  
- Copyright (c) 2015 Clement CN Tsang
+ Copyright (c) 2016 DarlingCoder
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -106,7 +106,7 @@
     [self.contentView addSubview:self.thumbnailStacks];
     [self.contentView addSubview:self.labelsView];
     
-    UIImage *accessory = [UIImage ctassetsPickerImageNamed:@"DisclosureArrow"];
+    UIImage *accessory = [UIImage assetImageNamed:@"DisclosureArrow"];
     accessory = [accessory imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     UIImageView *accessoryView = [[UIImageView alloc] initWithImage:accessory];
     accessoryView.tintColor = self.accessoryColor;
@@ -116,7 +116,7 @@
 - (void)setupPlaceholderImage
 {
     NSString *imageName = [self placeHolderImageNameOfCollectionSubtype:self.collection.assetCollection.assetCollectionSubtype];
-    UIImage *image = [UIImage ctassetsPickerImageNamed:imageName];
+    UIImage *image = [UIImage assetImageNamed:imageName];
     image = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     
     for (DLPhotoThumbnailView *thumbnailView in self.thumbnailStacks.thumbnailViews)
@@ -296,10 +296,10 @@
     if (count != NSNotFound)
     {
         NSNumberFormatter *nf = [NSNumberFormatter new];
-        [self.countLabel setText:[nf ctassetsPickerStringFromAssetsCount:count]];
+        [self.countLabel setText:[nf assetStringFromAssetCount:count]];
     }
     
-    [self setupThumbnailsImage:collection];
+    [self setupThumbnailsImageV2:collection];
     
     [self setNeedsUpdateConstraints];
     [self updateConstraintsIfNeeded];
@@ -308,7 +308,7 @@
 - (void)setupThumbnailsImage:(DLPhotoCollection *)collection
 {
     NSUInteger count    = self.thumbnailStacks.thumbnailViews.count;
-    NSArray *assets     = [[DLPhotoManager sharedInstance] posterAssetsFromAssetCollection:collection count:count];
+    NSArray *assets     = [[DLPhotoManager sharedInstance] posterAssetsForPhotoCollection:collection count:count];
     
     for (NSUInteger index = 0; index < count; index++)
     {
@@ -318,10 +318,30 @@
         if (index < assets.count)
         {
             DLPhotoAsset *asset = assets[index];
-            [[DLPhotoManager sharedInstance] requestThumbnailsForPhotoAsset:asset containerSize:self.thumbnailSize completion:^(UIImage *thumbnailImage) {
+            [asset requestThumbnailImageWithSize:self.thumbnailSize completion:^(UIImage *image, NSDictionary *info) {
                 [thumbnailView setHidden:NO];
-                [thumbnailView bind:thumbnailImage assetCollection:collection];
+                [thumbnailView bind:image assetCollection:collection];
             }];
+        }
+    }
+}
+
+- (void)setupThumbnailsImageV2:(DLPhotoCollection *)collection
+{
+    NSUInteger count    = self.thumbnailStacks.thumbnailViews.count;
+    NSArray *images     = [[DLPhotoManager sharedInstance] posterImagesForPhotoCollection:collection
+                                                                            thumbnailSize:self.thumbnailSize
+                                                                                    count:count];
+    
+    for (NSUInteger index = 0; index < images.count; index++)
+    {
+        DLPhotoThumbnailView *thumbnailView = [self.thumbnailStacks thumbnailAtIndex:index];
+        thumbnailView.hidden = (images.count > 0) ? YES : NO;
+        
+        UIImage *image = images[index];
+        if (image) {
+            [thumbnailView setHidden:NO];
+            [thumbnailView bind:image assetCollection:collection];
         }
     }
 }

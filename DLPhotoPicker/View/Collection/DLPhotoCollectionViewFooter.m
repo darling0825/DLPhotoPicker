@@ -2,7 +2,7 @@
  
  MIT License (MIT)
  
- Copyright (c) 2015 Clement CN Tsang
+ Copyright (c) 2016 DarlingCoder
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -118,10 +118,10 @@
     NSUInteger photoCount = photoCollection.countOfAssetsWithImageType;
     
     if (videoCount > 0)
-        numberOfVideos = [nf ctassetsPickerStringFromAssetsCount:videoCount];
+        numberOfVideos = [nf assetStringFromAssetCount:videoCount];
     
     if (photoCount > 0)
-        numberOfPhotos = [nf ctassetsPickerStringFromAssetsCount:photoCount];
+        numberOfPhotos = [nf assetStringFromAssetCount:photoCount];
     
     if (photoCount > 0 && videoCount > 0)
         self.label.text = [NSString stringWithFormat:DLPhotoPickerLocalizedString(@"%@ Photos, %@ Videos", nil), numberOfPhotos, numberOfVideos];

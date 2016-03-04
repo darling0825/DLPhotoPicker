@@ -2,7 +2,7 @@
  
  MIT License (MIT)
  
- Copyright (c) 2015 Clement CN Tsang
+ Copyright (c) 2016 DarlingCoder
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -27,8 +27,6 @@
 #import <PureLayout/PureLayout.h>
 #import "DLPhotoThumbnailOverlay.h"
 #import "UIImage+DLPhotoPicker.h"
-#import "PHAsset+DLPhotoPicker.h"
-#import "PHAssetCollection+DLPhotoPicker.h"
 
 
 @interface DLPhotoThumbnailOverlay ()
@@ -65,7 +63,7 @@
 - (void)setupViews
 {
     UIImageView *gradient = [UIImageView newAutoLayoutView];
-    gradient.image = [UIImage ctassetsPickerImageNamed:@"GridGradient"];
+    gradient.image = [UIImage assetImageNamed:@"GridGradient"];
     self.gradient = gradient;
     
     [self addSubview:self.gradient];
@@ -99,7 +97,6 @@
         [self.duration autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:self.duration.layoutMargins.right];
         [self.duration autoPinEdgeToSuperviewEdge:ALEdgeBottom withInset:self.duration.layoutMargins.bottom];
         
-        
         self.didSetupConstraints = YES;
     }
     
@@ -109,7 +106,7 @@
 
 #pragma - Bind asset and duration
 
-- (void)bind:(PHAsset *)asset duration:(NSString *)duration;
+- (void)bind:(DLPhotoAsset *)asset duration:(NSString *)duration;
 {
     self.badge.image = [asset badgeImage];
     self.badge.layoutMargins = [self layoutMarginsForAsset:asset];
@@ -119,15 +116,15 @@
     [self updateConstraintsIfNeeded];
 }
 
-- (UIEdgeInsets)layoutMarginsForAsset:(PHAsset *)asset
+- (UIEdgeInsets)layoutMarginsForAsset:(DLPhotoAsset *)asset
 {
-    if (asset.ctassetsPickerIsHighFrameRateVideo)
+    if (asset.isHighFrameRateVideo)
         return UIEdgeInsetsMake(2.5, 2.5, 2.5, 2.5);
     
-    else if (asset.ctassetsPickerIsTimelapseVideo)
+    else if (asset.isTimelapseVideo)
         return UIEdgeInsetsMake(2.5, 2.5, 2.5, 2.5);
     
-    else if (asset.ctassetsPickerIsVideo)
+    else if (asset.isVideo)
         return UIEdgeInsetsMake(4.5, 4.5, 4.5, 4.5);
     
     else
@@ -137,7 +134,7 @@
 
 #pragma - Bind asset collection
 
-- (void)bind:(PHAssetCollection *)assetCollection;
+- (void)bind:(DLPhotoCollection *)assetCollection;
 {
     self.badge.image = [assetCollection badgeImage];
     self.badge.layoutMargins = [self layoutMarginsForAssetCollection:assetCollection];
@@ -147,7 +144,7 @@
     [self updateConstraintsIfNeeded];    
 }
 
-- (UIEdgeInsets)layoutMarginsForAssetCollection:(PHAssetCollection *)assetCollection
+- (UIEdgeInsets)layoutMarginsForAssetCollection:(DLPhotoCollection *)assetCollection
 {
     return UIEdgeInsetsMake(4.0, 4.0, 4.0, 4.0);
 }

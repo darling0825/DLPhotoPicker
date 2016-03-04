@@ -6,6 +6,7 @@
 //  Copyright © 2016年 darling0825. All rights reserved.
 //
 
+#import <objc/runtime.h>
 #import "DLPhotoPickerViewController.h"
 #import "DLPhotoPickerDefines.h"
 #import "DLPhotoManager.h"
@@ -13,9 +14,9 @@
 #import "DLPhotoPickerNoAssetsView.h"
 #import "DLPhotoTableViewController.h"
 
-@interface DLPhotoPickerViewController ()<DLPhotoManagerDelegate>
+NSString * const DLPhotoPickerSelectedAssetsDidChangeNotification = @"DLPhotoPickerSelectedAssetsDidChangeNotification";
 
-
+@interface DLPhotoPickerViewController ()
 @end
 
 @implementation DLPhotoPickerViewController
@@ -24,7 +25,8 @@
 {
     self = [super init];
     if (self) {
-        _showsNumberOfAssets = YES;
+        _showsNumberOfAssets    = YES;
+        _selectedAssets         = [@[] mutableCopy];
     }
     return self;
 }
@@ -34,44 +36,121 @@
     
     self.view.backgroundColor = DLPhotoWhiteBackgroundColor;
     
-    [self showPhotoCollection];
+    [self addKeyValueObserver];
+    [self checkAuthorizationStatus];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
 }
 
-- (void)showPhotoCollection
+- (void)dealloc
 {
-    DLPhotoManager *photoManager = [DLPhotoManager sharedInstance];
-    photoManager.delegate = self;
-    [photoManager checkAuthorizationStatus];
+    [self removeKeyValueObserver];
+}
+
+- (void)checkAuthorizationStatus
+{
+    [[DLPhotoManager sharedInstance] checkAuthorizationStatus:^(DLAuthorizationStatus status) {
+        switch (status) {
+            case DLAuthorizationStatusSuccess:
+                [self getAlbumsSuccess];
+                break;
+            case DLAuthorizationStatusAccessDenied:
+                [self showOtherView:[DLPhotoPickerAccessDeniedView new]];
+                break;
+            case DLAuthorizationStatusNoAssets:
+                [self showOtherView:[DLPhotoPickerNoAssetsView new]];
+                break;
+            default:
+                break;
+        }
+    }];
+}
+
+#pragma mark - Post notifications
+- (void)postSelectedAssetsDidChangeNotification:(id)sender
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:DLPhotoPickerSelectedAssetsDidChangeNotification
+                                                        object:sender];
+}
+
+#pragma mark - Add/Remove selectedAsset
+- (BOOL)isSelectedForAsset:(DLPhotoAsset *)asset
+{
+    return [self.selectedAssets containsObject:asset];
+}
+
+- (void)selectAsset:(DLPhotoAsset *)asset
+{
+    [self insertObject:asset inSelectedAssetsAtIndex:self.selectedAssets.count];
+    //[self postDidSelectAssetNotification:asset];
+}
+
+- (void)deselectAsset:(DLPhotoAsset *)asset
+{
+    [self removeObjectFromSelectedAssetsAtIndex:[self.selectedAssets indexOfObject:asset]];
+    //[self postDidDeselectAssetNotification:asset];
+}
+
+- (void)removeAllSelectedAssets
+{
+    [self.selectedAssets removeAllObjects];
+}
+
+#pragma mark - Key-Value observer
+- (void)addKeyValueObserver
+{
+    [self addObserver:self
+           forKeyPath:@"selectedAssets"
+              options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld
+              context:nil];
+}
+
+- (void)removeKeyValueObserver
+{
+    @try {
+        [self removeObserver:self forKeyPath:@"selectedAssets"];
+    }
+    @catch (NSException *exception) {
+        // do nothing
+    }
+}
+
+#pragma mark - Key-Value changed
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if ([keyPath isEqual:@"selectedAssets"]){
+        [self postSelectedAssetsDidChangeNotification:[object valueForKey:keyPath]];
+    }
+}
+
+#pragma mark - KVO Implementation For NSArray
+- (void)insertObject:(id)object inSelectedAssetsAtIndex:(NSUInteger)index
+{
+    [self.selectedAssets insertObject:object atIndex:index];
+}
+
+- (void)removeObjectFromSelectedAssetsAtIndex:(NSUInteger)index
+{
+    [self.selectedAssets removeObjectAtIndex:index];
+}
+
+- (void)replaceObjectInSelectedAssetsAtIndex:(NSUInteger)index withObject:(DLPhotoAsset *)object
+{
+    [self.selectedAssets replaceObjectAtIndex:index withObject:object];
 }
 
 #pragma mark - DLPhotoManagerDelegate
-- (void)accessDenied
-{
-    [self showOtherView:[DLPhotoPickerAccessDeniedView new]];
-}
-
-- (void)haveNonePhotoCollection
-{
-    [self showOtherView:[DLPhotoPickerNoAssetsView new]];
-}
-
 - (void)getAlbumsSuccess
 {
     DLPhotoTableViewController *albumTableViewController = [[DLPhotoTableViewController alloc] init];
-    albumTableViewController.picker = self;
-    albumTableViewController.assetCollections = [NSArray arrayWithArray:[DLPhotoManager sharedInstance].assetCollections];
     albumTableViewController.navigationItem.title = self.navigationTitle;;
     
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:albumTableViewController];
-    
-    [nav willMoveToParentViewController:self];
+    [self addChildViewController:nav];
     [nav.view setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     [self.view addSubview:nav.view];
-    [self addChildViewController:nav];
     [nav didMoveToParentViewController:self];
 }
 
@@ -101,18 +180,41 @@
 
 - (void)setupChildViewController:(UIViewController *)vc
 {
-    [vc willMoveToParentViewController:self];
+    [self addChildViewController:vc];
     [vc.view setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     [self.view addSubview:vc.view];
-    [self addChildViewController:vc];
     [vc didMoveToParentViewController:self];
 }
 
 - (void)removeChildViewController
 {
     UIViewController *vc = self.childViewControllers.firstObject;
+    [vc willMoveToParentViewController:nil];
     [vc.view removeFromSuperview];
     [vc removeFromParentViewController];
 }
+@end
+
+
+
+@implementation UIViewController (DLPhotoPickerViewController)
+
+- (DLPhotoPickerViewController *)picker
+{
+    DLPhotoPickerViewController *picker = nil;
+    if ([self isKindOfClass:[DLPhotoPickerViewController class]]) {
+        picker = (DLPhotoPickerViewController *)self;
+    }
+    
+    if (!picker && self.parentViewController) {
+        picker = [self.parentViewController picker];
+    }
+    return picker;
+}
+
+- (void)setPicker:(DLPhotoPickerViewController *)aPicker {
+    objc_setAssociatedObject(self, @selector(picker), aPicker, OBJC_ASSOCIATION_ASSIGN);
+}
 
 @end
+

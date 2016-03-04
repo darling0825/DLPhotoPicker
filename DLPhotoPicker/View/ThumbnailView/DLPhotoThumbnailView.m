@@ -2,7 +2,7 @@
  
  MIT License (MIT)
  
- Copyright (c) 2015 Clement CN Tsang
+ Copyright (c) 2016 DarlingCoder
  
  Permission is hereby granted, free of charge, to any person obtaining a copy
  of this software and associated documentation files (the "Software"), to deal
@@ -28,7 +28,6 @@
 #import "DLPhotoPickerDefines.h"
 #import "DLPhotoThumbnailView.h"
 #import "DLPhotoThumbnailOverlay.h"
-#import "PHAsset+DLPhotoPicker.h"
 #import "NSDateFormatter+DLPhotoPicker.h"
 
 @interface DLPhotoThumbnailView ()
@@ -119,7 +118,7 @@
 
 - (void)bind:(UIImage *)image asset:(DLPhotoAsset *)asset;
 {
-    [self setupOverlayForAsset:asset.asset];
+    [self setupOverlayForAsset:asset];
     
     self.imageView.image = image;
     self.backgroundView.hidden = (image != nil);
@@ -128,9 +127,9 @@
     [self updateConstraintsIfNeeded];
 }
 
-- (void)setupOverlayForAsset:(PHAsset *)asset
+- (void)setupOverlayForAsset:(DLPhotoAsset *)asset
 {
-    if (asset.ctassetsPickerIsVideo){
+    if (asset.mediaType == DLPhotoMediaTypeVideo){
         if (!self.overlay) {
             self.overlay = [[DLPhotoThumbnailOverlay alloc] initWithFrame:self.bounds];
             [self addSubview:self.overlay];
@@ -140,7 +139,7 @@
 
         if (self.showsDuration){
             NSDateFormatter *df = [NSDateFormatter new];
-            duration = [df ctassetsPickerStringFromTimeInterval:asset.duration];
+            duration = [df assetStringFromTimeInterval:asset.duration];
         }
     
         [self.overlay bind:asset duration:duration];
@@ -155,7 +154,7 @@
 
 - (void)bind:(UIImage *)image assetCollection:(DLPhotoCollection *)assetCollection;
 {
-    [self setupOverlayForAssetCollection:assetCollection.assetCollection];
+    [self setupOverlayForAssetCollection:assetCollection];
     
     self.imageView.image = image;
     self.backgroundView.hidden = (image != nil);
@@ -164,10 +163,9 @@
     [self updateConstraintsIfNeeded];
 }
 
-- (void)setupOverlayForAssetCollection:(PHAssetCollection *)assetCollection
+- (void)setupOverlayForAssetCollection:(DLPhotoCollection *)assetCollection
 {
-    if (assetCollection.assetCollectionType == PHAssetCollectionTypeSmartAlbum &&
-        assetCollection.assetCollectionSubtype != PHAssetCollectionSubtypeSmartAlbumAllHidden)
+    if (assetCollection.isSmartAlbum)
     {
         if (!self.overlay) {
             self.overlay = [[DLPhotoThumbnailOverlay alloc] initWithFrame:self.bounds];
@@ -176,7 +174,6 @@
         
         [self.overlay bind:assetCollection];
     }
-    
     else
     {
         [self.overlay removeFromSuperview];

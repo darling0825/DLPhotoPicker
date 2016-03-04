@@ -10,18 +10,28 @@
 
 @class DLPhotoCollection;
 @class DLPhotoPickerViewController;
+@class DLPhotoCollectionViewController;
+
+@protocol DLPhotoCollectionViewControllerDelegate <NSObject>
+
+- (void)collectionViewController:(DLPhotoCollectionViewController *)controller photoLibraryDidChangeForPhotoCollection:(DLPhotoCollection *)assetCollection;
+
+@end
 
 @interface DLPhotoCollectionViewController : UICollectionViewController
 
-@property (nonatomic, weak) DLPhotoPickerViewController *picker;
+@property (nonatomic, weak) id<DLPhotoCollectionViewControllerDelegate> delegate;
 
 @property (nonatomic, strong) DLPhotoCollection *photoCollection;
 
-@property (nonatomic, strong) NSMutableArray *selectedAssets;
+/**
+ *  Reload Data
+ */
+- (void)reloadData;
 
 /**
- modifying status
+ *  iOS 7 or below
+ *  Call this method after receive notification of ALAssetsLibraryChangedNotification
  */
-@property (nonatomic, assign, getter=isModifying) BOOL modifying;
-
+- (void)resetAssetsAndReload;
 @end

@@ -10,7 +10,6 @@
 #import <PureLayout/PureLayout.h>
 #import "DLPhotoPickerDefines.h"
 #import "DLPhotoCollectionSelectedView.h"
-#import "PHAsset+DLPhotoPicker.h"
 #import "NSDateFormatter+DLPhotoPicker.h"
 #import "UIImage+DLPhotoPicker.h"
 
@@ -52,7 +51,7 @@
     DLPhotoThumbnailView *thumbnailView = [DLPhotoThumbnailView newAutoLayoutView];
     self.backgroundView = thumbnailView;
     
-    UIImage *disabledImage = [UIImage ctassetsPickerImageNamed:@"GridDisabledAsset"];
+    UIImage *disabledImage = [UIImage assetImageNamed:@"GridDisabledAsset"];
     disabledImage = [disabledImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     UIImageView *disabledImageView = [[UIImageView alloc] initWithImage:disabledImage];
     disabledImageView.tintColor = DLPhotoPickerThumbnailTintColor;

@@ -12,11 +12,9 @@
 
 @interface DLPhotoTableViewController : UITableViewController
 
-@property (nonatomic, weak) DLPhotoPickerViewController *picker;
-
 /**
  Array used to specify which albums to be shown in table view.
  */
-@property (nonatomic, strong) NSArray *assetCollections;
+@property (nonatomic, strong) NSMutableArray *photoCollections;
 
 @end
