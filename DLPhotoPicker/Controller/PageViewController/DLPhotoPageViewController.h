@@ -50,5 +50,4 @@
  */
 - (instancetype)initWithAssets:(NSArray *)assets;
 
-
 @end

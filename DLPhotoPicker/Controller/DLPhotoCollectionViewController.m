@@ -34,12 +34,13 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
 @property (nonatomic, strong) DLPhotoCollectionViewFooter *footer;
 @property (nonatomic, strong) DLPhotoPickerNoAssetsView *noAssetsView;
 
+@property (nonatomic, strong) DLPhotoPageViewController *pageViewController;
+
 @property (nonatomic, assign) CGRect previousPreheatRect;
 @property (nonatomic, assign) CGRect previousBounds;
 @property (nonatomic, assign) BOOL didLayoutSubviews;
 
 @property (nonatomic, strong) UIBarButtonItem *selectButton;
-
 @property (nonatomic, strong) UIBarButtonItem *confirmButton;
 
 @end
@@ -938,6 +939,8 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
         DLPhotoPageViewController *vc = [[DLPhotoPageViewController alloc] initWithAssets:self.assets];
         vc.pageIndex = indexPath.row;
         vc.allowsSelection = YES;
+        
+        self.pageViewController = vc;
         
         [self.navigationController pushViewController:vc animated:YES];
     }

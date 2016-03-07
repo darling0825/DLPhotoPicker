@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Photos/Photos.h>
 
 @class DLPhotoCollection;
 @class DLPhotoAsset;
@@ -45,6 +46,33 @@ typedef NS_ENUM(NSInteger, DLPhotoPickerType) {
 @property (copy, nonatomic) NSString *navigationTitle;
 
 /**
+ *  Set the `assetCollectionSubtypes` to specify which asset collections (albums) to be shown in the picker.
+ *  only iOS 8 or later
+ *  You can specify which albums and their order to be shown in the picker by creating an `NSArray` of `NSNumber`
+ *  that containing the value of `PHAssetCollectionSubtype`.
+ */
+@property (nonatomic, copy) NSArray *assetCollectionSubtypes NS_AVAILABLE_IOS(8.0);
+
+/**
+ *  Set the `PHFetchOptions` to specify options when fetching asset collections (albums).
+ *  only iOS 8 or later
+ *  @see assetsFetchOptions
+ */
+@property (nonatomic, strong) PHFetchOptions *assetCollectionFetchOptions NS_AVAILABLE_IOS(8.0);
+
+/**
+ *  Set the `PHFetchOptions` to specify options when fetching assets.
+ *  only iOS 8 or later
+ *  @see assetCollectionFetchOptions
+ */
+@property (nonatomic, strong) PHFetchOptions *assetsFetchOptions NS_AVAILABLE_IOS(8.0);
+
+/**
+ *  only iOS 8 or later
+ */
+@property (nonatomic, strong) PHImageRequestOptions *thumbnailRequestOptions NS_AVAILABLE_IOS(8.0);
+
+/**
  *  Determines whether or not the number of assets is shown in the album list.
  *
  *  The number of assets is visible by default. To hide the number of assets, (e.g. implementing `shouldShowAsset` delegate method)
@@ -53,6 +81,8 @@ typedef NS_ENUM(NSInteger, DLPhotoPickerType) {
 @property (nonatomic, assign) BOOL showsNumberOfAssets;
 
 @property (nonatomic, strong) NSMutableArray *selectedAssets;
+
+
 
 - (BOOL)isSelectedForAsset:(DLPhotoAsset *)asset;
 - (void)selectAsset:(DLPhotoAsset *)asset;
@@ -63,14 +93,15 @@ typedef NS_ENUM(NSInteger, DLPhotoPickerType) {
 
 
 
+
 @interface UIViewController (DLPhotoPickerViewController)
 @property (nonatomic, weak)DLPhotoPickerViewController *picker;
 @end
 
 
 
-@protocol DLPhotoPickerViewControllerDelegate <NSObject>
 
+@protocol DLPhotoPickerViewControllerDelegate <NSObject>
 
 /**
  *  @name Closing the Picker

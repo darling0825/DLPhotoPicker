@@ -41,10 +41,7 @@ NSString * const DLPhotoPickerDidExitEditModeNotification = @"DLPhotoPickerDidEx
 
 @interface DLPhotoItemViewController ()
 
-@property (nonatomic, strong) DLPhotoAsset *asset;
-
 @property (nonatomic, strong) DLPhotoScrollView *scrollView;
-
 @property (nonatomic, assign) BOOL didSetupConstraints;
 
 @end

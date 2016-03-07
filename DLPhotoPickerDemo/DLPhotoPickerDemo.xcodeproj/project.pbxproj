@@ -189,9 +189,9 @@
 				5958B1B91C7C438900A8B1F6 /* View */,
 				5958B18F1C7C438900A8B1F6 /* Controller */,
 				5958B19E1C7C438900A8B1F6 /* Resources */,
+				5958B1981C7C438900A8B1F6 /* DLPhotoPicker.h */,
 				5958B1961C7C438900A8B1F6 /* DLPhotoManager.h */,
 				5958B1971C7C438900A8B1F6 /* DLPhotoManager.m */,
-				5958B1981C7C438900A8B1F6 /* DLPhotoPicker.h */,
 			);
 			name = DLPhotoPicker;
 			path = ../DLPhotoPicker;
@@ -272,13 +272,13 @@
 				5958B1EF1C7C512300A8B1F6 /* PageView */,
 				5958B1BA1C7C438900A8B1F6 /* Cell */,
 				5958B1BF1C7C438900A8B1F6 /* Collection */,
+				5958B1CE1C7C438900A8B1F6 /* ThumbnailView */,
 				5958B1C81C7C438900A8B1F6 /* DLPhotoBackgroundView.h */,
 				5958B1C91C7C438900A8B1F6 /* DLPhotoBackgroundView.m */,
 				5958B1CA1C7C438900A8B1F6 /* DLPhotoPickerAccessDeniedView.h */,
 				5958B1CB1C7C438900A8B1F6 /* DLPhotoPickerAccessDeniedView.m */,
 				5958B1CC1C7C438900A8B1F6 /* DLPhotoPickerNoAssetsView.h */,
 				5958B1CD1C7C438900A8B1F6 /* DLPhotoPickerNoAssetsView.m */,
-				5958B1CE1C7C438900A8B1F6 /* ThumbnailView */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -431,6 +431,11 @@
 				sv,
 				"zh-Hans",
 				"zh-Hant",
+				cs,
+				"es-ES",
+				nb,
+				sk,
+				vi,
 			);
 			mainGroup = 595178A41C7C225D00000BDE;
 			productRefGroup = 595178AE1C7C225D00000BDE /* Products */;

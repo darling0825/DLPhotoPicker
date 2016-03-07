@@ -38,18 +38,19 @@
 #import "DLPhotoPickerViewController.h"
 
 @interface DLPhotoPageViewController ()
-<UIPageViewControllerDataSource, UIPageViewControllerDelegate>
+<UIPageViewControllerDataSource, UIPageViewControllerDelegate, PHPhotoLibraryChangeObserver, ALAssetsLibraryChangeObserver>
 
 @property (nonatomic, assign, getter = isStatusBarHidden) BOOL statusBarHidden;
 
-@property (nonatomic, copy) NSArray *assets;
-@property (nonatomic, strong, readonly) DLPhotoAsset *asset;
+@property (nonatomic, strong) NSMutableArray *assets;
+@property (nonatomic, strong) DLPhotoAsset *asset;
 
 @property (nonatomic, strong) DLPhotoPageView *pageView;
 
 @property (nonatomic, strong) UIBarButtonItem *playButton;
 @property (nonatomic, strong) UIBarButtonItem *pauseButton;
 @property (nonatomic, strong) UIBarButtonItem *actionButton;
+//@property (nonatomic, strong) UIBarButtonItem *infoButton;
 @property (nonatomic, strong) UIBarButtonItem *favoriteButton;
 @property (nonatomic, strong) UIBarButtonItem *deleteButton;
 @property (nonatomic, strong) DLPhotoBarButtonItem *selectionButton;
@@ -60,13 +61,18 @@
 
 - (instancetype)initWithAssets:(NSArray *)assets
 {
+    //初始化
+    //transitionStyle:转换样式，有PageCurl和Scroll两种
+    //navigationOrientation:导航方向，有Horizontal和Vertical两种
+    //options: UIPageViewControllerOptionSpineLocationKey---书脊的位置
+    //         UIPageViewControllerOptionInterPageSpacingKey---每页的间距
     self = [super initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
                     navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
                                   options:@{UIPageViewControllerOptionInterPageSpacingKey:@30.f}];
     
     if (self)
     {
-        self.assets          = assets;
+        self.assets          = [NSMutableArray arrayWithArray:assets];
         self.dataSource      = self;
         self.delegate        = self;
         self.allowsSelection = YES;
@@ -76,12 +82,12 @@
     return self;
 }
 
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self setupViews];
     [self setupButtons];
+    [self registerChangeObserver];
     [self addNotificationObserver];
 }
 
@@ -100,6 +106,7 @@
 
 - (void)dealloc
 {
+    [self unregisterChangeObserver];
     [self removeNotificationObserver];
 }
 
@@ -119,21 +126,19 @@
 
 - (void)setupButtons
 {
-//    DLPhotoBarButtonItem *selectionButton = [DLPhotoBarButtonItem buttonWithType:UIButtonTypeCustom];
-//    selectionButton.frame = CGRectMake(0, 0, 40.0, 40.0);
-//    selectionButton.backgroundColor = [UIColor redColor];
-//    [selectionButton setImage:[UIImage assetImageNamed:@"SelectButtonUnchecked"] forState:UIControlStateNormal];
-//    [selectionButton setImage:[UIImage assetImageNamed:@"SelectButtonChecked"] forState:UIControlStateSelected];
-//    [selectionButton addTarget:self action:@selector(selectionButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
-//    [selectionButton addTarget:self action:@selector(selectionButtonTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
-//    _selectionButton = selectionButton;
+    DLPhotoBarButtonItem *selectionButton = [DLPhotoBarButtonItem buttonWithType:UIButtonTypeCustom];
+    selectionButton.frame = CGRectMake(0, 0, 44.0, 44.0);
+    selectionButton.isLeftButton = NO;
+    UIImage *checkmarkImage = [UIImage assetImageNamed:@"SelectButtonChecked"];
+    UIImage *uncheckmarkImage = [UIImage assetImageNamed:@"SelectButtonUnchecked"];
+    [selectionButton setImage:uncheckmarkImage forState:UIControlStateNormal];
+    [selectionButton setImage:checkmarkImage forState:UIControlStateSelected];
+    [selectionButton addTarget:self action:@selector(selectionButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
+    [selectionButton addTarget:self action:@selector(selectionButtonTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
+    _selectionButton = selectionButton;
     
-    UIImage *image = [UIImage assetImageNamed:@"SelectButtonChecked"];
-    UIBarButtonItem *selectionButton = [[UIBarButtonItem alloc] initWithImage:[UIImage assetImageNamed:@"SelectButtonChecked"]
-                                                                        style:UIBarButtonItemStylePlain
-                                                                       target:self
-                                                                       action:@selector(selectionButtonTouchUpInside:)];
-    self.navigationItem.rightBarButtonItems = @[selectionButton];
+    UIBarButtonItem *checkButton = [[UIBarButtonItem alloc] initWithCustomView:selectionButton];
+    self.navigationItem.rightBarButtonItem = checkButton;
 }
 
 - (void)selectionButtonTouchDown:(id)sender
@@ -169,9 +174,54 @@
     [self pageViewController:self didUnhighlightAsset:self.asset];
 }
 
+#pragma mark - Photo library change observer
+- (void)registerChangeObserver
+{
+    [[DLPhotoManager sharedInstance] registerChangeObserver:self];
+}
+
+- (void)unregisterChangeObserver
+{
+    [[DLPhotoManager sharedInstance] unregisterChangeObserver:self];
+}
+
+#pragma mark - Photo library changed
+- (void)photoLibraryDidChange:(PHChange *)changeInstance
+{
+    // Call might come on any background queue. Re-dispatch to the main queue to handle it.
+    dispatch_async(dispatch_get_main_queue(), ^{
+        // Check if there are changes to the asset we're displaying.
+        PHObjectChangeDetails *changeDetails = [changeInstance changeDetailsForObject:self.asset.phAsset];
+        if (changeDetails == nil) {
+            return;
+        }
+        
+        // back to collection view
+        if (changeDetails.objectWasDeleted) {
+            [self.navigationController popViewControllerAnimated:YES];
+            return;
+        }
+        
+        // Get the updated asset.
+        PHAsset *phAsset = [changeDetails objectAfterChanges];
+        if (phAsset) {
+            DLPhotoAsset *newAsset = [[DLPhotoAsset alloc] initWithAsset:phAsset];
+            NSUInteger index = [self.assets indexOfObject:self.asset];
+            [self.assets replaceObjectAtIndex:index withObject:newAsset];
+            self.asset = newAsset;
+        }
+        
+        // If the asset's content changed, update the image and stop any video playback.
+        if ([changeDetails assetContentChanged]) {
+
+        }
+        
+        //  update toolbar
+        [self updateToolbar];
+    });
+}
 
 #pragma mark - Update title
-
 - (void)updateTitle:(NSInteger)index
 {
     NSNumberFormatter *nf = [NSNumberFormatter new];
@@ -182,50 +232,62 @@
                        [nf assetStringFromAssetCount:count]];
 }
 
-#pragma mark - Update toolbar
+#pragma mark - Update toolbar/navigationbat
+- (void)updateNavigationBarItem
+{
+    BOOL isSelected = [self.picker isSelectedForAsset:self.asset];
+    [self.selectionButton setSelected:isSelected];
+}
+
 - (void)updateToolbar
 {
     if (!self.playButton){
         UIImage *playImage = [UIImage assetImageNamed:@"PlayButton"];
         playImage = [playImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         
-        UIBarButtonItem *playButton =
+        self.playButton =
         [[UIBarButtonItem alloc] initWithImage:playImage style:UIBarButtonItemStyleDone target:self action:@selector(playAsset:)];
-        
-        self.playButton = playButton;
     }
     
     if (!self.pauseButton){
         UIImage *pasueImage = [UIImage assetImageNamed:@"PauseButton"];
         pasueImage = [pasueImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
         
-        UIBarButtonItem *pauseButton = [[UIBarButtonItem alloc] initWithImage:pasueImage
-                                                                        style:UIBarButtonItemStylePlain
-                                                                       target:self
-                                                                       action:@selector(pauseAsset:)];
-        self.pauseButton = pauseButton;
+        self.pauseButton =
+        [[UIBarButtonItem alloc] initWithImage:pasueImage style:UIBarButtonItemStylePlain target:self action:@selector(pauseAsset:)];
     }
     
     if (!self.actionButton) {
-        self.actionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction
-                                                                          target:self
-                                                                          action:@selector(photoShareAction:)];
+        self.actionButton =
+        [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(photoShareAction:)];
     }
     
-    if (!self.favoriteButton) {
-        self.favoriteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage assetImageNamed:@"BadgeFavorites"]
-                                                               style:UIBarButtonItemStylePlain
-                                                              target:self
-                                                              action:@selector(photoFavoriteAction:)];
-    }
+    self.favoriteButton = [self createFavoriteButton];
+    
+//    if (!self.infoButton) {
+//        UIImage *infoImage = [UIImage assetImageNamed:@"Info"];
+//        infoImage = [infoImage imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+//        self.infoButton =
+//        [[UIBarButtonItem alloc] initWithImage:infoImage style:UIBarButtonItemStylePlain target:self action:@selector(photoInfoAction:)];
+//    }
     
     if (!self.deleteButton) {
-        self.deleteButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash
-                                                                          target:self
-                                                                          action:@selector(photoDeleteAction:)];
+        self.deleteButton =
+        [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(photoDeleteAction:)];
     }   
     
-    self.toolbarItems = @[self.actionButton, self.toolbarSpace, self.favoriteButton, self.toolbarSpace, self.deleteButton];
+    UIBarButtonItem *space = [self toolbarSpace];
+//    if(self.asset.editable){
+//        self.toolbarItems = @[self.actionButton, space, self.infoButton, space, self.favoriteButton, space, self.deleteButton];
+//    }else{
+//        self.toolbarItems = @[self.actionButton, space, self.infoButton, space, self.deleteButton];
+//    }
+    
+    if(self.asset.editable){
+        self.toolbarItems = @[self.actionButton, space, self.favoriteButton, space, self.deleteButton];
+    }else{
+        self.toolbarItems = @[self.actionButton, space, self.deleteButton];
+    }
 }
 
 - (void)replaceToolbarButton:(UIBarButtonItem *)button
@@ -242,23 +304,62 @@
     return [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
 }
 
+- (UIBarButtonItem *)createFavoriteButton
+{
+    UIBarButtonItem *favoriteButton = nil;
+    if (self.asset.phAsset.favorite) {
+        favoriteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage assetImageNamed:@"favorite"]
+                                                          style:UIBarButtonItemStylePlain
+                                                         target:self
+                                                         action:@selector(photoFavoriteAction:)];
+    }else{
+        favoriteButton = [[UIBarButtonItem alloc] initWithImage:[UIImage assetImageNamed:@"favoriteoutline"]
+                                                          style:UIBarButtonItemStylePlain
+                                                         target:self
+                                                         action:@selector(photoFavoriteAction:)];
+    }
+    return favoriteButton;
+}
+
+#pragma mark - Button Action
 - (void)photoShareAction:(UIBarButtonItem *)sender
+{
+    UIImage *image = self.asset.originImage;
+
+    UIActivityViewController *activityVC =
+    [[UIActivityViewController alloc] initWithActivityItems:@[image] applicationActivities:nil];
+    
+    [self presentViewController:activityVC animated:YES completion:nil];
+}
+
+- (void)photoInfoAction:(UIBarButtonItem *)sender
 {
     
 }
 
 - (void)photoFavoriteAction:(UIBarButtonItem *)sender
 {
-    
+    if (self.asset.editable) {
+        [[DLPhotoManager sharedInstance] favoriteAsset:self.asset completion:^(BOOL success, NSError *error) {
+            /**
+             *  Use photoLibraryDidChange: instead
+            if (success) {
+                [self updateToolbar];
+            }
+             */
+        }];
+    }
 }
 
 - (void)photoDeleteAction:(UIBarButtonItem *)sender
 {
     [[DLPhotoManager sharedInstance] removeAsset:@[self.asset] completion:^(BOOL success) {
-        //  Back
+        /*
+         *  Use photoLibraryDidChange: instead
         if (success) {
             [self.navigationController popViewControllerAnimated:YES];
         }
+         */
     } failure:^(NSError *error) {
         NSLog(@">>> %@",error);
     }];
@@ -276,9 +377,9 @@
     
     if (pageIndex >= 0 && pageIndex < count){
         
-        DLPhotoAsset *asset = [self.assets objectAtIndex:pageIndex];
+        self.asset = [self.assets objectAtIndex:pageIndex];
         
-        DLPhotoItemViewController *page = [DLPhotoItemViewController assetItemViewControllerForAsset:asset];
+        DLPhotoItemViewController *page = [DLPhotoItemViewController assetItemViewControllerForAsset:self.asset];
         page.allowsSelection = self.allowsSelection;
         
         [self setViewControllers:@[page]
@@ -291,6 +392,8 @@
     }
 }
 
+#pragma mark -
+/**
 - (DLPhotoAsset *)asset
 {
     return ((DLPhotoItemViewController *)self.viewControllers[0]).asset;
@@ -300,44 +403,54 @@
 {
     return (DLPhotoItemViewController *)self.viewControllers[0];
 }
+*/
 
+- (DLPhotoItemViewController *)viewControllerAtIndex:(NSUInteger)index
+{
+    // Return the data view controller for the given index.
+    if (([self.assets count] == 0) || (index >= [self.assets count])) {
+        return nil;
+    }
+    
+    // Create a new view controller and pass suitable data.
+    DLPhotoItemViewController *itemViewController =
+    [DLPhotoItemViewController assetItemViewControllerForAsset:[self.assets objectAtIndex:index]];
+    itemViewController.allowsSelection = self.allowsSelection;
+    
+    return itemViewController;
+}
+
+- (NSUInteger)indexOfViewController:(DLPhotoItemViewController *)viewController
+{
+    return [self.assets indexOfObject:viewController.asset];
+}
 
 #pragma mark - Page view controller data source
-
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
     DLPhotoAsset *asset = ((DLPhotoItemViewController *)viewController).asset;
     NSInteger index = [self.assets indexOfObject:asset];
-    
-    if (index > 0){
-        DLPhotoAsset *beforeAsset = [self.assets objectAtIndex:(index - 1)];
-        DLPhotoItemViewController *page = [DLPhotoItemViewController assetItemViewControllerForAsset:beforeAsset];
-        page.allowsSelection = self.allowsSelection;
-        
-        return page;
-    }
-
-    return nil;
+    return [self viewControllerAtIndex:index - 1];
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
-    DLPhotoAsset *asset  = ((DLPhotoItemViewController *)viewController).asset;
+    DLPhotoAsset *asset = ((DLPhotoItemViewController *)viewController).asset;
     NSInteger index = [self.assets indexOfObject:asset];
-    NSInteger count = self.assets.count;
-    
-    if (index < count - 1)
-    {
-        DLPhotoAsset *afterAsset = [self.assets objectAtIndex:(index + 1)];
-        DLPhotoItemViewController *page = [DLPhotoItemViewController assetItemViewControllerForAsset:afterAsset];
-        page.allowsSelection = self.allowsSelection;
-        
-        return page;
-    }
-    
-    return nil;
+    return [self viewControllerAtIndex:index + 1];
 }
 
+/**
+- (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController
+{
+    return [self.assets count];
+}
+
+- (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController
+{
+    return 0;
+}
+*/
 
 #pragma mark - Page view controller delegate
 
@@ -346,10 +459,20 @@
     if (completed)
     {
         DLPhotoItemViewController *vc = (DLPhotoItemViewController *)pageViewController.viewControllers[0];
-        NSInteger index = [self.assets indexOfObject:vc.asset] + 1;
         
-        [self updateTitle:index];
+        /**
+         *  Fix bug
+         *  vc.asset maybe changed, we must get the new object. If not, the asset status will wrong.
+         */
+        DLPhotoAsset *oldAsset = vc.asset;
+        NSInteger index = [self.assets indexOfObject:oldAsset]; //isEqual
+        DLPhotoAsset *newAsset = [self.assets objectAtIndex:index];
+        
+        self.asset = newAsset;
+        
+        [self updateTitle:index + 1];
         [self updateToolbar];
+        [self updateNavigationBarItem];
     }
 }
 
@@ -358,6 +481,22 @@
     //[self.navigationController setToolbarHidden:NO animated:YES];
 }
 
+/**
+- (UIPageViewControllerSpineLocation)pageViewController:(UIPageViewController *)pageViewController spineLocationForInterfaceOrientation:(UIInterfaceOrientation)orientation
+{
+    return UIPageViewControllerSpineLocationMax;
+}
+
+- (UIInterfaceOrientationMask)pageViewControllerSupportedInterfaceOrientations:(UIPageViewController *)pageViewController
+{
+    return UIInterfaceOrientationMaskAllButUpsideDown;
+}
+
+- (UIInterfaceOrientation)pageViewControllerPreferredInterfaceOrientationForPresentation:(UIPageViewController *)pageViewController
+{
+    return UIInterfaceOrientationLandscapeLeft;
+}
+*/
 
 #pragma mark - Notification observer
 
@@ -416,7 +555,8 @@
 
 - (void)assetScrollViewPlayerDidPlayToEnd:(NSNotification *)notification
 {
-     self.toolbarItems = @[self.actionButton, self.toolbarSpace, self.favoriteButton, self.toolbarSpace, self.deleteButton];
+//     self.toolbarItems = @[self.actionButton, self.toolbarSpace, self.infoButton, self.toolbarSpace, self.favoriteButton, self.toolbarSpace, self.deleteButton];
+    self.toolbarItems = @[self.actionButton, self.toolbarSpace, self.favoriteButton, self.toolbarSpace, self.deleteButton];
     [self setFullscreen:NO];
 }
 

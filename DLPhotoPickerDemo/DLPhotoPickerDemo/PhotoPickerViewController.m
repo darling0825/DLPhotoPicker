@@ -84,11 +84,18 @@
 
 - (void)pickAssets:(id)sender
 {
-    DLPhotoPickerViewController *pickerController = [[DLPhotoPickerViewController alloc] init];
-    pickerController.delegate = self;
-    pickerController.pickerType = DLPhotoPickerTypePicker;
-    pickerController.navigationTitle = NSLocalizedString(@"Photo Library", nil);
-    [self presentViewController:pickerController animated:YES completion:nil];
+    DLPhotoPickerViewController *picker = [[DLPhotoPickerViewController alloc] init];
+    picker.delegate = self;
+    picker.pickerType = DLPhotoPickerTypePicker;
+    picker.navigationTitle = NSLocalizedString(@"Albums", nil);
+    
+//    // create options for fetching slo-mo videos only
+//    PHFetchOptions *assetsFetchOptions = [PHFetchOptions new];
+//    assetsFetchOptions.predicate = [NSPredicate predicateWithFormat:@"(mediaSubtype & %d) != 0", PHAssetMediaSubtypeVideoHighFrameRate];
+//    // assign options
+//    picker.assetsFetchOptions = assetsFetchOptions;
+    
+    [self presentViewController:picker animated:YES completion:nil];
 }
 
 #pragma mark - DLPhotoPickerViewControllerDelegate
@@ -177,5 +184,40 @@
 - (BOOL)pickerController:(DLPhotoPickerViewController *)picker shouldScrollToBottomForPhotoCollection:(DLPhotoCollection *)assetCollection;
 {
     return YES;
+}
+
+- (BOOL)pickerController:(DLPhotoPickerViewController *)picker shouldEnableAsset:(DLPhotoAsset *)asset
+{
+    return YES;
+}
+
+- (BOOL)pickerController:(DLPhotoPickerViewController *)picker shouldSelectAsset:(DLPhotoAsset *)asset
+{
+    return YES;
+}
+
+- (void)pickerController:(DLPhotoPickerViewController *)picker didSelectAsset:(DLPhotoAsset *)asset
+{
+    
+}
+
+- (BOOL)pickerController:(DLPhotoPickerViewController *)picker shouldDeselectAsset:(DLPhotoAsset *)asset
+{
+    return YES;
+}
+
+- (void)pickerController:(DLPhotoPickerViewController *)picker didDeselectAsset:(DLPhotoAsset *)asset
+{
+    
+}
+
+- (BOOL)pickerController:(DLPhotoPickerViewController *)picker shouldHighlightAsset:(DLPhotoAsset *)asset
+{
+    return YES;
+}
+
+- (void)pickerController:(DLPhotoPickerViewController *)picker didHighlightAsset:(DLPhotoAsset *)asset
+{
+    
 }
 @end

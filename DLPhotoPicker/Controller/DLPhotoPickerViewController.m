@@ -36,6 +36,7 @@ NSString * const DLPhotoPickerSelectedAssetsDidChangeNotification = @"DLPhotoPic
     
     self.view.backgroundColor = DLPhotoWhiteBackgroundColor;
     
+    [self setupDefaults];
     [self addKeyValueObserver];
     [self checkAuthorizationStatus];
 }
@@ -47,6 +48,26 @@ NSString * const DLPhotoPickerSelectedAssetsDidChangeNotification = @"DLPhotoPic
 - (void)dealloc
 {
     [self removeKeyValueObserver];
+}
+
+- (void)setupDefaults
+{
+    DLPhotoManager *photoManager = [DLPhotoManager sharedInstance];
+    if (self.assetCollectionSubtypes) {
+        photoManager.assetCollectionSubtypes = self.assetCollectionSubtypes;
+    }
+    
+    if (self.assetCollectionFetchOptions) {
+        photoManager.assetCollectionFetchOptions = self.assetCollectionFetchOptions;
+    }
+    
+    if (self.assetsFetchOptions) {
+        photoManager.assetsFetchOptions = self.assetsFetchOptions;
+    }
+    
+    if (self.thumbnailRequestOptions) {
+        photoManager.thumbnailRequestOptions = self.thumbnailRequestOptions;
+    }
 }
 
 - (void)checkAuthorizationStatus

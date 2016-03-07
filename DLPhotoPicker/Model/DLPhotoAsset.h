@@ -54,6 +54,7 @@ typedef NS_ENUM(NSInteger, DLPhotoMediaType) {
 - (NSString *)accessibilityLabel;
 
 - (BOOL)deletable;
+- (BOOL)editable;
 
 /**
  *  isHighFrameRateVideo,isTimelapseVideo,isVideo
@@ -164,7 +165,7 @@ typedef NS_ENUM(NSInteger, DLPhotoMediaType) {
  *  @return Success or not.
  */
 - (BOOL)writeOriginImageToFile:(NSString *)filePath;
-- (BOOL)writeOriginVideoToFile:(NSString *)filePath error: (NSError **) error;
+- (void)writeOriginVideoToFile:(NSString *)filePath completion:(void (^)(BOOL success, NSError *error))completion;
 - (BOOL)writeThumbnailImageToFile:(NSString *)filePath;
 - (BOOL)writePreviewImageToFile:(NSString *)filePath;
 @end

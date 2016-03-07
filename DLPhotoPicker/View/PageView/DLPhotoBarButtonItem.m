@@ -26,6 +26,21 @@
     self.layer.masksToBounds = YES;
 }
 
+- (UIEdgeInsets)alignmentRectInsets
+{
+    UIEdgeInsets insets;
+    if([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0){
+        if([self isLeftButton]){
+            insets = UIEdgeInsetsMake(0, 13, 0, 0);
+        }else{
+            insets = UIEdgeInsetsMake(0, 0, 0, 13);
+        }
+    }else{
+        insets = UIEdgeInsetsZero;
+    }
+    return insets;
+}
+
 - (void)setHighlighted:(BOOL)highlighted{
     if(highlighted){
         self.alpha = 0.5;

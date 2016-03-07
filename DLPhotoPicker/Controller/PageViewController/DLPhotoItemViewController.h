@@ -47,7 +47,7 @@ extern NSString * const DLPhotoPickerDidExitEditModeNotification;
 @interface DLPhotoItemViewController : UIViewController
 
 @property (nonatomic, assign) BOOL allowsSelection;
-@property (nonatomic, strong, readonly) DLPhotoAsset *asset;
+@property (nonatomic, strong) DLPhotoAsset *asset;
 @property (nonatomic, strong, readonly) UIImage *image;
 
 + (DLPhotoItemViewController *)assetItemViewControllerForAsset:(DLPhotoAsset *)asset;

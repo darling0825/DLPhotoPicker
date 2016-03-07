@@ -81,6 +81,7 @@ typedef NS_ENUM(NSInteger, DLAuthorizationStatus) {
  */
 @property (nonatomic, strong) PHImageRequestOptions *thumbnailRequestOptions NS_AVAILABLE_IOS(8.0);
 
+
 /**
  *  PHCachingImageManager
  *  only iOS 8 or later
@@ -93,36 +94,44 @@ typedef NS_ENUM(NSInteger, DLAuthorizationStatus) {
  */
 - (ALAssetsLibrary *)assetsLibrary;// NS_DEPRECATED_IOS(4_0, 7_0, "Use Photos framework instead");
 
+
 /**
  *  checkAuthorizationStatus
  */
 - (void)checkAuthorizationStatus:(void(^)(DLAuthorizationStatus status))completion;
+
 
 /**
  *  requestAuthorization
  */
 - (void)requestAuthorization;
 
+//  favorite asset
+- (void)favoriteAsset:(DLPhotoAsset *)photoAsset
+           completion:(void(^)(BOOL success, NSError *error))completion;
 
+//  create album
 - (void)createAlbumWithName:(NSString *)albumName
                 resultBlock:(void(^)(DLPhotoCollection *collection))completion
                failureBlock:(void(^)(NSError *error))failure;
+//  remove album
 - (void)removeAlbum:(DLPhotoCollection *)photoCollection
         resultBlock:(void(^)(BOOL success))completion
         failureBlock:(void(^)(NSError *error))failure NS_AVAILABLE_IOS(8.0);
 
+//  save image
 - (void)saveImage:(UIImage *)image
           toAlbum:(NSString *)albumName
        completion:(void(^)(BOOL success))completion
           failure:(void(^)(NSError *error))failure;
+
+//  save video
 - (void)saveVideo:(NSURL *)videoUrl
           toAlbum:(NSString *)albumName
        completion:(void(^)(BOOL success))completion
           failure:(void(^)(NSError *error))failure;
 
-/**
- *  iOS 8 or later
- */
+//  iOS 8 or later
 - (void)removeAsset:(NSArray<DLPhotoAsset *> *)photoAssets
          completion:(void(^)(BOOL success))completion
             failure:(void(^)(NSError *error))failure NS_AVAILABLE_IOS(8.0);
@@ -139,18 +148,20 @@ typedef NS_ENUM(NSInteger, DLAuthorizationStatus) {
         resultBlock:(void(^)(BOOL success))completion
        failureBlock:(void(^)(NSError *error))failure NS_DEPRECATED_IOS(4_0, 7_0, "Use saveImage:toAlbum:completion:failure: instead");
 
+
 /**
  *  can not work
  *  iOS 7 or below
  */
-- (void)removeAssetURL:(NSURL *)assetUrl
+- (void)removeAssetURL:(NSArray<DLPhotoAsset *> *)photoAssets
            resultBlock:(void(^)(BOOL success))completion
           failureBlock:(void(^)(NSError *error))failure NS_DEPRECATED_IOS(4_0, 7_0, "Use saveImage:toAlbum:completion:failure: instead");
 
 /**
- *  fetchPhotoCollection
+ *  fetch Photo Collection
  */
 - (void)fetchPhotoCollection:(void(^)(BOOL success))completion;
+
 
 /**
  *  Get asset count in a 'DLPhotoCollection'
@@ -169,6 +180,7 @@ typedef NS_ENUM(NSInteger, DLAuthorizationStatus) {
  *  @return DLPhotoCollection
  */
 - (NSArray *)assetsForPhotoCollection:(DLPhotoCollection *)photoCollection;
+
 
 /**
  *  posterAssets

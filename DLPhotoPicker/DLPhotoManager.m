@@ -256,6 +256,27 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
     }
 }
 
+#pragma mark - favorite
+- (void)favoriteAsset:(DLPhotoAsset *)photoAsset
+           completion:(void(^)(BOOL success, NSError *error))completion
+{
+    if (UsePhotoKit) {
+        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+            PHAssetChangeRequest *request = [PHAssetChangeRequest changeRequestForAsset:photoAsset.phAsset];
+            [request setFavorite:!photoAsset.phAsset.favorite];
+            
+        } completionHandler:^(BOOL success, NSError *error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (completion) {
+                    completion(success, error);
+                }
+            });
+        }];
+    }else{
+        //  do nothimg
+    }
+}
+
 #pragma mark - create album
 - (void)createAlbumWithName:(NSString *)albumName
                 resultBlock:(void(^)(DLPhotoCollection *collection))completion
@@ -330,6 +351,8 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
          */
     }
 }
+
+#pragma mark - save/remove image
 
 /**
  *  -writeImageToSavedPhotosAlbum: orientation: completionBlock:
@@ -658,7 +681,7 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
         if(asset.isEditable) {
             [asset setImageData:nil metadata:nil completionBlock:^(NSURL *assetUrl, NSError *error) {
                 if (assetUrl && completion) {
-                    completion(assetUrl);
+                    completion(YES);
                 }
                 if (error && failure) {
                     failure(error);

@@ -281,7 +281,15 @@
 - (BOOL)deletable
 {
     if (UsePhotoKit) {
-        return [self.phAsset canPerformEditOperation:PHCollectionEditOperationDeleteContent];
+        return [self.phAsset canPerformEditOperation:PHAssetEditOperationDelete];
+    }
+    return NO;
+}
+
+- (BOOL)editable
+{
+    if (UsePhotoKit) {
+        return [self.phAsset canPerformEditOperation:PHAssetEditOperationProperties];
     }
     return NO;
 }
@@ -319,10 +327,11 @@
     }
     __block UIImage *resultImage;
     if (UsePhotoKit) {
+        
+        //  image after edited
         PHImageRequestOptions *originRequestOptions = [[PHImageRequestOptions alloc] init];
         originRequestOptions.synchronous = YES;
         
-        /**
         [[[DLPhotoManager sharedInstance] phCachingImageManager]
          requestImageForAsset:self.phAsset
          targetSize:PHImageManagerMaximumSize
@@ -331,15 +340,17 @@
          resultHandler:^(UIImage *result, NSDictionary *info) {
              resultImage = result;
          }];
-        */
+        
+        /**
         PHContentEditingInputRequestOptions *options = [[PHContentEditingInputRequestOptions alloc] init];
         options.networkAccessAllowed = YES;
         options.canHandleAdjustmentData = ^ BOOL (PHAdjustmentData *adjustmentData) { return YES; };
         [self.phAsset requestContentEditingInputWithOptions:options
                                           completionHandler:^(PHContentEditingInput * _Nullable contentEditingInput, NSDictionary * _Nonnull info) {
                                               resultImage = [UIImage imageWithContentsOfFile:contentEditingInput.fullSizeImageURL.path];
-            
+        
         }];
+         */
     } else {
         CGImageRef fullResolutionImageRef = [[self.alAsset defaultRepresentation] fullResolutionImage];
         /*
@@ -420,7 +431,9 @@
                                            completion(result, info);
                                        }
                                    }];
-            /** And to get fullsize image url:
+            
+            /*
+             *  // Completion and progress handlers are called on an arbitrary serial queue.
             PHContentEditingInputRequestOptions *options = [[PHContentEditingInputRequestOptions alloc] init];
             options.canHandleAdjustmentData = ^BOOL(PHAdjustmentData *adjustmentData) {
                 return YES;
@@ -428,7 +441,8 @@
             
             [self.phAsset requestContentEditingInputWithOptions:options
                                               completionHandler:^(PHContentEditingInput *contentEditingInput, NSDictionary *info) {
-                                                  // use contentEditingInput.fullSizeImageURL
+                                                  
+                                                  UIImage *result = [UIImage imageWithContentsOfFile:contentEditingInput.fullSizeImageURL.path];
                                               }];
              */
             
@@ -756,13 +770,52 @@
     return NO;
 }
 
-- (BOOL)writeOriginVideoToFile:(NSString *)filePath error: (NSError **) error
+- (void)writeOriginVideoToFile:(NSString *)filePath completion:(void (^)(BOOL success, NSError *error))completion
 {
     if (UsePhotoKit) {
-#warning 需要分段写入
         AVURLAsset *avURLAsset = (AVURLAsset *)[self originVideoAsset];
+        
+        /**
         NSData *data = [NSData dataWithContentsOfURL:avURLAsset.URL];
         [data writeToFile:filePath atomically:YES];
+         */
+        
+        AVAssetExportSession *session = [AVAssetExportSession exportSessionWithAsset:avURLAsset presetName:AVAssetExportPresetHighestQuality];
+        session.outputFileType = AVFileTypeQuickTimeMovie;
+        session.outputURL = [NSURL fileURLWithPath:filePath];
+        //session.shouldOptimizeForNetworkUse = YES;
+        [session exportAsynchronouslyWithCompletionHandler:^{
+            switch (session.status) {
+                    
+                case AVAssetExportSessionStatusUnknown:
+                    NSLog(@"AVAssetExportSessionStatusUnknown");
+                    break;
+                    
+                case AVAssetExportSessionStatusWaiting:
+                    NSLog(@"AVAssetExportSessionStatusWaiting");
+                    break;
+                    
+                case AVAssetExportSessionStatusExporting:
+                    NSLog(@"AVAssetExportSessionStatusExporting");
+                    break;
+                    
+                case AVAssetExportSessionStatusCompleted:
+                    NSLog(@"AVAssetExportSessionStatusCompleted");
+                    break;
+                    
+                case AVAssetExportSessionStatusFailed:
+                    NSLog(@"AVAssetExportSessionStatusFailed");
+                    break;
+                    
+                case AVAssetExportSessionStatusCancelled:
+                    NSLog(@"AVAssetExportSessionStatusCancelled");
+                    break;
+            }
+            
+            if (completion) {
+                completion(YES,nil);
+            }
+        }];
     }else{
         [[NSFileManager defaultManager] createFileAtPath:filePath contents:nil attributes:nil];
         NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:filePath];
@@ -772,23 +825,25 @@
             NSUInteger bytesRead   = 0;
             uint8_t *buffer = calloc(bufferSize, sizeof(*buffer));
             
+            NSError *error = nil;
             do {
                 @try {
-                    bytesRead = [self.alAsset.defaultRepresentation getBytes:buffer fromOffset:offset length:bufferSize error:error];
+                    bytesRead = [self.alAsset.defaultRepresentation getBytes:buffer fromOffset:offset length:bufferSize error:&error];
                     [fileHandle writeData:[NSData dataWithBytesNoCopy:buffer length:bytesRead freeWhenDone:NO]];
                     offset += bytesRead;
                 } @catch (NSException *exception) {
                     free(buffer);
-                    return NO;
                 }
                 
             } while (bytesRead > 0);
             
             free(buffer);
+            
+            if (completion) {
+                completion(YES,error);
+            }
         }
     }
-    
-    return NO;
 }
 
 - (BOOL)writeThumbnailImageToFile:(NSString *)filePath
