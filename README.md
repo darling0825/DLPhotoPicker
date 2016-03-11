@@ -20,16 +20,16 @@ Then, run the following command:
 $ pod install
 ```
 # Screenshot
-![image](https://github.com/darling0825/DLPhotoPicker/Screenshot/01.jpg)
-![image](https://github.com/darling0825/DLPhotoPicker/Screenshot/02.jpg)
-![image](https://github.com/darling0825/DLPhotoPicker/Screenshot/03.jpg)
-![image](https://github.com/darling0825/DLPhotoPicker/Screenshot/04.jpg)
-![image](https://github.com/darling0825/DLPhotoPicker/Screenshot/05.jpg)
-![image](https://github.com/darling0825/DLPhotoPicker/Screenshot/06.jpg)
-![image](https://github.com/darling0825/DLPhotoPicker/Screenshot/07.jpg)
-![image](https://github.com/darling0825/DLPhotoPicker/Screenshot/08.jpg)
-![image](https://github.com/darling0825/DLPhotoPicker/Screenshot/09.jpg)
-![image](https://github.com/darling0825/DLPhotoPicker/Screenshot/10.jpg)
+![image](https://github.com/darling0825/DLPhotoPicker/blob/master/Screenshot/01.PNG)
+![image](https://github.com/darling0825/DLPhotoPicker/blob/master/Screenshot/02.PNG)
+![image](https://github.com/darling0825/DLPhotoPicker/blob/master/Screenshot/03.PNG)
+![image](https://github.com/darling0825/DLPhotoPicker/blob/master/Screenshot/04.PNG)
+![image](https://github.com/darling0825/DLPhotoPicker/blob/master/Screenshot/05.PNG)
+![image](https://github.com/darling0825/DLPhotoPicker/blob/master/Screenshot/06.PNG)
+![image](https://github.com/darling0825/DLPhotoPicker/blob/master/Screenshot/07.PNG)
+![image](https://github.com/darling0825/DLPhotoPicker/blob/master/Screenshot/08.PNG)
+![image](https://github.com/darling0825/DLPhotoPicker/blob/master/Screenshot/09.PNG)
+![image](https://github.com/darling0825/DLPhotoPicker/blob/master/Screenshot/10.PNG)
 
 
 # Usage

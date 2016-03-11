@@ -80,6 +80,7 @@ typedef NS_ENUM(NSInteger, DLPhotoMediaType) {
 - (BOOL)cancelRequestImage;
 - (BOOL)cancelRequestVideo;
 
+
 /**
  *  Asset 的原图（包含系统相册“编辑”功能处理后的效果
  *
@@ -87,6 +88,7 @@ typedef NS_ENUM(NSInteger, DLPhotoMediaType) {
  */
 - (UIImage *)originImage;
 - (AVAsset *)originVideoAsset;
+
 
 /**
  *  异步请求 Asset 的原图，包含了系统照片“编辑”功能处理后的效果（剪裁，旋转和滤镜等），可能会有网络请求

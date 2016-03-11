@@ -12,6 +12,7 @@
 #import "UIImage+DLPhotoPicker.h"
 #import "DLPhotoPickerDefines.h"
 
+
 @interface DLPhotoAsset()
 
 @property (nonatomic, strong) NSDictionary *phAssetInfo;

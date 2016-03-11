@@ -551,8 +551,6 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     
     if ([self.picker.delegate respondsToSelector:@selector(pickerController:collectionViewLayoutForContentSize:traitCollection:)]) {
         layout = [self.picker.delegate pickerController:self.picker collectionViewLayoutForContentSize:contentSize traitCollection:trait];
-    } else {
-        layout = [[DLPhotoCollectionViewLayout alloc] initWithContentSize:contentSize traitCollection:trait];
     }
     
     __weak DLPhotoCollectionViewController *weakSelf = self;
@@ -725,7 +723,7 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     NSUInteger maxSelected = self.picker.maxNumberOfSelectedToShare;
     if (self.picker.selectedAssets.count > maxSelected) {
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:DLPhotoPickerLocalizedString(@"Attention",nil)
-                                                        message:[NSString stringWithFormat:DLPhotoPickerLocalizedString(@"Please select not more than %ld items.",nil), maxSelected]
+                                                        message:[NSString stringWithFormat:DLPhotoPickerLocalizedString(@"Please select not more than %lud items.",nil), maxSelected]
                                                        delegate:nil
                                               cancelButtonTitle:DLPhotoPickerLocalizedString(@"OK", nil)
                                               otherButtonTitles:nil];

@@ -9,6 +9,9 @@
 #import "DLPhotoManager.h"
 #import "DLPhotoPickerDefines.h"
 
+static NSString * const AdjustmentFormatIdentifier = @"com.darlingcoder.DLPhotoPicker";
+static NSString * const AdjustmentFormatVersion = @"1.0";
+
 typedef void (^AddImageToCollectionBlock)(UIImage *, PHAssetCollection *);
 typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
 
@@ -785,6 +788,72 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
         // Add the asset to the custom photo album
         [self addAssetURL:assetURL toAlbum:albumName resultBlock:completion failureBlock:failure];
     };
+}
+
+#pragma mark - Photo Edit
+- (void)requestContentEditing:(DLPhotoAsset *)asset
+                   completion:(void (^)(UIImage *image, PHContentEditingInput *contentEditingInput, NSDictionary *info))completion
+{
+    if ([asset.phAsset canPerformEditOperation:PHAssetEditOperationContent] &&
+        !(asset.phAsset.mediaSubtypes & PHAssetMediaSubtypePhotoLive))
+    {
+        PHContentEditingInputRequestOptions *options = [[PHContentEditingInputRequestOptions alloc] init];
+        [options setCanHandleAdjustmentData:^BOOL(PHAdjustmentData *adjustmentData) {
+            //  origin image
+            return [adjustmentData.formatIdentifier isEqualToString:AdjustmentFormatIdentifier] && [adjustmentData.formatVersion isEqualToString:AdjustmentFormatVersion];
+        }];
+        
+        [asset.phAsset requestContentEditingInputWithOptions:options completionHandler:^(PHContentEditingInput *contentEditingInput, NSDictionary *info) {
+            
+            //CIImage *fullImage = [CIImage imageWithContentsOfURL:contentEditingInput.fullSizeImageURL];
+            //NSLog(@"%@", fullImage.properties.description);
+            
+            NSURL *url = [contentEditingInput fullSizeImageURL];
+            UIImage *image = [[UIImage alloc] initWithContentsOfFile:url.path];
+            //UIImage *image = contentEditingInput.displaySizeImage;
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (completion) {
+                    completion(image, contentEditingInput, info);
+                }
+            });
+        }];
+    }
+}
+
+- (void)saveContentEditing:(DLPhotoAsset *)asset
+                     image:(UIImage *)image
+       contentEditingInput:(PHContentEditingInput *)contentEditingInput
+     adjustmentDescription:(NSData *)adjustmentDescription
+{
+    /*
+     *  Edit the origin image
+     */
+    PHAdjustmentData *adjustmentData =
+    [[PHAdjustmentData alloc] initWithFormatIdentifier:AdjustmentFormatIdentifier formatVersion:AdjustmentFormatVersion data:adjustmentDescription];
+    
+    // Create a PHContentEditingOutput object and write a JPEG representation of the edited object to the renderedContentURL.
+    PHContentEditingOutput *contentEditingOutput = [[PHContentEditingOutput alloc] initWithContentEditingInput:contentEditingInput];
+    
+    //NSData *imageData = UIImagePNGRepresentation(image);//not work
+    NSData *imageData = UIImageJPEGRepresentation(image, 1.0f);
+    [imageData writeToURL:[contentEditingOutput renderedContentURL] atomically:YES];
+    [contentEditingOutput setAdjustmentData:adjustmentData];
+    
+    // Ask the shared PHPhotoLinrary to perform the changes.
+    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+        PHAssetChangeRequest *request = [PHAssetChangeRequest changeRequestForAsset:asset.phAsset];
+        request.contentEditingOutput = contentEditingOutput;
+    } completionHandler:^(BOOL success, NSError *error) {
+        if (!success) {
+            NSLog(@">>> PHContentEditingInputRequest Error: %@", error);
+        }else{
+            /*
+             *  use method -photoLibraryDidChange: instead
+             */
+            //[[self itemViewController] assetDidChanded:self.asset];
+        }
+    }];
 }
 
 #pragma mark - fetch album

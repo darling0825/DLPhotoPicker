@@ -165,6 +165,17 @@ typedef NS_ENUM(NSInteger, DLAuthorizationStatus) {
            resultBlock:(void(^)(BOOL success))completion
           failureBlock:(void(^)(NSError *error))failure NS_DEPRECATED_IOS(4_0, 7_0, "Use saveImage:toAlbum:completion:failure: instead");
 
+
+// photo edit
+- (void)requestContentEditing:(DLPhotoAsset *)asset
+                   completion:(void (^)(UIImage *image, PHContentEditingInput *contentEditingInput, NSDictionary *info))completion;
+- (void)saveContentEditing:(DLPhotoAsset *)asset
+                     image:(UIImage *)image
+       contentEditingInput:(PHContentEditingInput *)contentEditingInput
+     adjustmentDescription:(NSData *)adjustmentDescription;
+
+
+
 /**
  *  fetch Photo Collection
  */

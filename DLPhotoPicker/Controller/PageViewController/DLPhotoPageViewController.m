@@ -40,11 +40,6 @@
 #import "TOCropViewController.h"
 #import "SVProgressHUD.h"
 
-#import <Photos/Photos.h>
-
-
-static NSString * const AdjustmentFormatIdentifier = @"com.darlingcoder.DLPhotoPicker";
-static NSString * const AdjustmentFormatVersion = @"1.0";
 
 @interface DLPhotoPageViewController ()
 <UIPageViewControllerDataSource, UIPageViewControllerDelegate, PHPhotoLibraryChangeObserver, ALAssetsLibraryChangeObserver, TOCropViewControllerDelegate>
@@ -357,43 +352,24 @@ static NSString * const AdjustmentFormatVersion = @"1.0";
 - (void)photoEditAction:(UIBarButtonItem *)sender
 {
     if (UsePhotoKit) {
-        if ([self.asset.phAsset canPerformEditOperation:PHAssetEditOperationContent] &&
-            !(self.asset.phAsset.mediaSubtypes & PHAssetMediaSubtypePhotoLive))
-        {
-            PHContentEditingInputRequestOptions *options = [[PHContentEditingInputRequestOptions alloc] init];
-            [options setCanHandleAdjustmentData:^BOOL(PHAdjustmentData *adjustmentData) {
-                //  origin image
-                return [adjustmentData.formatIdentifier isEqualToString:AdjustmentFormatIdentifier] && [adjustmentData.formatVersion isEqualToString:AdjustmentFormatVersion];
-            }];
+        
+        [[DLPhotoManager sharedInstance] requestContentEditing:self.asset completion:^(UIImage *image, PHContentEditingInput *contentEditingInput, NSDictionary *info) {
             
-            [self.asset.phAsset requestContentEditingInputWithOptions:options completionHandler:^(PHContentEditingInput *contentEditingInput, NSDictionary *info) {
-                
-                
-                //CIImage *fullImage = [CIImage imageWithContentsOfURL:contentEditingInput.fullSizeImageURL];
-                //NSLog(@"%@", fullImage.properties.description);
-                
-                
-                self.contentEditingInput = contentEditingInput;
-                
-                NSURL *url = [contentEditingInput fullSizeImageURL];
-                UIImage *image = [[UIImage alloc] initWithContentsOfFile:url.path];
-                //UIImage *image = contentEditingInput.displaySizeImage;
-                
-                TOCropViewController *cropController = [[TOCropViewController alloc] initWithImage:image];
-                cropController.delegate = self;
-                
-                // Uncomment this to test out locked aspect ratio sizes
-                // cropController.defaultAspectRatio = TOCropViewControllerAspectRatioSquare;
-                // cropController.aspectRatioLocked = YES;
-                
-                // Uncomment this to place the toolbar at the top of the view controller
-                // cropController.toolbarPosition = TOCropViewControllerToolbarPositionTop;
-                
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.navigationController presentViewController:cropController animated:YES completion:nil];
-                });
-            }];
-        }
+            self.contentEditingInput = contentEditingInput;
+
+            TOCropViewController *cropController = [[TOCropViewController alloc] initWithImage:image];
+            cropController.delegate = self;
+            
+            // Uncomment this to test out locked aspect ratio sizes
+            // cropController.defaultAspectRatio = TOCropViewControllerAspectRatioSquare;
+            // cropController.aspectRatioLocked = YES;
+            
+            // Uncomment this to place the toolbar at the top of the view controller
+            // cropController.toolbarPosition = TOCropViewControllerToolbarPositionTop;
+            
+            [self.navigationController presentViewController:cropController animated:YES completion:nil];
+        }];
+        
     }else{
         UIImage *image = [self.asset originImage];
         TOCropViewController *cropController = [[TOCropViewController alloc] initWithImage:image];
@@ -494,40 +470,14 @@ static NSString * const AdjustmentFormatVersion = @"1.0";
     [cropViewController dismissAnimatedFromParentViewController:self withCroppedImage:image toFrame:viewFrame completion:^{
         
         if (UsePhotoKit) {
-            
-            /*
-             *  Edit the origin image
-             */
             // Create a PHAdjustmentData object that describes the filter that was applied.
             NSData *data =
-            [[NSString stringWithFormat:@"%@-%ld",NSStringFromCGRect(cropRect),angle] dataUsingEncoding:NSUTF8StringEncoding];
+            [[NSString stringWithFormat:@"%@-%ld",NSStringFromCGRect(cropRect),(long)angle] dataUsingEncoding:NSUTF8StringEncoding];
             
-            PHAdjustmentData *adjustmentData =
-            [[PHAdjustmentData alloc] initWithFormatIdentifier:AdjustmentFormatIdentifier formatVersion:AdjustmentFormatVersion data:data];
-            
-            // Create a PHContentEditingOutput object and write a JPEG representation of the edited object to the renderedContentURL.
-            PHContentEditingOutput *contentEditingOutput = [[PHContentEditingOutput alloc] initWithContentEditingInput:self.contentEditingInput];
-            
-            //NSData *imageData = UIImagePNGRepresentation(image);//not work
-            NSData *imageData = UIImageJPEGRepresentation(image, 1.0f);
-            [imageData writeToURL:[contentEditingOutput renderedContentURL] atomically:YES];
-            [contentEditingOutput setAdjustmentData:adjustmentData];
-            
-            // Ask the shared PHPhotoLinrary to perform the changes.
-            [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-                PHAssetChangeRequest *request = [PHAssetChangeRequest changeRequestForAsset:self.asset.phAsset];
-                request.contentEditingOutput = contentEditingOutput;
-            } completionHandler:^(BOOL success, NSError *error) {
-                if (!success) {
-                    NSLog(@">>> PHContentEditingInputRequest Error: %@", error);
-                }else{
-                    /*
-                     *  use method -photoLibraryDidChange: instead
-                     */
-                    //[[self itemViewController] assetDidChanded:self.asset];
-                }
-            }];
-            
+            [[DLPhotoManager sharedInstance] saveContentEditing:self.asset
+                                                          image:image
+                                            contentEditingInput:self.contentEditingInput
+                                          adjustmentDescription:data];
         }else{
             
             //  Saved to default album
