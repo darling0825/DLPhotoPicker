@@ -34,11 +34,12 @@ $ pod install
 
 # Usage
 
-# import header file: DLPhotoPicker.h
+First import header file: DLPhotoPicker.h
 
-### To display all albums and photos.
+To display all albums and photos.
 ```
-- (IBAction)clickPhotoDisplayAction:(id)sender {
+- (IBAction)clickPhotoDisplayAction:(id)sender 
+{
     DLPhotoPickerViewController *picker = [[DLPhotoPickerViewController alloc] init];
     picker.delegate = self;
     picker.pickerType = DLPhotoPickerTypeDisplay;
@@ -48,7 +49,8 @@ $ pod install
     [self presentViewController:picker animated:YES completion:nil];
   }
 ```
-### To pick photo or video from photo library.
+
+To pick photo or video from photo library.
 ```
 - (void)pickAssets:(id)sender
 {
