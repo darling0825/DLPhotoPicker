@@ -168,11 +168,11 @@ typedef NS_ENUM(NSInteger, DLAuthorizationStatus) {
 
 // photo edit
 - (void)requestContentEditing:(DLPhotoAsset *)asset
-                   completion:(void (^)(UIImage *image, PHContentEditingInput *contentEditingInput, NSDictionary *info))completion;
+                   completion:(void (^)(UIImage *image, PHContentEditingInput *contentEditingInput, NSDictionary *info))completion NS_AVAILABLE_IOS(8.0);
 - (void)saveContentEditing:(DLPhotoAsset *)asset
                      image:(UIImage *)image
        contentEditingInput:(PHContentEditingInput *)contentEditingInput
-     adjustmentDescription:(NSData *)adjustmentDescription;
+     adjustmentDescription:(NSData *)adjustmentDescription NS_AVAILABLE_IOS(8.0);
 
 
 
