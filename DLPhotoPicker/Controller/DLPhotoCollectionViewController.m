@@ -22,12 +22,16 @@
 #import "UICollectionView+DLPhotoPicker.h"
 #import "DLPhotoPageViewController.h"
 #import "DLPhotoItemViewController.h"
+#import "MBProgressHUD.h"
+#import "AssetActivityProvider.h"
+
 
 NSString * const DLPhotoCollectionViewCellIdentifier = @"DLPhotoCollectionViewCellIdentifier";
 NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionViewFooterIdentifier";
 
 
-@interface DLPhotoCollectionViewController ()<PHPhotoLibraryChangeObserver, ALAssetsLibraryChangeObserver>
+@interface DLPhotoCollectionViewController ()
+<PHPhotoLibraryChangeObserver, ALAssetsLibraryChangeObserver>
 
 @property (nonatomic, strong) NSMutableArray *assets;
 
@@ -42,6 +46,10 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
 
 @property (nonatomic, strong) UIBarButtonItem *selectButton;
 @property (nonatomic, strong) UIBarButtonItem *confirmButton;
+
+@property (nonatomic, strong) MBProgressHUD *progressHUD;
+@property (nonatomic, strong) UIActivityViewController *activityVC;
+@property (nonatomic, strong) UIPopoverController *popoverController;
 
 @end
 
@@ -210,12 +218,12 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     
     [center addObserver:self
                selector:@selector(photoPickerEnterEditMode:)
-                   name:DLPhotoPickerDidEnterEditModeNotification
+                   name:DLPhotoPickerDidEnterSelectModeNotification
                  object:nil];
     
     [center addObserver:self
                selector:@selector(photoPickerExitEditMode:)
-                   name:DLPhotoPickerDidExitEditModeNotification
+                   name:DLPhotoPickerDidExitSelectModeNotification
                  object:nil];
     
 }
@@ -225,8 +233,8 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
     
     [center removeObserver:self name:DLPhotoPickerSelectedAssetsDidChangeNotification object:nil];
-    [center removeObserver:self name:DLPhotoPickerDidEnterEditModeNotification object:nil];
-    [center removeObserver:self name:DLPhotoPickerDidExitEditModeNotification object:nil];
+    [center removeObserver:self name:DLPhotoPickerDidEnterSelectModeNotification object:nil];
+    [center removeObserver:self name:DLPhotoPickerDidExitSelectModeNotification object:nil];
 }
 
 #pragma mark - Photo library change observer
@@ -622,7 +630,7 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(photoDeleteAction:)];
     
     NSArray *toolItems = @[shareButton, self.toolbarSpace, toCopyButton, self.toolbarSpace, deleteButton];
-    if (__IPHONE_OS_VERSION_MAX_ALLOWED < __IPHONE_8_0) {
+    if (!UsePhotoKit) {
         toolItems = @[shareButton, self.toolbarSpace, toCopyButton];
     }
     
@@ -713,6 +721,73 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
 }
 - (void)photoShareAction:(UIBarButtonItem *)sender{
     
+    // more images maybe lead to memory leak.
+    NSUInteger maxSelected = self.picker.maxNumberOfSelectedToShare;
+    if (self.picker.selectedAssets.count > maxSelected) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:DLPhotoPickerLocalizedString(@"Attention",nil)
+                                                        message:[NSString stringWithFormat:DLPhotoPickerLocalizedString(@"Please select not more than %ld items.",nil), maxSelected]
+                                                       delegate:nil
+                                              cancelButtonTitle:DLPhotoPickerLocalizedString(@"OK", nil)
+                                              otherButtonTitles:nil];
+        
+        [alert show];
+        return;
+    }
+    
+    NSMutableArray *items = [NSMutableArray arrayWithCapacity:self.picker.selectedAssets.count];
+    for (DLPhotoAsset *asset in self.picker.selectedAssets) {
+        AssetActivityProvider *assetProvider = [[AssetActivityProvider alloc] initWithAsset:asset];
+        [items addObject:assetProvider];
+    }
+    
+    self.activityVC = [[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:nil];
+    
+    typeof(self) __weak weakSelf = self;
+    [self.activityVC setCompletionHandler:^(NSString *activityType, BOOL completed) {
+        typeof(self) __strong strongSelf = weakSelf;
+        NSLog(@">>> Activity Type selected: %@", activityType);
+        if (completed) {
+            NSLog(@">>> Activity(%@) was performed.", activityType);
+        } else {
+            if (activityType == nil) {
+                NSLog(@">>> User dismissed the view controller without making a selection.");
+            } else {
+                NSLog(@">>> Activity(%@) was not performed.", activityType);
+            }
+        }
+        
+        for (AssetActivityProvider *provider in items) {
+            [provider cleanup];
+        }
+        [strongSelf hideProgressHUD:YES];
+    }];
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
+        if (DLiOS_8_OR_LATER) {
+            self.activityVC.popoverPresentationController.barButtonItem = sender;
+            [self presentViewController:self.activityVC animated:YES completion:^{
+                self.activityVC.excludedActivityTypes = nil;
+                self.activityVC = nil;
+            }];
+        }else{
+            if ([self.popoverController isPopoverVisible]){
+                [self.popoverController dismissPopoverAnimated:YES];
+                self.popoverController = nil;
+            }else{
+                self.popoverController = [[UIPopoverController alloc]initWithContentViewController:self.activityVC];
+                [self.popoverController presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+            }
+        }
+    }else{
+        [self presentViewController:self.activityVC animated:YES completion:^{
+            self.activityVC.excludedActivityTypes = nil;
+            self.activityVC = nil;
+        }];
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^(void){
+        [self showProgressHUDWithMessage:nil];
+    });
 }
 
 - (void)photoDeleteAction:(UIBarButtonItem *)sender{
@@ -721,6 +796,42 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     } failure:^(NSError *error) {
         NSLog(@">>> %@",error);
     }];
+}
+
+#pragma mark - Action Progress
+
+- (MBProgressHUD *)progressHUD {
+    if (!_progressHUD) {
+        _progressHUD = [[MBProgressHUD alloc] initWithView:self.view];
+        _progressHUD.minSize = CGSizeMake(120, 120);
+        _progressHUD.minShowTime = 1;
+        [self.view addSubview:_progressHUD];
+    }
+    return _progressHUD;
+}
+
+- (void)showProgressHUDWithMessage:(NSString *)message {
+    self.progressHUD.labelText = message;
+    self.progressHUD.mode = MBProgressHUDModeIndeterminate;
+    [self.progressHUD show:YES];
+    self.navigationController.navigationBar.userInteractionEnabled = NO;
+}
+
+- (void)hideProgressHUD:(BOOL)animated {
+    [self.progressHUD hide:animated];
+    self.navigationController.navigationBar.userInteractionEnabled = YES;
+}
+
+- (void)showProgressHUDCompleteMessage:(NSString *)message {
+    if (message) {
+        if (self.progressHUD.isHidden) [self.progressHUD show:YES];
+        self.progressHUD.labelText = message;
+        self.progressHUD.mode = MBProgressHUDModeCustomView;
+        [self.progressHUD hide:YES afterDelay:1.5];
+    } else {
+        [self.progressHUD hide:YES];
+    }
+    self.navigationController.navigationBar.userInteractionEnabled = YES;
 }
 
 #pragma mark - Update status
@@ -937,8 +1048,8 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
         }
     }else{
         DLPhotoPageViewController *vc = [[DLPhotoPageViewController alloc] initWithAssets:self.assets];
-        vc.pageIndex = indexPath.row;
         vc.allowsSelection = YES;
+        vc.pageIndex = indexPath.row;
         
         self.pageViewController = vc;
         

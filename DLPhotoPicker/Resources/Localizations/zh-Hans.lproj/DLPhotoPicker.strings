@@ -53,3 +53,6 @@
 "Deselect All" = "取消全选";
 "Copy to" = "复制到...";
 "Select Item" = "选择项目";
+"Attention" = "注意";
+"Please select not more than %ld items." = "请选择 %ld 个以下的项目.";
+"Saved to default album." = "已保存到默认相册";

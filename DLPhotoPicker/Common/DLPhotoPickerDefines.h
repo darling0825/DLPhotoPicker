@@ -24,6 +24,20 @@
  
  */
 
+#define dispatch_main_sync_safe(block)\
+    if ([NSThread isMainThread]) {\
+        block();\
+    } else {\
+        dispatch_sync(dispatch_get_main_queue(), block);\
+    }
+
+#define dispatch_main_async_safe(block)\
+    if ([NSThread isMainThread]) {\
+        block();\
+    } else {\
+        dispatch_async(dispatch_get_main_queue(), block);\
+    }
+
 /** NSLocalizedString alias*/
 #define DLPhotoPickerLocalizedString(key, comment) \
 NSLocalizedStringFromTableInBundle((key), @"DLPhotoPicker", [NSBundle assetPickerBundle], (comment))

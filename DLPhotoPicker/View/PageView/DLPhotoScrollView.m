@@ -28,8 +28,8 @@
 #import "DLPhotoScrollView.h"
 #import "DLPhotoPlayButton.h"
 #import "DLPhotoAsset.h"
-
-
+#import "NSBundle+DLPhotoPicker.h"
+#import "UIImage+DLPhotoPicker.h"
 
 NSString * const DLPhotoScrollViewDidTapNotification = @"DLPhotoScrollViewDidTapNotification";
 NSString * const DLPhotoScrollViewPlayerWillPlayNotification = @"DLPhotoScrollViewPlayerWillPlayNotification";
@@ -54,6 +54,7 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
 @property (nonatomic, strong) UIProgressView *progressView;
 @property (nonatomic, strong) UIActivityIndicatorView *activityView;
 @property (nonatomic, strong) DLPhotoPlayButton *playButton;
+@property (nonatomic, strong) DLPhotoBarButtonItem *selectionButton;
 
 @property (nonatomic, assign) BOOL shouldUpdateConstraints;
 @property (nonatomic, assign) BOOL didSetupConstraints;
@@ -114,22 +115,38 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
     self.activityView = activityView;
     [self addSubview:self.activityView];
     
+    
     DLPhotoPlayButton *playButton = [DLPhotoPlayButton newAutoLayoutView];
+    playButton.hidden = YES;
     self.playButton = playButton;
     [self addSubview:self.playButton];
     
-//    DLPhotoSelectionButton *selectionButton = [DLPhotoSelectionButton newAutoLayoutView];
-//    self.selectionButton = selectionButton;
-//    [self addSubview:self.selectionButton];
+    
+    DLPhotoBarButtonItem *selectionButton = [DLPhotoBarButtonItem newAutoLayoutView];
+    selectionButton.frame = CGRectMake(0, 0, 80.0, 80.0);
+    selectionButton.isLeftButton = NO;
+    UIImage *checkmarkImage = [UIImage assetImageNamed:@"SelectButtonChecked"];
+    UIImage *uncheckmarkImage = [UIImage assetImageNamed:@"SelectButtonUnchecked"];
+    [selectionButton setImage:uncheckmarkImage forState:UIControlStateNormal];
+    [selectionButton setImage:checkmarkImage forState:UIControlStateSelected];
+    self.selectionButton = selectionButton;
+    [self addSubview:self.selectionButton];
 }
 
+- (void)reloadView
+{
+    self.image = nil;
+    self.imageView.image = nil;
+}
 
 #pragma mark - Update auto layout constraints
 
 - (void)updateConstraints
 {
+    [super updateConstraints];
     if (!self.didSetupConstraints)
     {
+        [self updateSelectionButtonIfNeeded];
         [self autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
         [self updateProgressConstraints];
         [self updateActivityConstraints];
@@ -139,7 +156,16 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
     }
 
     [self updateContentFrame];
-    [super updateConstraints];
+    [self updateContentInset];
+}
+
+- (void)updateSelectionButtonIfNeeded
+{
+    if (!self.allowsSelection)
+    {
+        [self.selectionButton removeFromSuperview];
+        self.selectionButton = nil;
+    }
 }
 
 - (void)updateProgressConstraints
@@ -150,11 +176,11 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
         [self.progressView autoConstrainAttribute:ALAttributeBottom toAttribute:ALAttributeBottom ofView:self.superview withMultiplier:1 relation:NSLayoutRelationEqual];
     }];
     
-    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
-        [self.progressView autoConstrainAttribute:ALAttributeLeading toAttribute:ALAttributeLeading ofView:self.imageView withMultiplier:1 relation:NSLayoutRelationGreaterThanOrEqual];
-        [self.progressView autoConstrainAttribute:ALAttributeTrailing toAttribute:ALAttributeTrailing ofView:self.imageView withMultiplier:1 relation:NSLayoutRelationLessThanOrEqual];
-        [self.progressView autoConstrainAttribute:ALAttributeBottom toAttribute:ALAttributeBottom ofView:self.imageView withMultiplier:1 relation:NSLayoutRelationLessThanOrEqual];
-    }];
+//    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
+//        [self.progressView autoConstrainAttribute:ALAttributeLeading toAttribute:ALAttributeLeading ofView:self.imageView withMultiplier:1 relation:NSLayoutRelationGreaterThanOrEqual];
+//        [self.progressView autoConstrainAttribute:ALAttributeTrailing toAttribute:ALAttributeTrailing ofView:self.imageView withMultiplier:1 relation:NSLayoutRelationLessThanOrEqual];
+//        [self.progressView autoConstrainAttribute:ALAttributeBottom toAttribute:ALAttributeBottom ofView:self.imageView withMultiplier:1 relation:NSLayoutRelationLessThanOrEqual];
+//    }];
 }
 
 - (void)updateActivityConstraints
@@ -168,15 +194,12 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
     [self.playButton autoAlignAxis:ALAxisVertical toSameAxisOfView:self.superview];
     [self.playButton autoAlignAxis:ALAxisHorizontal toSameAxisOfView:self.superview];
     
-//    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{
-//        [self.selectionButton autoConstrainAttribute:ALAttributeTrailing toAttribute:ALAttributeTrailing ofView:self.superview withOffset:-self.layoutMargins.right relation:NSLayoutRelationEqual];
-//        [self.selectionButton autoConstrainAttribute:ALAttributeBottom toAttribute:ALAttributeBottom ofView:self.superview withOffset:-self.layoutMargins.bottom relation:NSLayoutRelationEqual];
-//    }];
-//    
-//    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
-//        [self.selectionButton autoConstrainAttribute:ALAttributeTrailing toAttribute:ALAttributeTrailing ofView:self.imageView withOffset:-self.layoutMargins.right relation:NSLayoutRelationLessThanOrEqual];
-//        [self.selectionButton autoConstrainAttribute:ALAttributeBottom toAttribute:ALAttributeBottom ofView:self.imageView withOffset:-self.layoutMargins.bottom relation:NSLayoutRelationLessThanOrEqual];
-//    }];
+    CGFloat padding = 20;
+    CGFloat navBarHeight = 44;
+    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultLow forConstraints:^{
+        [self.selectionButton autoConstrainAttribute:ALAttributeTrailing toAttribute:ALAttributeTrailing ofView:self.superview withOffset:-(self.layoutMargins.right + padding) relation:NSLayoutRelationEqual];
+        [self.selectionButton autoConstrainAttribute:ALAttributeTop toAttribute:ALAttributeTop ofView:self.superview withOffset:(self.layoutMargins.top + padding + navBarHeight) relation:NSLayoutRelationEqual];
+    }];
 }
 
 - (void)updateContentFrame
@@ -196,6 +219,7 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
     
     self.contentInset = UIEdgeInsetsMake(verticalPadding, horizontalPadding, verticalPadding, horizontalPadding);
 }
+
 
 #pragma mark - Start/stop loading animation
 
@@ -274,10 +298,12 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
             [self mimicProgress];
         else
             [self setProgress:1];
-
+        
         [self setNeedsUpdateConstraints];
-        [self updateConstraintsIfNeeded];        
+        [self updateConstraintsIfNeeded];
+        
         [self updateZoomScalesAndZoom:zoom];
+        [self updateContentInset];
     }
 }
 
@@ -353,11 +379,6 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
     if (zoom){
          [self zoomToInitialScale];
     }
-    
-    /** 
-     *  Fix bug: a photo can not in the middle of screen
-     */
-    [self updateContentInset];
 }
 
 #pragma mark - Zoom
@@ -666,6 +687,7 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
 {
     [self setProgress:1];
     [self.playButton setHidden:YES];
+    [self.selectionButton setHidden:YES];
     [self.activityView stopAnimating];
 }
 
@@ -673,6 +695,7 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
 - (void)playerDidPause:(id)sender
 {
     [self.playButton setHidden:NO];
+    [self.selectionButton setHidden:NO];
 }
 
 - (void)playerDidLoadItem:(id)sender

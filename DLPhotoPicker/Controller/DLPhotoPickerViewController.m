@@ -13,6 +13,7 @@
 #import "DLPhotoPickerAccessDeniedView.h"
 #import "DLPhotoPickerNoAssetsView.h"
 #import "DLPhotoTableViewController.h"
+#import "NSBundle+DLPhotoPicker.h"
 
 NSString * const DLPhotoPickerSelectedAssetsDidChangeNotification = @"DLPhotoPickerSelectedAssetsDidChangeNotification";
 
@@ -25,8 +26,10 @@ NSString * const DLPhotoPickerSelectedAssetsDidChangeNotification = @"DLPhotoPic
 {
     self = [super init];
     if (self) {
-        _showsNumberOfAssets    = YES;
-        _selectedAssets         = [@[] mutableCopy];
+        _showsNumberOfAssets        = YES;
+        _showsCancelButton          = YES;
+        _selectedAssets             = [@[] mutableCopy];
+        _maxNumberOfSelectedToShare = 30;
     }
     return self;
 }
@@ -78,10 +81,10 @@ NSString * const DLPhotoPickerSelectedAssetsDidChangeNotification = @"DLPhotoPic
                 [self getAlbumsSuccess];
                 break;
             case DLAuthorizationStatusAccessDenied:
-                [self showOtherView:[DLPhotoPickerAccessDeniedView new]];
+                [self showAuxiliaryView:[DLPhotoPickerAccessDeniedView new]];
                 break;
             case DLAuthorizationStatusNoAssets:
-                [self showOtherView:[DLPhotoPickerNoAssetsView new]];
+                [self showAuxiliaryView:[DLPhotoPickerNoAssetsView new]];
                 break;
             default:
                 break;
@@ -176,17 +179,35 @@ NSString * const DLPhotoPickerSelectedAssetsDidChangeNotification = @"DLPhotoPic
 }
 
 #pragma mark - Show view
-- (void)showOtherView:(UIView *)view
+- (void)showAuxiliaryView:(UIView *)view
 {
     [self removeChildViewController];
     
     UIViewController *vc = [self emptyViewController];
+    if (self.showsCancelButton) {
+        vc.navigationItem.rightBarButtonItem =
+        [[UIBarButtonItem alloc] initWithTitle:DLPhotoPickerLocalizedString(@"Cancel", nil)
+                                         style:UIBarButtonItemStylePlain
+                                        target:self
+                                        action:@selector(dismiss:)];
+    }
+    
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
     
     [vc.view addSubview:view];
     [view setNeedsUpdateConstraints];
     [view updateConstraintsIfNeeded];
     
-    [self setupChildViewController:vc];
+    [self setupChildViewController:nav];
+}
+
+- (void)dismiss:(id)sender
+{
+    if ([self.delegate respondsToSelector:@selector(pickerControllerDidCancel:)]){
+        [self.delegate pickerControllerDidCancel:self];
+    }else{
+        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+    }
 }
 
 #pragma mark - Setup view controllers

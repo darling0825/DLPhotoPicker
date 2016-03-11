@@ -6,6 +6,7 @@ platform :ios, '7.0'
 target 'DLPhotoPickerDemo' do
 
 pod 'DLPhotoPicker', :path => '..'
+pod 'SVProgressHUD'
 
 end
 

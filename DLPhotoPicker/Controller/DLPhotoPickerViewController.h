@@ -41,6 +41,14 @@ typedef NS_ENUM(NSInteger, DLPhotoPickerType) {
 @property (nonatomic, weak) id<DLPhotoPickerViewControllerDelegate> delegate;
 
 /**
+ *  Determines whether or not the cancel button is visible in the picker.
+ *
+ *  The cancel button is visible by default. To hide the cancel button, (e.g. presenting the picker in `UIPopoverController`)
+ *  set this property’s value to `NO`.
+ */
+@property (nonatomic, assign) BOOL showsCancelButton;
+
+/**
  The navigation title used by the DLPhotoPickerViewController.
  */
 @property (copy, nonatomic) NSString *navigationTitle;
@@ -79,6 +87,12 @@ typedef NS_ENUM(NSInteger, DLPhotoPickerType) {
  *  set this property’s value to `NO`.
  */
 @property (nonatomic, assign) BOOL showsNumberOfAssets;
+
+/**
+ *  The max number of selected assets to share.
+ *  Default is equal to 20.
+ */
+@property (nonatomic, assign) NSUInteger maxNumberOfSelectedToShare;
 
 @property (nonatomic, strong) NSMutableArray *selectedAssets;
 

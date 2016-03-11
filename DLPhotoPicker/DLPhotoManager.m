@@ -256,6 +256,20 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
     }
 }
 
+#pragma mark - default album
+- (NSString *)defaultAlbum
+{
+    return self.defaultCollection.title;
+}
+
+- (DLPhotoCollection *)defaultCollection
+{
+    if (self.photoCollections.count > 0) {
+        return self.photoCollections[0];
+    }
+    return nil;
+}
+
 #pragma mark - favorite
 - (void)favoriteAsset:(DLPhotoAsset *)photoAsset
            completion:(void(^)(BOOL success, NSError *error))completion
@@ -284,6 +298,7 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
 {
     if (UsePhotoKit) {
         __block NSString *localIdentifier = nil;
+        
         [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
             PHAssetCollectionChangeRequest *assetCollectionChangeRequest = [PHAssetCollectionChangeRequest creationRequestForAssetCollectionWithTitle:albumName];
             localIdentifier = assetCollectionChangeRequest.placeholderForCreatedAssetCollection.localIdentifier;
@@ -380,7 +395,7 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
             
             for (PHAssetCollection *assetCollection in fetchResult){
                 // Compare the names of the albums
-                if ([albumName compare:assetCollection.localizedTitle] == NSOrderedSame) {
+                if ([albumName isEqualToString:assetCollection.localizedTitle]) {
                     
                     // Target album is found
                     albumWasFound = YES;
@@ -393,15 +408,21 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
         //  a block to add assets to a album
         AddImageToCollectionBlock addAssetsBlock = [self _addImageBlockWithCompletion:completion failure:failure];
         
-        if (albumWasFound) {
+        if (!albumName.length) {
+            //  add asset to default collection
+            addAssetsBlock(image, nil);
+        }else if (albumWasFound) {
             //  add asset
             addAssetsBlock(image, savedAssetCollection);
         }else{
             //  create a new album
             [self createAlbumWithName:albumName resultBlock:^(DLPhotoCollection *collection) {
                 if (collection) {
-                    //  add asset
+                    //  add asset to new collection
                     addAssetsBlock(image, collection.assetCollection);
+                }else{
+                    //  add asset to default collection
+                    addAssetsBlock(image, nil);
                 }
             } failureBlock:failure];
         }
@@ -503,6 +524,42 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
               failure:(void(^)(NSError *error))failure
 {
     if (UsePhotoKit) {
+        //  find album
+        BOOL albumWasFound = NO;
+        PHAssetCollection *savedAssetCollection = nil;
+        for (PHFetchResult *fetchResult in self.fetchResults){
+            if (albumWasFound) {
+                break;
+            }
+            
+            for (PHAssetCollection *assetCollection in fetchResult){
+                // Compare the names of the albums
+                if ([albumName compare:assetCollection.localizedTitle] == NSOrderedSame) {
+                    
+                    // Target album is found
+                    albumWasFound = YES;
+                    savedAssetCollection = assetCollection;
+                    break;
+                }
+            }
+        }
+        
+        //  a block to add assets to a album
+        AddImageToCollectionBlock addAssetsBlock = [self _addImageBlockWithCompletion:completion failure:failure];
+        
+        UIImage *image = [UIImage imageWithData:imageData];
+        if (albumWasFound) {
+            //  add asset
+            addAssetsBlock(image, savedAssetCollection);
+        }else{
+            //  create a new album
+            [self createAlbumWithName:albumName resultBlock:^(DLPhotoCollection *collection) {
+                if (collection) {
+                    //  add asset
+                    addAssetsBlock(image, collection.assetCollection);
+                }
+            } failureBlock:failure];
+        }
     }else{
         [self.assetsLibrary writeImageDataToSavedPhotosAlbum:imageData
                                                     metadata:metadata
@@ -520,6 +577,7 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
     if (UsePhotoKit) {
         //  do nothing
     }else{
+        
         typeof(self) __weak weakSelf = self;
         __block BOOL albumWasFound = NO;
         
@@ -595,10 +653,15 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
 {
     return ^(UIImage *image, PHAssetCollection *assetCollection){
         [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-            
-            PHAssetChangeRequest *assetChangeRequest = [PHAssetChangeRequest creationRequestForAssetFromImage:image];
-            PHAssetCollectionChangeRequest *assetCollectionChangeRequest = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:assetCollection];
-            [assetCollectionChangeRequest addAssets:@[assetChangeRequest.placeholderForCreatedAsset]];
+            if (assetCollection) {
+                // saved to assetCollection and CameraRoll
+                PHAssetChangeRequest *assetChangeRequest = [PHAssetChangeRequest creationRequestForAssetFromImage:image];
+                PHAssetCollectionChangeRequest *assetCollectionChangeRequest = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:assetCollection];
+                [assetCollectionChangeRequest addAssets:@[assetChangeRequest.placeholderForCreatedAsset]];
+            }else{
+                // only saved to CameraRoll
+                [PHAssetChangeRequest creationRequestForAssetFromImage:image];
+            }
             
         } completionHandler:^(BOOL success, NSError * _Nullable error) {
             dispatch_async(dispatch_get_main_queue(), ^{
@@ -711,6 +774,11 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
         //   the custom photo album
         if (error != nil) {
             if (failure) failure(error);
+            return;
+        }
+        
+        if (albumName == nil) {
+            if (completion) completion(YES);
             return;
         }
         
@@ -1067,5 +1135,124 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
 {
     PHFetchResult *result = [PHAsset fetchAssetsInAssetCollection:phAssetCollection options:fetchOptions];
     return result.count;
+}
+
+- (UIImage *)originImage:(DLPhotoAsset *)photoAsset
+{
+    @autoreleasepool {
+        __block UIImage *resultImage;
+        
+        if (UsePhotoKit) {
+            
+            @autoreleasepool {
+                
+                //  image after edited
+                PHImageRequestOptions *originRequestOptions = [[PHImageRequestOptions alloc] init];
+                originRequestOptions.version = PHImageRequestOptionsVersionCurrent;
+                originRequestOptions.networkAccessAllowed = YES;
+                originRequestOptions.synchronous = YES;
+                
+                //sync requests are automatically processed this way regardless of the specified mode
+                //originRequestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+                
+                originRequestOptions.progressHandler = ^(double progress, NSError *__nullable error, BOOL *stop, NSDictionary *__nullable info){
+                    dispatch_main_async_safe(^{
+                        
+                    });
+                };
+                
+                /*
+                 Printing description of info:
+                 {
+                 PHImageResultDeliveredImageFormatKey = 9999;
+                 PHImageResultIsDegradedKey = 0;
+                 PHImageResultIsInCloudKey = 0;
+                 PHImageResultIsPlaceholderKey = 0;
+                 PHImageResultWantedImageFormatKey = 9999;
+                 }
+                 */
+                
+                [[[DLPhotoManager sharedInstance] phCachingImageManager] requestImageForAsset:photoAsset.phAsset
+                                                                                   targetSize:PHImageManagerMaximumSize
+                                                                                  contentMode:PHImageContentModeDefault
+                                                                                      options:originRequestOptions
+                                                                                resultHandler:^(UIImage *result, NSDictionary *info) {
+                                                                                    
+                                                                                    @autoreleasepool {
+                                                                                        
+                                                                                        // 排除取消，错误，低清图三种情况，即已经获取到了高清图时，把这张高清图缓存到 _originImage 中
+                                                                                        BOOL downloadFinined = ![[info objectForKey:PHImageCancelledKey] boolValue] &&
+                                                                                        ![info objectForKey:PHImageErrorKey] &&
+                                                                                        ![[info objectForKey:PHImageResultIsDegradedKey] boolValue] && result;
+                                                                                        
+                                                                                        if (downloadFinined) {
+                                                                                            resultImage = result;
+                                                                                        }
+                                                                                    }
+                                                                                }];
+            }
+            
+            /*
+             if ([self.phAsset canPerformEditOperation:PHAssetEditOperationContent] &&
+             !(self.phAsset.mediaSubtypes & PHAssetMediaSubtypePhotoLive))
+             {
+             PHContentEditingInputRequestOptions *options = [[PHContentEditingInputRequestOptions alloc] init];
+             options.networkAccessAllowed = YES;
+             options.canHandleAdjustmentData = ^BOOL(PHAdjustmentData *adjustmentData) { return YES; };
+             
+             //  We synchronously have the asset
+             dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+             
+             [self.phAsset requestContentEditingInputWithOptions:options
+             completionHandler:^(PHContentEditingInput *contentEditingInput, NSDictionary *info) {
+             
+             
+             //http://www.cnblogs.com/crazypebble/p/5259641.html
+             
+             NSURL *url = [contentEditingInput fullSizeImageURL];
+             NSData *imageData = [NSData dataWithContentsOfURL:url];
+             resultImage = [[UIImage alloc] initWithData:imageData];
+             
+             dispatch_semaphore_signal(semaphore);
+             
+             }];
+             
+             dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+             }
+             */
+            
+        } else {
+            
+            CGImageRef fullResolutionImageRef = [[photoAsset.alAsset defaultRepresentation] fullResolutionImage];
+            /*
+             *通过 fullResolutionImage 获取到的的高清图实际上并不带上在照片应用中使用“编辑”处理的效果，
+             *需要额外在 AlAssetRepresentation 中获取这些信息
+             */
+            NSString *adjustment = [[[photoAsset.alAsset defaultRepresentation] metadata] objectForKey:@"AdjustmentXMP"];
+            if (adjustment) {
+                // 如果有在照片应用中使用“编辑”效果，则需要获取这些编辑后的滤镜，手工叠加到原图中
+                NSData *xmpData = [adjustment dataUsingEncoding:NSUTF8StringEncoding];
+                CIImage *tempImage = [CIImage imageWithCGImage:fullResolutionImageRef];
+                
+                NSError *error;
+                NSArray *filterArray = [CIFilter filterArrayFromSerializedXMP:xmpData
+                                                             inputImageExtent:tempImage.extent
+                                                                        error:&error];
+                CIContext *context = [CIContext contextWithOptions:nil];
+                if (filterArray && !error) {
+                    for (CIFilter *filter in filterArray) {
+                        [filter setValue:tempImage forKey:kCIInputImageKey];
+                        tempImage = [filter outputImage];
+                    }
+                    fullResolutionImageRef = [context createCGImage:tempImage fromRect:[tempImage extent]];
+                }
+            }
+            // 生成最终返回的 UIImage，同时把图片的 orientation 也补充上去
+            resultImage = [UIImage imageWithCGImage:fullResolutionImageRef scale:[[photoAsset.alAsset defaultRepresentation] scale] orientation:(UIImageOrientation)[[photoAsset.alAsset defaultRepresentation] orientation]];
+        }
+        
+        //return resultImage ? resultImage : [self originImage:photoAsset];
+        return resultImage;
+    }
 }
 @end

@@ -24,6 +24,7 @@ typedef NS_ENUM(NSInteger, DLPhotoMediaType) {
 @property (nonatomic, strong) PHAsset *phAsset;
 @property (nonatomic, strong) ALAsset *alAsset;
 @property (nonatomic, strong) AVAsset *avAsset;
+@property (nonatomic, copy) NSString *albumName;
 
 
 /**
@@ -165,6 +166,7 @@ typedef NS_ENUM(NSInteger, DLPhotoMediaType) {
  *  @return Success or not.
  */
 - (BOOL)writeOriginImageToFile:(NSString *)filePath;
+- (BOOL)writeOriginVideoToFile:(NSString *)filePath;
 - (void)writeOriginVideoToFile:(NSString *)filePath completion:(void (^)(BOOL success, NSError *error))completion;
 - (BOOL)writeThumbnailImageToFile:(NSString *)filePath;
 - (BOOL)writePreviewImageToFile:(NSString *)filePath;

@@ -53,4 +53,7 @@
 "Deselect All" = "Deselect All";
 "Copy to" = "Copy to";
 "Select Item" = "Select Item";
+"Attention" = "Attention";
+"Please select not more than %ld items." = "Please select not more than %ld items.";
+"Saved to default album." = "Saved to default album.";
 

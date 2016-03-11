@@ -322,65 +322,122 @@
 #pragma mark - Request Image
 - (UIImage *)originImage
 {
-    if (_originImage) {
-        return _originImage;
-    }
-    __block UIImage *resultImage;
-    if (UsePhotoKit) {
-        
-        //  image after edited
-        PHImageRequestOptions *originRequestOptions = [[PHImageRequestOptions alloc] init];
-        originRequestOptions.synchronous = YES;
-        
-        [[[DLPhotoManager sharedInstance] phCachingImageManager]
-         requestImageForAsset:self.phAsset
-         targetSize:PHImageManagerMaximumSize
-         contentMode:PHImageContentModeDefault
-         options:originRequestOptions
-         resultHandler:^(UIImage *result, NSDictionary *info) {
-             resultImage = result;
-         }];
-        
-        /**
-        PHContentEditingInputRequestOptions *options = [[PHContentEditingInputRequestOptions alloc] init];
-        options.networkAccessAllowed = YES;
-        options.canHandleAdjustmentData = ^ BOOL (PHAdjustmentData *adjustmentData) { return YES; };
-        [self.phAsset requestContentEditingInputWithOptions:options
-                                          completionHandler:^(PHContentEditingInput * _Nullable contentEditingInput, NSDictionary * _Nonnull info) {
-                                              resultImage = [UIImage imageWithContentsOfFile:contentEditingInput.fullSizeImageURL.path];
-        
-        }];
-         */
-    } else {
-        CGImageRef fullResolutionImageRef = [[self.alAsset defaultRepresentation] fullResolutionImage];
-        /*
-         *通过 fullResolutionImage 获取到的的高清图实际上并不带上在照片应用中使用“编辑”处理的效果，
-         *需要额外在 AlAssetRepresentation 中获取这些信息
-         */
-        NSString *adjustment = [[[self.alAsset defaultRepresentation] metadata] objectForKey:@"AdjustmentXMP"];
-        if (adjustment) {
-            // 如果有在照片应用中使用“编辑”效果，则需要获取这些编辑后的滤镜，手工叠加到原图中
-            NSData *xmpData = [adjustment dataUsingEncoding:NSUTF8StringEncoding];
-            CIImage *tempImage = [CIImage imageWithCGImage:fullResolutionImageRef];
-            
-            NSError *error;
-            NSArray *filterArray = [CIFilter filterArrayFromSerializedXMP:xmpData
-                                                         inputImageExtent:tempImage.extent
-                                                                    error:&error];
-            CIContext *context = [CIContext contextWithOptions:nil];
-            if (filterArray && !error) {
-                for (CIFilter *filter in filterArray) {
-                    [filter setValue:tempImage forKey:kCIInputImageKey];
-                    tempImage = [filter outputImage];
-                }
-                fullResolutionImageRef = [context createCGImage:tempImage fromRect:[tempImage extent]];
-            }
+    @autoreleasepool {
+        if (_originImage) {
+            return _originImage;
         }
-        // 生成最终返回的 UIImage，同时把图片的 orientation 也补充上去
-        resultImage = [UIImage imageWithCGImage:fullResolutionImageRef scale:[[self.alAsset defaultRepresentation] scale] orientation:(UIImageOrientation)[[self.alAsset defaultRepresentation] orientation]];
+        
+        __block UIImage *resultImage;
+        
+        if (UsePhotoKit) {
+            //  image after edited
+            PHImageRequestOptions *originRequestOptions = [[PHImageRequestOptions alloc] init];
+            originRequestOptions.version = PHImageRequestOptionsVersionCurrent;
+            originRequestOptions.networkAccessAllowed = YES;
+            originRequestOptions.synchronous = YES;
+            
+            //sync requests are automatically processed this way regardless of the specified mode
+            //originRequestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+            
+            originRequestOptions.progressHandler = ^(double progress, NSError *__nullable error, BOOL *stop, NSDictionary *__nullable info){
+                dispatch_main_async_safe(^{
+                    
+                });
+            };
+            
+            /*
+             Printing description of info:
+             {
+             PHImageResultDeliveredImageFormatKey = 9999;
+             PHImageResultIsDegradedKey = 0;
+             PHImageResultIsInCloudKey = 0;
+             PHImageResultIsPlaceholderKey = 0;
+             PHImageResultWantedImageFormatKey = 9999;
+             }
+             */
+            
+            [[[DLPhotoManager sharedInstance] phCachingImageManager] requestImageForAsset:self.phAsset
+                                                                               targetSize:PHImageManagerMaximumSize
+                                                                              contentMode:PHImageContentModeDefault
+                                                                                  options:originRequestOptions
+                                                                            resultHandler:^(UIImage *result, NSDictionary *info) {
+                                                                                @autoreleasepool {
+                                                                                    // 排除取消，错误，低清图三种情况，即已经获取到了高清图时，把这张高清图缓存到 _originImage 中
+                                                                                    BOOL downloadFinined = ![[info objectForKey:PHImageCancelledKey] boolValue] &&
+                                                                                    ![info objectForKey:PHImageErrorKey] &&
+                                                                                    ![[info objectForKey:PHImageResultIsDegradedKey] boolValue] && result;
+                                                                                    
+                                                                                    if (downloadFinined) {
+                                                                                        resultImage = result;
+                                                                                    }
+                                                                                }
+                                                                                
+                                                                            }];
+            
+            /*
+             if ([self.phAsset canPerformEditOperation:PHAssetEditOperationContent] &&
+             !(self.phAsset.mediaSubtypes & PHAssetMediaSubtypePhotoLive))
+             {
+             PHContentEditingInputRequestOptions *options = [[PHContentEditingInputRequestOptions alloc] init];
+             options.networkAccessAllowed = YES;
+             options.canHandleAdjustmentData = ^BOOL(PHAdjustmentData *adjustmentData) { return YES; };
+             
+             //  We synchronously have the asset
+             dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+             
+             [self.phAsset requestContentEditingInputWithOptions:options
+             completionHandler:^(PHContentEditingInput *contentEditingInput, NSDictionary *info) {
+             
+             
+             //http://www.cnblogs.com/crazypebble/p/5259641.html
+             
+             NSURL *url = [contentEditingInput fullSizeImageURL];
+             NSData *imageData = [NSData dataWithContentsOfURL:url];
+             resultImage = [[UIImage alloc] initWithData:imageData];
+             
+             dispatch_semaphore_signal(semaphore);
+             
+             }];
+             
+             dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+             }
+             */
+            
+        } else {
+            CGImageRef fullResolutionImageRef = [[self.alAsset defaultRepresentation] fullResolutionImage];
+            /*
+             *通过 fullResolutionImage 获取到的的高清图实际上并不带上在照片应用中使用“编辑”处理的效果，
+             *需要额外在 AlAssetRepresentation 中获取这些信息
+             */
+            NSString *adjustment = [[[self.alAsset defaultRepresentation] metadata] objectForKey:@"AdjustmentXMP"];
+            if (adjustment) {
+                // 如果有在照片应用中使用“编辑”效果，则需要获取这些编辑后的滤镜，手工叠加到原图中
+                NSData *xmpData = [adjustment dataUsingEncoding:NSUTF8StringEncoding];
+                CIImage *tempImage = [CIImage imageWithCGImage:fullResolutionImageRef];
+                
+                NSError *error;
+                NSArray *filterArray = [CIFilter filterArrayFromSerializedXMP:xmpData
+                                                             inputImageExtent:tempImage.extent
+                                                                        error:&error];
+                CIContext *context = [CIContext contextWithOptions:nil];
+                if (filterArray && !error) {
+                    for (CIFilter *filter in filterArray) {
+                        [filter setValue:tempImage forKey:kCIInputImageKey];
+                        tempImage = [filter outputImage];
+                    }
+                    fullResolutionImageRef = [context createCGImage:tempImage fromRect:[tempImage extent]];
+                }
+            }
+            // 生成最终返回的 UIImage，同时把图片的 orientation 也补充上去
+            resultImage = [UIImage imageWithCGImage:fullResolutionImageRef scale:[[self.alAsset defaultRepresentation] scale] orientation:(UIImageOrientation)[[self.alAsset defaultRepresentation] orientation]];
+        }
+        
+        // 不能及时释放内存
+        //_originImage = resultImage;
+        
+        //return resultImage ? resultImage : [self originImage];
+        return resultImage;
     }
-    _originImage = resultImage;
-    return resultImage;
 }
 
 /**
@@ -402,57 +459,74 @@
 - (NSInteger)requestOriginImageWithCompletion:(void (^)(UIImage *, NSDictionary *))completion
                           withProgressHandler:(PHAssetImageProgressHandler)phProgressHandler
 {
-    if (UsePhotoKit) {
-        if (_originImage) {
-            // 如果已经有缓存的图片则直接拿缓存的图片
-            if (completion) {
-                completion(_originImage, nil);
+    @autoreleasepool {
+        if (UsePhotoKit) {
+            if (_originImage) {
+                // 如果已经有缓存的图片则直接拿缓存的图片
+                dispatch_main_async_safe(^{
+                    if (completion) {
+                        completion(_originImage, nil);
+                    }
+                })
+                return 0;
+            } else {
+            
+                PHImageRequestOptions *originRequestOptions = [[PHImageRequestOptions alloc] init];
+                // 允许访问网络
+                originRequestOptions.version = PHImageRequestOptionsVersionCurrent;
+                originRequestOptions.networkAccessAllowed = YES;
+                originRequestOptions.progressHandler = phProgressHandler;
+                self.imageRequestID = [[[DLPhotoManager sharedInstance] phCachingImageManager]
+                                       requestImageForAsset:self.phAsset
+                                       targetSize:PHImageManagerMaximumSize
+                                       contentMode:PHImageContentModeDefault
+                                       options:originRequestOptions
+                                       resultHandler:^(UIImage *result, NSDictionary *info) {
+                                           @autoreleasepool {
+                                               // 排除取消，错误，低清图三种情况，即已经获取到了高清图时，把这张高清图缓存到 _originImage 中
+                                               BOOL downloadFinined = ![[info objectForKey:PHImageCancelledKey] boolValue] &&
+                                               ![info objectForKey:PHImageErrorKey] &&
+                                               ![[info objectForKey:PHImageResultIsDegradedKey] boolValue];
+                                               
+                                               if (downloadFinined) {
+                                                   //_originImage = result;
+                                               }
+                                               if (completion) {
+                                                   completion(result, info);
+                                               }
+                                           }
+                                       }];
+                
+                return self.imageRequestID;
+                
+                /*
+                 // Completion and progress handlers are called on an arbitrary serial queue.
+                 if ([self.phAsset canPerformEditOperation:PHAssetEditOperationContent] &&
+                 !(self.phAsset.mediaSubtypes & PHAssetMediaSubtypePhotoLive))
+                 {
+                 PHContentEditingInputRequestOptions *options = [[PHContentEditingInputRequestOptions alloc] init];
+                 options.networkAccessAllowed = YES;
+                 options.canHandleAdjustmentData = ^BOOL(PHAdjustmentData *adjustmentData) {return YES;};
+                 
+                 [self.phAsset requestContentEditingInputWithOptions:options
+                 completionHandler:^(PHContentEditingInput *contentEditingInput, NSDictionary *info) {
+                 NSURL *url = [contentEditingInput fullSizeImageURL];
+                 NSData *imageData = [NSData dataWithContentsOfURL:url];
+                 _originImage = [[UIImage alloc] initWithData:imageData];
+                 }];
+                 }
+                 
+                 return 0;
+                 */
             }
-            return 0;
         } else {
-            PHImageRequestOptions *originRequestOptions = [[PHImageRequestOptions alloc] init];
-            // 允许访问网络
-            originRequestOptions.networkAccessAllowed = YES;
-            originRequestOptions.progressHandler = phProgressHandler;
-            self.imageRequestID = [[[DLPhotoManager sharedInstance] phCachingImageManager]
-                                   requestImageForAsset:self.phAsset
-                                   targetSize:PHImageManagerMaximumSize
-                                   contentMode:PHImageContentModeDefault
-                                   options:originRequestOptions
-                                   resultHandler:^(UIImage *result, NSDictionary *info) {
-                                       // 排除取消，错误，低清图三种情况，即已经获取到了高清图时，把这张高清图缓存到 _originImage 中
-                                       BOOL downloadFinined = ![[info objectForKey:PHImageCancelledKey] boolValue] &&
-                                       ![info objectForKey:PHImageErrorKey] &&
-                                       ![[info objectForKey:PHImageResultIsDegradedKey] boolValue];
-                                       if (downloadFinined) {
-                                           _originImage = result;
-                                       }
-                                       if (completion) {
-                                           completion(result, info);
-                                       }
-                                   }];
-            
-            /*
-             *  // Completion and progress handlers are called on an arbitrary serial queue.
-            PHContentEditingInputRequestOptions *options = [[PHContentEditingInputRequestOptions alloc] init];
-            options.canHandleAdjustmentData = ^BOOL(PHAdjustmentData *adjustmentData) {
-                return YES;
-            };
-            
-            [self.phAsset requestContentEditingInputWithOptions:options
-                                              completionHandler:^(PHContentEditingInput *contentEditingInput, NSDictionary *info) {
-                                                  
-                                                  UIImage *result = [UIImage imageWithContentsOfFile:contentEditingInput.fullSizeImageURL.path];
-                                              }];
-             */
-            
-            return self.imageRequestID;
+            dispatch_main_async_safe(^{
+                if (completion) {
+                    completion([self originImage], nil);
+                }
+            })
+            return 0;
         }
-    } else {
-        if (completion) {
-            completion([self originImage], nil);
-        }
-        return 0;
     }
 }
 
@@ -502,9 +576,11 @@
     if (UsePhotoKit) {
         if (_avAsset) {
             // 如果已经有缓存的图片则直接拿缓存的图片
-            if (completion) {
-                completion(_avAsset, nil, nil);
-            }
+            dispatch_main_async_safe(^{
+                if (completion) {
+                    completion(_avAsset, nil, nil);
+                }
+            })
             return 0;
         } else {
             PHVideoRequestOptions *videoRequestOptions = [[PHVideoRequestOptions alloc] init];
@@ -552,9 +628,11 @@
             return self.avAssetRequestID;
         }
     } else {
-        if (completion) {
-            completion([self originVideoAsset], nil, nil);
-        }
+        dispatch_main_async_safe(^{
+            if (completion) {
+                completion([self originVideoAsset], nil, nil);
+            }
+        })
         return 0;
     }
 }
@@ -564,7 +642,9 @@
     if (_thumbnailImage) {
         return _thumbnailImage;
     }
+    
     __block UIImage *resultImage;
+    
     if (UsePhotoKit) {
         PHImageRequestOptions *thumbnailRequestOptions = [[PHImageRequestOptions alloc] init];
         thumbnailRequestOptions.synchronous = YES;
@@ -587,6 +667,7 @@
             resultImage = [UIImage imageWithCGImage:thumbnailImageRef];
         }
     }
+    
     _thumbnailImage = resultImage;
     return resultImage;
 }
@@ -595,9 +676,11 @@
 {
     if (UsePhotoKit) {
         if (_thumbnailImage) {
-            if (completion) {
-                completion(_thumbnailImage, nil);
-            }
+            dispatch_main_async_safe(^{
+                if (completion) {
+                    completion(_thumbnailImage, nil);
+                }
+            })
             return 0;
         } else {
             PHImageRequestOptions *thumbnailRequestOptions = [[PHImageRequestOptions alloc] init];
@@ -626,9 +709,11 @@
             return self.imageRequestID;
         }
     } else {
-        if (completion) {
-            completion([self thumbnailWithSize:size], nil);
-        }
+        dispatch_main_async_safe(^{
+            if (completion) {
+                completion([self thumbnailWithSize:size], nil);
+            }
+        })
         return 0;
     }
 }
@@ -638,7 +723,9 @@
     if (_previewImage) {
         return _previewImage;
     }
+    
     __block UIImage *resultImage;
+    
     if (UsePhotoKit) {
         PHImageRequestOptions *previewRequestOptions = [[PHImageRequestOptions alloc] init];
         previewRequestOptions.synchronous = YES;
@@ -665,6 +752,7 @@
             
         resultImage = [UIImage imageWithCGImage:fullScreenImageRef];
     }
+    
     _previewImage = resultImage;
     return resultImage;
 }
@@ -675,9 +763,11 @@
     if (UsePhotoKit) {
         if (_previewImage) {
             // 如果已经有缓存的图片则直接拿缓存的图片
-            if (completion) {
-                completion(_previewImage, nil);
-            }
+            dispatch_main_async_safe(^{
+                if (completion) {
+                    completion(_previewImage, nil);
+                }
+            })
             return 0;
         }else {
             PHImageRequestOptions *previewRequestOptions = [[PHImageRequestOptions alloc] init];
@@ -705,9 +795,11 @@
             return self.imageRequestID;
         }
     } else {
-        if (completion) {
-            completion([self previewImage], nil);
-        }
+        dispatch_main_async_safe(^{
+            if (completion) {
+                completion([self previewImage], nil);
+            }
+        })
         return 0;
     }
 }
@@ -770,6 +862,96 @@
     return NO;
 }
 
+- (BOOL)writeOriginVideoToFile:(NSString *)filePath
+{
+    if (UsePhotoKit) {
+        AVURLAsset *avURLAsset = (AVURLAsset *)[self originVideoAsset];
+        
+        /**
+         NSData *data = [NSData dataWithContentsOfURL:avURLAsset.URL];
+         [data writeToFile:filePath atomically:YES];
+         */
+        
+        AVAssetExportSession *session = [AVAssetExportSession exportSessionWithAsset:avURLAsset presetName:AVAssetExportPresetHighestQuality];
+        session.outputFileType = AVFileTypeQuickTimeMovie;
+        session.outputURL = [NSURL fileURLWithPath:filePath];
+        //session.shouldOptimizeForNetworkUse = YES;
+        
+        __block BOOL result = YES;
+        
+        //  We synchronously have the asset
+        dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+        
+        [session exportAsynchronouslyWithCompletionHandler:^{
+            switch (session.status) {
+                    
+                case AVAssetExportSessionStatusUnknown:
+                    NSLog(@"AVAssetExportSessionStatusUnknown");
+                    break;
+                    
+                case AVAssetExportSessionStatusWaiting:
+                    NSLog(@"AVAssetExportSessionStatusWaiting");
+                    break;
+                    
+                case AVAssetExportSessionStatusExporting:
+                    NSLog(@"AVAssetExportSessionStatusExporting");
+                    break;
+                    
+                case AVAssetExportSessionStatusCompleted:
+                    NSLog(@"AVAssetExportSessionStatusCompleted");
+                    break;
+                    
+                case AVAssetExportSessionStatusFailed:
+                    NSLog(@"AVAssetExportSessionStatusFailed");
+                    result = NO;
+                    break;
+                    
+                case AVAssetExportSessionStatusCancelled:
+                    NSLog(@"AVAssetExportSessionStatusCancelled");
+                    result = NO;
+                    break;
+            }
+            
+            dispatch_semaphore_signal(semaphore);
+        }];
+        
+        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+        
+        return result;
+        
+    }else{
+        [[NSFileManager defaultManager] createFileAtPath:filePath contents:nil attributes:nil];
+        NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:filePath];
+        if (filePath) {
+            NSUInteger bufferSize  = 1024;
+            long long  offset  = 0;
+            NSUInteger bytesRead   = 0;
+            uint8_t *buffer = calloc(bufferSize, sizeof(*buffer));
+            
+            NSError *error = nil;
+            do {
+                @try {
+                    bytesRead = [self.alAsset.defaultRepresentation getBytes:buffer fromOffset:offset length:bufferSize error:&error];
+                    [fileHandle writeData:[NSData dataWithBytesNoCopy:buffer length:bytesRead freeWhenDone:NO]];
+                    offset += bytesRead;
+                } @catch (NSException *exception) {
+                    free(buffer);
+                }
+                
+            } while (bytesRead > 0);
+            
+            free(buffer);
+            
+            if (error) {
+                NSLog(@">>> writeOriginVideoToFile ERROR:%@",error);
+                return NO;
+            }else{
+                return YES;
+            }
+        }
+    }
+}
+
 - (void)writeOriginVideoToFile:(NSString *)filePath completion:(void (^)(BOOL success, NSError *error))completion
 {
     if (UsePhotoKit) {
@@ -779,6 +961,8 @@
         NSData *data = [NSData dataWithContentsOfURL:avURLAsset.URL];
         [data writeToFile:filePath atomically:YES];
          */
+        
+        __block BOOL result = YES;
         
         AVAssetExportSession *session = [AVAssetExportSession exportSessionWithAsset:avURLAsset presetName:AVAssetExportPresetHighestQuality];
         session.outputFileType = AVFileTypeQuickTimeMovie;
@@ -805,43 +989,24 @@
                     
                 case AVAssetExportSessionStatusFailed:
                     NSLog(@"AVAssetExportSessionStatusFailed");
+                    result = NO;
                     break;
                     
                 case AVAssetExportSessionStatusCancelled:
                     NSLog(@"AVAssetExportSessionStatusCancelled");
+                    result = NO;
                     break;
             }
             
             if (completion) {
-                completion(YES,nil);
+                completion(result,nil);
             }
         }];
     }else{
-        [[NSFileManager defaultManager] createFileAtPath:filePath contents:nil attributes:nil];
-        NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:filePath];
-        if (filePath) {
-            NSUInteger bufferSize  = 1024;
-            long long  offset  = 0;
-            NSUInteger bytesRead   = 0;
-            uint8_t *buffer = calloc(bufferSize, sizeof(*buffer));
+        BOOL result = [self writeOriginVideoToFile:filePath];
             
-            NSError *error = nil;
-            do {
-                @try {
-                    bytesRead = [self.alAsset.defaultRepresentation getBytes:buffer fromOffset:offset length:bufferSize error:&error];
-                    [fileHandle writeData:[NSData dataWithBytesNoCopy:buffer length:bytesRead freeWhenDone:NO]];
-                    offset += bytesRead;
-                } @catch (NSException *exception) {
-                    free(buffer);
-                }
-                
-            } while (bytesRead > 0);
-            
-            free(buffer);
-            
-            if (completion) {
-                completion(YES,error);
-            }
+        if (completion) {
+            completion(result,nil);
         }
     }
 }

@@ -28,6 +28,7 @@
 #import <AVKit/AVKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import "DLPhotoPlayButton.h"
+#import "DLPhotoBarButtonItem.h"
 
 extern NSString * const DLPhotoScrollViewDidTapNotification;
 extern NSString * const DLPhotoScrollViewPlayerWillPlayNotification;
@@ -46,12 +47,14 @@ extern NSString * const DLPhotoScrollViewDidZoomNotification;
 
 @property (nonatomic, strong, readonly) UIImageView *imageView;
 @property (nonatomic, strong, readonly) DLPhotoPlayButton *playButton;
-
+@property (nonatomic, strong, readonly) DLPhotoBarButtonItem *selectionButton;
 
 - (void)startActivityAnimating;
 - (void)stopActivityAnimating;
 
 - (void)setProgress:(CGFloat)progress;
+
+- (void)reloadView;
 
 - (void)bind:(DLPhotoAsset *)asset image:(UIImage *)image requestInfo:(NSDictionary *)info;
 - (void)bind:(AVAsset *)asset requestInfo:(NSDictionary *)info;

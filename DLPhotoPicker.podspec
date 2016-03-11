@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                  = 'DLPhotoPicker'
-  s.version               = '0.5'
+  s.version               = '0.6'
   s.summary               = 'iOS control that allows picking or displaying photos and videos from user\'s photo library.'
 
   s.description           = <<-DESC
@@ -22,4 +22,7 @@ Pod::Spec.new do |s|
   s.ios.frameworks        = 'Photos','AssetsLibrary'
   s.requires_arc          = true
   s.dependency            'PureLayout', '~> 3.0.0'
+  s.dependency            'MBProgressHUD'
+    s.dependency          'SVProgressHUD'
+  s.dependency            'TOCropViewController'
 end

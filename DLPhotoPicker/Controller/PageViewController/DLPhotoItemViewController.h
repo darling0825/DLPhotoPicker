@@ -31,14 +31,14 @@
  *
  *  The notification’s `object` is a `DLPhotoAsset` that is selected
  */
-extern NSString * const DLPhotoPickerDidEnterEditModeNotification;
+extern NSString * const DLPhotoPickerDidEnterSelectModeNotification;
 
 /**
  *  Sent when asset is deselected
  *
  *  The notification’s `object` is a `DLPhotoAsset` that is deselected
  */
-extern NSString * const DLPhotoPickerDidExitEditModeNotification;
+extern NSString * const DLPhotoPickerDidExitSelectModeNotification;
 
 
 
@@ -55,4 +55,7 @@ extern NSString * const DLPhotoPickerDidExitEditModeNotification;
 - (void)playAsset:(id)sender;
 - (void)pauseAsset:(id)sender;
 
+- (void)assetDidChanded:(DLPhotoAsset *)asset;
+
 @end
+

@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
     </dependencies>
     <scenes>
-        <!--Photo View Controller-->
+        <!--Select Function-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="PhotoViewController" sceneMemberID="viewController">
@@ -50,7 +50,7 @@
                             <constraint firstItem="LPR-9o-mXs" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="134" id="S1e-W8-eaG"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="Y0s-Jb-iez"/>
+                    <navigationItem key="navigationItem" title="Select Function" id="Y0s-Jb-iez"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

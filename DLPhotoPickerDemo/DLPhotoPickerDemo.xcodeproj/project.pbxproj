@@ -16,6 +16,7 @@
 		595178C01C7C225D00000BDE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 595178BE1C7C225D00000BDE /* LaunchScreen.storyboard */; };
 		5958B1E11C7C438900A8B1F6 /* DLPhotoPicker.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5958B19F1C7C438900A8B1F6 /* DLPhotoPicker.xcassets */; };
 		5958B1E21C7C438900A8B1F6 /* DLPhotoPicker.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5958B1A11C7C438900A8B1F6 /* DLPhotoPicker.strings */; };
+		595905461C916CEB00F390A1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 595905451C916CEB00F390A1 /* InfoPlist.strings */; };
 		59604B041C804F3C00339DDE /* PhotoPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59604B031C804F3C00339DDE /* PhotoPickerViewController.m */; };
 /* End PBXBuildFile section */
 
@@ -116,8 +117,11 @@
 		5958B1FA1C7C513C00A8B1F6 /* DLPhotoPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPhotoPageViewController.m; sourceTree = "<group>"; };
 		5958B1FD1C7C527B00A8B1F6 /* DLPhotoPlayButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoPlayButton.h; sourceTree = "<group>"; };
 		5958B1FE1C7C527B00A8B1F6 /* DLPhotoPlayButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPhotoPlayButton.m; sourceTree = "<group>"; };
+		595905451C916CEB00F390A1 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
 		59604B021C804F3C00339DDE /* PhotoPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoPickerViewController.h; sourceTree = "<group>"; };
 		59604B031C804F3C00339DDE /* PhotoPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoPickerViewController.m; sourceTree = "<group>"; };
+		5996F30B1C8E82E400A70C87 /* AssetActivityProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetActivityProvider.h; sourceTree = "<group>"; };
+		5996F30C1C8E82E400A70C87 /* AssetActivityProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetActivityProvider.m; sourceTree = "<group>"; };
 		858D99B433ECC6DC3B7E4022 /* Pods-DLPhotoPickerDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DLPhotoPickerDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DLPhotoPickerDemo/Pods-DLPhotoPickerDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		9DC496B897984591D0E6D28D /* Pods-DLPhotoPickerDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DLPhotoPickerDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-DLPhotoPickerDemo/Pods-DLPhotoPickerDemo.release.xcconfig"; sourceTree = "<group>"; };
 		B91ADF680AF6DE2DA6E0FD9D /* libPods-DLPhotoPickerDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DLPhotoPickerDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -167,6 +171,7 @@
 				595178BC1C7C225D00000BDE /* Assets.xcassets */,
 				595178BE1C7C225D00000BDE /* LaunchScreen.storyboard */,
 				595178C11C7C225D00000BDE /* Info.plist */,
+				595905451C916CEB00F390A1 /* InfoPlist.strings */,
 				595178B01C7C225D00000BDE /* Supporting Files */,
 			);
 			path = DLPhotoPickerDemo;
@@ -245,6 +250,8 @@
 				5958B19B1C7C438900A8B1F6 /* DLPhotoAsset.m */,
 				5958B19C1C7C438900A8B1F6 /* DLPhotoCollection.h */,
 				5958B19D1C7C438900A8B1F6 /* DLPhotoCollection.m */,
+				5996F30B1C8E82E400A70C87 /* AssetActivityProvider.h */,
+				5996F30C1C8E82E400A70C87 /* AssetActivityProvider.m */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -452,6 +459,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				595905461C916CEB00F390A1 /* InfoPlist.strings in Resources */,
 				595178C01C7C225D00000BDE /* LaunchScreen.storyboard in Resources */,
 				595178BD1C7C225D00000BDE /* Assets.xcassets in Resources */,
 				5958B1E11C7C438900A8B1F6 /* DLPhotoPicker.xcassets in Resources */,

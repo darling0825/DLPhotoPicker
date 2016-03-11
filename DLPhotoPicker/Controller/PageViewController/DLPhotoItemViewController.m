@@ -26,23 +26,22 @@
 
 
 #import <PureLayout/PureLayout.h>
+#import "NSBundle+DLPhotoPicker.h"
 #import "DLPhotoPickerViewController.h"
 #import "DLPhotoItemViewController.h"
 #import "DLPhotoScrollView.h"
-#import "NSBundle+DLPhotoPicker.h"
 #import "DLPhotoPickerDefines.h"
 #import "DLPhotoAsset.h"
 #import "DLPhotoManager.h"
 
 
-NSString * const DLPhotoPickerDidEnterEditModeNotification = @"DLPhotoPickerDidEnterEditModeNotification";
-NSString * const DLPhotoPickerDidExitEditModeNotification = @"DLPhotoPickerDidExitEditModeNotification";
+NSString * const DLPhotoPickerDidEnterSelectModeNotification = @"DLPhotoPickerDidEnterSelectModeNotification";
+NSString * const DLPhotoPickerDidExitSelectModeNotification = @"DLPhotoPickerDidExitSelectModeNotification";
 
 
 @interface DLPhotoItemViewController ()
 
 @property (nonatomic, strong) DLPhotoScrollView *scrollView;
-@property (nonatomic, assign) BOOL didSetupConstraints;
 
 @end
 
@@ -65,18 +64,17 @@ NSString * const DLPhotoPickerDidExitEditModeNotification = @"DLPhotoPickerDidEx
     return self;
 }
 
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self setupViews];
+    [self setupScrollViewButtons];
+    [self requestAssetImage];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self setupScrollViewButtons];
-    [self requestAssetImage];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -139,6 +137,13 @@ NSString * const DLPhotoPickerDidExitEditModeNotification = @"DLPhotoPickerDidEx
 {
     DLPhotoPlayButton *playButton = self.scrollView.playButton;
     [playButton addTarget:self action:@selector(playAsset:) forControlEvents:UIControlEventTouchUpInside];
+    
+    DLPhotoBarButtonItem *selectionButton = self.scrollView.selectionButton;
+    selectionButton.enabled  = [self pageItemViewController:self shouldEnableAsset:self.asset];
+    selectionButton.selected = [self.picker isSelectedForAsset:self.asset];
+    
+    [selectionButton addTarget:self action:@selector(selectionButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
+    [selectionButton addTarget:self action:@selector(selectionButtonTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
 }
 
 
@@ -233,6 +238,13 @@ NSString * const DLPhotoPickerDidExitEditModeNotification = @"DLPhotoPickerDidEx
     [alert show];
 }
 
+#pragma mark - asset chanded
+- (void)assetDidChanded:(DLPhotoAsset *)asset
+{
+    self.asset = asset;
+    [self.scrollView reloadView];
+    [self requestAssetImage];
+}
 
 #pragma mark - Playback
 
@@ -252,4 +264,108 @@ NSString * const DLPhotoPickerDidExitEditModeNotification = @"DLPhotoPickerDidEx
         [self.scrollView pauseVideo];
 }
 
+#pragma mark - Post notifications
+- (void)postEnterEditModeNotification:(id)sender
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:DLPhotoPickerDidEnterSelectModeNotification
+                                                        object:sender];
+}
+
+- (void)postExitEditModeNotification:(id)sender
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:DLPhotoPickerDidExitSelectModeNotification
+                                                        object:sender];
+}
+
+#pragma mark - Selecton Action
+- (void)selectionButtonTouchDown:(id)sender
+{
+    DLPhotoAsset *asset = self.asset;
+    
+    if ([self pageItemViewController:self shouldHighlightAsset:asset]){
+        [self pageItemViewController:self didHighlightAsset:asset];
+    }
+}
+
+- (void)selectionButtonTouchUpInside:(id)sender
+{
+    DLPhotoAsset *asset = self.asset;
+    DLPhotoBarButtonItem *selectionButton = self.scrollView.selectionButton;
+    
+    if (!selectionButton.selected){
+        if ([self pageItemViewController:self shouldSelectAsset:asset]){
+            [self.picker selectAsset:asset];
+            [selectionButton setSelected:YES];
+            [self pageItemViewController:self didSelectAsset:asset];
+            [self postEnterEditModeNotification:asset];
+        }
+        
+    }else{
+        if ([self pageItemViewController:self shouldDeselectAsset:asset]){
+            [self.picker deselectAsset:asset];
+            [selectionButton setSelected:NO];
+            [self pageItemViewController:self didDeselectAsset:asset];
+            [self postExitEditModeNotification:asset];
+        }
+    }
+    
+    [self pageItemViewController:self didUnhighlightAsset:self.asset];
+}
+
+#pragma mark - Asset scrollView delegate
+- (BOOL)pageItemViewController:(DLPhotoItemViewController *)pageItemViewController shouldEnableAsset:(DLPhotoAsset *)asset
+{
+    if ([self.picker.delegate respondsToSelector:@selector(pickerController:shouldEnableAsset:)])
+        return [self.picker.delegate pickerController:self.picker shouldEnableAsset:asset];
+    else
+        return YES;
+}
+
+- (BOOL)pageItemViewController:(DLPhotoItemViewController *)pageItemViewController shouldSelectAsset:(DLPhotoAsset *)asset
+{
+    if ([self.picker.delegate respondsToSelector:@selector(pickerController:shouldSelectAsset:)])
+        return [self.picker.delegate pickerController:self.picker shouldSelectAsset:asset];
+    else
+        return YES;
+}
+
+- (void)pageItemViewController:(DLPhotoItemViewController *)pageItemViewController didSelectAsset:(DLPhotoAsset *)asset
+{
+    if ([self.picker.delegate respondsToSelector:@selector(pickerController:didSelectAsset:)])
+        [self.picker.delegate pickerController:self.picker didSelectAsset:asset];
+}
+
+- (BOOL)pageItemViewController:(DLPhotoItemViewController *)pageItemViewController shouldDeselectAsset:(DLPhotoAsset *)asset
+{
+    if ([self.picker.delegate respondsToSelector:@selector(pickerController:shouldDeselectAsset:)])
+        return [self.picker.delegate pickerController:self.picker shouldDeselectAsset:asset];
+    else
+        return YES;
+}
+
+- (void)pageItemViewController:(DLPhotoItemViewController *)pageItemViewController didDeselectAsset:(DLPhotoAsset *)asset
+{
+    if ([self.picker.delegate respondsToSelector:@selector(pickerController:didDeselectAsset:)])
+        [self.picker.delegate pickerController:self.picker didDeselectAsset:asset];
+}
+
+- (BOOL)pageItemViewController:(DLPhotoItemViewController *)pageItemViewController shouldHighlightAsset:(DLPhotoAsset *)asset
+{
+    if ([self.picker.delegate respondsToSelector:@selector(pickerController:shouldHighlightAsset:)])
+        return [self.picker.delegate pickerController:self.picker shouldHighlightAsset:asset];
+    else
+        return YES;
+}
+
+- (void)pageItemViewController:(DLPhotoItemViewController *)pageItemViewController didHighlightAsset:(DLPhotoAsset *)asset
+{
+    if ([self.picker.delegate respondsToSelector:@selector(pickerController:didHighlightAsset:)])
+        [self.picker.delegate pickerController:self.picker didHighlightAsset:asset];
+}
+
+- (void)pageItemViewController:(DLPhotoItemViewController *)pageItemViewController didUnhighlightAsset:(DLPhotoAsset *)asset
+{
+    if ([self.picker.delegate respondsToSelector:@selector(pickerController:didUnhighlightAsset:)])
+        [self.picker.delegate pickerController:self.picker didUnhighlightAsset:asset];
+}
 @end

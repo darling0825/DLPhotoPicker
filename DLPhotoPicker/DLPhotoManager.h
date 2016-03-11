@@ -81,6 +81,11 @@ typedef NS_ENUM(NSInteger, DLAuthorizationStatus) {
  */
 @property (nonatomic, strong) PHImageRequestOptions *thumbnailRequestOptions NS_AVAILABLE_IOS(8.0);
 
+/**
+ *  default album (CameraRoll)
+ */
+@property (nonatomic, copy, readonly) NSString *defaultAlbum;
+@property (nonatomic, copy, readonly) DLPhotoCollection *defaultCollection;
 
 /**
  *  PHCachingImageManager
@@ -119,7 +124,10 @@ typedef NS_ENUM(NSInteger, DLAuthorizationStatus) {
         resultBlock:(void(^)(BOOL success))completion
         failureBlock:(void(^)(NSError *error))failure NS_AVAILABLE_IOS(8.0);
 
-//  save image
+/**
+ *  save image
+ *  if albumName is nil, the image will save to default album.(CameraRoll)
+ */
 - (void)saveImage:(UIImage *)image
           toAlbum:(NSString *)albumName
        completion:(void(^)(BOOL success))completion
@@ -221,4 +229,7 @@ typedef NS_ENUM(NSInteger, DLAuthorizationStatus) {
 - (void)startCachingImagesForAssets:(DLPhotoAsset *)asset targetSize:(CGSize)targetSize NS_AVAILABLE_IOS(8.0);
 - (void)stopCachingImagesForAssets:(DLPhotoAsset *)asset targetSize:(CGSize)targetSize NS_AVAILABLE_IOS(8.0);
 - (void)stopCachingImagesForAllAssets NS_AVAILABLE_IOS(8.0);
+
+// for test
+- (UIImage *)originImage:(DLPhotoAsset *)photoAsset;
 @end

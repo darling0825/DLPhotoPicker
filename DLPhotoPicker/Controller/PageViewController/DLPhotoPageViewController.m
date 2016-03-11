@@ -28,17 +28,26 @@
 #import "DLPhotoPageView.h"
 #import "DLPhotoItemViewController.h"
 #import "DLPhotoScrollView.h"
-#import "NSNumberFormatter+DLPhotoPicker.h"
 #import "NSBundle+DLPhotoPicker.h"
 #import "UIImage+DLPhotoPicker.h"
+#import "NSNumberFormatter+DLPhotoPicker.h"
 #import "DLPhotoPickerDefines.h"
 #import "DLPhotoAsset.h"
 #import "DLPhotoManager.h"
-#import "DLPhotoBarButtonItem.h"
 #import "DLPhotoPickerViewController.h"
+#import "MBProgressHUD.h"
+#import "AssetActivityProvider.h"
+#import "TOCropViewController.h"
+#import "SVProgressHUD.h"
+
+#import <Photos/Photos.h>
+
+
+static NSString * const AdjustmentFormatIdentifier = @"com.darlingcoder.DLPhotoPicker";
+static NSString * const AdjustmentFormatVersion = @"1.0";
 
 @interface DLPhotoPageViewController ()
-<UIPageViewControllerDataSource, UIPageViewControllerDelegate, PHPhotoLibraryChangeObserver, ALAssetsLibraryChangeObserver>
+<UIPageViewControllerDataSource, UIPageViewControllerDelegate, PHPhotoLibraryChangeObserver, ALAssetsLibraryChangeObserver, TOCropViewControllerDelegate>
 
 @property (nonatomic, assign, getter = isStatusBarHidden) BOOL statusBarHidden;
 
@@ -46,6 +55,7 @@
 @property (nonatomic, strong) DLPhotoAsset *asset;
 
 @property (nonatomic, strong) DLPhotoPageView *pageView;
+@property (nonatomic, strong) MBProgressHUD *progressHUD;
 
 @property (nonatomic, strong) UIBarButtonItem *playButton;
 @property (nonatomic, strong) UIBarButtonItem *pauseButton;
@@ -53,7 +63,13 @@
 //@property (nonatomic, strong) UIBarButtonItem *infoButton;
 @property (nonatomic, strong) UIBarButtonItem *favoriteButton;
 @property (nonatomic, strong) UIBarButtonItem *deleteButton;
-@property (nonatomic, strong) DLPhotoBarButtonItem *selectionButton;
+@property (nonatomic, strong) UIBarButtonItem *editButton;
+
+@property (nonatomic, strong)PHContentEditingInput *contentEditingInput;
+
+@property (nonatomic, strong) UIActivityViewController *activityVC;
+@property (nonatomic, strong) UIPopoverController *popoverController;
+
 
 @end
 
@@ -75,7 +91,7 @@
         self.assets          = [NSMutableArray arrayWithArray:assets];
         self.dataSource      = self;
         self.delegate        = self;
-        self.allowsSelection = YES;
+        self.allowsSelection = NO;
         self.automaticallyAdjustsScrollViewInsets = NO;
     }
     
@@ -126,53 +142,12 @@
 
 - (void)setupButtons
 {
-    DLPhotoBarButtonItem *selectionButton = [DLPhotoBarButtonItem buttonWithType:UIButtonTypeCustom];
-    selectionButton.frame = CGRectMake(0, 0, 44.0, 44.0);
-    selectionButton.isLeftButton = NO;
-    UIImage *checkmarkImage = [UIImage assetImageNamed:@"SelectButtonChecked"];
-    UIImage *uncheckmarkImage = [UIImage assetImageNamed:@"SelectButtonUnchecked"];
-    [selectionButton setImage:uncheckmarkImage forState:UIControlStateNormal];
-    [selectionButton setImage:checkmarkImage forState:UIControlStateSelected];
-    [selectionButton addTarget:self action:@selector(selectionButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
-    [selectionButton addTarget:self action:@selector(selectionButtonTouchUpInside:) forControlEvents:UIControlEventTouchUpInside];
-    _selectionButton = selectionButton;
-    
-    UIBarButtonItem *checkButton = [[UIBarButtonItem alloc] initWithCustomView:selectionButton];
-    self.navigationItem.rightBarButtonItem = checkButton;
-}
-
-- (void)selectionButtonTouchDown:(id)sender
-{
-    DLPhotoAsset *asset = self.asset;
-    
-    if ([self pageViewController:self shouldHighlightAsset:asset]){
-        [self pageViewController:self didHighlightAsset:asset];
+    if (self.asset.mediaType == DLPhotoMediaTypeImage) {
+        UIBarButtonItem *editButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit target:self action:@selector(photoEditAction:)];
+        self.navigationItem.rightBarButtonItem = editButton;
     }
 }
 
-- (void)selectionButtonTouchUpInside:(id)sender
-{
-    DLPhotoAsset *asset = self.asset;
-    
-    if (!self.selectionButton.selected){
-        if ([self pageViewController:self shouldSelectAsset:asset]){
-            [self.picker selectAsset:asset];
-            [self.selectionButton setSelected:YES];
-            [self pageViewController:self didSelectAsset:asset];
-            [self postEnterEditModeNotification:asset];
-        }
-        
-    }else{
-        if ([self pageViewController:self shouldDeselectAsset:asset]){
-            [self.picker deselectAsset:asset];
-            [self.selectionButton setSelected:NO];
-            [self pageViewController:self didDeselectAsset:asset];
-            [self postExitEditModeNotification:asset];
-        }
-    }
-    
-    [self pageViewController:self didUnhighlightAsset:self.asset];
-}
 
 #pragma mark - Photo library change observer
 - (void)registerChangeObserver
@@ -213,12 +188,17 @@
         
         // If the asset's content changed, update the image and stop any video playback.
         if ([changeDetails assetContentChanged]) {
-
+            [[self itemViewController] assetDidChanded:self.asset];
         }
         
         //  update toolbar
         [self updateToolbar];
     });
+}
+
+- (void)assetsLibraryChanged:(NSNotification *)notification
+{
+    // do nothing
 }
 
 #pragma mark - Update title
@@ -233,12 +213,6 @@
 }
 
 #pragma mark - Update toolbar/navigationbat
-- (void)updateNavigationBarItem
-{
-    BOOL isSelected = [self.picker isSelectedForAsset:self.asset];
-    [self.selectionButton setSelected:isSelected];
-}
-
 - (void)updateToolbar
 {
     if (!self.playButton){
@@ -324,17 +298,108 @@
 #pragma mark - Button Action
 - (void)photoShareAction:(UIBarButtonItem *)sender
 {
-    UIImage *image = self.asset.originImage;
-
-    UIActivityViewController *activityVC =
-    [[UIActivityViewController alloc] initWithActivityItems:@[image] applicationActivities:nil];
+    AssetActivityProvider *assetProvider = [[AssetActivityProvider alloc] initWithAsset:self.asset];
+    self.activityVC =
+    [[UIActivityViewController alloc] initWithActivityItems:@[assetProvider] applicationActivities:nil];
     
-    [self presentViewController:activityVC animated:YES completion:nil];
+    typeof(self) __weak weakSelf = self;
+    [self.activityVC setCompletionHandler:^(NSString *activityType, BOOL completed) {
+        typeof(self) __strong strongSelf = weakSelf;
+        NSLog(@">>> Activity Type selected: %@", activityType);
+        if (completed) {
+            NSLog(@">>> Activity(%@) was performed.", activityType);
+        } else {
+            if (activityType == nil) {
+                NSLog(@">>> User dismissed the view controller without making a selection.");
+            } else {
+                NSLog(@">>> Activity(%@) was not performed.", activityType);
+            }
+        }
+        
+        [assetProvider cleanup];
+        [strongSelf hideProgressHUD:YES];
+    }];
+    
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
+        if (DLiOS_8_OR_LATER) {
+            self.activityVC.popoverPresentationController.barButtonItem = sender;
+            [self presentViewController:self.activityVC animated:YES completion:^{
+                self.activityVC.excludedActivityTypes = nil;
+                self.activityVC = nil;}
+             ];
+        }else{
+            if ([self.popoverController isPopoverVisible]){
+                [self.popoverController dismissPopoverAnimated:YES];
+                self.popoverController = nil;
+            }else{
+                self.popoverController = [[UIPopoverController alloc]initWithContentViewController:self.activityVC];
+                [self.popoverController presentPopoverFromBarButtonItem:sender permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+            }
+        }
+    }else{
+        [self presentViewController:self.activityVC animated:YES completion:^{
+            self.activityVC.excludedActivityTypes = nil;
+            self.activityVC = nil;}
+         ];
+    }
+    
+    dispatch_async(dispatch_get_main_queue(), ^(void){
+        [self showProgressHUDWithMessage:nil];
+    });
 }
 
 - (void)photoInfoAction:(UIBarButtonItem *)sender
 {
     
+}
+
+- (void)photoEditAction:(UIBarButtonItem *)sender
+{
+    if (UsePhotoKit) {
+        if ([self.asset.phAsset canPerformEditOperation:PHAssetEditOperationContent] &&
+            !(self.asset.phAsset.mediaSubtypes & PHAssetMediaSubtypePhotoLive))
+        {
+            PHContentEditingInputRequestOptions *options = [[PHContentEditingInputRequestOptions alloc] init];
+            [options setCanHandleAdjustmentData:^BOOL(PHAdjustmentData *adjustmentData) {
+                //  origin image
+                return [adjustmentData.formatIdentifier isEqualToString:AdjustmentFormatIdentifier] && [adjustmentData.formatVersion isEqualToString:AdjustmentFormatVersion];
+            }];
+            
+            [self.asset.phAsset requestContentEditingInputWithOptions:options completionHandler:^(PHContentEditingInput *contentEditingInput, NSDictionary *info) {
+                
+                
+                //CIImage *fullImage = [CIImage imageWithContentsOfURL:contentEditingInput.fullSizeImageURL];
+                //NSLog(@"%@", fullImage.properties.description);
+                
+                
+                self.contentEditingInput = contentEditingInput;
+                
+                NSURL *url = [contentEditingInput fullSizeImageURL];
+                UIImage *image = [[UIImage alloc] initWithContentsOfFile:url.path];
+                //UIImage *image = contentEditingInput.displaySizeImage;
+                
+                TOCropViewController *cropController = [[TOCropViewController alloc] initWithImage:image];
+                cropController.delegate = self;
+                
+                // Uncomment this to test out locked aspect ratio sizes
+                // cropController.defaultAspectRatio = TOCropViewControllerAspectRatioSquare;
+                // cropController.aspectRatioLocked = YES;
+                
+                // Uncomment this to place the toolbar at the top of the view controller
+                // cropController.toolbarPosition = TOCropViewControllerToolbarPositionTop;
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self.navigationController presentViewController:cropController animated:YES completion:nil];
+                });
+            }];
+        }
+    }else{
+        UIImage *image = [self.asset originImage];
+        TOCropViewController *cropController = [[TOCropViewController alloc] initWithImage:image];
+        cropController.delegate = self;
+        [self.navigationController presentViewController:cropController animated:YES completion:nil];
+    }
 }
 
 - (void)photoFavoriteAction:(UIBarButtonItem *)sender
@@ -393,17 +458,11 @@
 }
 
 #pragma mark -
-/**
-- (DLPhotoAsset *)asset
-{
-    return ((DLPhotoItemViewController *)self.viewControllers[0]).asset;
-}
 
 - (DLPhotoItemViewController *)itemViewController
 {
     return (DLPhotoItemViewController *)self.viewControllers[0];
 }
-*/
 
 - (DLPhotoItemViewController *)viewControllerAtIndex:(NSUInteger)index
 {
@@ -424,6 +483,72 @@
 {
     return [self.assets indexOfObject:viewController.asset];
 }
+
+#pragma mark - Cropper Delegate
+- (void)cropViewController:(TOCropViewController *)cropViewController didCropToImage:(UIImage *)image withRect:(CGRect)cropRect angle:(NSInteger)angle
+{
+    
+    CGRect viewFrame = [self.view convertRect:CGRectZero toView:self.navigationController.view];
+    
+    //  dismiss crop View
+    [cropViewController dismissAnimatedFromParentViewController:self withCroppedImage:image toFrame:viewFrame completion:^{
+        
+        if (UsePhotoKit) {
+            
+            /*
+             *  Edit the origin image
+             */
+            // Create a PHAdjustmentData object that describes the filter that was applied.
+            NSData *data =
+            [[NSString stringWithFormat:@"%@-%ld",NSStringFromCGRect(cropRect),angle] dataUsingEncoding:NSUTF8StringEncoding];
+            
+            PHAdjustmentData *adjustmentData =
+            [[PHAdjustmentData alloc] initWithFormatIdentifier:AdjustmentFormatIdentifier formatVersion:AdjustmentFormatVersion data:data];
+            
+            // Create a PHContentEditingOutput object and write a JPEG representation of the edited object to the renderedContentURL.
+            PHContentEditingOutput *contentEditingOutput = [[PHContentEditingOutput alloc] initWithContentEditingInput:self.contentEditingInput];
+            
+            //NSData *imageData = UIImagePNGRepresentation(image);//not work
+            NSData *imageData = UIImageJPEGRepresentation(image, 1.0f);
+            [imageData writeToURL:[contentEditingOutput renderedContentURL] atomically:YES];
+            [contentEditingOutput setAdjustmentData:adjustmentData];
+            
+            // Ask the shared PHPhotoLinrary to perform the changes.
+            [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+                PHAssetChangeRequest *request = [PHAssetChangeRequest changeRequestForAsset:self.asset.phAsset];
+                request.contentEditingOutput = contentEditingOutput;
+            } completionHandler:^(BOOL success, NSError *error) {
+                if (!success) {
+                    NSLog(@">>> PHContentEditingInputRequest Error: %@", error);
+                }else{
+                    /*
+                     *  use method -photoLibraryDidChange: instead
+                     */
+                    //[[self itemViewController] assetDidChanded:self.asset];
+                }
+            }];
+            
+        }else{
+            
+            //  Saved to default album
+            [[DLPhotoManager sharedInstance] saveImage:image toAlbum:nil completion:^(BOOL success) {
+                
+                [SVProgressHUD setBackgroundColor:[UIColor blackColor]];
+                [SVProgressHUD setForegroundColor:[UIColor whiteColor]];
+                [SVProgressHUD showSuccessWithStatus:DLPhotoPickerLocalizedString(@"Saved to default album.",nil) maskType:SVProgressHUDMaskTypeBlack];
+                
+                //  dismiss after 2 second
+                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC);
+                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                    [SVProgressHUD dismiss];
+                });
+            } failure:^(NSError *error) {
+                
+            }];
+        }
+    }];
+}
+
 
 #pragma mark - Page view controller data source
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
@@ -472,7 +597,6 @@
         
         [self updateTitle:index + 1];
         [self updateToolbar];
-        [self updateNavigationBarItem];
     }
 }
 
@@ -647,75 +771,27 @@
 }
 
 
-#pragma mark - Post notifications
-- (void)postEnterEditModeNotification:(id)sender
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:DLPhotoPickerDidEnterEditModeNotification
-                                                        object:sender];
+#pragma mark - Action Progress
+
+- (MBProgressHUD *)progressHUD {
+    if (!_progressHUD) {
+        _progressHUD = [[MBProgressHUD alloc] initWithView:self.view];
+        _progressHUD.minSize = CGSizeMake(120, 120);
+        _progressHUD.minShowTime = 1;
+        [self.view addSubview:_progressHUD];
+    }
+    return _progressHUD;
 }
 
-- (void)postExitEditModeNotification:(id)sender
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:DLPhotoPickerDidExitEditModeNotification
-                                                        object:sender];
+- (void)showProgressHUDWithMessage:(NSString *)message {
+    self.progressHUD.labelText = message;
+    self.progressHUD.mode = MBProgressHUDModeIndeterminate;
+    [self.progressHUD show:YES];
+    self.navigationController.navigationBar.userInteractionEnabled = NO;
 }
 
-#pragma mark - Asset scrollView delegate
-
-- (BOOL)pageViewController:(DLPhotoPageViewController *)pageViewController shouldEnableAsset:(DLPhotoAsset *)asset
-{
-    if ([self.picker.delegate respondsToSelector:@selector(pickerController:shouldEnableAsset:)])
-        return [self.picker.delegate pickerController:self.picker shouldEnableAsset:asset];
-    else
-        return YES;
+- (void)hideProgressHUD:(BOOL)animated {
+    [self.progressHUD hide:animated];
+    self.navigationController.navigationBar.userInteractionEnabled = YES;
 }
-
-- (BOOL)pageViewController:(DLPhotoPageViewController *)pageViewController shouldSelectAsset:(DLPhotoAsset *)asset
-{
-    if ([self.picker.delegate respondsToSelector:@selector(pickerController:shouldSelectAsset:)])
-        return [self.picker.delegate pickerController:self.picker shouldSelectAsset:asset];
-    else
-        return YES;
-}
-
-- (void)pageViewController:(DLPhotoPageViewController *)pageViewController didSelectAsset:(DLPhotoAsset *)asset
-{
-    if ([self.picker.delegate respondsToSelector:@selector(pickerController:didSelectAsset:)])
-        [self.picker.delegate pickerController:self.picker didSelectAsset:asset];
-}
-
-- (BOOL)pageViewController:(DLPhotoPageViewController *)pageViewController shouldDeselectAsset:(DLPhotoAsset *)asset
-{
-    if ([self.picker.delegate respondsToSelector:@selector(pickerController:shouldDeselectAsset:)])
-        return [self.picker.delegate pickerController:self.picker shouldDeselectAsset:asset];
-    else
-        return YES;
-}
-
-- (void)pageViewController:(DLPhotoPageViewController *)pageViewController didDeselectAsset:(DLPhotoAsset *)asset
-{
-    if ([self.picker.delegate respondsToSelector:@selector(pickerController:didDeselectAsset:)])
-        [self.picker.delegate pickerController:self.picker didDeselectAsset:asset];
-}
-
-- (BOOL)pageViewController:(DLPhotoPageViewController *)pageViewController shouldHighlightAsset:(DLPhotoAsset *)asset
-{
-    if ([self.picker.delegate respondsToSelector:@selector(pickerController:shouldHighlightAsset:)])
-        return [self.picker.delegate pickerController:self.picker shouldHighlightAsset:asset];
-    else
-        return YES;
-}
-
-- (void)pageViewController:(DLPhotoPageViewController *)pageViewController didHighlightAsset:(DLPhotoAsset *)asset
-{
-    if ([self.picker.delegate respondsToSelector:@selector(pickerController:didHighlightAsset:)])
-        [self.picker.delegate pickerController:self.picker didHighlightAsset:asset];
-}
-
-- (void)pageViewController:(DLPhotoPageViewController *)pageViewController didUnhighlightAsset:(DLPhotoAsset *)asset
-{
-    if ([self.picker.delegate respondsToSelector:@selector(pickerController:didUnhighlightAsset:)])
-        [self.picker.delegate pickerController:self.picker didUnhighlightAsset:asset];
-}
-
 @end
