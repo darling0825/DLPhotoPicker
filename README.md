@@ -1,6 +1,8 @@
 # DLPhotoPicker
 iOS control that allows picking or displaying photos and videos from user's photo library.
 
+[![Build Status](https://travis-ci.org/darling0825/DLPhotoPicker.svg?branch=master)](https://travis-ci.org/darling0825/DLPhotoPicker)
+
 # Installation with CocoaPods
 [CocoaPods](http://cocoapods.org) is a dependency manager for Objective-C, which automates and simplifies the process of using 3rd-party libraries like DLPhotoPicker in your projects.  You can install it with the following command:
 
