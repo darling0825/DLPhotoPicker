@@ -255,6 +255,8 @@ ALAssetsLibraryChangeObserver, DLPhotoCollectionViewControllerDelegate>
         }
         if (insertedAssetGroup.count > 0){
             for (NSURL *groupUrl in insertedAssetGroup) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
                 [[[DLPhotoManager sharedInstance] assetsLibrary] groupForURL:groupUrl resultBlock:^(ALAssetsGroup *group) {
                     if (group) {
                         DLPhotoCollection *newCollection = [[DLPhotoCollection alloc] initWithAssetCollection:group];
@@ -263,10 +265,13 @@ ALAssetsLibraryChangeObserver, DLPhotoCollectionViewControllerDelegate>
                 } failureBlock:^(NSError *error) {
                     NSLog(@">>> %@",error);
                 }];
+#pragma clang diagnostic pop
             }
         }
         if (updatedAssetGroup.count >0){
             for (NSURL *groupUrl in updatedAssetGroup) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
                 NSDictionary *queryDictionInURL = [strongSelf queryStringToDictionaryOfNSURL:groupUrl];
                 NSString *groupId = queryDictionInURL[@"id"];
                 
@@ -296,6 +301,7 @@ ALAssetsLibraryChangeObserver, DLPhotoCollectionViewControllerDelegate>
                 } failureBlock:^(NSError *error) {
                     NSLog(@">>> %@",error);
                 }];
+#pragma clang diagnostic pop
                 
                 //
                 if (!currentAssetsGroupIsInUpdatedAssetGroup && [groupId isEqualToString:currentAssetGroupId]){
