@@ -46,6 +46,10 @@ $ pod install
 ![image](https://github.com/darling0825/DLPhotoPicker/blob/master/Screenshot/13.PNG)
 ![image](https://github.com/darling0825/DLPhotoPicker/blob/master/Screenshot/14.PNG)
 
+#Features
+- Support AssetsLibrary(iOS7) and Photos(iOS 8 or later) framework.
+- Support photo display, edit and pick.
+- Suppert save the photo to a album and save to document of app sandbox.
 
 # Usage
 
