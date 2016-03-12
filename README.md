@@ -35,6 +35,10 @@ $ pod install
 ![image](https://github.com/darling0825/DLPhotoPicker/blob/master/Screenshot/08.PNG)
 ![image](https://github.com/darling0825/DLPhotoPicker/blob/master/Screenshot/09.PNG)
 ![image](https://github.com/darling0825/DLPhotoPicker/blob/master/Screenshot/10.PNG)
+![image](https://github.com/darling0825/DLPhotoPicker/blob/master/Screenshot/11.PNG)
+![image](https://github.com/darling0825/DLPhotoPicker/blob/master/Screenshot/12.PNG)
+![image](https://github.com/darling0825/DLPhotoPicker/blob/master/Screenshot/13.PNG)
+![image](https://github.com/darling0825/DLPhotoPicker/blob/master/Screenshot/14.PNG)
 
 
 # Usage
