@@ -323,6 +323,8 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
         }];
         
     }else{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
         [self.assetsLibrary addAssetsGroupAlbumWithName:albumName resultBlock:^(ALAssetsGroup *group) {
             if (completion) {
                 if (group) {
@@ -338,6 +340,7 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
             }
         }];
     }
+#pragma clang diagnostic pop
 }
 
 - (void)removeAlbum:(DLPhotoCollection *)photoCollection
@@ -431,11 +434,14 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
         }
         
     }else{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
         [self.assetsLibrary writeImageToSavedPhotosAlbum:image.CGImage
                                              orientation:(ALAssetOrientation)image.imageOrientation
                                          completionBlock:[self _resultBlockOfAddingToAlbum:albumName
                                                                                 completion:completion
                                                                                    failure:failure]];
+#pragma clang diagnostic pop
     }
 }
 
@@ -479,10 +485,13 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
             } failureBlock:failure];
         }
     }else{
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
         [self.assetsLibrary writeVideoAtPathToSavedPhotosAlbum:videoUrl
                                                completionBlock:[self _resultBlockOfAddingToAlbum:albumName
                                                                                       completion:completion
                                                                                          failure:failure]];
+#pragma clang diagnostic pop
     }
 }
 

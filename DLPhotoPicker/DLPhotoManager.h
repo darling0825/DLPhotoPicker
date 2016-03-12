@@ -99,7 +99,7 @@ typedef NS_ENUM(NSInteger, DLAuthorizationStatus) {
  */
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated-declarations"
-- (ALAssetsLibrary *)assetsLibrary;// NS_DEPRECATED_IOS(4_0, 7_0, "Use Photos framework instead");
+- (ALAssetsLibrary *)assetsLibrary NS_DEPRECATED_IOS(4_0, 7_0, "Use Photos framework instead");
 #pragma clang diagnostic pop
 
 /**
