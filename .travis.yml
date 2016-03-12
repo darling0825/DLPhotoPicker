@@ -3,6 +3,6 @@ osx_image: xcode7.1
 before_install:
   - pod update --project-directory=./DLPhotoPickerDemo
 script:
-  - xctool -workspace DLPhotoPickerDemo/DLPhotoPickerDemo.xcworkspace -scheme DLPhotoPickerDemo -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
+  - xctool -workspace DLPhotoPickerDemo/DLPhotoPickerDemo.xcworkspace -scheme DLPhotoPickerDemo -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES
 after_success:
   - bash <(curl -s https://codecov.io/bash)
