@@ -3,6 +3,13 @@ iOS control that allows picking or displaying photos and videos from user's phot
 
 [![Build Status](https://travis-ci.org/darling0825/DLPhotoPicker.svg?branch=master)](https://travis-ci.org/darling0825/DLPhotoPicker)
 [![codecov.io](https://codecov.io/github/darling0825/DLPhotoPicker/coverage.svg?branch=master)](https://codecov.io/github/darling0825/DLPhotoPicker?branch=master)
+[![CocoaPods](https://img.shields.io/cocoapods/v/DLPhotoPicker.svg)]()
+
+[![GitHub watchers](https://img.shields.io/github/watchers/darling0825/DLPhotoPicker.svg?style=social&label=Watch)]()
+[![GitHub stars](https://img.shields.io/github/stars/darling0825/DLPhotoPicker.svg)](https://github.com/darling0825/DLPhotoPicker/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/darling0825/DLPhotoPicker.svg)](https://github.com/darling0825/DLPhotoPicker/network)
+[![GitHub issues](https://img.shields.io/github/issues/darling0825/DLPhotoPicker.svg)](https://github.com/darling0825/DLPhotoPicker/issues)
+
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/darling0825/DLPhotoPicker/master/LICENSE)
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/darling0825/DLPhotoPicker.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=%5Bobject%20Object%5D)
 
