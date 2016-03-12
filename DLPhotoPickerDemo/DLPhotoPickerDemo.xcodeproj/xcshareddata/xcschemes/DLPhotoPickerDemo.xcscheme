@@ -28,6 +28,16 @@
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5977D9831C93BEFD005C0A4B"
+               BuildableName = "DLPhotoPickerDemoUITests.xctest"
+               BlueprintName = "DLPhotoPickerDemoUITests"
+               ReferencedContainer = "container:DLPhotoPickerDemo.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

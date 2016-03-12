@@ -516,7 +516,11 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
         /**
          *  can not work
          */
+
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
         [self removeAssetURL:photoAssets resultBlock:completion failureBlock:failure];
+#pragma clang diagnostic pop
     }
 }
 
@@ -786,7 +790,10 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
         }
         
         // Add the asset to the custom photo album
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
         [self addAssetURL:assetURL toAlbum:albumName resultBlock:completion failureBlock:failure];
+#pragma clang diagnostic pop
     };
 }
 

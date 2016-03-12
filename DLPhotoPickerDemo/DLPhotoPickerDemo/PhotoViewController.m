@@ -7,7 +7,7 @@
 //
 
 #import "PhotoViewController.h"
-#import <DLPhotoPicker/DLPhotoPicker.h>
+#import "DLPhotoPicker.h"
 #import "PhotoPickerViewController.h"
 
 @interface PhotoViewController ()<DLPhotoPickerViewControllerDelegate>

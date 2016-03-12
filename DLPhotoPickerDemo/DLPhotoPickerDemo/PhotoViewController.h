@@ -10,6 +10,7 @@
 
 @interface PhotoViewController : UIViewController
 
+- (IBAction)clickPhotoDisplayAction:(id)sender;
 
 @end
 

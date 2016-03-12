@@ -22,7 +22,10 @@ typedef NS_ENUM(NSInteger, DLPhotoMediaType) {
 @interface DLPhotoAsset : NSObject
 
 @property (nonatomic, strong) PHAsset *phAsset;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 @property (nonatomic, strong) ALAsset *alAsset;
+#pragma clang diagnostic pop
 @property (nonatomic, strong) AVAsset *avAsset;
 @property (nonatomic, copy) NSString *albumName;
 

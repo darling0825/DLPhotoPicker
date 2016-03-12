@@ -25,13 +25,13 @@
  */
 
 #import <UIKit/UIKit.h>
-#import <DLPhotoPicker/DLPhotoPicker.h>
 
 
-@interface PhotoPickerViewController : UITableViewController<DLPhotoPickerViewControllerDelegate>
+
+@interface PhotoPickerViewController : UITableViewController
 
 @property (nonatomic, copy) NSArray *assets;
 @property (nonatomic, strong) NSDateFormatter *dateFormatter;
 
-
+- (void)pickAssets:(id)sender;
 @end

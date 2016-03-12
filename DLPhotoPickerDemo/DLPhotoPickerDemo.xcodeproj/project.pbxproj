@@ -18,7 +18,26 @@
 		5958B1E21C7C438900A8B1F6 /* DLPhotoPicker.strings in Resources */ = {isa = PBXBuildFile; fileRef = 5958B1A11C7C438900A8B1F6 /* DLPhotoPicker.strings */; };
 		595905461C916CEB00F390A1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 595905451C916CEB00F390A1 /* InfoPlist.strings */; };
 		59604B041C804F3C00339DDE /* PhotoPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59604B031C804F3C00339DDE /* PhotoPickerViewController.m */; };
+		5977D9871C93BEFD005C0A4B /* DLPhotoPickerDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5977D9861C93BEFD005C0A4B /* DLPhotoPickerDemoUITests.m */; };
+		5977D9931C93C2C4005C0A4B /* libPods-DLPhotoPickerDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5977D9921C93C2C4005C0A4B /* libPods-DLPhotoPickerDemo.a */; };
+		5977D9941C93C2F7005C0A4B /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 595178B71C7C225D00000BDE /* PhotoViewController.m */; };
+		5977D9951C93C2F7005C0A4B /* PhotoPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59604B031C804F3C00339DDE /* PhotoPickerViewController.m */; };
+		5977D9971C93C365005C0A4B /* libDLPhotoPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5977D9961C93C365005C0A4B /* libDLPhotoPicker.a */; };
+		5977D9991C93C39C005C0A4B /* libMBProgressHUD.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5977D9981C93C39C005C0A4B /* libMBProgressHUD.a */; };
+		5977D99B1C93C39F005C0A4B /* libPureLayout.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5977D99A1C93C39F005C0A4B /* libPureLayout.a */; };
+		5977D99D1C93C3A2005C0A4B /* libSVProgressHUD.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5977D99C1C93C3A2005C0A4B /* libSVProgressHUD.a */; };
+		5977D99F1C93C3A5005C0A4B /* libTOCropViewController.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5977D99E1C93C3A5005C0A4B /* libTOCropViewController.a */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5977D9891C93BEFD005C0A4B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 595178A51C7C225D00000BDE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 595178AC1C7C225D00000BDE;
+			remoteInfo = DLPhotoPickerDemo;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		5924FA721C8967C000B82A18 /* DLPhotoBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoBarButtonItem.h; sourceTree = "<group>"; };
@@ -120,6 +139,17 @@
 		595905451C916CEB00F390A1 /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
 		59604B021C804F3C00339DDE /* PhotoPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoPickerViewController.h; sourceTree = "<group>"; };
 		59604B031C804F3C00339DDE /* PhotoPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoPickerViewController.m; sourceTree = "<group>"; };
+		5977D9841C93BEFD005C0A4B /* DLPhotoPickerDemoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DLPhotoPickerDemoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5977D9861C93BEFD005C0A4B /* DLPhotoPickerDemoUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DLPhotoPickerDemoUITests.m; sourceTree = "<group>"; };
+		5977D9881C93BEFD005C0A4B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		5977D98E1C93BF23005C0A4B /* libDLPhotoPicker.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libDLPhotoPicker.a; path = "Pods/../build/Debug-iphoneos/libDLPhotoPicker.a"; sourceTree = "<group>"; };
+		5977D9901C93BF2F005C0A4B /* libPods-DLPhotoPickerDemo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-DLPhotoPickerDemo.a"; path = "Pods/../build/Debug-iphoneos/libPods-DLPhotoPickerDemo.a"; sourceTree = "<group>"; };
+		5977D9921C93C2C4005C0A4B /* libPods-DLPhotoPickerDemo.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libPods-DLPhotoPickerDemo.a"; path = "Pods/../build/Debug-iphoneos/libPods-DLPhotoPickerDemo.a"; sourceTree = "<group>"; };
+		5977D9961C93C365005C0A4B /* libDLPhotoPicker.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libDLPhotoPicker.a; path = "Pods/../build/Debug-iphoneos/libDLPhotoPicker.a"; sourceTree = "<group>"; };
+		5977D9981C93C39C005C0A4B /* libMBProgressHUD.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMBProgressHUD.a; path = "Pods/../build/Debug-iphoneos/libMBProgressHUD.a"; sourceTree = "<group>"; };
+		5977D99A1C93C39F005C0A4B /* libPureLayout.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPureLayout.a; path = "Pods/../build/Debug-iphoneos/libPureLayout.a"; sourceTree = "<group>"; };
+		5977D99C1C93C3A2005C0A4B /* libSVProgressHUD.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSVProgressHUD.a; path = "Pods/../build/Debug-iphoneos/libSVProgressHUD.a"; sourceTree = "<group>"; };
+		5977D99E1C93C3A5005C0A4B /* libTOCropViewController.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTOCropViewController.a; path = "Pods/../build/Debug-iphoneos/libTOCropViewController.a"; sourceTree = "<group>"; };
 		5996F30B1C8E82E400A70C87 /* AssetActivityProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetActivityProvider.h; sourceTree = "<group>"; };
 		5996F30C1C8E82E400A70C87 /* AssetActivityProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetActivityProvider.m; sourceTree = "<group>"; };
 		858D99B433ECC6DC3B7E4022 /* Pods-DLPhotoPickerDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DLPhotoPickerDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DLPhotoPickerDemo/Pods-DLPhotoPickerDemo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -136,6 +166,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5977D9811C93BEFD005C0A4B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5977D99F1C93C3A5005C0A4B /* libTOCropViewController.a in Frameworks */,
+				5977D99D1C93C3A2005C0A4B /* libSVProgressHUD.a in Frameworks */,
+				5977D99B1C93C39F005C0A4B /* libPureLayout.a in Frameworks */,
+				5977D9991C93C39C005C0A4B /* libMBProgressHUD.a in Frameworks */,
+				5977D9971C93C365005C0A4B /* libDLPhotoPicker.a in Frameworks */,
+				5977D9931C93C2C4005C0A4B /* libPods-DLPhotoPickerDemo.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -144,6 +187,7 @@
 			children = (
 				5958B17F1C7C438900A8B1F6 /* DLPhotoPicker */,
 				595178AF1C7C225D00000BDE /* DLPhotoPickerDemo */,
+				5977D9851C93BEFD005C0A4B /* DLPhotoPickerDemoUITests */,
 				595178AE1C7C225D00000BDE /* Products */,
 				EEB51D61AA8E6458A4D211E3 /* Pods */,
 				8400D35598898F8245B38B2A /* Frameworks */,
@@ -154,6 +198,7 @@
 			isa = PBXGroup;
 			children = (
 				595178AD1C7C225D00000BDE /* DLPhotoPickerDemo.app */,
+				5977D9841C93BEFD005C0A4B /* DLPhotoPickerDemoUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -355,9 +400,26 @@
 			path = PageViewController;
 			sourceTree = "<group>";
 		};
+		5977D9851C93BEFD005C0A4B /* DLPhotoPickerDemoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				5977D9861C93BEFD005C0A4B /* DLPhotoPickerDemoUITests.m */,
+				5977D9881C93BEFD005C0A4B /* Info.plist */,
+			);
+			path = DLPhotoPickerDemoUITests;
+			sourceTree = "<group>";
+		};
 		8400D35598898F8245B38B2A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5977D99E1C93C3A5005C0A4B /* libTOCropViewController.a */,
+				5977D99C1C93C3A2005C0A4B /* libSVProgressHUD.a */,
+				5977D99A1C93C39F005C0A4B /* libPureLayout.a */,
+				5977D9981C93C39C005C0A4B /* libMBProgressHUD.a */,
+				5977D9961C93C365005C0A4B /* libDLPhotoPicker.a */,
+				5977D9921C93C2C4005C0A4B /* libPods-DLPhotoPickerDemo.a */,
+				5977D9901C93BF2F005C0A4B /* libPods-DLPhotoPickerDemo.a */,
+				5977D98E1C93BF23005C0A4B /* libDLPhotoPicker.a */,
 				B91ADF680AF6DE2DA6E0FD9D /* libPods-DLPhotoPickerDemo.a */,
 			);
 			name = Frameworks;
@@ -395,6 +457,24 @@
 			productReference = 595178AD1C7C225D00000BDE /* DLPhotoPickerDemo.app */;
 			productType = "com.apple.product-type.application";
 		};
+		5977D9831C93BEFD005C0A4B /* DLPhotoPickerDemoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5977D98D1C93BEFD005C0A4B /* Build configuration list for PBXNativeTarget "DLPhotoPickerDemoUITests" */;
+			buildPhases = (
+				5977D9801C93BEFD005C0A4B /* Sources */,
+				5977D9811C93BEFD005C0A4B /* Frameworks */,
+				5977D9821C93BEFD005C0A4B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5977D98A1C93BEFD005C0A4B /* PBXTargetDependency */,
+			);
+			name = DLPhotoPickerDemoUITests;
+			productName = DLPhotoPickerDemoUITests;
+			productReference = 5977D9841C93BEFD005C0A4B /* DLPhotoPickerDemoUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -406,6 +486,10 @@
 				TargetAttributes = {
 					595178AC1C7C225D00000BDE = {
 						CreatedOnToolsVersion = 7.2.1;
+					};
+					5977D9831C93BEFD005C0A4B = {
+						CreatedOnToolsVersion = 7.2.1;
+						TestTargetID = 595178AC1C7C225D00000BDE;
 					};
 				};
 			};
@@ -450,6 +534,7 @@
 			projectRoot = "";
 			targets = (
 				595178AC1C7C225D00000BDE /* DLPhotoPickerDemo */,
+				5977D9831C93BEFD005C0A4B /* DLPhotoPickerDemoUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -465,6 +550,13 @@
 				5958B1E11C7C438900A8B1F6 /* DLPhotoPicker.xcassets in Resources */,
 				595178BB1C7C225D00000BDE /* Main.storyboard in Resources */,
 				5958B1E21C7C438900A8B1F6 /* DLPhotoPicker.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5977D9821C93BEFD005C0A4B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -530,7 +622,25 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5977D9801C93BEFD005C0A4B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5977D9941C93C2F7005C0A4B /* PhotoViewController.m in Sources */,
+				5977D9951C93C2F7005C0A4B /* PhotoPickerViewController.m in Sources */,
+				5977D9871C93BEFD005C0A4B /* DLPhotoPickerDemoUITests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5977D98A1C93BEFD005C0A4B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 595178AC1C7C225D00000BDE /* DLPhotoPickerDemo */;
+			targetProxy = 5977D9891C93BEFD005C0A4B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		595178B91C7C225D00000BDE /* Main.storyboard */ = {
@@ -669,6 +779,7 @@
 			baseConfigurationReference = 858D99B433ECC6DC3B7E4022 /* Pods-DLPhotoPickerDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				INFOPLIST_FILE = DLPhotoPickerDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -682,11 +793,40 @@
 			baseConfigurationReference = 9DC496B897984591D0E6D28D /* Pods-DLPhotoPickerDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
 				INFOPLIST_FILE = DLPhotoPickerDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.darlingcoder.DLPhotoPickerDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		5977D98B1C93BEFD005C0A4B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = DLPhotoPickerDemoUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.darlingcoder.DLPhotoPickerDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = DLPhotoPickerDemo;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		5977D98C1C93BEFD005C0A4B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = DLPhotoPickerDemoUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.darlingcoder.DLPhotoPickerDemoUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = DLPhotoPickerDemo;
+				USES_XCTRUNNER = YES;
 			};
 			name = Release;
 		};
@@ -710,6 +850,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		5977D98D1C93BEFD005C0A4B /* Build configuration list for PBXNativeTarget "DLPhotoPickerDemoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5977D98B1C93BEFD005C0A4B /* Debug */,
+				5977D98C1C93BEFD005C0A4B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

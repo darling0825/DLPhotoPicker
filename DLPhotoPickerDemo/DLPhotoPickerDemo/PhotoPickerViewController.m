@@ -24,11 +24,15 @@
  
  */
 
+#import "DLPhotoPicker.h"
 #import "PhotoPickerViewController.h"
 
 
 #define TableViewRowHeight 120.0f
 
+@interface PhotoPickerViewController()<DLPhotoPickerViewControllerDelegate>
+
+@end
 
 @implementation PhotoPickerViewController
 

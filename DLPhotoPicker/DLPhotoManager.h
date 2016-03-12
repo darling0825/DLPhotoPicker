@@ -97,8 +97,10 @@ typedef NS_ENUM(NSInteger, DLAuthorizationStatus) {
  *  PHCachingImageManager
  *  only iOS 8 or below
  */
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
 - (ALAssetsLibrary *)assetsLibrary;// NS_DEPRECATED_IOS(4_0, 7_0, "Use Photos framework instead");
-
+#pragma clang diagnostic pop
 
 /**
  *  checkAuthorizationStatus
@@ -166,9 +168,15 @@ typedef NS_ENUM(NSInteger, DLAuthorizationStatus) {
           failureBlock:(void(^)(NSError *error))failure NS_DEPRECATED_IOS(4_0, 7_0, "Use saveImage:toAlbum:completion:failure: instead");
 
 
-// photo edit
+/**
+ *  Photo edit
+ *
+ *  @param asset      The asset will edit
+ *  @param completion completion
+ */
 - (void)requestContentEditing:(DLPhotoAsset *)asset
                    completion:(void (^)(UIImage *image, PHContentEditingInput *contentEditingInput, NSDictionary *info))completion NS_AVAILABLE_IOS(8.0);
+
 - (void)saveContentEditing:(DLPhotoAsset *)asset
                      image:(UIImage *)image
        contentEditingInput:(PHContentEditingInput *)contentEditingInput
