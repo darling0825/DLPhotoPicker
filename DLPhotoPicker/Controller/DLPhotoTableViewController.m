@@ -546,6 +546,7 @@ ALAssetsLibraryChangeObserver, DLPhotoCollectionViewControllerDelegate>
         DLPhotoCollectionViewController *photoCollectionViewController = [[DLPhotoCollectionViewController alloc] init];
         photoCollectionViewController.delegate = self;
         photoCollectionViewController.photoCollection = collection;
+        photoCollectionViewController.hidesBottomBarWhenPushed = self.picker.hidesBottomBarWhenPushedInAssetView;
         
         self.photoCollectionViewController = photoCollectionViewController;
         self.selectedPhotoCollection = collection;

@@ -48,6 +48,12 @@ typedef NS_ENUM(NSInteger, DLPhotoPickerType) {
  */
 @property (nonatomic, assign) BOOL showsCancelButton;
 
+
+/**
+ *  Determines whether or not the bottombar is visible in the asset view.
+ */
+@property (nonatomic, assign) BOOL hidesBottomBarWhenPushedInAssetView;
+
 /**
  The navigation title used by the DLPhotoPickerViewController.
  */

@@ -26,10 +26,11 @@ NSString * const DLPhotoPickerSelectedAssetsDidChangeNotification = @"DLPhotoPic
 {
     self = [super init];
     if (self) {
-        _showsNumberOfAssets        = YES;
-        _showsCancelButton          = YES;
-        _selectedAssets             = [@[] mutableCopy];
-        _maxNumberOfSelectedToShare = 30;
+        _showsNumberOfAssets                    = YES;
+        _showsCancelButton                      = YES;
+        _hidesBottomBarWhenPushedInAssetView    = YES;
+        _selectedAssets                         = [@[] mutableCopy];
+        _maxNumberOfSelectedToShare             = 30;
     }
     return self;
 }

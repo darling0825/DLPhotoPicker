@@ -1046,10 +1046,10 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
         }
     }else{
         DLPhotoPageViewController *vc = [[DLPhotoPageViewController alloc] initWithAssets:self.assets];
-        vc.allowsSelection = YES;
-        vc.pageIndex = indexPath.row;
-        
-        self.pageViewController = vc;
+        vc.allowsSelection          = YES;
+        vc.pageIndex                = indexPath.row;
+        vc.hidesBottomBarWhenPushed = YES;
+        self.pageViewController     = vc;
         
         [self.navigationController pushViewController:vc animated:YES];
     }
