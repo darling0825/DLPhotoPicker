@@ -21,16 +21,22 @@ NSString * const DLPhotoPickerSelectedAssetsDidChangeNotification = @"DLPhotoPic
 @end
 
 @implementation DLPhotoPickerViewController
+@synthesize delegate;
 
--(instancetype)init
+- (instancetype)init
 {
     self = [super init];
     if (self) {
-        _showsNumberOfAssets                    = YES;
-        _showsCancelButton                      = YES;
-        _hidesBottomBarWhenPushedInAssetView    = YES;
-        _selectedAssets                         = [@[] mutableCopy];
-        _maxNumberOfSelectedToShare             = 30;
+        [self setupInit];
+    }
+    return self;
+}
+
+- (instancetype)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self setupInit];
     }
     return self;
 }
@@ -52,6 +58,15 @@ NSString * const DLPhotoPickerSelectedAssetsDidChangeNotification = @"DLPhotoPic
 - (void)dealloc
 {
     [self removeKeyValueObserver];
+}
+
+- (void)setupInit
+{
+    _showsNumberOfAssets                    = YES;
+    _showsCancelButton                      = YES;
+    _hidesBottomBarWhenPushedInAssetView    = YES;
+    _selectedAssets                         = [@[] mutableCopy];
+    _maxNumberOfSelectedToShare             = 30;
 }
 
 - (void)setupDefaults
@@ -171,12 +186,14 @@ NSString * const DLPhotoPickerSelectedAssetsDidChangeNotification = @"DLPhotoPic
 {
     DLPhotoTableViewController *albumTableViewController = [[DLPhotoTableViewController alloc] init];
     albumTableViewController.navigationItem.title = self.navigationTitle;;
-    
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:albumTableViewController];
-    [self addChildViewController:nav];
-    [nav.view setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    [self.view addSubview:nav.view];
-    [nav didMoveToParentViewController:self];
+
+    [self pushViewController:albumTableViewController animated:NO];
+
+//    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:albumTableViewController];
+//    [self addChildViewController:nav];
+//    [nav.view setFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+//    [self.view addSubview:nav.view];
+//    [nav didMoveToParentViewController:self];
 }
 
 #pragma mark - Show view
@@ -207,7 +224,7 @@ NSString * const DLPhotoPickerSelectedAssetsDidChangeNotification = @"DLPhotoPic
     if ([self.delegate respondsToSelector:@selector(pickerControllerDidCancel:)]){
         [self.delegate pickerControllerDidCancel:self];
     }else{
-        [self.presentingViewController dismissViewControllerAnimated:YES completion:nil];
+        [self dismissViewControllerAnimated:YES completion:nil];
     }
 }
 
@@ -253,10 +270,6 @@ NSString * const DLPhotoPickerSelectedAssetsDidChangeNotification = @"DLPhotoPic
         picker = [self.parentViewController picker];
     }
     return picker;
-}
-
-- (void)setPicker:(DLPhotoPickerViewController *)aPicker {
-    objc_setAssociatedObject(self, @selector(picker), aPicker, OBJC_ASSOCIATION_ASSIGN);
 }
 
 @end

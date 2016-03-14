@@ -28,7 +28,7 @@ typedef NS_ENUM(NSInteger, DLPhotoPickerType) {
     DLPhotoPickerTypeDisplay
 };
 
-@interface DLPhotoPickerViewController : UIViewController
+@interface DLPhotoPickerViewController : UINavigationController
 
 /**
  *  To display or pick photo and video from photo library.
@@ -38,7 +38,7 @@ typedef NS_ENUM(NSInteger, DLPhotoPickerType) {
 /**
  *  The assets picker’s delegate object.
  */
-@property (nonatomic, weak) id<DLPhotoPickerViewControllerDelegate> delegate;
+@property (nonatomic, assign) id<UINavigationControllerDelegate,DLPhotoPickerViewControllerDelegate> delegate;
 
 /**
  *  Determines whether or not the cancel button is visible in the picker.
@@ -115,7 +115,7 @@ typedef NS_ENUM(NSInteger, DLPhotoPickerType) {
 
 
 @interface UIViewController (DLPhotoPickerViewController)
-@property (nonatomic, weak)DLPhotoPickerViewController *picker;
+@property (nonatomic, weak, readonly)DLPhotoPickerViewController *picker;
 @end
 
 

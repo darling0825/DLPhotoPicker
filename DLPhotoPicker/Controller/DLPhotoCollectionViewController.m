@@ -101,6 +101,12 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     [self updateCachedAssetImages];
 }
 
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self.navigationController setToolbarHidden:YES animated:YES];
+}
+
 - (void)viewWillLayoutSubviews
 {
     [super viewWillLayoutSubviews];

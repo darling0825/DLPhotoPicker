@@ -30,7 +30,7 @@
 
 #define TableViewRowHeight 120.0f
 
-@interface PhotoPickerViewController()<DLPhotoPickerViewControllerDelegate>
+@interface PhotoPickerViewController()<UINavigationControllerDelegate,DLPhotoPickerViewControllerDelegate>
 
 @end
 
@@ -39,6 +39,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    UIBarButtonItem *backButton =
+    [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                                  target:self
+                                                  action:@selector(back:)];
     
     UIBarButtonItem *clearButton =
     [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"Clear", nil)
@@ -56,6 +61,7 @@
     UIBarButtonItem *space =
     [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil];
     
+    self.navigationItem.leftBarButtonItem = backButton;
     self.toolbarItems = @[clearButton, space, addButton];
     self.tableView.rowHeight = TableViewRowHeight;
     
@@ -86,19 +92,18 @@
     [self.tableView reloadData];
 }
 
+- (void)back:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void)pickAssets:(id)sender
 {
     DLPhotoPickerViewController *picker = [[DLPhotoPickerViewController alloc] init];
     picker.delegate = self;
     picker.pickerType = DLPhotoPickerTypePicker;
     picker.navigationTitle = NSLocalizedString(@"Albums", nil);
-    
-//    // create options for fetching slo-mo videos only
-//    PHFetchOptions *assetsFetchOptions = [PHFetchOptions new];
-//    assetsFetchOptions.predicate = [NSPredicate predicateWithFormat:@"(mediaSubtype & %d) != 0", PHAssetMediaSubtypeVideoHighFrameRate];
-//    // assign options
-//    picker.assetsFetchOptions = assetsFetchOptions;
-    
+
     [self presentViewController:picker animated:YES completion:nil];
 }
 

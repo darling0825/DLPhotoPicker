@@ -27,6 +27,7 @@
 		5977D99B1C93C39F005C0A4B /* libPureLayout.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5977D99A1C93C39F005C0A4B /* libPureLayout.a */; };
 		5977D99D1C93C3A2005C0A4B /* libSVProgressHUD.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5977D99C1C93C3A2005C0A4B /* libSVProgressHUD.a */; };
 		5977D99F1C93C3A5005C0A4B /* libTOCropViewController.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5977D99E1C93C3A5005C0A4B /* libTOCropViewController.a */; };
+		59EF397D1C96B9A9005054E9 /* PhotoViewControllerTwo.m in Sources */ = {isa = PBXBuildFile; fileRef = 59EF397C1C96B9A9005054E9 /* PhotoViewControllerTwo.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -152,6 +153,8 @@
 		5977D99E1C93C3A5005C0A4B /* libTOCropViewController.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTOCropViewController.a; path = "Pods/../build/Debug-iphoneos/libTOCropViewController.a"; sourceTree = "<group>"; };
 		5996F30B1C8E82E400A70C87 /* AssetActivityProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AssetActivityProvider.h; sourceTree = "<group>"; };
 		5996F30C1C8E82E400A70C87 /* AssetActivityProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetActivityProvider.m; sourceTree = "<group>"; };
+		59EF397B1C96B9A9005054E9 /* PhotoViewControllerTwo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoViewControllerTwo.h; sourceTree = "<group>"; };
+		59EF397C1C96B9A9005054E9 /* PhotoViewControllerTwo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoViewControllerTwo.m; sourceTree = "<group>"; };
 		858D99B433ECC6DC3B7E4022 /* Pods-DLPhotoPickerDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DLPhotoPickerDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DLPhotoPickerDemo/Pods-DLPhotoPickerDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		9DC496B897984591D0E6D28D /* Pods-DLPhotoPickerDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DLPhotoPickerDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-DLPhotoPickerDemo/Pods-DLPhotoPickerDemo.release.xcconfig"; sourceTree = "<group>"; };
 		B91ADF680AF6DE2DA6E0FD9D /* libPods-DLPhotoPickerDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DLPhotoPickerDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -210,6 +213,8 @@
 				595178B41C7C225D00000BDE /* AppDelegate.m */,
 				595178B61C7C225D00000BDE /* PhotoViewController.h */,
 				595178B71C7C225D00000BDE /* PhotoViewController.m */,
+				59EF397B1C96B9A9005054E9 /* PhotoViewControllerTwo.h */,
+				59EF397C1C96B9A9005054E9 /* PhotoViewControllerTwo.m */,
 				59604B021C804F3C00339DDE /* PhotoPickerViewController.h */,
 				59604B031C804F3C00339DDE /* PhotoPickerViewController.m */,
 				595178B91C7C225D00000BDE /* Main.storyboard */,
@@ -619,6 +624,7 @@
 				595178B81C7C225D00000BDE /* PhotoViewController.m in Sources */,
 				595178B51C7C225D00000BDE /* AppDelegate.m in Sources */,
 				595178B21C7C225D00000BDE /* main.m in Sources */,
+				59EF397D1C96B9A9005054E9 /* PhotoViewControllerTwo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -858,6 +864,7 @@
 				5977D98C1C93BEFD005C0A4B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

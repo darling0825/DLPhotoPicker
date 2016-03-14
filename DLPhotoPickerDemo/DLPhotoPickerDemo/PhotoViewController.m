@@ -10,7 +10,7 @@
 #import "DLPhotoPicker.h"
 #import "PhotoPickerViewController.h"
 
-@interface PhotoViewController ()<DLPhotoPickerViewControllerDelegate>
+@interface PhotoViewController ()<UINavigationControllerDelegate,DLPhotoPickerViewControllerDelegate>
 @property (nonatomic, copy) NSArray *assets;
 
 @property (nonatomic, strong) UIColor *color1;
@@ -230,8 +230,9 @@
 }
 
 - (IBAction)clickPhotoPickerAction:(id)sender {
-    PhotoPickerViewController *pickerController = [[PhotoPickerViewController alloc] init];
-    [self.navigationController pushViewController:pickerController animated:YES];
+    PhotoPickerViewController *picker = [[PhotoPickerViewController alloc] init];
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:picker];
+    [self presentViewController:nav animated:NO completion:nil];
 }
 
 
