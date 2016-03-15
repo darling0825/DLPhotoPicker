@@ -49,6 +49,9 @@ ALAssetsLibraryChangeObserver, DLPhotoCollectionViewControllerDelegate>
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+    self.photoCollections = nil;
+    self.selectedPhotoCollection = nil;
+    self.photoCollectionViewController = nil;
 }
 
 - (void)dealloc

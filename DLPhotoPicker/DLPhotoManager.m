@@ -44,7 +44,6 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
     self = [super init];
     if (self) {
         [self setDefaults];
-        [self initAssetCollectionSubtypes];
     }
     
     return self;
@@ -72,71 +71,76 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
 }
 
 #pragma mark - Init properties
-- (void)initAssetCollectionSubtypes
+- (NSArray *)assetCollectionSubtypes
 {
-    /**
-     // PHAssetCollectionTypeAlbum regular subtypes
-     PHAssetCollectionSubtypeAlbumRegular         = 2,
-     PHAssetCollectionSubtypeAlbumSyncedEvent     = 3,
-     PHAssetCollectionSubtypeAlbumSyncedFaces     = 4,
-     PHAssetCollectionSubtypeAlbumSyncedAlbum     = 5,
-     PHAssetCollectionSubtypeAlbumImported        = 6,
-     
-     // PHAssetCollectionTypeAlbum shared subtypes
-     PHAssetCollectionSubtypeAlbumMyPhotoStream   = 100,
-     PHAssetCollectionSubtypeAlbumCloudShared     = 101,
-     
-     // PHAssetCollectionTypeSmartAlbum subtypes
-     PHAssetCollectionSubtypeSmartAlbumGeneric    = 200,
-     PHAssetCollectionSubtypeSmartAlbumPanoramas  = 201,
-     PHAssetCollectionSubtypeSmartAlbumVideos     = 202,
-     PHAssetCollectionSubtypeSmartAlbumFavorites  = 203,
-     PHAssetCollectionSubtypeSmartAlbumTimelapses = 204,
-     PHAssetCollectionSubtypeSmartAlbumAllHidden  = 205,
-     PHAssetCollectionSubtypeSmartAlbumRecentlyAdded = 206,
-     PHAssetCollectionSubtypeSmartAlbumBursts     = 207,
-     PHAssetCollectionSubtypeSmartAlbumSlomoVideos = 208,
-     PHAssetCollectionSubtypeSmartAlbumUserLibrary = 209,
-     PHAssetCollectionSubtypeSmartAlbumSelfPortraits NS_AVAILABLE_IOS(9_0) = 210,
-     PHAssetCollectionSubtypeSmartAlbumScreenshots NS_AVAILABLE_IOS(9_0) = 211,
-     */
-    _assetCollectionSubtypes =
-    @[[NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumUserLibrary],
-      [NSNumber numberWithInt:PHAssetCollectionSubtypeAlbumMyPhotoStream],
-      [NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumRecentlyAdded],
-      [NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumFavorites],
-      [NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumPanoramas],
-      [NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumVideos],
-      [NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumSlomoVideos],
-      [NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumTimelapses],
-      [NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumBursts],
-      [NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumAllHidden],
-      [NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumGeneric],
-      [NSNumber numberWithInt:PHAssetCollectionSubtypeAlbumRegular],
-      [NSNumber numberWithInt:PHAssetCollectionSubtypeAlbumSyncedAlbum],
-      [NSNumber numberWithInt:PHAssetCollectionSubtypeAlbumSyncedEvent],
-      [NSNumber numberWithInt:PHAssetCollectionSubtypeAlbumSyncedFaces],
-      [NSNumber numberWithInt:PHAssetCollectionSubtypeAlbumImported],
-      [NSNumber numberWithInt:PHAssetCollectionSubtypeAlbumCloudShared]];
-    
-    // Add iOS 9's new albums
-    if ([[PHAsset new] respondsToSelector:@selector(sourceType)])
-    {
-        NSMutableArray *subtypes = [NSMutableArray arrayWithArray:self.assetCollectionSubtypes];
-        [subtypes insertObject:[NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumSelfPortraits] atIndex:4];
-        [subtypes insertObject:[NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumScreenshots] atIndex:10];
+    if (!_assetCollectionSubtypes) {
+        /**
+         // PHAssetCollectionTypeAlbum regular subtypes
+         PHAssetCollectionSubtypeAlbumRegular         = 2,
+         PHAssetCollectionSubtypeAlbumSyncedEvent     = 3,
+         PHAssetCollectionSubtypeAlbumSyncedFaces     = 4,
+         PHAssetCollectionSubtypeAlbumSyncedAlbum     = 5,
+         PHAssetCollectionSubtypeAlbumImported        = 6,
+         
+         // PHAssetCollectionTypeAlbum shared subtypes
+         PHAssetCollectionSubtypeAlbumMyPhotoStream   = 100,
+         PHAssetCollectionSubtypeAlbumCloudShared     = 101,
+         
+         // PHAssetCollectionTypeSmartAlbum subtypes
+         PHAssetCollectionSubtypeSmartAlbumGeneric    = 200,
+         PHAssetCollectionSubtypeSmartAlbumPanoramas  = 201,
+         PHAssetCollectionSubtypeSmartAlbumVideos     = 202,
+         PHAssetCollectionSubtypeSmartAlbumFavorites  = 203,
+         PHAssetCollectionSubtypeSmartAlbumTimelapses = 204,
+         PHAssetCollectionSubtypeSmartAlbumAllHidden  = 205,
+         PHAssetCollectionSubtypeSmartAlbumRecentlyAdded = 206,
+         PHAssetCollectionSubtypeSmartAlbumBursts     = 207,
+         PHAssetCollectionSubtypeSmartAlbumSlomoVideos = 208,
+         PHAssetCollectionSubtypeSmartAlbumUserLibrary = 209,
+         PHAssetCollectionSubtypeSmartAlbumSelfPortraits NS_AVAILABLE_IOS(9_0) = 210,
+         PHAssetCollectionSubtypeSmartAlbumScreenshots NS_AVAILABLE_IOS(9_0) = 211,
+         */
+        _assetCollectionSubtypes =
+        @[[NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumUserLibrary],
+          [NSNumber numberWithInt:PHAssetCollectionSubtypeAlbumMyPhotoStream],
+          [NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumRecentlyAdded],
+          [NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumFavorites],
+          [NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumPanoramas],
+          [NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumVideos],
+          [NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumSlomoVideos],
+          [NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumTimelapses],
+          [NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumBursts],
+          [NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumAllHidden],
+          [NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumGeneric],
+          [NSNumber numberWithInt:PHAssetCollectionSubtypeAlbumRegular],
+          [NSNumber numberWithInt:PHAssetCollectionSubtypeAlbumSyncedAlbum],
+          [NSNumber numberWithInt:PHAssetCollectionSubtypeAlbumSyncedEvent],
+          [NSNumber numberWithInt:PHAssetCollectionSubtypeAlbumSyncedFaces],
+          [NSNumber numberWithInt:PHAssetCollectionSubtypeAlbumImported],
+          [NSNumber numberWithInt:PHAssetCollectionSubtypeAlbumCloudShared]];
         
-        self.assetCollectionSubtypes = [NSArray arrayWithArray:subtypes];
+        // Add iOS 9's new albums
+        if ([[PHAsset new] respondsToSelector:@selector(sourceType)])
+        {
+            NSMutableArray *subtypes = [NSMutableArray arrayWithArray:_assetCollectionSubtypes];
+            [subtypes insertObject:[NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumSelfPortraits] atIndex:4];
+            [subtypes insertObject:[NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumScreenshots] atIndex:10];
+            
+            _assetCollectionSubtypes = [NSArray arrayWithArray:subtypes];
+        }
     }
+    return _assetCollectionSubtypes;
 }
 
-- (void)initThumbnailRequestOptions
+- (PHImageRequestOptions *)thumbnailRequestOptions
 {
-    PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
-    options.resizeMode = PHImageRequestOptionsResizeModeFast;
-    //options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
-    
-    _thumbnailRequestOptions = options;
+    if (!_thumbnailRequestOptions) {
+        PHImageRequestOptions *options = [[PHImageRequestOptions alloc] init];
+        options.resizeMode = PHImageRequestOptionsResizeModeFast;
+        //options.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+        _thumbnailRequestOptions = options;
+    }
+    return _thumbnailRequestOptions;
 }
 
 #pragma mark - Authorization

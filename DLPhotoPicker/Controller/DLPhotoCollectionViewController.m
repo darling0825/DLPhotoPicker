@@ -131,6 +131,9 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
+    _progressHUD = nil;
+    _activityVC = nil;
+    _popoverController = nil;
 }
 
 - (void)dealloc
