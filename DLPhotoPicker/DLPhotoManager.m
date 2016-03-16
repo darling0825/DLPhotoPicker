@@ -189,20 +189,20 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
 - (void)requestAuthorizationStatus_AfteriOS8
 {
     [PHPhotoLibrary requestAuthorization:^(PHAuthorizationStatus status){
-        switch (status) {
-            case PHAuthorizationStatusAuthorized:
-            {
-                dispatch_async(dispatch_get_main_queue(), ^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            switch (status) {
+                case PHAuthorizationStatusAuthorized:
+                {
                     [self checkAuthorizationSuccess];
-                });
-                break;
+                    break;
+                }
+                default:
+                {
+                    [self showAccessDenied];
+                    break;
+                }
             }
-            default:
-            {
-                [self showAccessDenied];
-                break;
-            }
-        }
+        });
     }];
 }
 

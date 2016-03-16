@@ -20,6 +20,7 @@
     if (self) {
         self.delegate = self;
         self.showsNumberOfAssets = YES;
+        self.showsCancelButton = NO;
         self.hidesBottomBarWhenPushedInAssetView = YES;
         self.navigationTitle = NSLocalizedString(@"Albums", nil);
         self.pickerType = DLPhotoPickerTypeDisplay;
