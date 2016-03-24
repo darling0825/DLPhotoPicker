@@ -58,6 +58,7 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
 
 @property (nonatomic, assign) BOOL shouldUpdateConstraints;
 @property (nonatomic, assign) BOOL didSetupConstraints;
+@property (nonatomic, assign) BOOL isInitialZoom;
 
 @end
 
@@ -72,6 +73,7 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
     if (self)
     {
         _shouldUpdateConstraints            = YES;
+        _isInitialZoom                      = NO;
         self.allowsSelection                = NO;
         self.showsVerticalScrollIndicator   = YES;
         self.showsHorizontalScrollIndicator = YES;
@@ -385,6 +387,7 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
 
 - (void)zoomToInitialScale
 {
+    self.isInitialZoom = YES;
     if ([self canPerspectiveZoom])
         [self zoomToPerspectiveZoomScaleAnimated:NO];
     else
@@ -546,7 +549,11 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
 
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:DLPhotoScrollViewDidZoomNotification object:nil];
+    if (self.isInitialZoom) {
+        self.isInitialZoom = NO;
+    }else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:DLPhotoScrollViewDidZoomNotification object:nil];
+    }
     
     [self setScrollEnabled:(self.zoomScale != self.perspectiveZoomScale)];
     

@@ -686,9 +686,9 @@
     [UIView animateWithDuration:0.2
                      animations:^{
                          [self setNeedsStatusBarAppearanceUpdate];
-                         [nav.navigationBar setAlpha:1.0f];
                          
-                         [nav.toolbar setAlpha:1.0f];
+                         [nav.navigationBar setAlpha:1.0f];
+                        [nav.toolbar setAlpha:1.0f];
                      }];
 }
 
@@ -696,12 +696,13 @@
 {
     self.statusBarHidden = YES;
     
+    [nav setNavigationBarHidden:YES animated:YES];
+    [nav setToolbarHidden:YES animated:YES];
+    
     [UIView animateWithDuration:0.2
                      animations:^{
                          [self setNeedsStatusBarAppearanceUpdate];
                          
-                         [nav setNavigationBarHidden:YES animated:NO];
-                         [nav setToolbarHidden:YES animated:YES];
                          [nav.navigationBar setAlpha:0.0f];
                          [nav.toolbar setAlpha:0.0f];
                      }];

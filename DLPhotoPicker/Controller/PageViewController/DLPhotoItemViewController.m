@@ -68,13 +68,13 @@ NSString * const DLPhotoPickerDidExitSelectModeNotification = @"DLPhotoPickerDid
 {
     [super viewDidLoad];
     [self setupViews];
-    [self setupScrollViewButtons];
-    [self requestAssetImage];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self setupScrollViewButtons];
+    [self requestAssetImage];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
