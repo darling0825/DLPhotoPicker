@@ -485,7 +485,8 @@
                 
                 [SVProgressHUD setBackgroundColor:[UIColor blackColor]];
                 [SVProgressHUD setForegroundColor:[UIColor whiteColor]];
-                [SVProgressHUD showSuccessWithStatus:DLPhotoPickerLocalizedString(@"Saved to default album.",nil) maskType:SVProgressHUDMaskTypeBlack];
+                [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
+                [SVProgressHUD showSuccessWithStatus:DLPhotoPickerLocalizedString(@"Saved to default album.",nil)];
                 
                 //  dismiss after 2 second
                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC);

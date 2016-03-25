@@ -637,7 +637,7 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(photoDeleteAction:)];
     
     NSArray *toolItems = @[shareButton, self.toolbarSpace, toCopyButton, self.toolbarSpace, deleteButton];
-    if (!UsePhotoKit) {
+    if (!(UsePhotoKit)) {
         toolItems = @[shareButton, self.toolbarSpace, toCopyButton];
     }
     
