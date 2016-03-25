@@ -725,6 +725,8 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     if ([self.picker.delegate respondsToSelector:@selector(pickerController:didFinishPickingAssets:)]){
         [self.picker.delegate pickerController:self.picker didFinishPickingAssets:self.selectedAssets];
     }
+    
+    [self cancelEditAction: nil];
 }
 - (void)photoShareAction:(UIBarButtonItem *)sender{
     
