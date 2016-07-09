@@ -149,20 +149,21 @@
 {
     __block NSString *name = @"";
     if (UsePhotoKit) {
-        if (!_phAssetInfo) {
-            // PHAsset 的 assetSize 需要调用过 requestImageDataForAsset 才能获取
-            [self requestPHAssetInfo:^(NSDictionary *info) {
-                _phAssetInfo = [NSDictionary dictionaryWithDictionary:info];
-                if ([_phAssetInfo objectForKey:@"PHImageFileURLKey"]) {
-                    /* path looks like this -
-                     * file:///var/mobile/Media/DCIM/###APPLE/IMG_####.JPG
-                     */
-                    name = [[_phAssetInfo objectForKey:@"PHImageFileURLKey"] lastPathComponent];
-                }
-            }];
-        }else{
-            name = [[_phAssetInfo objectForKey:@"PHImageFileURLKey"] lastPathComponent];
-        }
+        // if (!_phAssetInfo) {
+        //     // PHAsset 的 assetSize 需要调用过 requestImageDataForAsset 才能获取
+        //     [self requestPHAssetInfo:^(NSDictionary *info) {
+        //         _phAssetInfo = [NSDictionary dictionaryWithDictionary:info];
+        //         if ([_phAssetInfo objectForKey:@"PHImageFileURLKey"]) {
+        //             /* path looks like this -
+        //              * file:///var/mobile/Media/DCIM/###APPLE/IMG_####.JPG
+        //              */
+        //             name = [[_phAssetInfo objectForKey:@"PHImageFileURLKey"] lastPathComponent];
+        //         }
+        //     }];
+        // }else{
+        //     name = [[_phAssetInfo objectForKey:@"PHImageFileURLKey"] lastPathComponent];
+        // }
+        name = [[self phAsset] valueForKey:@"filename"];
     } else {
         name = [[[self alAsset] defaultRepresentation] filename];
     }
