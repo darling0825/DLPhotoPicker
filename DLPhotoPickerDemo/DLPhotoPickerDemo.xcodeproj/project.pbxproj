@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		41747234B0D98F5DDAB108C8 /* libPods-DLPhotoPickerDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B91ADF680AF6DE2DA6E0FD9D /* libPods-DLPhotoPickerDemo.a */; };
+		266345109E962CB4C0C92DCD /* libPods-DLPhotoPickerDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 12F03B916F323D1F9BEDE7B8 /* libPods-DLPhotoPickerDemo.a */; };
 		595178B21C7C225D00000BDE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 595178B11C7C225D00000BDE /* main.m */; };
 		595178B51C7C225D00000BDE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 595178B41C7C225D00000BDE /* AppDelegate.m */; };
 		595178B81C7C225D00000BDE /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 595178B71C7C225D00000BDE /* PhotoViewController.m */; };
@@ -19,7 +19,6 @@
 		595905461C916CEB00F390A1 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 595905451C916CEB00F390A1 /* InfoPlist.strings */; };
 		59604B041C804F3C00339DDE /* PhotoPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59604B031C804F3C00339DDE /* PhotoPickerViewController.m */; };
 		5977D9871C93BEFD005C0A4B /* DLPhotoPickerDemoUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5977D9861C93BEFD005C0A4B /* DLPhotoPickerDemoUITests.m */; };
-		5977D9931C93C2C4005C0A4B /* libPods-DLPhotoPickerDemo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5977D9921C93C2C4005C0A4B /* libPods-DLPhotoPickerDemo.a */; };
 		5977D9941C93C2F7005C0A4B /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 595178B71C7C225D00000BDE /* PhotoViewController.m */; };
 		5977D9951C93C2F7005C0A4B /* PhotoPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 59604B031C804F3C00339DDE /* PhotoPickerViewController.m */; };
 		5977D9971C93C365005C0A4B /* libDLPhotoPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5977D9961C93C365005C0A4B /* libDLPhotoPicker.a */; };
@@ -41,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		12F03B916F323D1F9BEDE7B8 /* libPods-DLPhotoPickerDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DLPhotoPickerDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5924FA721C8967C000B82A18 /* DLPhotoBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoBarButtonItem.h; sourceTree = "<group>"; };
 		5924FA731C8967C000B82A18 /* DLPhotoBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPhotoBarButtonItem.m; sourceTree = "<group>"; };
 		59505B941C82C0F900E025D6 /* NSIndexSet+DLPhotoPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSIndexSet+DLPhotoPicker.h"; sourceTree = "<group>"; };
@@ -155,9 +155,8 @@
 		5996F30C1C8E82E400A70C87 /* AssetActivityProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AssetActivityProvider.m; sourceTree = "<group>"; };
 		59EF397B1C96B9A9005054E9 /* PhotoViewControllerTwo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhotoViewControllerTwo.h; sourceTree = "<group>"; };
 		59EF397C1C96B9A9005054E9 /* PhotoViewControllerTwo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhotoViewControllerTwo.m; sourceTree = "<group>"; };
-		858D99B433ECC6DC3B7E4022 /* Pods-DLPhotoPickerDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DLPhotoPickerDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DLPhotoPickerDemo/Pods-DLPhotoPickerDemo.debug.xcconfig"; sourceTree = "<group>"; };
-		9DC496B897984591D0E6D28D /* Pods-DLPhotoPickerDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DLPhotoPickerDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-DLPhotoPickerDemo/Pods-DLPhotoPickerDemo.release.xcconfig"; sourceTree = "<group>"; };
-		B91ADF680AF6DE2DA6E0FD9D /* libPods-DLPhotoPickerDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DLPhotoPickerDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7B09FC51CE61E5122C1457A2 /* Pods-DLPhotoPickerDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DLPhotoPickerDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DLPhotoPickerDemo/Pods-DLPhotoPickerDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		D8BC90E52450940C095F4D36 /* Pods-DLPhotoPickerDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DLPhotoPickerDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-DLPhotoPickerDemo/Pods-DLPhotoPickerDemo.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -165,7 +164,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				41747234B0D98F5DDAB108C8 /* libPods-DLPhotoPickerDemo.a in Frameworks */,
+				266345109E962CB4C0C92DCD /* libPods-DLPhotoPickerDemo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -178,13 +177,21 @@
 				5977D99B1C93C39F005C0A4B /* libPureLayout.a in Frameworks */,
 				5977D9991C93C39C005C0A4B /* libMBProgressHUD.a in Frameworks */,
 				5977D9971C93C365005C0A4B /* libDLPhotoPicker.a in Frameworks */,
-				5977D9931C93C2C4005C0A4B /* libPods-DLPhotoPickerDemo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		25ACA0DBE9C87B63E474AF81 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7B09FC51CE61E5122C1457A2 /* Pods-DLPhotoPickerDemo.debug.xcconfig */,
+				D8BC90E52450940C095F4D36 /* Pods-DLPhotoPickerDemo.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		595178A41C7C225D00000BDE = {
 			isa = PBXGroup;
 			children = (
@@ -192,8 +199,8 @@
 				595178AF1C7C225D00000BDE /* DLPhotoPickerDemo */,
 				5977D9851C93BEFD005C0A4B /* DLPhotoPickerDemoUITests */,
 				595178AE1C7C225D00000BDE /* Products */,
-				EEB51D61AA8E6458A4D211E3 /* Pods */,
 				8400D35598898F8245B38B2A /* Frameworks */,
+				25ACA0DBE9C87B63E474AF81 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -425,18 +432,9 @@
 				5977D9921C93C2C4005C0A4B /* libPods-DLPhotoPickerDemo.a */,
 				5977D9901C93BF2F005C0A4B /* libPods-DLPhotoPickerDemo.a */,
 				5977D98E1C93BF23005C0A4B /* libDLPhotoPicker.a */,
-				B91ADF680AF6DE2DA6E0FD9D /* libPods-DLPhotoPickerDemo.a */,
+				12F03B916F323D1F9BEDE7B8 /* libPods-DLPhotoPickerDemo.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		EEB51D61AA8E6458A4D211E3 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				858D99B433ECC6DC3B7E4022 /* Pods-DLPhotoPickerDemo.debug.xcconfig */,
-				9DC496B897984591D0E6D28D /* Pods-DLPhotoPickerDemo.release.xcconfig */,
-			);
-			name = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -446,12 +444,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 595178C41C7C225D00000BDE /* Build configuration list for PBXNativeTarget "DLPhotoPickerDemo" */;
 			buildPhases = (
-				A91A45F04B0F8AC82E8CB739 /* Check Pods Manifest.lock */,
+				5EE136D7BA317DB2C24F18D0 /* [CP] Check Pods Manifest.lock */,
 				595178A91C7C225D00000BDE /* Sources */,
 				595178AA1C7C225D00000BDE /* Frameworks */,
 				595178AB1C7C225D00000BDE /* Resources */,
-				691650F6C9DFAF3EFB5561C4 /* Embed Pods Frameworks */,
-				15CAB030E4ED36F8AE00B901 /* Copy Pods Resources */,
+				89C8AFB1DB9B93ACDD6D9A0E /* [CP] Embed Pods Frameworks */,
+				97AC617CDEA5C07D74ADA5C9 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -568,29 +566,29 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		15CAB030E4ED36F8AE00B901 /* Copy Pods Resources */ = {
+		5EE136D7BA317DB2C24F18D0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Copy Pods Resources";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DLPhotoPickerDemo/Pods-DLPhotoPickerDemo-resources.sh\"\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
-		691650F6C9DFAF3EFB5561C4 /* Embed Pods Frameworks */ = {
+		89C8AFB1DB9B93ACDD6D9A0E /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Embed Pods Frameworks";
+			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -598,19 +596,19 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DLPhotoPickerDemo/Pods-DLPhotoPickerDemo-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A91A45F04B0F8AC82E8CB739 /* Check Pods Manifest.lock */ = {
+		97AC617CDEA5C07D74ADA5C9 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "Check Pods Manifest.lock";
+			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DLPhotoPickerDemo/Pods-DLPhotoPickerDemo-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -782,7 +780,7 @@
 		};
 		595178C51C7C225D00000BDE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 858D99B433ECC6DC3B7E4022 /* Pods-DLPhotoPickerDemo.debug.xcconfig */;
+			baseConfigurationReference = 7B09FC51CE61E5122C1457A2 /* Pods-DLPhotoPickerDemo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
@@ -796,7 +794,7 @@
 		};
 		595178C61C7C225D00000BDE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9DC496B897984591D0E6D28D /* Pods-DLPhotoPickerDemo.release.xcconfig */;
+			baseConfigurationReference = D8BC90E52450940C095F4D36 /* Pods-DLPhotoPickerDemo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";

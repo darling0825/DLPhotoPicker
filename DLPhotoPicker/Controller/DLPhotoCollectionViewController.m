@@ -67,7 +67,7 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
     [self setupViews];
     [self setupButtons];
     
@@ -148,7 +148,6 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     //self.extendedLayoutIncludesOpaqueBars = YES;
     
     self.collectionView.backgroundColor = DLPhotoCollectionViewBackgroundColor;
-    self.collectionView.allowsMultipleSelection = YES;
     
     [self.collectionView registerClass:DLPhotoCollectionViewCell.class
             forCellWithReuseIdentifier:DLPhotoCollectionViewCellIdentifier];
@@ -178,6 +177,7 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
 {
     if (self.picker.pickerType == DLPhotoPickerTypePicker) {
         [self setEditing:YES animated:YES];
+        self.collectionView.allowsMultipleSelection = NO;
     }else if (self.picker.pickerType == DLPhotoPickerTypeDisplay){
         [self setEditing:NO animated:YES];
     }else{

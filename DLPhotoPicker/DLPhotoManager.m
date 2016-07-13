@@ -818,6 +818,7 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
         !(asset.phAsset.mediaSubtypes & PHAssetMediaSubtypePhotoLive))
     {
         PHContentEditingInputRequestOptions *options = [[PHContentEditingInputRequestOptions alloc] init];
+        [options setNetworkAccessAllowed:YES];
         [options setCanHandleAdjustmentData:^BOOL(PHAdjustmentData *adjustmentData) {
             //  origin image
             return [adjustmentData.formatIdentifier isEqualToString:AdjustmentFormatIdentifier] && [adjustmentData.formatVersion isEqualToString:AdjustmentFormatVersion];

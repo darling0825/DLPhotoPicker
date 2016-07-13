@@ -303,7 +303,7 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
         
         [self setNeedsUpdateConstraints];
         [self updateConstraintsIfNeeded];
-        
+                
         [self updateZoomScalesAndZoom:zoom];
         [self updateContentInset];
     }
