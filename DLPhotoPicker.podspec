@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
   s.source                = { :git => 'https://github.com/darling0825/DLPhotoPicker.git', :tag => s.version }
   s.public_header_files   = 'DLPhotoPicker/**/*.h'
   s.source_files          = 'DLPhotoPicker/**/*.{h,m}'
-  s.resource_bundles      = { 'DLPhotoPicker' => ['DLPhotoPicker/Resources/DLPhotoPicker.xcassets/**/*.png', 'DLPhotoPicker/Resources/Localizations/*.lproj'] }
+  s.resource_bundles      = { 'DLPhotoPicker' => ['DLPhotoPicker/Resources/*.xcassets', 'DLPhotoPicker/Resources/Localizations/*.lproj'] }
   s.ios.frameworks        = 'Photos','AssetsLibrary'
   s.requires_arc          = true
   s.dependency            'PureLayout', '~> 3.0.0'
