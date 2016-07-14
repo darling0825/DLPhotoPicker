@@ -157,4 +157,3 @@ The Delegate of DLPhotoPicker
 
 # License
 DLPhotoPicker is released under the MIT license. See LICENSE for details.
-

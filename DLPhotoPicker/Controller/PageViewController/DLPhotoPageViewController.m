@@ -355,19 +355,21 @@
         
         [[DLPhotoManager sharedInstance] requestContentEditing:self.asset completion:^(UIImage *image, PHContentEditingInput *contentEditingInput, NSDictionary *info) {
             
-            self.contentEditingInput = contentEditingInput;
-
-            TOCropViewController *cropController = [[TOCropViewController alloc] initWithImage:image];
-            cropController.delegate = self;
-            
-            // Uncomment this to test out locked aspect ratio sizes
-            // cropController.defaultAspectRatio = TOCropViewControllerAspectRatioSquare;
-            // cropController.aspectRatioLocked = YES;
-            
-            // Uncomment this to place the toolbar at the top of the view controller
-            // cropController.toolbarPosition = TOCropViewControllerToolbarPositionTop;
-            
-            [self.navigationController presentViewController:cropController animated:YES completion:nil];
+            if (image) {
+                self.contentEditingInput = contentEditingInput;
+                
+                TOCropViewController *cropController = [[TOCropViewController alloc] initWithImage:image];
+                cropController.delegate = self;
+                
+                // Uncomment this to test out locked aspect ratio sizes
+                // cropController.defaultAspectRatio = TOCropViewControllerAspectRatioSquare;
+                // cropController.aspectRatioLocked = YES;
+                
+                // Uncomment this to place the toolbar at the top of the view controller
+                // cropController.toolbarPosition = TOCropViewControllerToolbarPositionTop;
+                
+                [self.navigationController presentViewController:cropController animated:YES completion:nil];
+            }
         }];
         
     }else{
@@ -467,8 +469,8 @@
     CGRect viewFrame = [self.view convertRect:CGRectZero toView:self.navigationController.view];
     
     //  dismiss crop View
-    [cropViewController dismissAnimatedFromParentViewController:self withCroppedImage:image toFrame:viewFrame completion:^{
-        
+    [cropViewController dismissAnimatedFromParentViewController:self withCroppedImage:image toView:nil toFrame:viewFrame setup:nil completion:^{
+
         if (UsePhotoKit) {
             // Create a PHAdjustmentData object that describes the filter that was applied.
             NSData *data =

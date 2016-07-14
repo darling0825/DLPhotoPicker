@@ -148,7 +148,10 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     //self.extendedLayoutIncludesOpaqueBars = YES;
     
     self.collectionView.backgroundColor = DLPhotoCollectionViewBackgroundColor;
-    self.collectionView.allowsMultipleSelection = YES;
+    
+    if (self.picker.pickerType == DLPhotoPickerTypePicker) {
+        self.collectionView.allowsMultipleSelection = YES;
+    }
     
     [self.collectionView registerClass:DLPhotoCollectionViewCell.class
             forCellWithReuseIdentifier:DLPhotoCollectionViewCellIdentifier];
