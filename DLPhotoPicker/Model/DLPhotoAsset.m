@@ -492,9 +492,9 @@
                                                
                                                if (downloadFinined) {
                                                    //_originImage = result;
-                                               }
-                                               if (completion) {
-                                                   completion(result, info);
+                                                   if (completion) {
+                                                       completion(result, info);
+                                                   }
                                                }
                                            }
                                        }];
@@ -864,6 +864,40 @@
     return NO;
 }
 
+- (void)writeOriginImageToFile:(NSString *)filePath
+               progressHandler:(void (^)(double progress))progressHandler
+             completionHandler:(void (^)(BOOL success, NSError *error))completionHandler
+{
+    [self requestOriginImageWithCompletion:^(UIImage *image, NSDictionary *info) {
+        NSError *error = [info objectForKey:PHImageErrorKey];
+        if (error){
+            if (completionHandler) {
+                completionHandler(NO, error);
+            }
+        }else{
+            if (image) {
+                NSData *data = UIImagePNGRepresentation(image);
+                if (data) {
+                    [data writeToFile:filePath atomically:YES];
+                    if (progressHandler) {
+                        progressHandler(1.0);
+                    }
+                }
+            }
+            
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                if (completionHandler) {
+                    completionHandler(image != nil, nil);
+                }
+            });
+        }
+    } withProgressHandler:^(double progress, NSError * _Nullable error, BOOL * _Nonnull stop, NSDictionary * _Nullable info) {
+        if (progressHandler) {
+            progressHandler(progress);
+        }
+    }];
+}
+
 - (BOOL)writeOriginVideoToFile:(NSString *)filePath
 {
     if (UsePhotoKit) {
@@ -1011,6 +1045,79 @@
             completion(result,nil);
         }
     }
+}
+
+- (void)writeOriginVideoToFile:(NSString *)filePath
+               progressHandler:(void (^)(double progress))progressHandler
+             completionHandler:(void (^)(BOOL success, NSError *error))completionHandler
+{
+    
+    [self requestOriginAVAssetWithCompletion:^(AVAsset *asset, AVAudioMix *audioMix, NSDictionary *info) {
+        NSError *error = [info objectForKey:PHImageErrorKey];
+        if (error){
+            if (completionHandler) {
+                completionHandler(NO, error);
+            }
+        }else{
+            AVURLAsset *avURLAsset = (AVURLAsset *)asset;
+            
+            /**
+             NSData *data = [NSData dataWithContentsOfURL:avURLAsset.URL];
+             [data writeToFile:filePath atomically:YES];
+             */
+            
+            __block BOOL result = YES;
+            
+            AVAssetExportSession *session = [AVAssetExportSession exportSessionWithAsset:avURLAsset presetName:AVAssetExportPresetHighestQuality];
+            session.outputFileType = AVFileTypeQuickTimeMovie;
+            session.outputURL = [NSURL fileURLWithPath:filePath];
+            //session.shouldOptimizeForNetworkUse = YES;
+            [session exportAsynchronouslyWithCompletionHandler:^{
+                switch (session.status) {
+                        
+                    case AVAssetExportSessionStatusUnknown:
+                        NSLog(@"AVAssetExportSessionStatusUnknown");
+                        break;
+                        
+                    case AVAssetExportSessionStatusWaiting:
+                        NSLog(@"AVAssetExportSessionStatusWaiting");
+                        break;
+                        
+                    case AVAssetExportSessionStatusExporting:
+                        NSLog(@"AVAssetExportSessionStatusExporting");
+                        break;
+                        
+                    case AVAssetExportSessionStatusCompleted:
+                        NSLog(@"AVAssetExportSessionStatusCompleted");
+                        break;
+                        
+                    case AVAssetExportSessionStatusFailed:
+                        NSLog(@"AVAssetExportSessionStatusFailed");
+                        result = NO;
+                        break;
+                        
+                    case AVAssetExportSessionStatusCancelled:
+                        NSLog(@"AVAssetExportSessionStatusCancelled");
+                        result = NO;
+                        break;
+                }
+                
+                if (progressHandler) {
+                    progressHandler(1.0);
+                }
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    if (completionHandler) {
+                        completionHandler(result,nil);
+                    }
+                });
+            }];
+        }
+    } withProgressHandler:^(double progress, NSError * _Nullable error, BOOL * _Nonnull stop, NSDictionary * _Nullable info) {
+        if (progressHandler) {
+            progressHandler(progress);
+        }
+    }];
 }
 
 - (BOOL)writeThumbnailImageToFile:(NSString *)filePath

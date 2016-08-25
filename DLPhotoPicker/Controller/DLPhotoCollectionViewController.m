@@ -671,6 +671,9 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
 
 #pragma mark - Button Action
 - (void)editAction:(UIBarButtonItem *)sender{
+    
+    self.collectionView.allowsMultipleSelection = YES;
+    
     [self setEditing:YES animated:YES];
     
     //Nav Button
@@ -686,6 +689,9 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
 }
 
 - (void)cancelEditAction:(UIBarButtonItem *)sender{
+    
+    self.collectionView.allowsMultipleSelection = NO;
+    
     [self setEditing:NO animated:YES];
     
     // Unselect all

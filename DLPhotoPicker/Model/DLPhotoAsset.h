@@ -171,8 +171,16 @@ typedef NS_ENUM(NSInteger, DLPhotoMediaType) {
  *  @return Success or not.
  */
 - (BOOL)writeOriginImageToFile:(NSString *)filePath;
+- (void)writeOriginImageToFile:(NSString *)filePath
+               progressHandler:(void (^)(double progress))progressHandler
+             completionHandler:(void (^)(BOOL success, NSError *error))completionHandler;
+
 - (BOOL)writeOriginVideoToFile:(NSString *)filePath;
 - (void)writeOriginVideoToFile:(NSString *)filePath completion:(void (^)(BOOL success, NSError *error))completion;
+- (void)writeOriginVideoToFile:(NSString *)filePath
+               progressHandler:(void (^)(double progress))progressHandler
+             completionHandler:(void (^)(BOOL success, NSError *error))completionHandler;
+
 - (BOOL)writeThumbnailImageToFile:(NSString *)filePath;
 - (BOOL)writePreviewImageToFile:(NSString *)filePath;
 @end
