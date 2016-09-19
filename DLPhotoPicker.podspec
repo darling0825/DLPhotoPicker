@@ -23,6 +23,6 @@ Pod::Spec.new do |s|
   s.requires_arc          = true
   s.dependency            'PureLayout', '~> 3.0.0'
   s.dependency            'MBProgressHUD'
-    s.dependency          'SVProgressHUD'
+  s.dependency            'SVProgressHUD'
   s.dependency            'TOCropViewController'
 end
