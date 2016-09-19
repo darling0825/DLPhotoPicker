@@ -852,113 +852,122 @@
 #pragma mark - Write to file
 - (BOOL)writeOriginImageToFile:(NSString *)filePath
 {
-    UIImage *image = [self originImage];
-    if (image) {
-        NSData *data = UIImagePNGRepresentation(image);
-        if (data) {
-            [data writeToFile:filePath atomically:YES];
-            return YES;
+    __block BOOL result = NO;
+    NSFileCoordinator *fileCoordinator = [[NSFileCoordinator alloc] initWithFilePresenter:nil];
+    [fileCoordinator coordinateWritingItemAtURL:[NSURL fileURLWithPath:filePath]
+                                        options:NSFileCoordinatorWritingForReplacing
+                                          error:nil
+                                     byAccessor:^(NSURL * _Nonnull accessorUrl) {
+        
+        UIImage *image = [self originImage];
+        if (image) {
+            NSData *data = UIImagePNGRepresentation(image);
+            if (data) {
+                result = [data writeToFile:accessorUrl.path atomically:YES];
+            }
         }
-    }
+    }];
     
-    return NO;
+    return result;
 }
 
 - (void)writeOriginImageToFile:(NSString *)filePath
                progressHandler:(void (^)(double progress))progressHandler
              completionHandler:(void (^)(BOOL success, NSError *error))completionHandler
 {
-    [self requestOriginImageWithCompletion:^(UIImage *image, NSDictionary *info) {
-        NSError *error = [info objectForKey:PHImageErrorKey];
-        if (error){
-            if (completionHandler) {
-                completionHandler(NO, error);
-            }
-        }else{
-            if (image) {
-                NSData *data = UIImagePNGRepresentation(image);
-                if (data) {
-                    [data writeToFile:filePath atomically:YES];
-                    if (progressHandler) {
-                        progressHandler(1.0);
+    NSFileCoordinator *fileCoordinator = [[NSFileCoordinator alloc] initWithFilePresenter:nil];
+    [fileCoordinator coordinateWritingItemAtURL:[NSURL fileURLWithPath:filePath] options:NSFileCoordinatorWritingForReplacing error:nil byAccessor:^(NSURL * _Nonnull accessorUrl) {
+        [self requestOriginImageWithCompletion:^(UIImage *image, NSDictionary *info) {
+            NSError *error = [info objectForKey:PHImageErrorKey];
+            if (error){
+                if (completionHandler) {
+                    completionHandler(NO, error);
+                }
+            }else{
+                if (image) {
+                    NSData *data = UIImagePNGRepresentation(image);
+                    if (data) {
+                        [data writeToFile:accessorUrl.path atomically:YES];
+                        if (progressHandler) {
+                            progressHandler(1.0);
+                        }
                     }
                 }
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    if (completionHandler) {
+                        completionHandler(image != nil, nil);
+                    }
+                });
             }
-            
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                if (completionHandler) {
-                    completionHandler(image != nil, nil);
-                }
-            });
-        }
-    } withProgressHandler:^(double progress, NSError * _Nullable error, BOOL * _Nonnull stop, NSDictionary * _Nullable info) {
-        if (progressHandler) {
-            progressHandler(progress);
-        }
+        } withProgressHandler:^(double progress, NSError * _Nullable error, BOOL * _Nonnull stop, NSDictionary * _Nullable info) {
+            if (progressHandler) {
+                progressHandler(progress);
+            }
+        }];
     }];
 }
 
 - (BOOL)writeOriginVideoToFile:(NSString *)filePath
 {
-    if (UsePhotoKit) {
-        AVURLAsset *avURLAsset = (AVURLAsset *)[self originVideoAsset];
+    __block BOOL result = YES;
+    NSFileCoordinator *fileCoordinator = [[NSFileCoordinator alloc] initWithFilePresenter:nil];
+    [fileCoordinator coordinateWritingItemAtURL:[NSURL fileURLWithPath:filePath] options:NSFileCoordinatorWritingForReplacing error:nil byAccessor:^(NSURL * _Nonnull accessorUrl) {
         
-        /**
-         NSData *data = [NSData dataWithContentsOfURL:avURLAsset.URL];
-         [data writeToFile:filePath atomically:YES];
-         */
-        
-        AVAssetExportSession *session = [AVAssetExportSession exportSessionWithAsset:avURLAsset presetName:AVAssetExportPresetHighestQuality];
-        session.outputFileType = AVFileTypeQuickTimeMovie;
-        session.outputURL = [NSURL fileURLWithPath:filePath];
-        //session.shouldOptimizeForNetworkUse = YES;
-        
-        __block BOOL result = YES;
-        
-        //  We synchronously have the asset
-        dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-        
-        [session exportAsynchronouslyWithCompletionHandler:^{
-            switch (session.status) {
-                    
-                case AVAssetExportSessionStatusUnknown:
-                    NSLog(@"AVAssetExportSessionStatusUnknown");
-                    break;
-                    
-                case AVAssetExportSessionStatusWaiting:
-                    NSLog(@"AVAssetExportSessionStatusWaiting");
-                    break;
-                    
-                case AVAssetExportSessionStatusExporting:
-                    NSLog(@"AVAssetExportSessionStatusExporting");
-                    break;
-                    
-                case AVAssetExportSessionStatusCompleted:
-                    NSLog(@"AVAssetExportSessionStatusCompleted");
-                    break;
-                    
-                case AVAssetExportSessionStatusFailed:
-                    NSLog(@"AVAssetExportSessionStatusFailed");
-                    result = NO;
-                    break;
-                    
-                case AVAssetExportSessionStatusCancelled:
-                    NSLog(@"AVAssetExportSessionStatusCancelled");
-                    result = NO;
-                    break;
-            }
+        if (UsePhotoKit) {
+            AVURLAsset *avURLAsset = (AVURLAsset *)[self originVideoAsset];
             
-            dispatch_semaphore_signal(semaphore);
-        }];
-        
-        dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-        
-        return result;
-        
-    }else{
-        [[NSFileManager defaultManager] createFileAtPath:filePath contents:nil attributes:nil];
-        NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:filePath];
-        if (filePath) {
+            /**
+             NSData *data = [NSData dataWithContentsOfURL:avURLAsset.URL];
+             [data writeToFile:accessorUrl.path atomically:YES];
+             */
+            
+            AVAssetExportSession *session = [AVAssetExportSession exportSessionWithAsset:avURLAsset presetName:AVAssetExportPresetHighestQuality];
+            session.outputFileType = AVFileTypeQuickTimeMovie;
+            session.outputURL = [NSURL fileURLWithPath:accessorUrl.path];
+            //session.shouldOptimizeForNetworkUse = YES;
+            
+            //  We synchronously have the asset
+            dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+            
+            [session exportAsynchronouslyWithCompletionHandler:^{
+                switch (session.status) {
+                        
+                    case AVAssetExportSessionStatusUnknown:
+                        NSLog(@"AVAssetExportSessionStatusUnknown");
+                        break;
+                        
+                    case AVAssetExportSessionStatusWaiting:
+                        NSLog(@"AVAssetExportSessionStatusWaiting");
+                        break;
+                        
+                    case AVAssetExportSessionStatusExporting:
+                        NSLog(@"AVAssetExportSessionStatusExporting");
+                        break;
+                        
+                    case AVAssetExportSessionStatusCompleted:
+                        NSLog(@"AVAssetExportSessionStatusCompleted");
+                        break;
+                        
+                    case AVAssetExportSessionStatusFailed:
+                        NSLog(@"AVAssetExportSessionStatusFailed");
+                        result = NO;
+                        break;
+                        
+                    case AVAssetExportSessionStatusCancelled:
+                        NSLog(@"AVAssetExportSessionStatusCancelled");
+                        result = NO;
+                        break;
+                }
+                
+                dispatch_semaphore_signal(semaphore);
+            }];
+            
+            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+            
+        }else{
+            [[NSFileManager defaultManager] createFileAtPath:accessorUrl.path contents:nil attributes:nil];
+            NSFileHandle *fileHandle = [NSFileHandle fileHandleForWritingAtPath:accessorUrl.path];
             NSUInteger bufferSize  = 1024;
             long long  offset  = 0;
             NSUInteger bytesRead   = 0;
@@ -980,97 +989,34 @@
             
             if (error) {
                 NSLog(@">>> writeOriginVideoToFile ERROR:%@",error);
-                return NO;
+                result = NO;
             }else{
-                return YES;
+                result = YES;
             }
         }
-    }
+    }];
+    
+    return result;
 }
 
 - (void)writeOriginVideoToFile:(NSString *)filePath completion:(void (^)(BOOL success, NSError *error))completion
 {
-    if (UsePhotoKit) {
-        AVURLAsset *avURLAsset = (AVURLAsset *)[self originVideoAsset];
+    NSFileCoordinator *fileCoordinator = [[NSFileCoordinator alloc] initWithFilePresenter:nil];
+    [fileCoordinator coordinateWritingItemAtURL:[NSURL fileURLWithPath:filePath] options:NSFileCoordinatorWritingForReplacing error:nil byAccessor:^(NSURL * _Nonnull accessorUrl) {
         
-        /**
-        NSData *data = [NSData dataWithContentsOfURL:avURLAsset.URL];
-        [data writeToFile:filePath atomically:YES];
-         */
-        
-        __block BOOL result = YES;
-        
-        AVAssetExportSession *session = [AVAssetExportSession exportSessionWithAsset:avURLAsset presetName:AVAssetExportPresetHighestQuality];
-        session.outputFileType = AVFileTypeQuickTimeMovie;
-        session.outputURL = [NSURL fileURLWithPath:filePath];
-        //session.shouldOptimizeForNetworkUse = YES;
-        [session exportAsynchronouslyWithCompletionHandler:^{
-            switch (session.status) {
-                    
-                case AVAssetExportSessionStatusUnknown:
-                    NSLog(@"AVAssetExportSessionStatusUnknown");
-                    break;
-                    
-                case AVAssetExportSessionStatusWaiting:
-                    NSLog(@"AVAssetExportSessionStatusWaiting");
-                    break;
-                    
-                case AVAssetExportSessionStatusExporting:
-                    NSLog(@"AVAssetExportSessionStatusExporting");
-                    break;
-                    
-                case AVAssetExportSessionStatusCompleted:
-                    NSLog(@"AVAssetExportSessionStatusCompleted");
-                    break;
-                    
-                case AVAssetExportSessionStatusFailed:
-                    NSLog(@"AVAssetExportSessionStatusFailed");
-                    result = NO;
-                    break;
-                    
-                case AVAssetExportSessionStatusCancelled:
-                    NSLog(@"AVAssetExportSessionStatusCancelled");
-                    result = NO;
-                    break;
-            }
-            
-            if (completion) {
-                completion(result,nil);
-            }
-        }];
-    }else{
-        BOOL result = [self writeOriginVideoToFile:filePath];
-            
-        if (completion) {
-            completion(result,nil);
-        }
-    }
-}
-
-- (void)writeOriginVideoToFile:(NSString *)filePath
-               progressHandler:(void (^)(double progress))progressHandler
-             completionHandler:(void (^)(BOOL success, NSError *error))completionHandler
-{
-    
-    [self requestOriginAVAssetWithCompletion:^(AVAsset *asset, AVAudioMix *audioMix, NSDictionary *info) {
-        NSError *error = [info objectForKey:PHImageErrorKey];
-        if (error){
-            if (completionHandler) {
-                completionHandler(NO, error);
-            }
-        }else{
-            AVURLAsset *avURLAsset = (AVURLAsset *)asset;
+        if (UsePhotoKit) {
+            AVURLAsset *avURLAsset = (AVURLAsset *)[self originVideoAsset];
             
             /**
              NSData *data = [NSData dataWithContentsOfURL:avURLAsset.URL];
-             [data writeToFile:filePath atomically:YES];
+             [data writeToFile:accessorUrl.path atomically:YES];
              */
             
             __block BOOL result = YES;
             
             AVAssetExportSession *session = [AVAssetExportSession exportSessionWithAsset:avURLAsset presetName:AVAssetExportPresetHighestQuality];
             session.outputFileType = AVFileTypeQuickTimeMovie;
-            session.outputURL = [NSURL fileURLWithPath:filePath];
+            session.outputURL = [NSURL fileURLWithPath:accessorUrl.path];
             //session.shouldOptimizeForNetworkUse = YES;
             [session exportAsynchronouslyWithCompletionHandler:^{
                 switch (session.status) {
@@ -1102,50 +1048,130 @@
                         break;
                 }
                 
-                if (progressHandler) {
-                    progressHandler(1.0);
+                if (completion) {
+                    completion(result,nil);
                 }
-                
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    if (completionHandler) {
-                        completionHandler(result,nil);
-                    }
-                });
             }];
+        }else{
+            BOOL result = [self writeOriginVideoToFile:accessorUrl.path];
+            
+            if (completion) {
+                completion(result,nil);
+            }
         }
-    } withProgressHandler:^(double progress, NSError * _Nullable error, BOOL * _Nonnull stop, NSDictionary * _Nullable info) {
-        if (progressHandler) {
-            progressHandler(progress);
-        }
+    }];
+}
+
+- (void)writeOriginVideoToFile:(NSString *)filePath
+               progressHandler:(void (^)(double progress))progressHandler
+             completionHandler:(void (^)(BOOL success, NSError *error))completionHandler
+{
+    NSFileCoordinator *fileCoordinator = [[NSFileCoordinator alloc] initWithFilePresenter:nil];
+    [fileCoordinator coordinateWritingItemAtURL:[NSURL fileURLWithPath:filePath] options:NSFileCoordinatorWritingForReplacing error:nil byAccessor:^(NSURL * _Nonnull accessorUrl) {
+        
+        [self requestOriginAVAssetWithCompletion:^(AVAsset *asset, AVAudioMix *audioMix, NSDictionary *info) {
+            NSError *error = [info objectForKey:PHImageErrorKey];
+            if (error){
+                if (completionHandler) {
+                    completionHandler(NO, error);
+                }
+            }else{
+                AVURLAsset *avURLAsset = (AVURLAsset *)asset;
+                
+                /**
+                 NSData *data = [NSData dataWithContentsOfURL:avURLAsset.URL];
+                 [data writeToFile:accessorUrl.path atomically:YES];
+                 */
+                
+                __block BOOL result = YES;
+                
+                AVAssetExportSession *session = [AVAssetExportSession exportSessionWithAsset:avURLAsset presetName:AVAssetExportPresetHighestQuality];
+                session.outputFileType = AVFileTypeQuickTimeMovie;
+                session.outputURL = [NSURL fileURLWithPath:accessorUrl.path];
+                //session.shouldOptimizeForNetworkUse = YES;
+                [session exportAsynchronouslyWithCompletionHandler:^{
+                    switch (session.status) {
+                            
+                        case AVAssetExportSessionStatusUnknown:
+                            NSLog(@"AVAssetExportSessionStatusUnknown");
+                            break;
+                            
+                        case AVAssetExportSessionStatusWaiting:
+                            NSLog(@"AVAssetExportSessionStatusWaiting");
+                            break;
+                            
+                        case AVAssetExportSessionStatusExporting:
+                            NSLog(@"AVAssetExportSessionStatusExporting");
+                            break;
+                            
+                        case AVAssetExportSessionStatusCompleted:
+                            NSLog(@"AVAssetExportSessionStatusCompleted");
+                            break;
+                            
+                        case AVAssetExportSessionStatusFailed:
+                            NSLog(@"AVAssetExportSessionStatusFailed");
+                            result = NO;
+                            break;
+                            
+                        case AVAssetExportSessionStatusCancelled:
+                            NSLog(@"AVAssetExportSessionStatusCancelled");
+                            result = NO;
+                            break;
+                    }
+                    
+                    if (progressHandler) {
+                        progressHandler(1.0);
+                    }
+                    
+                    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                        if (completionHandler) {
+                            completionHandler(result,nil);
+                        }
+                    });
+                }];
+            }
+        } withProgressHandler:^(double progress, NSError * _Nullable error, BOOL * _Nonnull stop, NSDictionary * _Nullable info) {
+            if (progressHandler) {
+                progressHandler(progress);
+            }
+        }];
     }];
 }
 
 - (BOOL)writeThumbnailImageToFile:(NSString *)filePath
 {
-    UIImage *image = [self thumbnailImage];
-    if (image) {
-        NSData *data = UIImagePNGRepresentation(image);
-        if (data) {
-            [data writeToFile:filePath atomically:YES];
-            return YES;
+    __block BOOL result = NO;
+    NSFileCoordinator *fileCoordinator = [[NSFileCoordinator alloc] initWithFilePresenter:nil];
+    [fileCoordinator coordinateWritingItemAtURL:[NSURL fileURLWithPath:filePath] options:NSFileCoordinatorWritingForReplacing error:nil byAccessor:^(NSURL * _Nonnull accessorUrl) {
+        
+        UIImage *image = [self thumbnailImage];
+        if (image) {
+            NSData *data = UIImagePNGRepresentation(image);
+            if (data) {
+                [data writeToFile:accessorUrl.path atomically:YES];
+                result = YES;
+            }
         }
-    }
-    
-    return NO;
+    }];
+    return result;
 }
 
 - (BOOL)writePreviewImageToFile:(NSString *)filePath
 {
-    UIImage *image = [self previewImage];
-    if (image) {
-        NSData *data = UIImagePNGRepresentation(image);
-        if (data) {
-            [data writeToFile:filePath atomically:YES];
-            return YES;
+    __block BOOL result = NO;
+    NSFileCoordinator *fileCoordinator = [[NSFileCoordinator alloc] initWithFilePresenter:nil];
+    [fileCoordinator coordinateWritingItemAtURL:[NSURL fileURLWithPath:filePath] options:NSFileCoordinatorWritingForReplacing error:nil byAccessor:^(NSURL * _Nonnull accessorUrl) {
+        
+        UIImage *image = [self previewImage];
+        if (image) {
+            NSData *data = UIImagePNGRepresentation(image);
+            if (data) {
+                [data writeToFile:accessorUrl.path atomically:YES];
+                result = YES;
+            }
         }
-    }
-    
-    return NO;
+    }];
+    return result;
 }
 
 @end

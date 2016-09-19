@@ -159,6 +159,7 @@
     picker.showsNumberOfAssets = YES;
     picker.navigationTitle = NSLocalizedString(@"Albums", nil);
     picker.pickerType = DLPhotoPickerTypeDisplay;
+    picker.showsEmptyAlbums = NO;
     
     
     

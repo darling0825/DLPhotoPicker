@@ -96,6 +96,8 @@ NSString * const DLPhotoPickerSelectedAssetsDidChangeNotification = @"DLPhotoPic
     if (self.thumbnailRequestOptions) {
         photoManager.thumbnailRequestOptions = self.thumbnailRequestOptions;
     }
+    
+    photoManager.showsEmptyAlbums = self.showsEmptyAlbums;
 }
 
 - (void)checkAuthorizationStatus

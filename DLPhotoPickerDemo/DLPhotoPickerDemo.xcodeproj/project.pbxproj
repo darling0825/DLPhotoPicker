@@ -489,6 +489,7 @@
 				TargetAttributes = {
 					595178AC1C7C225D00000BDE = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = 93XLKGTF68;
 					};
 					5977D9831C93BEFD005C0A4B = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -784,6 +785,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				DEVELOPMENT_TEAM = 93XLKGTF68;
 				INFOPLIST_FILE = DLPhotoPickerDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -798,6 +800,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
+				DEVELOPMENT_TEAM = 93XLKGTF68;
 				INFOPLIST_FILE = DLPhotoPickerDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

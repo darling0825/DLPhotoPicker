@@ -48,6 +48,15 @@ typedef NS_ENUM(NSInteger, DLPhotoPickerType) {
  */
 @property (nonatomic, assign) BOOL showsCancelButton;
 
+/**
+ *  Determines whether or not the empty albums is shown in the album list.
+ *
+ *  All albums are visible by default. To hide albums without assets matched with `assetsFetchOptions`,
+ *  set this property’s value to `NO`.
+ *
+ *  @see assetsFetchOptions
+ */
+@property (nonatomic, assign) BOOL showsEmptyAlbums;
 
 /**
  *  Determines whether or not the bottombar is visible in the asset view.
