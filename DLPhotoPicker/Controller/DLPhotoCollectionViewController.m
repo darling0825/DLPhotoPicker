@@ -761,24 +761,47 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     self.activityVC = [[UIActivityViewController alloc] initWithActivityItems:items applicationActivities:nil];
     
     typeof(self) __weak weakSelf = self;
-    [self.activityVC setCompletionHandler:^(NSString *activityType, BOOL completed) {
-        typeof(self) __strong strongSelf = weakSelf;
-        NSLog(@">>> Activity Type selected: %@", activityType);
-        if (completed) {
-            NSLog(@">>> Activity(%@) was performed.", activityType);
-        } else {
-            if (activityType == nil) {
-                NSLog(@">>> User dismissed the view controller without making a selection.");
+    
+    if (DLiOS_8_OR_LATER) {
+        self.activityVC.completionWithItemsHandler = ^(UIActivityType __nullable activityType, BOOL completed, NSArray * __nullable returnedItems, NSError * __nullable activityError){
+            typeof(self) __strong strongSelf = weakSelf;
+            NSLog(@">>> Activity Type selected: %@", activityType);
+            if (completed) {
+                NSLog(@">>> Activity(%@) was performed.", activityType);
             } else {
-                NSLog(@">>> Activity(%@) was not performed.", activityType);
+                if (activityType == nil) {
+                    NSLog(@">>> User dismissed the view controller without making a selection.");
+                } else {
+                    NSLog(@">>> Activity(%@) was not performed.", activityType);
+                }
             }
-        }
-        
-        for (AssetActivityProvider *provider in items) {
-            [provider cleanup];
-        }
-        [strongSelf hideProgressHUD:YES];
-    }];
+            
+            for (AssetActivityProvider *provider in items) {
+                [provider cleanup];
+            }
+            [strongSelf hideProgressHUD:YES];
+        };
+    }
+    else {
+        [self.activityVC setCompletionHandler:^(NSString *activityType, BOOL completed) {
+            typeof(self) __strong strongSelf = weakSelf;
+            NSLog(@">>> Activity Type selected: %@", activityType);
+            if (completed) {
+                NSLog(@">>> Activity(%@) was performed.", activityType);
+            } else {
+                if (activityType == nil) {
+                    NSLog(@">>> User dismissed the view controller without making a selection.");
+                } else {
+                    NSLog(@">>> Activity(%@) was not performed.", activityType);
+                }
+            }
+            
+            for (AssetActivityProvider *provider in items) {
+                [provider cleanup];
+            }
+            [strongSelf hideProgressHUD:YES];
+        }];
+    }
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){
         if (DLiOS_8_OR_LATER) {
@@ -829,25 +852,25 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
 }
 
 - (void)showProgressHUDWithMessage:(NSString *)message {
-    self.progressHUD.labelText = message;
+    self.progressHUD.label.text = message;
     self.progressHUD.mode = MBProgressHUDModeIndeterminate;
-    [self.progressHUD show:YES];
+    [self.progressHUD showAnimated:YES];
     self.navigationController.navigationBar.userInteractionEnabled = NO;
 }
 
 - (void)hideProgressHUD:(BOOL)animated {
-    [self.progressHUD hide:animated];
+    [self.progressHUD hideAnimated:animated];
     self.navigationController.navigationBar.userInteractionEnabled = YES;
 }
 
 - (void)showProgressHUDCompleteMessage:(NSString *)message {
     if (message) {
-        if (self.progressHUD.isHidden) [self.progressHUD show:YES];
-        self.progressHUD.labelText = message;
+        if (self.progressHUD.isHidden) [self.progressHUD showAnimated:YES];
+        self.progressHUD.label.text = message;
         self.progressHUD.mode = MBProgressHUDModeCustomView;
-        [self.progressHUD hide:YES afterDelay:1.5];
+        [self.progressHUD hideAnimated:YES afterDelay:1.5];
     } else {
-        [self.progressHUD hide:YES];
+        [self.progressHUD hideAnimated:YES];
     }
     self.navigationController.navigationBar.userInteractionEnabled = YES;
 }
