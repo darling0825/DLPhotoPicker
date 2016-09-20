@@ -1,5 +1,5 @@
 PODS:
-  - DLPhotoPicker (1.0.1):
+  - DLPhotoPicker (1.0.2):
     - MBProgressHUD
     - PureLayout (~> 3.0.0)
     - SVProgressHUD
@@ -18,7 +18,7 @@ EXTERNAL SOURCES:
     :path: ".."
 
 SPEC CHECKSUMS:
-  DLPhotoPicker: 54f6194f554c2ce6d2b014032fc453ee6eb824b7
+  DLPhotoPicker: c9262e3c41f18f9ec75a70bbfc6df3b0b0cc4669
   MBProgressHUD: 4890f671c94e8a0f3cf959aa731e9de2f036d71a
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4

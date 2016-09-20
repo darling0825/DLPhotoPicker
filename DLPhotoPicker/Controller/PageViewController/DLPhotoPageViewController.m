@@ -299,7 +299,8 @@
     
     typeof(self) __weak weakSelf = self;
     if (DLiOS_8_OR_LATER) {
-        self.activityVC.completionWithItemsHandler = ^(UIActivityType __nullable activityType, BOOL completed, NSArray * __nullable returnedItems, NSError * __nullable activityError){
+        self.activityVC.completionWithItemsHandler = ^(NSString *activityType, BOOL completed, NSArray *returnedItems, NSError *activityError)
+        {
             typeof(self) __strong strongSelf = weakSelf;
             NSLog(@">>> Activity Type selected: %@", activityType);
             if (completed) {
@@ -311,9 +312,9 @@
                     NSLog(@">>> Activity(%@) was not performed.", activityType);
                 }
             }
-            
             [assetProvider cleanup];
             [strongSelf hideProgressHUD:YES];
+            strongSelf.activityVC.completionWithItemsHandler = nil;
         };
     }
     else {
