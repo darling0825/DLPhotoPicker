@@ -3,6 +3,6 @@ osx_image: xcode8.0
 before_install:
   - pod update --project-directory=./DLPhotoPickerDemo
 script:
-  - xctool -workspace DLPhotoPickerDemo/DLPhotoPickerDemo.xcworkspace -scheme DLPhotoPickerDemo -destination "platform=iOS Simulator,name=iPhone 7 Plus,OS=10.0" clean build -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES
+  - xctool -workspace DLPhotoPickerDemo/DLPhotoPickerDemo.xcworkspace -scheme DLPhotoPickerDemo -destination "platform=iOS Simulator,name=iPhone 6 Plus,OS=9.2" clean build -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO GCC_INSTRUMENT_PROGRAM_FLOW_ARCS=YES GCC_GENERATE_TEST_COVERAGE_FILES=YES
 after_success:
   - bash <(curl -s https://codecov.io/bash)
