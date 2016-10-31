@@ -94,6 +94,8 @@ NSString * const DLPhotoPickerDidExitSelectModeNotification = @"DLPhotoPickerDid
 {
     [super viewWillLayoutSubviews];
     
+    [self.view layoutIfNeeded];
+    
     [self.scrollView setNeedsUpdateConstraints];
     [self.scrollView updateConstraintsIfNeeded];
 }
@@ -124,13 +126,13 @@ NSString * const DLPhotoPickerDidExitSelectModeNotification = @"DLPhotoPickerDid
 
 - (void)setupViews
 {
-    DLPhotoScrollView *scrollView = [DLPhotoScrollView newAutoLayoutView];
+    DLPhotoScrollView *scrollView = [[DLPhotoScrollView alloc] initWithFrame:self.view.bounds];
+    scrollView.translatesAutoresizingMaskIntoConstraints = NO;
     scrollView.allowsSelection = self.allowsSelection;
     
     self.scrollView = scrollView;
     
     [self.view addSubview:scrollView];
-    [self.view layoutIfNeeded];
 }
 
 - (void)setupScrollViewButtons
