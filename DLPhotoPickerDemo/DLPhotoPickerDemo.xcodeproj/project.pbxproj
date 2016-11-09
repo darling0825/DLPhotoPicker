@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		592013A11DD2060200B7AE36 /* SVProgressHUD+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 592013A01DD2060200B7AE36 /* SVProgressHUD+Extension.m */; };
 		595178B21C7C225D00000BDE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 595178B11C7C225D00000BDE /* main.m */; };
 		595178B51C7C225D00000BDE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 595178B41C7C225D00000BDE /* AppDelegate.m */; };
 		595178B81C7C225D00000BDE /* PhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 595178B71C7C225D00000BDE /* PhotoViewController.m */; };
@@ -42,6 +43,8 @@
 /* Begin PBXFileReference section */
 		0625ADBDD097A81546BD4117 /* Pods-DLPhotoPickerDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DLPhotoPickerDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DLPhotoPickerDemo/Pods-DLPhotoPickerDemo.debug.xcconfig"; sourceTree = "<group>"; };
 		13F108D0C9137FA43C8A8774 /* Pods-DLPhotoPickerDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DLPhotoPickerDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-DLPhotoPickerDemo/Pods-DLPhotoPickerDemo.release.xcconfig"; sourceTree = "<group>"; };
+		5920139F1DD2060200B7AE36 /* SVProgressHUD+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD+Extension.h"; sourceTree = "<group>"; };
+		592013A01DD2060200B7AE36 /* SVProgressHUD+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SVProgressHUD+Extension.m"; sourceTree = "<group>"; };
 		5924FA721C8967C000B82A18 /* DLPhotoBarButtonItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLPhotoBarButtonItem.h; sourceTree = "<group>"; };
 		5924FA731C8967C000B82A18 /* DLPhotoBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLPhotoBarButtonItem.m; sourceTree = "<group>"; };
 		59505B941C82C0F900E025D6 /* NSIndexSet+DLPhotoPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSIndexSet+DLPhotoPicker.h"; sourceTree = "<group>"; };
@@ -265,6 +268,8 @@
 				5958B1861C7C438900A8B1F6 /* NSNumberFormatter+DLPhotoPicker.m */,
 				5958B18B1C7C438900A8B1F6 /* UIImage+DLPhotoPicker.h */,
 				5958B18C1C7C438900A8B1F6 /* UIImage+DLPhotoPicker.m */,
+				5920139F1DD2060200B7AE36 /* SVProgressHUD+Extension.h */,
+				592013A01DD2060200B7AE36 /* SVProgressHUD+Extension.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -624,6 +629,7 @@
 				595178B51C7C225D00000BDE /* AppDelegate.m in Sources */,
 				595178B21C7C225D00000BDE /* main.m in Sources */,
 				59EF397D1C96B9A9005054E9 /* PhotoViewControllerTwo.m in Sources */,
+				592013A11DD2060200B7AE36 /* SVProgressHUD+Extension.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

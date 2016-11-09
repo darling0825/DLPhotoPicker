@@ -29,6 +29,8 @@
 #import "NSNumberFormatter+DLPhotoPicker.h"
 #import "NSDateFormatter+DLPhotoPicker.h"
 
+#import "SVProgressHUD+Extension.h"
+
 #import "DLPhotoCheckmark.h"
 #import "DLPhotoBackgroundView.h"
 

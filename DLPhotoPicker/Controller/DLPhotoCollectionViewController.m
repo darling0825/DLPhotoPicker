@@ -22,9 +22,8 @@
 #import "UICollectionView+DLPhotoPicker.h"
 #import "DLPhotoPageViewController.h"
 #import "DLPhotoItemViewController.h"
-#import "MBProgressHUD.h"
 #import "AssetActivityProvider.h"
-
+#import "SVProgressHUD+Extension.h"
 
 NSString * const DLPhotoCollectionViewCellIdentifier = @"DLPhotoCollectionViewCellIdentifier";
 NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionViewFooterIdentifier";
@@ -34,6 +33,7 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
 <PHPhotoLibraryChangeObserver, ALAssetsLibraryChangeObserver>
 
 @property (nonatomic, strong) NSMutableArray *assets;
+@property (nonatomic, assign) BOOL didLoadAssets;
 
 @property (nonatomic, strong) DLPhotoCollectionViewFooter *footer;
 @property (nonatomic, strong) DLPhotoPickerNoAssetsView *noAssetsView;
@@ -47,7 +47,6 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
 @property (nonatomic, strong) UIBarButtonItem *selectButton;
 @property (nonatomic, strong) UIBarButtonItem *confirmButton;
 
-@property (nonatomic, strong) MBProgressHUD *progressHUD;
 @property (nonatomic, strong) UIActivityViewController *activityVC;
 @property (nonatomic, strong) UIPopoverController *popoverController;
 
@@ -131,7 +130,6 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    _progressHUD = nil;
     _activityVC = nil;
     _popoverController = nil;
 }
@@ -189,10 +187,22 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
 
 - (void)resetAssetsAndReload
 {
-    self.assets = [[[DLPhotoManager sharedInstance] assetsForPhotoCollection:self.photoCollection] mutableCopy];
-    [self reloadData];
+    [SVProgressHUD showActivity];
     
-    [self updateToolBarStatus];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        
+        self.assets = [[[DLPhotoManager sharedInstance] assetsForPhotoCollection:self.photoCollection] mutableCopy];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            [self reloadData];
+            
+            [SVProgressHUD dismiss];
+            
+            self.didLoadAssets = YES;
+        });
+        
+    });
 }
 
 - (DLPhotoAsset *)assetAtIndexPath:(NSIndexPath *)indexPath
@@ -780,7 +790,7 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
             for (AssetActivityProvider *provider in items) {
                 [provider cleanup];
             }
-            [strongSelf hideProgressHUD:YES];
+            [SVProgressHUD dismiss];
             strongSelf.activityVC.completionWithItemsHandler = nil;
         };
     }
@@ -801,7 +811,7 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
             for (AssetActivityProvider *provider in items) {
                 [provider cleanup];
             }
-            [strongSelf hideProgressHUD:YES];
+            [SVProgressHUD dismiss];
         }];
     }
     
@@ -829,7 +839,7 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     }
     
     dispatch_async(dispatch_get_main_queue(), ^(void){
-        [self showProgressHUDWithMessage:nil];
+        [SVProgressHUD showActivity];
     });
 }
 
@@ -839,42 +849,6 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     } failure:^(NSError *error) {
         NSLog(@">>> %@",error);
     }];
-}
-
-#pragma mark - Action Progress
-
-- (MBProgressHUD *)progressHUD {
-    if (!_progressHUD) {
-        _progressHUD = [[MBProgressHUD alloc] initWithView:self.view];
-        _progressHUD.minSize = CGSizeMake(120, 120);
-        _progressHUD.minShowTime = 1;
-        [self.view addSubview:_progressHUD];
-    }
-    return _progressHUD;
-}
-
-- (void)showProgressHUDWithMessage:(NSString *)message {
-    self.progressHUD.label.text = message;
-    self.progressHUD.mode = MBProgressHUDModeIndeterminate;
-    [self.progressHUD showAnimated:YES];
-    self.navigationController.navigationBar.userInteractionEnabled = NO;
-}
-
-- (void)hideProgressHUD:(BOOL)animated {
-    [self.progressHUD hideAnimated:animated];
-    self.navigationController.navigationBar.userInteractionEnabled = YES;
-}
-
-- (void)showProgressHUDCompleteMessage:(NSString *)message {
-    if (message) {
-        if (self.progressHUD.isHidden) [self.progressHUD showAnimated:YES];
-        self.progressHUD.label.text = message;
-        self.progressHUD.mode = MBProgressHUDModeCustomView;
-        [self.progressHUD hideAnimated:YES afterDelay:1.5];
-    } else {
-        [self.progressHUD hideAnimated:YES];
-    }
-    self.navigationController.navigationBar.userInteractionEnabled = YES;
 }
 
 #pragma mark - Update status

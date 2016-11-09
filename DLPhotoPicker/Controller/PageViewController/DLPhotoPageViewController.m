@@ -35,10 +35,9 @@
 #import "DLPhotoAsset.h"
 #import "DLPhotoManager.h"
 #import "DLPhotoPickerViewController.h"
-#import "MBProgressHUD.h"
 #import "AssetActivityProvider.h"
 #import "TOCropViewController.h"
-#import "SVProgressHUD.h"
+#import "SVProgressHUD+Extension.h"
 
 
 @interface DLPhotoPageViewController ()
@@ -50,7 +49,6 @@
 @property (nonatomic, strong) DLPhotoAsset *asset;
 
 @property (nonatomic, strong) DLPhotoPageView *pageView;
-@property (nonatomic, strong) MBProgressHUD *progressHUD;
 
 @property (nonatomic, strong) UIBarButtonItem *playButton;
 @property (nonatomic, strong) UIBarButtonItem *pauseButton;
@@ -293,6 +291,8 @@
 #pragma mark - Button Action
 - (void)photoShareAction:(UIBarButtonItem *)sender
 {
+    [SVProgressHUD showActivity];
+    
     AssetActivityProvider *assetProvider = [[AssetActivityProvider alloc] initWithAsset:self.asset];
     self.activityVC =
     [[UIActivityViewController alloc] initWithActivityItems:@[assetProvider] applicationActivities:nil];
@@ -313,7 +313,6 @@
                 }
             }
             [assetProvider cleanup];
-            [strongSelf hideProgressHUD:YES];
             strongSelf.activityVC.completionWithItemsHandler = nil;
         };
     }
@@ -332,7 +331,6 @@
             }
             
             [assetProvider cleanup];
-            [strongSelf hideProgressHUD:YES];
         }];
     }
     
@@ -356,13 +354,11 @@
     }else{
         [self presentViewController:self.activityVC animated:YES completion:^{
             self.activityVC.excludedActivityTypes = nil;
-            self.activityVC = nil;}
-         ];
+            self.activityVC = nil;
+            
+            [SVProgressHUD dismiss];
+        }];
     }
-    
-    dispatch_async(dispatch_get_main_queue(), ^(void){
-        [self showProgressHUDWithMessage:nil];
-    });
 }
 
 - (void)photoInfoAction:(UIBarButtonItem *)sender
@@ -505,11 +501,8 @@
             
             //  Saved to default album
             [[DLPhotoManager sharedInstance] saveImage:image toAlbum:nil completion:^(BOOL success) {
-                
-                [SVProgressHUD setBackgroundColor:[UIColor blackColor]];
-                [SVProgressHUD setForegroundColor:[UIColor whiteColor]];
-                [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeBlack];
-                [SVProgressHUD showSuccessWithStatus:DLPhotoPickerLocalizedString(@"Saved to default album.",nil)];
+
+                [SVProgressHUD showSuccessStatus:DLPhotoPickerLocalizedString(@"Saved to default album.",nil)];
                 
                 //  dismiss after 2 second
                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC);
@@ -743,30 +736,5 @@
 - (void)pauseAsset:(id)sender
 {
     [((DLPhotoItemViewController *)self.viewControllers[0]) pauseAsset:sender];
-}
-
-
-#pragma mark - Action Progress
-
-- (MBProgressHUD *)progressHUD {
-    if (!_progressHUD) {
-        _progressHUD = [[MBProgressHUD alloc] initWithView:self.view];
-        _progressHUD.minSize = CGSizeMake(120, 120);
-        _progressHUD.minShowTime = 1;
-        [self.view addSubview:_progressHUD];
-    }
-    return _progressHUD;
-}
-
-- (void)showProgressHUDWithMessage:(NSString *)message {
-    self.progressHUD.label.text = message;
-    self.progressHUD.mode = MBProgressHUDModeIndeterminate;
-    [self.progressHUD showAnimated:YES];
-    self.navigationController.navigationBar.userInteractionEnabled = NO;
-}
-
-- (void)hideProgressHUD:(BOOL)animated {
-    [self.progressHUD hideAnimated:animated];
-    self.navigationController.navigationBar.userInteractionEnabled = YES;
 }
 @end
