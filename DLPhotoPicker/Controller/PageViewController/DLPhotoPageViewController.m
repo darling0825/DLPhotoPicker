@@ -37,7 +37,7 @@
 #import "DLPhotoPickerViewController.h"
 #import "AssetActivityProvider.h"
 #import "TOCropViewController.h"
-#import "SVProgressHUD+Extension.h"
+#import "DLProgressHud.h"
 
 
 @interface DLPhotoPageViewController ()
@@ -291,7 +291,7 @@
 #pragma mark - Button Action
 - (void)photoShareAction:(UIBarButtonItem *)sender
 {
-    [SVProgressHUD showActivity];
+    [DLProgressHud showActivity];
     
     AssetActivityProvider *assetProvider = [[AssetActivityProvider alloc] initWithAsset:self.asset];
     self.activityVC =
@@ -318,7 +318,6 @@
     }
     else {
         [self.activityVC setCompletionHandler:^(NSString *activityType, BOOL completed) {
-            typeof(self) __strong strongSelf = weakSelf;
             NSLog(@">>> Activity Type selected: %@", activityType);
             if (completed) {
                 NSLog(@">>> Activity(%@) was performed.", activityType);
@@ -356,7 +355,7 @@
             self.activityVC.excludedActivityTypes = nil;
             self.activityVC = nil;
             
-            [SVProgressHUD dismiss];
+            [DLProgressHud dismiss];
         }];
     }
 }
@@ -502,12 +501,12 @@
             //  Saved to default album
             [[DLPhotoManager sharedInstance] saveImage:image toAlbum:nil completion:^(BOOL success) {
 
-                [SVProgressHUD showSuccessStatus:DLPhotoPickerLocalizedString(@"Saved to default album.",nil)];
+                [DLProgressHud showSuccessStatus:DLPhotoPickerLocalizedString(@"Saved to default album.",nil)];
                 
                 //  dismiss after 2 second
                 dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC);
                 dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                    [SVProgressHUD dismiss];
+                    [DLProgressHud dismiss];
                 });
             } failure:^(NSError *error) {
                 

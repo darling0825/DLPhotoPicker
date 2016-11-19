@@ -1,11 +1,11 @@
 PODS:
-  - DLPhotoPicker (1.0.4):
+  - DLPhotoPicker (1.0.5):
     - PureLayout (~> 3.0.0)
     - SVProgressHUD
     - TOCropViewController
   - PureLayout (3.0.2)
   - SVProgressHUD (2.0.3)
-  - TOCropViewController (2.0.7)
+  - TOCropViewController (2.0.11)
 
 DEPENDENCIES:
   - DLPhotoPicker (from `..`)
@@ -16,10 +16,10 @@ EXTERNAL SOURCES:
     :path: ".."
 
 SPEC CHECKSUMS:
-  DLPhotoPicker: d51581304e6e934010950b4a1e778a918f347496
+  DLPhotoPicker: 849eaf4e7734f62c202114bc9a2c61132f256ce7
   PureLayout: 4d550abe49a94f24c2808b9b95db9131685fe4cd
   SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
-  TOCropViewController: cec24e4385929683b217d08bfdc8791975cddc04
+  TOCropViewController: fe91aaab9e95d72ac38654d1174c8c8339585ee5
 
 PODFILE CHECKSUM: 6ef001143d3ecc6ad6c5ccc73505f3294982742c
 

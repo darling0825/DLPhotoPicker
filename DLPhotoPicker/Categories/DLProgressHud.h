@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SVProgressHUD.h"
 
-@interface SVProgressHUD(Extension)
+@interface DLProgressHud : NSObject 
 + (void)showActivity;
 + (void)showSuccessStatus:(NSString *)status;
++ (void)dismiss;
 @end

@@ -6,10 +6,10 @@
 //  Copyright © 2016年 darling0825. All rights reserved.
 //
 
-#import "SVProgressHUD+Extension.h"
+#import "DLProgressHud.h"
+#import "SVProgressHUD.h"
 
-
-@implementation SVProgressHUD(Extension)
+@implementation DLProgressHud
 + (void)showActivity {
     [SVProgressHUD setDefaultStyle:SVProgressHUDStyleCustom];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
@@ -21,5 +21,9 @@
     [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeClear];
     [SVProgressHUD showSuccessWithStatus:status];
+}
+
++ (void)dismiss {
+    [SVProgressHUD dismiss];
 }
 @end

@@ -5,7 +5,7 @@
 </p>
 
 [![CI Status](http://img.shields.io/travis/TimOliver/TOCropViewController.svg?style=flat)](http://api.travis-ci.org/TimOliver/TOCropViewController.svg)
-[![CocoaPods](https://img.shields.io/cocoapods/dt/TOCropViewController.svg?maxAge=2592000)](https://cocoapods.org/pods/TOCropViewController)
+[![CocoaPods](https://img.shields.io/cocoapods/dt/TOCropViewController.svg?maxAge=3600)](https://cocoapods.org/pods/TOCropViewController)
 [![Version](https://img.shields.io/cocoapods/v/TOCropViewController.svg?style=flat)](http://cocoadocs.org/docsets/TOCropViewController)
 [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/TimOliver/TOCropViewController/master/LICENSE)
@@ -117,7 +117,9 @@ Optionally, `TOCropViewController` also supports a custom presentation animation
 ## Architecture of `TOCropViewController`
 While traditional cropping UI implementations will usually just have a dimming view with a square hole cut out of the middle, `TOCropViewController` goes about its implementation a little differently.
 
-![TOCropViewController](breakdown.jpg)
+<p align="center">
+<img src="https://raw.githubusercontent.com/TimOliver/TOCropViewController/master/breakdown.jpg" width="702" style="margin:0 auto" />
+</p>
 
 Since there are two views that are overlaid over the image (A dimming view and a translucency view), trying to cut a hole open in both of them would be rather complex. Instead, an image view is placed in a scroll view in the background, and a copy of the image view is placed on top, inside a container view that is clipped to the designated cropping size. The size and position of the foreground image is then made to match the background view, creating the illusion that there is a hole in the dimming views, and minimising the number of views onscreen.
 

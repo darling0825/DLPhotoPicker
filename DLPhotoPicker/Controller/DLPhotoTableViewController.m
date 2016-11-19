@@ -14,7 +14,7 @@
 #import "DLPhotoPickerDefines.h"
 #import "DLPhotoManager.h"
 #import "NSBundle+DLPhotoPicker.h"
-#import "SVProgressHUD+Extension.h"
+#import "DLProgressHud.h"
 
 static NSString *cellIdentifier = @"CellIdentifier";
 
@@ -98,13 +98,13 @@ ALAssetsLibraryChangeObserver, DLPhotoCollectionViewControllerDelegate>
 #pragma mark -
 - (void)fetchPhotoCollectionAndReload
 {
-    [SVProgressHUD showActivity];
+    [DLProgressHud showActivity];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [[DLPhotoManager sharedInstance] fetchPhotoCollection:^(BOOL success) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 
-                [SVProgressHUD dismiss];
+                [DLProgressHud dismiss];
                 
                 if (success) {
                     [self setupPhotoCollection];

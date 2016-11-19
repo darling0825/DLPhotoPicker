@@ -145,6 +145,9 @@
         
         self.modalTransitionStyle = UIModalTransitionStyleCoverVertical;
     }
+    else {
+        [self.cropView setBackgroundImageViewHidden:YES animated:NO];
+    }
 
     if (self.aspectRatioPreset != TOCropViewControllerAspectRatioPresetOriginal) {
         [self setAspectRatioPreset:self.aspectRatioPreset animated:NO];
@@ -326,6 +329,7 @@
     [self.cropView prepareforRotation];
     self.cropView.frame = [self frameForCropViewWithVerticalLayout:!UIInterfaceOrientationIsPortrait(toInterfaceOrientation)];
     self.cropView.simpleRenderMode = YES;
+    self.cropView.internalLayoutDisabled = YES;
 }
 
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
@@ -352,6 +356,7 @@
     self.toolbarSnapshotView = nil;
     
     [self.cropView setSimpleRenderMode:NO animated:YES];
+    self.cropView.internalLayoutDisabled = NO;
 }
 
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
@@ -377,14 +382,11 @@
 {
     BOOL animated = (self.cropView.angle == 0);
     
-    if (self.resetAspectRatioEnabled == NO) {
-        [self.cropView resetLayoutToDefaultAnimated:animated];
-    }
-    else {
+    if (self.resetAspectRatioEnabled) {
         self.aspectRatioLockEnabled = NO;
-        [self setAspectRatioPreset:TOCropViewControllerAspectRatioPresetOriginal animated:animated];
-        [self.cropView resetLayoutToDefaultAnimated:animated];
     }
+    
+    [self.cropView resetLayoutToDefaultAnimated:animated];
 }
 
 #pragma mark - Aspect Ratio Handling -
@@ -484,6 +486,8 @@
 - (void)setAspectRatioPreset:(TOCropViewControllerAspectRatioPreset)aspectRatioPreset animated:(BOOL)animated
 {
     CGSize aspectRatio = CGSizeZero;
+    
+    _aspectRatioPreset = aspectRatioPreset;
     
     switch (aspectRatioPreset) {
         case TOCropViewControllerAspectRatioPresetOriginal:
@@ -632,7 +636,7 @@
 
 - (id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
 {
-    if (self.navigationController) {
+    if (self.navigationController || self.modalTransitionStyle == UIModalTransitionStyleCoverVertical) {
         return nil;
     }
     
@@ -660,7 +664,7 @@
 
 - (id <UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
 {
-    if (self.navigationController) {
+    if (self.navigationController || self.modalTransitionStyle == UIModalTransitionStyleCoverVertical) {
         return nil;
     }
     
@@ -875,6 +879,12 @@
 {
     self.cropView.resetAspectRatioEnabled = resetAspectRatioEnabled;
     self.aspectRatioPickerButtonHidden = (resetAspectRatioEnabled == NO && self.aspectRatioLockEnabled);
+}
+
+- (void)setCustomAspectRatio:(CGSize)customAspectRatio
+{
+    _customAspectRatio = customAspectRatio;
+    [self setAspectRatioPreset:TOCropViewControllerAspectRatioPresetCustom animated:NO];
 }
 
 - (BOOL)resetAspectRatioEnabled

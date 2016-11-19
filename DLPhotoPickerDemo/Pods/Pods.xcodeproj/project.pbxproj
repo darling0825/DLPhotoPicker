@@ -7,163 +7,164 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		013D8A4E21D1CD6CF14995A0B5C00E56 /* NSLayoutConstraint+PureLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 560BD323FE21E3D6B0A1715DAC6F0C8E /* NSLayoutConstraint+PureLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		00063E81476AF58D1B19C64C53124106 /* DLPhotoCollectionViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 065B35ED46D595C6346A5EB180603170 /* DLPhotoCollectionViewCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		00FFC89D36CA30419192466DF207D994 /* DLPhotoPickerNoAssetsView.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BCBCA0F0C9589DBB287784BE0689CC /* DLPhotoPickerNoAssetsView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		013D8A4E21D1CD6CF14995A0B5C00E56 /* NSLayoutConstraint+PureLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 876FF74ED3F746FBF420CAC6ECC4A844 /* NSLayoutConstraint+PureLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		02B5CB07D862FB81454F1A79FEC8ECEF /* TOActivityCroppedImageProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 0C896D88259C00DDAC4B521AE673B3B1 /* TOActivityCroppedImageProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		04224722B25FDC0D3D4922C9A05E77FE /* id.lproj in Resources */ = {isa = PBXBuildFile; fileRef = D1DA8B2FC44F6FB6384A253401333EA3 /* id.lproj */; };
 		0446B02340B6A8C8D4DC575F09292084 /* nl.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 6568536AB75A3B1895F9523DBAAD7989 /* nl.lproj */; };
-		081F4C30EE586D781A45408CE88502C0 /* TOCropToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = B10BBF57C0C52383B1E487EAF159D738 /* TOCropToolbar.m */; };
-		09F8ABF20220282B04D7092285FFBEBE /* NSBundle+DLPhotoPicker.h in Headers */ = {isa = PBXBuildFile; fileRef = 3AC696D27409B81DCEFBCFD62561EEC1 /* NSBundle+DLPhotoPicker.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0A50E8FD85E16C989D9D208FB60E4284 /* SVRadialGradientLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = EF01C16318A0195E3EECE33CB66A5FF0 /* SVRadialGradientLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0B797AE10F5F6250F91A4B105FE38D7E /* DLPhotoPickerDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 174D5A043EF829EF1A96E99458A3E69B /* DLPhotoPickerDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0BD10285163ACD06F1340FB06571061B /* DLPhotoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 11AB4C9FFE61067C25BE3CE33BF1114A /* DLPhotoManager.m */; };
-		0FC643460050FB45CFC9BF3582CB5ED3 /* Base.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 6F5AE388EE086B199C7CFC65C6EA9D46 /* Base.lproj */; };
-		1034C59CF6E48F2512CE3E1B258A6BDB /* DLPhotoBackgroundView.h in Headers */ = {isa = PBXBuildFile; fileRef = AC263649EB192FAF69C5AEE5C63C0D92 /* DLPhotoBackgroundView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1137BF83ACAD60C7599A94D1AF79FDEA /* DLPhotoCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 8944E0CEC14E56E91680EE18F49D9735 /* DLPhotoCollection.m */; };
-		11B27A8810BADA9C26A4FC8301B6E6C1 /* DLPhotoPlayButton.h in Headers */ = {isa = PBXBuildFile; fileRef = D93B5AD2DD7560CB0726CAB72A7D7614 /* DLPhotoPlayButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1474639610F3533AC8036AFFAC05DDCF /* ko.lproj in Resources */ = {isa = PBXBuildFile; fileRef = CD8D8A938009F9DD68CCEE42EE2AA699 /* ko.lproj */; };
-		162C76D1D5381436CA1BA2CB995D0BC2 /* ar.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 50B17B0BD3855C2AF202AEB09390063E /* ar.lproj */; };
+		05B6B39726E736CAAB1750B6135DD364 /* DLPhotoCollectionViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2413BCF69835F4FC4A571301CDE87AF5 /* DLPhotoCollectionViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		07232F78D431DFCDEC1C37202506EBA3 /* NSIndexSet+DLPhotoPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 11F935C6AE053D5AE1D75A1436206CB2 /* NSIndexSet+DLPhotoPicker.m */; };
+		07B1EFA5577B157A7616133046FB6EF6 /* DLPhotoPickerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 083D4A8AB24323721CF9061657ACFAFA /* DLPhotoPickerViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		07C9EA2C3D165DDF8A626D6786E61B96 /* DLPhotoCollectionSelectedView.h in Headers */ = {isa = PBXBuildFile; fileRef = B44866AE91D5AEEFBF8D1455481FF2D8 /* DLPhotoCollectionSelectedView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		07F936F499606A1806848B1621612BD6 /* DLPhotoPicker.h in Headers */ = {isa = PBXBuildFile; fileRef = DB8B43339D1E319AA5DFC093F0066341 /* DLPhotoPicker.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		081F4C30EE586D781A45408CE88502C0 /* TOCropToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 7B20EE48FF4D4950A71E930B618D110B /* TOCropToolbar.m */; };
+		0A50E8FD85E16C989D9D208FB60E4284 /* SVRadialGradientLayer.h in Headers */ = {isa = PBXBuildFile; fileRef = FC51F61D5ADE6B2E3F11680EAEA229F7 /* SVRadialGradientLayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0A65D95FC1F16823D9EFAA2784E458A2 /* NSNumberFormatter+DLPhotoPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = D5AD4B549AF1A076B016AF80295C9D0F /* NSNumberFormatter+DLPhotoPicker.m */; };
+		0A8C8100C6B4539A452807416B5A26A3 /* TOCropView.h in Headers */ = {isa = PBXBuildFile; fileRef = D1C2632948D65551D6267B8B3AE89EA7 /* TOCropView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0BFD5DF4C5E8E43224F55800C494D6E7 /* NSBundle+DLPhotoPicker.h in Headers */ = {isa = PBXBuildFile; fileRef = D5E6E0810209B2CFE56F3E0A905F89BA /* NSBundle+DLPhotoPicker.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0D626DCA2417343BA9CF05400C25E6EC /* DLPhotoThumbnailOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 57C85EBE414F018776C6552377D9E0A9 /* DLPhotoThumbnailOverlay.m */; };
+		0E79D1F7C231A22C41994507A96808B7 /* DLPhotoTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = A5994F4FD37B698362E693285DBCB364 /* DLPhotoTableViewCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0EE2BEA6E78110B21E2325A4399BA2DD /* AssetActivityProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = C17C85D276DE07ACC4F74B3A38A169C0 /* AssetActivityProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0F70D90AEAC4BF8BE4018F771D270431 /* DLPhotoCollectionViewFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 14024EC3C371F97CF88036F298BBE7F6 /* DLPhotoCollectionViewFooter.m */; };
+		0FC643460050FB45CFC9BF3582CB5ED3 /* Base.lproj in Resources */ = {isa = PBXBuildFile; fileRef = A91C3FBDA80ADE9FB62E02C260C86AA9 /* Base.lproj */; };
+		1225A7A2DA1036F287967B21E9105A8C /* DLPhotoCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D12BA5852A9657EA0BF84F86FFEEEA9D /* DLPhotoCollectionViewController.m */; };
+		1474639610F3533AC8036AFFAC05DDCF /* ko.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 9321B68A277E9FBE7F935F4B04AB12AF /* ko.lproj */; };
+		162C76D1D5381436CA1BA2CB995D0BC2 /* ar.lproj in Resources */ = {isa = PBXBuildFile; fileRef = F386970313926FBBF2E9B194DD0E3CBD /* ar.lproj */; };
 		188BF7872FBD0DE78A1694DD49F9582C /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE26E00E6D9B6F536E78D4458AC38F2E /* AssetsLibrary.framework */; };
-		190627654CA0C204663FCDA7BD341DD0 /* DLPhotoTableViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 38A8D16E75582F0F73DC9622DAD033F9 /* DLPhotoTableViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		19A784EA8A903C44B18F4162CE44E795 /* pl.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 182F94BEADFACFD1A915828B8C480F5A /* pl.lproj */; };
-		19E420DEC4037F42E02B2A81AB61C7FF /* UIImage+CropRotate.m in Sources */ = {isa = PBXBuildFile; fileRef = A4A3A772BFDA3A16C9D516DCAD9BFB7E /* UIImage+CropRotate.m */; };
-		1CA0CD89B8FB03D43636BBD29E60400E /* TOCropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F40A91DD8962400C7842E90E43801098 /* TOCropViewController.m */; };
-		1D7E312682EF319C7EDC5A6C7A0F6931 /* DLPhotoThumbnailStacks.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D1BBE13CA6F4B8EC3D51AA2BF6309FC /* DLPhotoThumbnailStacks.m */; };
-		1DB6657C1BE0D481875A004CD81C1E13 /* es.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 659E6C63D9A63D746407F922AC93309A /* es.lproj */; };
+		19A784EA8A903C44B18F4162CE44E795 /* pl.lproj in Resources */ = {isa = PBXBuildFile; fileRef = BA97C1B2F16EED3B7DFD3FF90B3ECCE9 /* pl.lproj */; };
+		19E420DEC4037F42E02B2A81AB61C7FF /* UIImage+CropRotate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7343FD59FEC694465FB25D149A024A7C /* UIImage+CropRotate.m */; };
+		1C8333051B488E4DD329F3BB935018A3 /* DLPhotoThumbnailStacks.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D1BBE13CA6F4B8EC3D51AA2BF6309FC /* DLPhotoThumbnailStacks.m */; };
+		1CA0CD89B8FB03D43636BBD29E60400E /* TOCropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 777B67FEF620583FCE1C24CB22B3681C /* TOCropViewController.m */; };
+		1DB6657C1BE0D481875A004CD81C1E13 /* es.lproj in Resources */ = {isa = PBXBuildFile; fileRef = A590655252FF7EF58E14EBC93C098A62 /* es.lproj */; };
 		1E1520806E640FC91D7C9D56BE4A06BA /* Pods-DLPhotoPickerDemo-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 67A9BA4370AE140E4136E4EE12DB65AC /* Pods-DLPhotoPickerDemo-dummy.m */; };
-		1F8D501FD1B3BE5C048FCF03FA716A16 /* NSNumberFormatter+DLPhotoPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = FFEF4BCB0FE1F9A43B4FDCD7D0A82B0E /* NSNumberFormatter+DLPhotoPicker.m */; };
-		2079F48BAD5F3B92C550AF941CAD81FC /* DLPhotoScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96106D42E3F5065E5733C6F08013A29D /* DLPhotoScrollView.m */; };
-		24AC409C5BF8C1C0B444B70D69B0DF94 /* DLPhotoThumbnailOverlay.h in Headers */ = {isa = PBXBuildFile; fileRef = 205E51B82F646019E2029924A85ED409 /* DLPhotoThumbnailOverlay.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2537F22726C05E68A21746670431B65A /* zh-Hans.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 85905049D9E3FC9A6E6A14E381F7C468 /* zh-Hans.lproj */; };
-		25A4B3862F4585E7C37934BD2312F303 /* DLPhotoCollectionSelectedView.h in Headers */ = {isa = PBXBuildFile; fileRef = B44866AE91D5AEEFBF8D1455481FF2D8 /* DLPhotoCollectionSelectedView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2202BDA7F924459FB9B21D211FF00928 /* TOCropViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 41C0F18136E35D4A626841C47D977BDB /* TOCropViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2537F22726C05E68A21746670431B65A /* zh-Hans.lproj in Resources */ = {isa = PBXBuildFile; fileRef = A402C0F1ED47EBCEC552C63228C11606 /* zh-Hans.lproj */; };
 		26CCDED4BF8ADC5CB1F9F0659D3C1162 /* sv.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 30990B1170A54051250031CB97E83656 /* sv.lproj */; };
-		29DD4889C2A0FC2EA9FDB61EC5345FFC /* DLPhotoThumbnailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DF9A75BA3D4A0F1236303CA39ADB596 /* DLPhotoThumbnailView.m */; };
-		29E836FB3661D579FA94535192C0362C /* TOCropView.m in Sources */ = {isa = PBXBuildFile; fileRef = DBCA842F6E687C7C394F4E584E607C41 /* TOCropView.m */; };
-		2BB45AA5F0A3AFCD9EE38FBE59ED9F3D /* TOActivityCroppedImageProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = C87E514F3359B1BAEA72E5559A8002E6 /* TOActivityCroppedImageProvider.m */; };
-		2E29B784CF9FDC9EFDE382469B789D5E /* DLPhotoCollectionViewFooter.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F7F4C5F6AAEF025448724035763AE9C /* DLPhotoCollectionViewFooter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		29E836FB3661D579FA94535192C0362C /* TOCropView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F7F09F9296C7443A9C4C89A202EDE4C /* TOCropView.m */; };
+		2B5AAB3F493DCE488867E7B71157E6DC /* DLPhotoPicker-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F6F2FEE84FE852A44C05EA17493524 /* DLPhotoPicker-dummy.m */; };
+		2BB45AA5F0A3AFCD9EE38FBE59ED9F3D /* TOActivityCroppedImageProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 6B5362D50D9155D0950FEBA924080F71 /* TOActivityCroppedImageProvider.m */; };
 		2F3486080CBF8ED5479ACA47CCAB9274 /* ru.lproj in Resources */ = {isa = PBXBuildFile; fileRef = E7685D55F3FA21AE1C23F3D54F8B4456 /* ru.lproj */; };
-		2F44DD50E78CA53AC9D37299DE2C961E /* NSIndexSet+DLPhotoPicker.h in Headers */ = {isa = PBXBuildFile; fileRef = CD71C8FF3350CE5490022EC084E6DD42 /* NSIndexSet+DLPhotoPicker.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3429AB9535B8238B16747F6D14EAD4FE /* PureLayout+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = B91B272A96BD58963D3C360903AEC428 /* PureLayout+Internal.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		351A87A67C6AC9DC8DEBE25A32C77A47 /* TOCropOverlayView.h in Headers */ = {isa = PBXBuildFile; fileRef = 74DA2EAD8519490137F62F6206A7CB1D /* TOCropOverlayView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3AADC396C1395B5C1C172BCE84075538 /* TOActivityCroppedImageProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 4146FF7A8F1484531978C88781FF3FF3 /* TOActivityCroppedImageProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		40B9E93238328B32E0A0C6ADA58BE0CF /* NSArray+PureLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 25E89BB43E9A376DE014D0EE4A660938 /* NSArray+PureLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4161E81E25A2115F51C7B7F4373FD1D2 /* id.lproj in Resources */ = {isa = PBXBuildFile; fileRef = F553AECF4878FC82132D31ABF343FF1D /* id.lproj */; };
-		4184BFDDD071F3D3C70A394DFB1EAC1C /* TOCropScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F9D55EC1785F0A33573B0C94FF01A1E /* TOCropScrollView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		43D6CDA3206FFFC368C68F6873C36E43 /* AssetActivityProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = EE16FE518897055B1A9CCB0E73FAFD3E /* AssetActivityProvider.m */; };
+		2FDF1E12DA6C6BD2AD14A6C739C20CC0 /* DLPhotoAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7AE7BA364F2580DBDFEA1F91E4D0BE /* DLPhotoAsset.m */; };
+		3317C5D61B0F6B07AAE492F114B1BD02 /* DLPhotoTableViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 38A8D16E75582F0F73DC9622DAD033F9 /* DLPhotoTableViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3429AB9535B8238B16747F6D14EAD4FE /* PureLayout+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D34FEDDED6903658F7E4274FBC62229 /* PureLayout+Internal.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		38AABED3061CE41D43A6007BE1BAAEA3 /* NSDateFormatter+DLPhotoPicker.h in Headers */ = {isa = PBXBuildFile; fileRef = E510D62A341DBE4AAF80949D36291960 /* NSDateFormatter+DLPhotoPicker.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		39A5EE9568282119319350885F6D08F7 /* NSIndexSet+DLPhotoPicker.h in Headers */ = {isa = PBXBuildFile; fileRef = 1D9658192DEF11513DE5319520AAEFCD /* NSIndexSet+DLPhotoPicker.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		39A7CC58A058CE3FDBCD8DB51D76B7A3 /* DLPhotoCollectionViewLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = CA68FD29180B9145C769B6AB97A22872 /* DLPhotoCollectionViewLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3BEFCC40C880DD8BC4C3620F0F7FE7A2 /* TOCroppedImageAttributes.h in Headers */ = {isa = PBXBuildFile; fileRef = F2BA0E5BF99D003AB1992C77CF41117E /* TOCroppedImageAttributes.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3C147C1F6740D2B6D80C83228383A0BB /* DLPhotoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2221D588D470DC993A68E530704807B6 /* DLPhotoTableViewCell.m */; };
+		3C4ED5F7A52105F062ED5BFA38D0F27F /* TOCropViewController-Bridging-Header.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E0C113C4705D081407C2A6393A3E160 /* TOCropViewController-Bridging-Header.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		40B9E93238328B32E0A0C6ADA58BE0CF /* NSArray+PureLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 9C3CC84F9FD8412E096394C86B136F50 /* NSArray+PureLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4161E81E25A2115F51C7B7F4373FD1D2 /* id.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 9CBC05F331463C1FD1F4712C73040B3B /* id.lproj */; };
 		442FC04BD1239F77BBA1F22CCAFC2BE8 /* DLPhotoPicker.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EF6DF30EA55B53C3B2CC0AF60B7DAFAB /* DLPhotoPicker.xcassets */; };
+		44EAC532A2A2E4DA3616B199BA113C68 /* DLPhotoBackgroundView.h in Headers */ = {isa = PBXBuildFile; fileRef = AC263649EB192FAF69C5AEE5C63C0D92 /* DLPhotoBackgroundView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		45926DF9549D40716B936F0A44D501A0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AB64A070F97C6596DF44D66BF0C55EB /* Foundation.framework */; };
-		4638EB85ED827AA4ED096729AC8FE0C8 /* DLPhotoBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF7A43ADC1EA7769EAE54C6DACFE5CA /* DLPhotoBarButtonItem.m */; };
 		473454B46748D2D715C51D82FE835ED0 /* fr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 2ADC26B93F1390870F19CBFB39167CC4 /* fr.lproj */; };
-		4D4353F716087A46BB5710FA3D520E9F /* DLPhotoCollectionViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 065B35ED46D595C6346A5EB180603170 /* DLPhotoCollectionViewCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		4D6CF781BFF74C7EB19C0B44A02D017D /* DLPhotoCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = 87493652E29C479639719AE695979CBB /* DLPhotoCollection.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		5269387597089B5FCCEA59F7AFF97150 /* DLPhotoPickerAccessDeniedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95130FC21ED636AD897DA50779D673B6 /* DLPhotoPickerAccessDeniedView.m */; };
-		545FBB9B8544A5EE331D676A4DF26D94 /* DLPhotoPicker.h in Headers */ = {isa = PBXBuildFile; fileRef = DB8B43339D1E319AA5DFC093F0066341 /* DLPhotoPicker.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		475EE594E9E3B30921574B6B90757E12 /* DLPhotoSelectionButton.h in Headers */ = {isa = PBXBuildFile; fileRef = D3E6A595B73076DFB4674DAEDCFFAE5E /* DLPhotoSelectionButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		487770CB0B34E93FE6F38700D889541D /* TOCropToolbar.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A4C8506644E976AF1D200F9AE5E4E5A /* TOCropToolbar.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		52E002A77AABC6986DCFCE7249F9ED6C /* DLPhotoCollection.h in Headers */ = {isa = PBXBuildFile; fileRef = 87493652E29C479639719AE695979CBB /* DLPhotoCollection.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		52F3C758D0297C7D5D1FB40BC853A459 /* TOCropOverlayView.h in Headers */ = {isa = PBXBuildFile; fileRef = AD28D52F3E83461C045CA386C1406896 /* TOCropOverlayView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5A33F413A1EEDA23DB20C7EFB29F4ED8 /* hi-IN.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 79A3C79EF86B304D5654E67C7E39FAE0 /* hi-IN.lproj */; };
-		5C02DF90C01DD5B53BC861529CC2E0E9 /* NSArray+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C8B5E65D9E81CE53E9F927E79401E7C /* NSArray+PureLayout.m */; };
+		5A385AC6B8C207E9376D8140C4C87295 /* DLPhotoCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 659D53D11183D3EF249E3409E4EBA320 /* DLPhotoCollectionViewLayout.m */; };
+		5B5933F955F6BFEB6B99488A7BE76C28 /* DLProgressHud.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E3339474CB9589D162C9EF6DCA46466 /* DLProgressHud.m */; };
+		5C02DF90C01DD5B53BC861529CC2E0E9 /* NSArray+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 14FDD6FF6DDDCD03448081588C7B2EC8 /* NSArray+PureLayout.m */; };
+		5EE2F20B08A9FB9300BD0639B650B143 /* DLPhotoPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 767DCF452F186B83BADF772F477ADBDF /* DLPhotoPickerViewController.m */; };
+		61F30E7C882F10AF1801F7370EB2005E /* DLPhotoThumbnailView.h in Headers */ = {isa = PBXBuildFile; fileRef = 17E63CBB657F0A61380A3F65CB9C7BBB /* DLPhotoThumbnailView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		64210A3F5D3B0865D8742D57D4841905 /* es.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 8F1DB5272BB35D3660666B8BE4431016 /* es.lproj */; };
-		6457113D35E6D87455D38D50378B6FB4 /* UIImage+DLPhotoPicker.h in Headers */ = {isa = PBXBuildFile; fileRef = 0DB72A2D85BBF6F53393A492084FBA56 /* UIImage+DLPhotoPicker.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		66136C6FAD6F1BD12914604022B0268B /* DLPhotoTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = A5994F4FD37B698362E693285DBCB364 /* DLPhotoTableViewCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		6AC2C2F6C1B23AE658F32C0AD7390AD6 /* SVProgressAnimatedView.h in Headers */ = {isa = PBXBuildFile; fileRef = F4935278CBC2EE12AA75CD12E3D3926E /* SVProgressAnimatedView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		64E681ADFA78F1488AF360EB13A2749E /* DLPhotoThumbnailOverlay.h in Headers */ = {isa = PBXBuildFile; fileRef = 205E51B82F646019E2029924A85ED409 /* DLPhotoThumbnailOverlay.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		674D01DB8D5C2C9804A3E8C5C39683A0 /* DLPhotoScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4690C47DEF7C533E58C95F53CCBB0312 /* DLPhotoScrollView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		68C726FFEB71ADEC2E588ABB300F16D5 /* DLPhotoPickerDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 174D5A043EF829EF1A96E99458A3E69B /* DLPhotoPickerDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6A89685DA8818D257453FC81EBAC4346 /* DLPhotoCollectionViewFooter.h in Headers */ = {isa = PBXBuildFile; fileRef = 2F7F4C5F6AAEF025448724035763AE9C /* DLPhotoCollectionViewFooter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6AC2C2F6C1B23AE658F32C0AD7390AD6 /* SVProgressAnimatedView.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E98421D66431D3FFD7D2AD3E92E8959 /* SVProgressAnimatedView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6B3E265F28B5E73D8778EFF9F65CD8D6 /* zh-Hant.lproj in Resources */ = {isa = PBXBuildFile; fileRef = C075B505A2111432FB0D82CEC82ED524 /* zh-Hant.lproj */; };
-		6C9CB3299B4A9E91A24525ED3A32C313 /* TOCroppedImageAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = F2D48CD4643631F85509F3456C3A1E0E /* TOCroppedImageAttributes.m */; };
-		6CEB306DD62B332180DD4ADED9D09543 /* DLPhotoPlayButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD9FB7050B61C4C82A5BDFC1806952D /* DLPhotoPlayButton.m */; };
-		7164643046DCF52F6FCAE5169909A50F /* DLPhotoThumbnailStacks.h in Headers */ = {isa = PBXBuildFile; fileRef = ED0610941AF5CE78CA6EA2CEAC1F0DEA /* DLPhotoThumbnailStacks.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		722359638E2E8A34521CEC77EAFEAFF6 /* DLPhotoCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 659D53D11183D3EF249E3409E4EBA320 /* DLPhotoCollectionViewLayout.m */; };
+		6C9CB3299B4A9E91A24525ED3A32C313 /* TOCroppedImageAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = DA2B659D57827487DE2FCA228839DB33 /* TOCroppedImageAttributes.m */; };
+		70D276A26B8C0EAFE6A239F9E55D50C0 /* DLPhotoPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF58066C6E9ACB93A3B8D07C0B27C79C /* DLPhotoPageViewController.m */; };
 		7234C5D27ED12C5EA1FE58AD4CD511D9 /* es-MX.lproj in Resources */ = {isa = PBXBuildFile; fileRef = F850CC6D6B3ED67C34510F903B327ADB /* es-MX.lproj */; };
-		728490CEFE717E46E2C4306AC12C106F /* DLPhotoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 872CD36E53CFF97CC46A9406BE34E0C8 /* DLPhotoTableViewController.m */; };
-		7650E0ACC71FD458E1235FD295EA7062 /* DLPhotoManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EF090F0AA590049BD0731D8DD2722C57 /* DLPhotoManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		766E2C2349464111D3F530A536E52473 /* TOCropView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2A6287928CBB065A40BBF257E72393B4 /* TOCropView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		77C1B2BBF0ED099EE72F5F3FCBDE8071 /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = EF7835D164D4C11B7834E2D4A7C16548 /* NSLayoutConstraint+PureLayout.m */; };
+		73DB5F88A7CA14F6F8F5225C9988EC53 /* UIImage+DLPhotoPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 70B57DF052F809455A3F902B72A0B1D9 /* UIImage+DLPhotoPicker.m */; };
+		77C1B2BBF0ED099EE72F5F3FCBDE8071 /* NSLayoutConstraint+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 8C00CDB5D0A42BD53BFFD654A462A597 /* NSLayoutConstraint+PureLayout.m */; };
 		79B8BE5ED99351DBB12D044CDA2C0ECB /* ar.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 4BD720779D11AFA47687EC42E12E1F5B /* ar.lproj */; };
-		7BA0F76A2239CD876F11D49D25DF588B /* fr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 9AC0A14D2FE04364368BB9F52B39B306 /* fr.lproj */; };
-		7CD1BF2D83746B696331812A470BBA78 /* TOCropOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = C1F9A176C8AB44D457A24EC14A05ECD3 /* TOCropOverlayView.m */; };
-		7E8578E791A7FB736DD224E7C9802515 /* en.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 8538D50372C48E2E1480522B69FCEF2A /* en.lproj */; };
-		7EBF1629A3A9711E7DABBA03EBB65F96 /* NSDateFormatter+DLPhotoPicker.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DF6D33BD0A010261E85271201F2D509 /* NSDateFormatter+DLPhotoPicker.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		7EE6A91877F3D0DF2230811D0CE89907 /* DLPhotoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2221D588D470DC993A68E530704807B6 /* DLPhotoTableViewCell.m */; };
-		7F6844410B65770185BF29D595349395 /* DLPhotoCollectionSelectedView.m in Sources */ = {isa = PBXBuildFile; fileRef = D8D4B497685A6AE0EA121B4E14300C7E /* DLPhotoCollectionSelectedView.m */; };
+		79D23E3AA0FCCE5306AD0856E57D0AE6 /* UICollectionView+DLPhotoPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = A47EC4A8140F7D220800D4C5A1C125E3 /* UICollectionView+DLPhotoPicker.m */; };
+		7BA0F76A2239CD876F11D49D25DF588B /* fr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A0AA69D20D08EB2B914BACBEAEEA4 /* fr.lproj */; };
+		7CD1BF2D83746B696331812A470BBA78 /* TOCropOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A26ED1DB2301E306334D4CDE5A03081 /* TOCropOverlayView.m */; };
+		7D3A98C9864D3FFA7C71996AA98832DD /* DLPhotoPlayButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 3AD9FB7050B61C4C82A5BDFC1806952D /* DLPhotoPlayButton.m */; };
+		7E8578E791A7FB736DD224E7C9802515 /* en.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 869E248688556D68C24C028F47BFB2DE /* en.lproj */; };
 		81524EF499B0B9AA4CF91499B9C212E9 /* fi.lproj in Resources */ = {isa = PBXBuildFile; fileRef = AD82F5338241B0A3AA3119007FB462AC /* fi.lproj */; };
-		84774B3B037980D0CF294366FC7A4B2E /* TOCropViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CFDEB396E114226081089D7C377CE8A2 /* TOCropViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		869E36EECA8D07D40B669FCA42982C16 /* DLPhotoPickerViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 083D4A8AB24323721CF9061657ACFAFA /* DLPhotoPickerViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		870A4872BE263CF9F49AD6C28481CAB1 /* DLPhotoThumbnailView.h in Headers */ = {isa = PBXBuildFile; fileRef = 17E63CBB657F0A61380A3F65CB9C7BBB /* DLPhotoThumbnailView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		899609DEE51C61BB2E0A2B586DE732EB /* DLPhotoThumbnailStacks.h in Headers */ = {isa = PBXBuildFile; fileRef = ED0610941AF5CE78CA6EA2CEAC1F0DEA /* DLPhotoThumbnailStacks.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8CDEBD83A37C09D6BE82C340AA602B47 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AB64A070F97C6596DF44D66BF0C55EB /* Foundation.framework */; };
-		8E482E32D958D8813E9547C0AC37BA92 /* AssetActivityProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = C17C85D276DE07ACC4F74B3A38A169C0 /* AssetActivityProvider.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		90ECF1292722602495CD6D0530903E62 /* ru.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 7DE3D5EF9618F0F0A89E1A559AF979CB /* ru.lproj */; };
-		913A7F4D48D8486965A4A59DAF0B11DB /* DLPhotoScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = 4690C47DEF7C533E58C95F53CCBB0312 /* DLPhotoScrollView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		9426CA50D27CA605CB154E4D6BFDC9DC /* da.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 7EAEC35DB92472CFCD02DDFE4CDC4318 /* da.lproj */; };
-		965375C7D93702574C426DD4DBE8625F /* DLPhotoItemViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = E8126146434B8662487A18A10C67DBA9 /* DLPhotoItemViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		970B4995A8AB4DDCEB24C798E07995A5 /* nl.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 314897788CE6CA711BB38DE34413A61A /* nl.lproj */; };
-		9760005A22BBE4C54FA7C67BB4AC02BA /* DLPhotoAsset.m in Sources */ = {isa = PBXBuildFile; fileRef = BE7AE7BA364F2580DBDFEA1F91E4D0BE /* DLPhotoAsset.m */; };
-		9AC47550FDA71ACCAAC47581178B7D4E /* TOCroppedImageAttributes.h in Headers */ = {isa = PBXBuildFile; fileRef = 2C4E31E06F4B1E4638FCD8956010DFE6 /* TOCroppedImageAttributes.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		9C35FEFF12CAD68018CCF7E6D23E9F7C /* pt.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 037AF91E362A8C76576B9B5859285ECF /* pt.lproj */; };
-		9F2F87238C6595487592ABAC1A437C06 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = F1D5AAD2C318AD79A7A21EB61F1BD820 /* SVIndefiniteAnimatedView.m */; };
+		8EB6EE23A4157848AD0EEF0FBFEA95B2 /* NSNumberFormatter+DLPhotoPicker.h in Headers */ = {isa = PBXBuildFile; fileRef = 199BB0A55BB579733E9EDA605C713318 /* NSNumberFormatter+DLPhotoPicker.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8F77E7070B803805641E8F5CB0B42CFE /* DLPhotoManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EF090F0AA590049BD0731D8DD2722C57 /* DLPhotoManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		90ECF1292722602495CD6D0530903E62 /* ru.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 02A3E78E6DF3AEC458DE8C20BEA06CF1 /* ru.lproj */; };
+		9426CA50D27CA605CB154E4D6BFDC9DC /* da.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 89CA4F9FE55063E8FD6FDC4F641AB6ED /* da.lproj */; };
+		947620E8B130B313E5A3D0E54CA8831C /* DLPhotoPlayButton.h in Headers */ = {isa = PBXBuildFile; fileRef = D93B5AD2DD7560CB0726CAB72A7D7614 /* DLPhotoPlayButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		970B4995A8AB4DDCEB24C798E07995A5 /* nl.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 7C17D3E2E64A30FEF9698F7A42E669CD /* nl.lproj */; };
+		9B406558A01FAFBEC0FB93187167B44F /* DLPhotoPageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 8709298089DC90014F4AD7BDD92C22B0 /* DLPhotoPageView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9C35FEFF12CAD68018CCF7E6D23E9F7C /* pt.lproj in Resources */ = {isa = PBXBuildFile; fileRef = B11D3BC696EBECBB1E62C85B2ACA2AEC /* pt.lproj */; };
+		9EBC6521A070ACBFEB7AC6AEDD9A77E4 /* TOCropScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = E84D75FE0BCAD3C48BECE929F9982B10 /* TOCropScrollView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9F2B020B7E67B869978E7BC9D426C83B /* DLProgressHud.h in Headers */ = {isa = PBXBuildFile; fileRef = 769D3627F516BED40E926C21598894C7 /* DLProgressHud.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9F2F87238C6595487592ABAC1A437C06 /* SVIndefiniteAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0604E9AF53516D35F61977ED4410EF84 /* SVIndefiniteAnimatedView.m */; };
 		A019BA5BD49CF5DD2E9D1F1B36CDEBA1 /* da.lproj in Resources */ = {isa = PBXBuildFile; fileRef = DB18083BEAB8B2B64D23EAA4F563C021 /* da.lproj */; };
 		A11C82D265C8EFCA7D0CFE4B38EFDF52 /* pt.lproj in Resources */ = {isa = PBXBuildFile; fileRef = EEEDA5F7092315F55FA4036BE6D0F205 /* pt.lproj */; };
-		A23DE62B1408D729A05C4FCB494B3D82 /* DLPhotoPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9B4B9C8EFBFFA03D5A19EF10ADAB72 /* DLPhotoPageView.m */; };
 		A34B77DDC7EC7909D464FA191C85A75B /* nl-NL.lproj in Resources */ = {isa = PBXBuildFile; fileRef = A939C7E425EE4897853644D4A95002A2 /* nl-NL.lproj */; };
-		A5FEA4275864756FC8C861BFD1CF8808 /* TOCropViewControllerTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = C69C120740AF8EE75070728B54196770 /* TOCropViewControllerTransitioning.m */; };
-		A7B99DBF2DCD83CCBEF1DFF49DCB02CF /* DLPhotoBarButtonItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A6AF7618AEA8A4AFF71E25654767EFC /* DLPhotoBarButtonItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A84C0D0AF847C452F9F19E737EA1AB5B /* DLPhotoCollectionViewLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = CA68FD29180B9145C769B6AB97A22872 /* DLPhotoCollectionViewLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A8FFFCDE7CDDBB4EC9BDE2511CE82DFD /* DLPhotoThumbnailOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 57C85EBE414F018776C6552377D9E0A9 /* DLPhotoThumbnailOverlay.m */; };
-		AA96C07194A94DAF2B62B45A251F9C1B /* DLPhotoCollectionViewFooter.m in Sources */ = {isa = PBXBuildFile; fileRef = 14024EC3C371F97CF88036F298BBE7F6 /* DLPhotoCollectionViewFooter.m */; };
-		AB37CA3984C708F7591EACACE97E5C68 /* UICollectionView+DLPhotoPicker.h in Headers */ = {isa = PBXBuildFile; fileRef = 07315DEF543CBCEA1F1E1D506AA1A6C3 /* UICollectionView+DLPhotoPicker.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		AB9EB58BE47E9C232EA3D44665A969F5 /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2141F4B38BC19641DA34C54F122F00A0 /* SVRadialGradientLayer.m */; };
-		AC38D502D4212E459A7F7D49AD9063CB /* PureLayoutDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 38937EB98E1C741B8EB4C6C4B613417D /* PureLayoutDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		ACA8119809230D54BA4C01D7CA878A02 /* ALView+PureLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 93FFAA0F1BD143B947C6517787C4FF06 /* ALView+PureLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A3A9089059BB880B274CD13C8B8EAB0C /* DLPhotoAsset.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D00038357C52EE70CE5F66C50588376 /* DLPhotoAsset.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A5FEA4275864756FC8C861BFD1CF8808 /* TOCropViewControllerTransitioning.m in Sources */ = {isa = PBXBuildFile; fileRef = 423E698C650F14E679418E73FA3D451D /* TOCropViewControllerTransitioning.m */; };
+		A7EB0359D534A1A6E07410E77F1839BF /* DLPhotoCheckmark.h in Headers */ = {isa = PBXBuildFile; fileRef = 697FF362B3918EC920A323F0EDA57497 /* DLPhotoCheckmark.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		AB9EB58BE47E9C232EA3D44665A969F5 /* SVRadialGradientLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D922BAF4FBD8CC6B1A4DE6125DBC170 /* SVRadialGradientLayer.m */; };
+		AC38D502D4212E459A7F7D49AD9063CB /* PureLayoutDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = 8DCE12401B47F8F3F4AA260C1E59A51C /* PureLayoutDefines.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ACA8119809230D54BA4C01D7CA878A02 /* ALView+PureLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 676E59928B1C704A8CD94A6CF3EFB63A /* ALView+PureLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		ACBF85A381F598974D90A95B0D590A8C /* DLPhotoThumbnailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 6DF9A75BA3D4A0F1236303CA39ADB596 /* DLPhotoThumbnailView.m */; };
 		AD1D715DDB3754CAA18EF0A848E2922C /* de.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 7DABFDB08A15EE07BC490B619AFD15C0 /* de.lproj */; };
-		B1390794C9D861C70D987139A88663E9 /* NSIndexSet+DLPhotoPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = E5A2BC0D68C41347CA8DF1DD309F3737 /* NSIndexSet+DLPhotoPicker.m */; };
+		B0AC0ADEF7AE7AD2ED37C3A42A44E8A6 /* DLPhotoCollection.m in Sources */ = {isa = PBXBuildFile; fileRef = 8944E0CEC14E56E91680EE18F49D9735 /* DLPhotoCollection.m */; };
 		B211EE1588508A259A8ADB8829940923 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AB64A070F97C6596DF44D66BF0C55EB /* Foundation.framework */; };
-		B24593A39F4365D9C5058EC8196E1CF5 /* it.lproj in Resources */ = {isa = PBXBuildFile; fileRef = B79ADFC8B29BF0D0627D1BC5AF227281 /* it.lproj */; };
-		B3D9757BF004D5846C1BE17C446B42B3 /* SVIndefiniteAnimatedView.h in Headers */ = {isa = PBXBuildFile; fileRef = A80AFDDE25396EE0F521DA7BFB202B9A /* SVIndefiniteAnimatedView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B542B959458AAADBEA9E0F329A8D1508 /* DLPhotoCollectionViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2413BCF69835F4FC4A571301CDE87AF5 /* DLPhotoCollectionViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B774D29AEA5A534832F34BCA43C6DEF9 /* DLPhotoPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 767DCF452F186B83BADF772F477ADBDF /* DLPhotoPickerViewController.m */; };
-		B8CF0B76D3E683FCA79DC3FC853C8824 /* DLPhotoPicker-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 64F6F2FEE84FE852A44C05EA17493524 /* DLPhotoPicker-dummy.m */; };
-		B97D51F6DE60C3D95CEF6174EE0800BA /* TOCropViewControllerTransitioning.h in Headers */ = {isa = PBXBuildFile; fileRef = 406FEB7E0A4AED125204CC0957ED3389 /* TOCropViewControllerTransitioning.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		BAA1C4DBEDDF08F3F022626EB34764B6 /* TOCropViewController-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 39680788E29CA3E5DF5F8643A9FA3ED8 /* TOCropViewController-dummy.m */; };
-		C2945485F199B5C9EE1D9A64CB8ACDAF /* PureLayout-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 4182891E06910D885A8FE4CDF40E65E3 /* PureLayout-dummy.m */; };
-		C2CD17C46FAD0B02E423BC1775B34C39 /* DLPhotoCheckmark.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F471A3BBEC337FA25C57AC2224B991E /* DLPhotoCheckmark.m */; };
-		C4362F633D78BEB5CE4994253C245A67 /* NSDateFormatter+DLPhotoPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = CDF154BA9CCAE926C1BEEB8F9AA69751 /* NSDateFormatter+DLPhotoPicker.m */; };
-		C43CEA6BDA6CD9BECB0713842E240757 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 608904065077AC7AE03E6D5C4F083077 /* SVProgressHUD.m */; };
-		C68F1768C4A8EA030846F63A770AA3A6 /* vi.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 02BAE09A79361662DDF88AEBB976A866 /* vi.lproj */; };
-		C82B539B880C26BD20D0ACE35D259FF6 /* NSNumberFormatter+DLPhotoPicker.h in Headers */ = {isa = PBXBuildFile; fileRef = D9380C363952504B16B59C7C12338328 /* NSNumberFormatter+DLPhotoPicker.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B24593A39F4365D9C5058EC8196E1CF5 /* it.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 32482DA1579C3B0490C998D97F51662C /* it.lproj */; };
+		B2CB7B16275FE12EDCA280FBB92CDF0A /* NSDateFormatter+DLPhotoPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = D58C91819077979464F400244D7B1F29 /* NSDateFormatter+DLPhotoPicker.m */; };
+		B3D9757BF004D5846C1BE17C446B42B3 /* SVIndefiniteAnimatedView.h in Headers */ = {isa = PBXBuildFile; fileRef = 0BE0BF161E73EE884ED6FF92A6B3D91A /* SVIndefiniteAnimatedView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B40141345177906CF423BA4E4B5D53E5 /* UIImage+DLPhotoPicker.h in Headers */ = {isa = PBXBuildFile; fileRef = A14BFEF390DCED307F210F0980D44898 /* UIImage+DLPhotoPicker.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BAA1C4DBEDDF08F3F022626EB34764B6 /* TOCropViewController-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = ABB0AFC8B611F62E80394615BE68842A /* TOCropViewController-dummy.m */; };
+		BAFE0F7FC935D8ECFA702341B7A045C7 /* DLPhotoItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B64749D5E42442E0BB9B5CBD4B95DC /* DLPhotoItemViewController.m */; };
+		BBDA9EEDA269DA2628177E9B0BBF5A5D /* DLPhotoPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9D9B4B9C8EFBFFA03D5A19EF10ADAB72 /* DLPhotoPageView.m */; };
+		BE53729782CBF76B4040868D7605BF6D /* UICollectionView+DLPhotoPicker.h in Headers */ = {isa = PBXBuildFile; fileRef = BAADC3CFD8B1573D33E0AEB0235465A6 /* UICollectionView+DLPhotoPicker.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BFF50117217BB8FE4764DFDAEF772B97 /* DLPhotoPickerAccessDeniedView.h in Headers */ = {isa = PBXBuildFile; fileRef = FBCFE9CE6A039D560434A5B6B893AD2A /* DLPhotoPickerAccessDeniedView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C08B615A0CD23BC2E536428A064F15AE /* DLPhotoBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DF7A43ADC1EA7769EAE54C6DACFE5CA /* DLPhotoBarButtonItem.m */; };
+		C2945485F199B5C9EE1D9A64CB8ACDAF /* PureLayout-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = D27A36DDDA165DC5F5FCE53489A5962A /* PureLayout-dummy.m */; };
+		C43CEA6BDA6CD9BECB0713842E240757 /* SVProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 799355CA3D3EFE037725C2B286294D40 /* SVProgressHUD.m */; };
+		C68F1768C4A8EA030846F63A770AA3A6 /* vi.lproj in Resources */ = {isa = PBXBuildFile; fileRef = E1EAB7F9E345A4525CA4D62359E3EEAA /* vi.lproj */; };
 		CB3591D6F6D061B605313EF727B48B73 /* en.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 8CF8DF8E325FB508033336C8F5C3A359 /* en.lproj */; };
-		CC42F61C2661ACA41762297C4B51F9A6 /* zh-Hant.lproj in Resources */ = {isa = PBXBuildFile; fileRef = F37AA32CC2200F9060F829458BFEEABA /* zh-Hant.lproj */; };
+		CC42F61C2661ACA41762297C4B51F9A6 /* zh-Hant.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 0EFA538733A088C5BC8B9FEDAE8E503C /* zh-Hant.lproj */; };
 		CD1FB4410466F5E7E7A3A1C1EF8B2CF1 /* ko.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 21D09B5F06F0E1D694C61C68BAFBF914 /* ko.lproj */; };
-		CDD7F98C4BDBEB3708592007B58828E1 /* de.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 6EE6B3592B57935C93C897769A61BC56 /* de.lproj */; };
-		D0E6D7E0ED776EB0B02E5D56586509A5 /* ja.lproj in Resources */ = {isa = PBXBuildFile; fileRef = C28CE100DCB218ABE1990573453BD8E0 /* ja.lproj */; };
-		D2B953A1E4A6F6ED8AFC5724AE876E8E /* UICollectionView+DLPhotoPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = F5B03E02EE1653F208B9DB6815638E4F /* UICollectionView+DLPhotoPicker.m */; };
+		CDD7F98C4BDBEB3708592007B58828E1 /* de.lproj in Resources */ = {isa = PBXBuildFile; fileRef = FFFADCBDFDE92FE2471D9D419A6E62EF /* de.lproj */; };
+		D0E6D7E0ED776EB0B02E5D56586509A5 /* ja.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 27C06D68977C7FB57AFFF7AB4B2451B1 /* ja.lproj */; };
+		D1A5B3EBF1BDFDEDB49A6160FCDC9510 /* TOCropViewControllerTransitioning.h in Headers */ = {isa = PBXBuildFile; fileRef = 647ACE7B4A122B4693CEB8F46F63498D /* TOCropViewControllerTransitioning.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D33C570F8ABB23B151090C8FC13F73B6 /* pt-PT.lproj in Resources */ = {isa = PBXBuildFile; fileRef = C966246D4985599F888DE5E7DEE730D0 /* pt-PT.lproj */; };
-		D4994CEC993A3CBB9C3F3A45B115B22C /* SVProgressHUD-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 64867D67F4829EC8561573F77D037686 /* SVProgressHUD-dummy.m */; };
-		D539C31024CB9A17B8719D0347294FB6 /* DLPhotoPickerNoAssetsView.h in Headers */ = {isa = PBXBuildFile; fileRef = E3BCBCA0F0C9589DBB287784BE0689CC /* DLPhotoPickerNoAssetsView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D4994CEC993A3CBB9C3F3A45B115B22C /* SVProgressHUD-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A717BA1EB77E908F4C0F57B9D4EAD6A3 /* SVProgressHUD-dummy.m */; };
 		D7CB530924C441C53CA71B7A42D191FD /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD88EF4AF455E1371E9126A2FA0D9749 /* QuartzCore.framework */; };
+		D8B8BE867F638F49C5F022DD90DBBF39 /* AssetActivityProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = EE16FE518897055B1A9CCB0E73FAFD3E /* AssetActivityProvider.m */; };
 		D8BDFA23EEEFB27E4169E712B65EB1EF /* zh-Hans.lproj in Resources */ = {isa = PBXBuildFile; fileRef = EDC9F7291189F44E4E8234C5D0D126BD /* zh-Hans.lproj */; };
-		DA560C3AB4FB6B7B7E12CCC1EDBADB3D /* NSBundle+DLPhotoPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BFDFC6F40CB8E4DA39B49DEBA979E8B /* NSBundle+DLPhotoPicker.m */; };
-		DBFF7EBFC0BB1ABE99B49701576971CD /* DLPhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D78E4F41300026E4F5DC549CCF123504 /* DLPhotoCollectionViewCell.m */; };
-		DCAE9B3D2ED97E0D3CFE03ED3B3C8627 /* DLPhotoSelectionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 003AA906B95A65A108A20CC24C63E607 /* DLPhotoSelectionButton.m */; };
-		DCB3D13EE493E917AB8C5C9C43B00157 /* DLPhotoPickerNoAssetsView.m in Sources */ = {isa = PBXBuildFile; fileRef = DD3B3B8E80286311D4DA71C820ED4948 /* DLPhotoPickerNoAssetsView.m */; };
-		DD416593E25AD19173BFFA2BF057BA9F /* DLPhotoCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D12BA5852A9657EA0BF84F86FFEEEA9D /* DLPhotoCollectionViewController.m */; };
-		DDA67EAECF40B4565F49F5BBE8D0CBC8 /* SVProgressHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = 11BC7BFF4488204D4C977FB0790661DB /* SVProgressHUD.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DDD8D1CC04A3F160E8837CB5A7886C4B /* DLPhotoAsset.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D00038357C52EE70CE5F66C50588376 /* DLPhotoAsset.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DE88068E73541BDC6249C5FD9B76560F /* DLPhotoSelectionButton.h in Headers */ = {isa = PBXBuildFile; fileRef = D3E6A595B73076DFB4674DAEDCFFAE5E /* DLPhotoSelectionButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DF778A3CB2406F16B99F16139A80B3EB /* tr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 396887DC1ECF884BDF7E2879176A5BB0 /* tr.lproj */; };
-		E64754882C3E7E1C12138E4854B9CD33 /* DLPhotoPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF58066C6E9ACB93A3B8D07C0B27C79C /* DLPhotoPageViewController.m */; };
-		E759720594F58025EA5A4C2B3B2F7ACE /* TOCropToolbar.h in Headers */ = {isa = PBXBuildFile; fileRef = A7075FFB4C6C481F55FE19FE38F7164D /* TOCropToolbar.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E75C11B4BEE787A3EE0E00AF031BDA2F /* PureLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 9D61DB3321A230AEBF17A388CAC635B6 /* PureLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E8DA4F9AF6D941EBAAEA9D69E6D019DF /* DLPhotoItemViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5B64749D5E42442E0BB9B5CBD4B95DC /* DLPhotoItemViewController.m */; };
-		EAEEC1A88FBFBC00BF114C179F629E9F /* TOCropScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = C241CC24CA3915D7F1CB176F7E96C298 /* TOCropScrollView.m */; };
-		EB649484B9890135F10F92EE215209F1 /* UIImage+DLPhotoPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = 4CA7973D0490CC6CBE8E8B7E5CD48DE4 /* UIImage+DLPhotoPicker.m */; };
+		DDA67EAECF40B4565F49F5BBE8D0CBC8 /* SVProgressHUD.h in Headers */ = {isa = PBXBuildFile; fileRef = 1711932A0AFA049FC003CC2A636C151A /* SVProgressHUD.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DF011461B79FDB70F03673F2D99F7312 /* DLPhotoScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 96106D42E3F5065E5733C6F08013A29D /* DLPhotoScrollView.m */; };
+		DF38403D24751FBAE60F792EE58A81E7 /* DLPhotoCheckmark.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F471A3BBEC337FA25C57AC2224B991E /* DLPhotoCheckmark.m */; };
+		DF778A3CB2406F16B99F16139A80B3EB /* tr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 1C5A389D5B2556DC399D46B6850CEE21 /* tr.lproj */; };
+		DF7B31455B3ADFBEAB78B2ECBC6954F5 /* DLPhotoItemViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = E8126146434B8662487A18A10C67DBA9 /* DLPhotoItemViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		DFC6A53C12B852FF694AF711D9B6EACF /* DLPhotoPickerAccessDeniedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 95130FC21ED636AD897DA50779D673B6 /* DLPhotoPickerAccessDeniedView.m */; };
+		E1C4E10734EF74D2E7ACE66887B25E8B /* DLPhotoCollectionSelectedView.m in Sources */ = {isa = PBXBuildFile; fileRef = D8D4B497685A6AE0EA121B4E14300C7E /* DLPhotoCollectionSelectedView.m */; };
+		E274DE93C9B00131ED26C757822B7729 /* NSBundle+DLPhotoPicker.m in Sources */ = {isa = PBXBuildFile; fileRef = BA973247A52E67DDDE090B69886EC427 /* NSBundle+DLPhotoPicker.m */; };
+		E3EFE479BAB186316A6BC768EAE5E78E /* UIImage+CropRotate.h in Headers */ = {isa = PBXBuildFile; fileRef = 4166A606D282BD2E69B453E3FDCD9CB9 /* UIImage+CropRotate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E6920033BE6727DFE0122CE280A6100E /* DLPhotoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 11AB4C9FFE61067C25BE3CE33BF1114A /* DLPhotoManager.m */; };
+		E75C11B4BEE787A3EE0E00AF031BDA2F /* PureLayout.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CDE59C82DED7678C8E6443F697E67C9 /* PureLayout.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EA6C9C68E51F35C1C50F6A8655376AE8 /* DLPhotoPickerNoAssetsView.m in Sources */ = {isa = PBXBuildFile; fileRef = DD3B3B8E80286311D4DA71C820ED4948 /* DLPhotoPickerNoAssetsView.m */; };
+		EAD1750C6E3854250248504229B2C63E /* DLPhotoPageViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 25FF79127AED44F09169B2B994100604 /* DLPhotoPageViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EAEEC1A88FBFBC00BF114C179F629E9F /* TOCropScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = F000266C5CAA2A60E44583C71BBF6E02 /* TOCropScrollView.m */; };
 		EF725F14B6297CD063A9B95419F954F2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AB64A070F97C6596DF44D66BF0C55EB /* Foundation.framework */; };
-		F1B652C8D8E8454C93D7EDE57D22FC38 /* DLPhotoPageViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 25FF79127AED44F09169B2B994100604 /* DLPhotoPageViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F3D3202FAF9F3ECBC7557EC58C21DB5F /* DLPhotoPickerAccessDeniedView.h in Headers */ = {isa = PBXBuildFile; fileRef = FBCFE9CE6A039D560434A5B6B893AD2A /* DLPhotoPickerAccessDeniedView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EFA8833D40E32B68292B32D0D2837CBC /* DLPhotoSelectionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 003AA906B95A65A108A20CC24C63E607 /* DLPhotoSelectionButton.m */; };
+		F0F0CAC448A7F12B29F119C336779B50 /* DLPhotoCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D78E4F41300026E4F5DC549CCF123504 /* DLPhotoCollectionViewCell.m */; };
+		F2908E17191590A5EC6712FAB3529C63 /* DLPhotoBarButtonItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 3A6AF7618AEA8A4AFF71E25654767EFC /* DLPhotoBarButtonItem.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F315E87D47AC9FEA1B5C2BA0A96440CA /* DLPhotoBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3F15705E698604E0770791D85A6411 /* DLPhotoBackgroundView.m */; };
+		F3A7322A2AE892E158AE8985ECEA8023 /* DLPhotoTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 872CD36E53CFF97CC46A9406BE34E0C8 /* DLPhotoTableViewController.m */; };
 		F517888020761527F2137FC4047E15BB /* he.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 97B7840FEEE9547581DC34A8C736F669 /* he.lproj */; };
 		F571D79E7F854B41E69072A2DDAB2848 /* it.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 0F2BDA8EBD7F4BFBE378CC47CB72C71E /* it.lproj */; };
-		F5842CA7A0AA0C3868CDA82D648F0227 /* DLPhotoBackgroundView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2D3F15705E698604E0770791D85A6411 /* DLPhotoBackgroundView.m */; };
-		F5BDB2D2D96436F3D740F679EE6D7F14 /* ALView+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 84C2E4E1BFEA92206E16A4EE30CB90F8 /* ALView+PureLayout.m */; };
-		F73469B70E0BDD0445C9B842579CBF02 /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF1FAAEEA64C628DBF6CAA950670D49 /* SVProgressAnimatedView.m */; };
-		F756072C08C1AE901C6F8F6CD72D1951 /* UIImage+CropRotate.h in Headers */ = {isa = PBXBuildFile; fileRef = 96EAD6B8203C6E67A387826D741E8502 /* UIImage+CropRotate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F5BDB2D2D96436F3D740F679EE6D7F14 /* ALView+PureLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = EDE17F5D2F174D29C88DDCBDAA3D6369 /* ALView+PureLayout.m */; };
+		F73469B70E0BDD0445C9B842579CBF02 /* SVProgressAnimatedView.m in Sources */ = {isa = PBXBuildFile; fileRef = B2EF1F9ECA1EDD38196D0B8A810BD7AE /* SVProgressAnimatedView.m */; };
 		F7F52BBBFB213F207F9D2C490FA45C9E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AB64A070F97C6596DF44D66BF0C55EB /* Foundation.framework */; };
 		F8D499FEF690536BF820E8D044C21BA1 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 365ED3C54B60D1C41961493A60807E0F /* Photos.framework */; };
-		FA4C0E360C328E2D909B305704F6AB2F /* SVProgressHUD+Extension.h in Headers */ = {isa = PBXBuildFile; fileRef = 7305E4A1B6A2C6016404F9EF000C80FA /* SVProgressHUD+Extension.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FB0156B2AA0C2BE13D517BAD3968008A /* SVProgressHUD+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B2E57BC9B1398AEFA5DAA0C477D70FF /* SVProgressHUD+Extension.m */; };
-		FBA1B48740D9D812EEDB544E203B9C45 /* DLPhotoPageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 8709298089DC90014F4AD7BDD92C22B0 /* DLPhotoPageView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		FC080520156D2327FF19247EEC782E0C /* DLPhotoCheckmark.h in Headers */ = {isa = PBXBuildFile; fileRef = 697FF362B3918EC920A323F0EDA57497 /* DLPhotoCheckmark.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FD3BA61778B790CC2E4290725AAE62C6 /* ja.lproj in Resources */ = {isa = PBXBuildFile; fileRef = BA67C3838D16CEE5E72E12DCF87AFF63 /* ja.lproj */; };
 		FED1CFDA37F01318B533A57D4CCE9AE1 /* hu.lproj in Resources */ = {isa = PBXBuildFile; fileRef = A8B336A61DEDB24319F75E1CBE58DB6F /* hu.lproj */; };
 /* End PBXBuildFile section */
@@ -236,185 +237,186 @@
 
 /* Begin PBXFileReference section */
 		003AA906B95A65A108A20CC24C63E607 /* DLPhotoSelectionButton.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DLPhotoSelectionButton.m; sourceTree = "<group>"; };
-		02BAE09A79361662DDF88AEBB976A866 /* vi.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = vi.lproj; path = TOCropViewController/vi.lproj; sourceTree = "<group>"; };
-		037AF91E362A8C76576B9B5859285ECF /* pt.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = pt.lproj; path = TOCropViewController/pt.lproj; sourceTree = "<group>"; };
+		02A3E78E6DF3AEC458DE8C20BEA06CF1 /* ru.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = ru.lproj; path = TOCropViewController/ru.lproj; sourceTree = "<group>"; };
+		0604E9AF53516D35F61977ED4410EF84 /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVIndefiniteAnimatedView.m; path = SVProgressHUD/SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
 		065B35ED46D595C6346A5EB180603170 /* DLPhotoCollectionViewCell.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DLPhotoCollectionViewCell.h; sourceTree = "<group>"; };
-		07315DEF543CBCEA1F1E1D506AA1A6C3 /* UICollectionView+DLPhotoPicker.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UICollectionView+DLPhotoPicker.h"; sourceTree = "<group>"; };
 		083D4A8AB24323721CF9061657ACFAFA /* DLPhotoPickerViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DLPhotoPickerViewController.h; sourceTree = "<group>"; };
-		0AAAF403F9EFE383E81181806EE68591 /* PureLayout.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PureLayout.xcconfig; sourceTree = "<group>"; };
-		0DB72A2D85BBF6F53393A492084FBA56 /* UIImage+DLPhotoPicker.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UIImage+DLPhotoPicker.h"; sourceTree = "<group>"; };
+		0BE0BF161E73EE884ED6FF92A6B3D91A /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVIndefiniteAnimatedView.h; path = SVProgressHUD/SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
+		0C896D88259C00DDAC4B521AE673B3B1 /* TOActivityCroppedImageProvider.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TOActivityCroppedImageProvider.h; path = TOCropViewController/Models/TOActivityCroppedImageProvider.h; sourceTree = "<group>"; };
+		0EFA538733A088C5BC8B9FEDAE8E503C /* zh-Hant.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "zh-Hant.lproj"; path = "TOCropViewController/zh-Hant.lproj"; sourceTree = "<group>"; };
 		0F2BDA8EBD7F4BFBE378CC47CB72C71E /* it.lproj */ = {isa = PBXFileReference; includeInIndex = 1; path = it.lproj; sourceTree = "<group>"; };
 		0F471A3BBEC337FA25C57AC2224B991E /* DLPhotoCheckmark.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DLPhotoCheckmark.m; sourceTree = "<group>"; };
-		0F9D55EC1785F0A33573B0C94FF01A1E /* TOCropScrollView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TOCropScrollView.h; path = TOCropViewController/Views/TOCropScrollView.h; sourceTree = "<group>"; };
 		11AB4C9FFE61067C25BE3CE33BF1114A /* DLPhotoManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DLPhotoManager.m; sourceTree = "<group>"; };
-		11BC7BFF4488204D4C977FB0790661DB /* SVProgressHUD.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVProgressHUD.h; path = SVProgressHUD/SVProgressHUD.h; sourceTree = "<group>"; };
+		11F935C6AE053D5AE1D75A1436206CB2 /* NSIndexSet+DLPhotoPicker.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NSIndexSet+DLPhotoPicker.m"; sourceTree = "<group>"; };
 		14024EC3C371F97CF88036F298BBE7F6 /* DLPhotoCollectionViewFooter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DLPhotoCollectionViewFooter.m; sourceTree = "<group>"; };
+		14FDD6FF6DDDCD03448081588C7B2EC8 /* NSArray+PureLayout.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSArray+PureLayout.m"; path = "PureLayout/PureLayout/NSArray+PureLayout.m"; sourceTree = "<group>"; };
+		1711932A0AFA049FC003CC2A636C151A /* SVProgressHUD.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVProgressHUD.h; path = SVProgressHUD/SVProgressHUD.h; sourceTree = "<group>"; };
 		174D5A043EF829EF1A96E99458A3E69B /* DLPhotoPickerDefines.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DLPhotoPickerDefines.h; sourceTree = "<group>"; };
 		17E63CBB657F0A61380A3F65CB9C7BBB /* DLPhotoThumbnailView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DLPhotoThumbnailView.h; sourceTree = "<group>"; };
-		182F94BEADFACFD1A915828B8C480F5A /* pl.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = pl.lproj; path = TOCropViewController/pl.lproj; sourceTree = "<group>"; };
+		199BB0A55BB579733E9EDA605C713318 /* NSNumberFormatter+DLPhotoPicker.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NSNumberFormatter+DLPhotoPicker.h"; sourceTree = "<group>"; };
+		1C5A389D5B2556DC399D46B6850CEE21 /* tr.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = tr.lproj; path = TOCropViewController/tr.lproj; sourceTree = "<group>"; };
+		1D9658192DEF11513DE5319520AAEFCD /* NSIndexSet+DLPhotoPicker.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NSIndexSet+DLPhotoPicker.h"; sourceTree = "<group>"; };
+		1E98421D66431D3FFD7D2AD3E92E8959 /* SVProgressAnimatedView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVProgressAnimatedView.h; path = SVProgressHUD/SVProgressAnimatedView.h; sourceTree = "<group>"; };
 		205E51B82F646019E2029924A85ED409 /* DLPhotoThumbnailOverlay.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DLPhotoThumbnailOverlay.h; sourceTree = "<group>"; };
 		20A314AEAA793FA43EFD9DA857C3D392 /* DLPhotoPicker.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = DLPhotoPicker.bundle; path = DLPhotoPicker.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		2141F4B38BC19641DA34C54F122F00A0 /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVRadialGradientLayer.m; path = SVProgressHUD/SVRadialGradientLayer.m; sourceTree = "<group>"; };
 		21D09B5F06F0E1D694C61C68BAFBF914 /* ko.lproj */ = {isa = PBXFileReference; includeInIndex = 1; path = ko.lproj; sourceTree = "<group>"; };
 		2221D588D470DC993A68E530704807B6 /* DLPhotoTableViewCell.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DLPhotoTableViewCell.m; sourceTree = "<group>"; };
 		2413BCF69835F4FC4A571301CDE87AF5 /* DLPhotoCollectionViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DLPhotoCollectionViewController.h; sourceTree = "<group>"; };
-		25E89BB43E9A376DE014D0EE4A660938 /* NSArray+PureLayout.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSArray+PureLayout.h"; path = "PureLayout/PureLayout/NSArray+PureLayout.h"; sourceTree = "<group>"; };
 		25FF79127AED44F09169B2B994100604 /* DLPhotoPageViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DLPhotoPageViewController.h; sourceTree = "<group>"; };
-		2A6287928CBB065A40BBF257E72393B4 /* TOCropView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TOCropView.h; path = TOCropViewController/Views/TOCropView.h; sourceTree = "<group>"; };
+		27C06D68977C7FB57AFFF7AB4B2451B1 /* ja.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = ja.lproj; path = TOCropViewController/ja.lproj; sourceTree = "<group>"; };
 		2ADC26B93F1390870F19CBFB39167CC4 /* fr.lproj */ = {isa = PBXFileReference; includeInIndex = 1; path = fr.lproj; sourceTree = "<group>"; };
-		2C4E31E06F4B1E4638FCD8956010DFE6 /* TOCroppedImageAttributes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TOCroppedImageAttributes.h; path = TOCropViewController/Models/TOCroppedImageAttributes.h; sourceTree = "<group>"; };
 		2D1BBE13CA6F4B8EC3D51AA2BF6309FC /* DLPhotoThumbnailStacks.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DLPhotoThumbnailStacks.m; sourceTree = "<group>"; };
 		2D3F15705E698604E0770791D85A6411 /* DLPhotoBackgroundView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DLPhotoBackgroundView.m; sourceTree = "<group>"; };
 		2F7F4C5F6AAEF025448724035763AE9C /* DLPhotoCollectionViewFooter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DLPhotoCollectionViewFooter.h; sourceTree = "<group>"; };
 		30990B1170A54051250031CB97E83656 /* sv.lproj */ = {isa = PBXFileReference; includeInIndex = 1; path = sv.lproj; sourceTree = "<group>"; };
-		314897788CE6CA711BB38DE34413A61A /* nl.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = nl.lproj; path = TOCropViewController/nl.lproj; sourceTree = "<group>"; };
+		32482DA1579C3B0490C998D97F51662C /* it.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = it.lproj; path = TOCropViewController/it.lproj; sourceTree = "<group>"; };
 		365ED3C54B60D1C41961493A60807E0F /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Photos.framework; sourceTree = DEVELOPER_DIR; };
-		38937EB98E1C741B8EB4C6C4B613417D /* PureLayoutDefines.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PureLayoutDefines.h; path = PureLayout/PureLayout/PureLayoutDefines.h; sourceTree = "<group>"; };
 		38A8D16E75582F0F73DC9622DAD033F9 /* DLPhotoTableViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DLPhotoTableViewController.h; sourceTree = "<group>"; };
-		39680788E29CA3E5DF5F8643A9FA3ED8 /* TOCropViewController-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "TOCropViewController-dummy.m"; sourceTree = "<group>"; };
-		396887DC1ECF884BDF7E2879176A5BB0 /* tr.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = tr.lproj; path = TOCropViewController/tr.lproj; sourceTree = "<group>"; };
+		3A4C8506644E976AF1D200F9AE5E4E5A /* TOCropToolbar.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TOCropToolbar.h; path = TOCropViewController/Views/TOCropToolbar.h; sourceTree = "<group>"; };
 		3A6AF7618AEA8A4AFF71E25654767EFC /* DLPhotoBarButtonItem.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DLPhotoBarButtonItem.h; sourceTree = "<group>"; };
-		3AC696D27409B81DCEFBCFD62561EEC1 /* NSBundle+DLPhotoPicker.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NSBundle+DLPhotoPicker.h"; sourceTree = "<group>"; };
 		3AD9FB7050B61C4C82A5BDFC1806952D /* DLPhotoPlayButton.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DLPhotoPlayButton.m; sourceTree = "<group>"; };
-		406FEB7E0A4AED125204CC0957ED3389 /* TOCropViewControllerTransitioning.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TOCropViewControllerTransitioning.h; path = TOCropViewController/Models/TOCropViewControllerTransitioning.h; sourceTree = "<group>"; };
-		4146FF7A8F1484531978C88781FF3FF3 /* TOActivityCroppedImageProvider.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TOActivityCroppedImageProvider.h; path = TOCropViewController/Models/TOActivityCroppedImageProvider.h; sourceTree = "<group>"; };
-		4182891E06910D885A8FE4CDF40E65E3 /* PureLayout-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "PureLayout-dummy.m"; sourceTree = "<group>"; };
-		4453DD6CF370837411DAD90D0A19A382 /* TOCropViewController-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "TOCropViewController-prefix.pch"; sourceTree = "<group>"; };
+		3C4A0AA69D20D08EB2B914BACBEAEEA4 /* fr.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = fr.lproj; path = TOCropViewController/fr.lproj; sourceTree = "<group>"; };
+		3CDE59C82DED7678C8E6443F697E67C9 /* PureLayout.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PureLayout.h; path = PureLayout/PureLayout/PureLayout.h; sourceTree = "<group>"; };
+		3F7F09F9296C7443A9C4C89A202EDE4C /* TOCropView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TOCropView.m; path = TOCropViewController/Views/TOCropView.m; sourceTree = "<group>"; };
+		4166A606D282BD2E69B453E3FDCD9CB9 /* UIImage+CropRotate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+CropRotate.h"; path = "TOCropViewController/Models/UIImage+CropRotate.h"; sourceTree = "<group>"; };
+		41C0F18136E35D4A626841C47D977BDB /* TOCropViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TOCropViewController.h; path = TOCropViewController/TOCropViewController.h; sourceTree = "<group>"; };
+		423E698C650F14E679418E73FA3D451D /* TOCropViewControllerTransitioning.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TOCropViewControllerTransitioning.m; path = TOCropViewController/Models/TOCropViewControllerTransitioning.m; sourceTree = "<group>"; };
+		445C1363AEDF43A176DF76F4F31C67E0 /* TOCropViewController-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "TOCropViewController-prefix.pch"; sourceTree = "<group>"; };
 		4690C47DEF7C533E58C95F53CCBB0312 /* DLPhotoScrollView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DLPhotoScrollView.h; sourceTree = "<group>"; };
 		47B1F84933A2A47D7E130EE90593BF57 /* libPods-DLPhotoPickerDemo.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = "libPods-DLPhotoPickerDemo.a"; path = "libPods-DLPhotoPickerDemo.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4AB64A070F97C6596DF44D66BF0C55EB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		4BD720779D11AFA47687EC42E12E1F5B /* ar.lproj */ = {isa = PBXFileReference; includeInIndex = 1; path = ar.lproj; sourceTree = "<group>"; };
-		4C8B5E65D9E81CE53E9F927E79401E7C /* NSArray+PureLayout.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSArray+PureLayout.m"; path = "PureLayout/PureLayout/NSArray+PureLayout.m"; sourceTree = "<group>"; };
-		4CA7973D0490CC6CBE8E8B7E5CD48DE4 /* UIImage+DLPhotoPicker.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "UIImage+DLPhotoPicker.m"; sourceTree = "<group>"; };
 		4CE921BB87D30BE46F87A799526A8DA5 /* ResourceBundle-DLPhotoPicker-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-DLPhotoPicker-Info.plist"; sourceTree = "<group>"; };
+		4D34FEDDED6903658F7E4274FBC62229 /* PureLayout+Internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "PureLayout+Internal.h"; path = "PureLayout/PureLayout/PureLayout+Internal.h"; sourceTree = "<group>"; };
 		4DF7A43ADC1EA7769EAE54C6DACFE5CA /* DLPhotoBarButtonItem.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DLPhotoBarButtonItem.m; sourceTree = "<group>"; };
-		50B17B0BD3855C2AF202AEB09390063E /* ar.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = ar.lproj; path = TOCropViewController/ar.lproj; sourceTree = "<group>"; };
+		4E0C113C4705D081407C2A6393A3E160 /* TOCropViewController-Bridging-Header.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "TOCropViewController-Bridging-Header.h"; path = "TOCropViewController/TOCropViewController-Bridging-Header.h"; sourceTree = "<group>"; };
 		510F50475A442B343B0544F4D56E88E8 /* Pods-DLPhotoPickerDemo-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DLPhotoPickerDemo-resources.sh"; sourceTree = "<group>"; };
-		560BD323FE21E3D6B0A1715DAC6F0C8E /* NSLayoutConstraint+PureLayout.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSLayoutConstraint+PureLayout.h"; path = "PureLayout/PureLayout/NSLayoutConstraint+PureLayout.h"; sourceTree = "<group>"; };
 		57C85EBE414F018776C6552377D9E0A9 /* DLPhotoThumbnailOverlay.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DLPhotoThumbnailOverlay.m; sourceTree = "<group>"; };
-		58571164A380371753C078CB10C7DDCB /* TOCropViewController.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = TOCropViewController.xcconfig; sourceTree = "<group>"; };
-		5DF6D33BD0A010261E85271201F2D509 /* NSDateFormatter+DLPhotoPicker.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NSDateFormatter+DLPhotoPicker.h"; sourceTree = "<group>"; };
+		5D0AA520E40F8C85B40266F40B9D1446 /* ResourceBundle-TOCropViewControllerBundle-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-TOCropViewControllerBundle-Info.plist"; sourceTree = "<group>"; };
 		5E0E37E6672A098F314DE244F196CADA /* Pods-DLPhotoPickerDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DLPhotoPickerDemo.debug.xcconfig"; sourceTree = "<group>"; };
-		5E93D30C0A69BF7B016CA21FD0050A23 /* SVProgressHUD.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SVProgressHUD.xcconfig; sourceTree = "<group>"; };
-		608904065077AC7AE03E6D5C4F083077 /* SVProgressHUD.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVProgressHUD.m; path = SVProgressHUD/SVProgressHUD.m; sourceTree = "<group>"; };
-		64867D67F4829EC8561573F77D037686 /* SVProgressHUD-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SVProgressHUD-dummy.m"; sourceTree = "<group>"; };
+		647ACE7B4A122B4693CEB8F46F63498D /* TOCropViewControllerTransitioning.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TOCropViewControllerTransitioning.h; path = TOCropViewController/Models/TOCropViewControllerTransitioning.h; sourceTree = "<group>"; };
 		64F6F2FEE84FE852A44C05EA17493524 /* DLPhotoPicker-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "DLPhotoPicker-dummy.m"; sourceTree = "<group>"; };
 		6568536AB75A3B1895F9523DBAAD7989 /* nl.lproj */ = {isa = PBXFileReference; includeInIndex = 1; path = nl.lproj; sourceTree = "<group>"; };
 		659D53D11183D3EF249E3409E4EBA320 /* DLPhotoCollectionViewLayout.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DLPhotoCollectionViewLayout.m; sourceTree = "<group>"; };
-		659E6C63D9A63D746407F922AC93309A /* es.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = es.lproj; path = TOCropViewController/es.lproj; sourceTree = "<group>"; };
+		676E59928B1C704A8CD94A6CF3EFB63A /* ALView+PureLayout.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "ALView+PureLayout.h"; path = "PureLayout/PureLayout/ALView+PureLayout.h"; sourceTree = "<group>"; };
 		67A9BA4370AE140E4136E4EE12DB65AC /* Pods-DLPhotoPickerDemo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-DLPhotoPickerDemo-dummy.m"; sourceTree = "<group>"; };
 		697FF362B3918EC920A323F0EDA57497 /* DLPhotoCheckmark.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DLPhotoCheckmark.h; sourceTree = "<group>"; };
 		6A89EF45F5D383CB83A9B3A317980298 /* Pods-DLPhotoPickerDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DLPhotoPickerDemo.release.xcconfig"; sourceTree = "<group>"; };
-		6BFDFC6F40CB8E4DA39B49DEBA979E8B /* NSBundle+DLPhotoPicker.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+DLPhotoPicker.m"; sourceTree = "<group>"; };
+		6B5362D50D9155D0950FEBA924080F71 /* TOActivityCroppedImageProvider.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TOActivityCroppedImageProvider.m; path = TOCropViewController/Models/TOActivityCroppedImageProvider.m; sourceTree = "<group>"; };
 		6DF9A75BA3D4A0F1236303CA39ADB596 /* DLPhotoThumbnailView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DLPhotoThumbnailView.m; sourceTree = "<group>"; };
-		6EE6B3592B57935C93C897769A61BC56 /* de.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = de.lproj; path = TOCropViewController/de.lproj; sourceTree = "<group>"; };
-		6F5AE388EE086B199C7CFC65C6EA9D46 /* Base.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = Base.lproj; path = TOCropViewController/Base.lproj; sourceTree = "<group>"; };
+		70B57DF052F809455A3F902B72A0B1D9 /* UIImage+DLPhotoPicker.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "UIImage+DLPhotoPicker.m"; sourceTree = "<group>"; };
 		7144280A419CD51A0750E94CB17AE273 /* Pods-DLPhotoPickerDemo-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-DLPhotoPickerDemo-acknowledgements.markdown"; sourceTree = "<group>"; };
 		72D35ABDF63EC4131663DF61CBF40429 /* TOCropViewControllerBundle.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = TOCropViewControllerBundle.bundle; path = TOCropViewControllerBundle.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		7305E4A1B6A2C6016404F9EF000C80FA /* SVProgressHUD+Extension.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD+Extension.h"; sourceTree = "<group>"; };
-		74DA2EAD8519490137F62F6206A7CB1D /* TOCropOverlayView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TOCropOverlayView.h; path = TOCropViewController/Views/TOCropOverlayView.h; sourceTree = "<group>"; };
+		7343FD59FEC694465FB25D149A024A7C /* UIImage+CropRotate.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImage+CropRotate.m"; path = "TOCropViewController/Models/UIImage+CropRotate.m"; sourceTree = "<group>"; };
 		767DCF452F186B83BADF772F477ADBDF /* DLPhotoPickerViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DLPhotoPickerViewController.m; sourceTree = "<group>"; };
-		7738DC422D6B668597AC665B8448DE11 /* ResourceBundle-TOCropViewControllerBundle-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-TOCropViewControllerBundle-Info.plist"; sourceTree = "<group>"; };
+		769D3627F516BED40E926C21598894C7 /* DLProgressHud.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DLProgressHud.h; sourceTree = "<group>"; };
+		777B67FEF620583FCE1C24CB22B3681C /* TOCropViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TOCropViewController.m; path = TOCropViewController/TOCropViewController.m; sourceTree = "<group>"; };
+		799355CA3D3EFE037725C2B286294D40 /* SVProgressHUD.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVProgressHUD.m; path = SVProgressHUD/SVProgressHUD.m; sourceTree = "<group>"; };
 		79A3C79EF86B304D5654E67C7E39FAE0 /* hi-IN.lproj */ = {isa = PBXFileReference; includeInIndex = 1; path = "hi-IN.lproj"; sourceTree = "<group>"; };
+		7B20EE48FF4D4950A71E930B618D110B /* TOCropToolbar.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TOCropToolbar.m; path = TOCropViewController/Views/TOCropToolbar.m; sourceTree = "<group>"; };
+		7C17D3E2E64A30FEF9698F7A42E669CD /* nl.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = nl.lproj; path = TOCropViewController/nl.lproj; sourceTree = "<group>"; };
 		7DABFDB08A15EE07BC490B619AFD15C0 /* de.lproj */ = {isa = PBXFileReference; includeInIndex = 1; path = de.lproj; sourceTree = "<group>"; };
-		7DE3D5EF9618F0F0A89E1A559AF979CB /* ru.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = ru.lproj; path = TOCropViewController/ru.lproj; sourceTree = "<group>"; };
-		7EAEC35DB92472CFCD02DDFE4CDC4318 /* da.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = da.lproj; path = TOCropViewController/da.lproj; sourceTree = "<group>"; };
-		84C2E4E1BFEA92206E16A4EE30CB90F8 /* ALView+PureLayout.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "ALView+PureLayout.m"; path = "PureLayout/PureLayout/ALView+PureLayout.m"; sourceTree = "<group>"; };
-		8538D50372C48E2E1480522B69FCEF2A /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = en.lproj; path = TOCropViewController/en.lproj; sourceTree = "<group>"; };
-		85905049D9E3FC9A6E6A14E381F7C468 /* zh-Hans.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "zh-Hans.lproj"; path = "TOCropViewController/zh-Hans.lproj"; sourceTree = "<group>"; };
+		869E248688556D68C24C028F47BFB2DE /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = en.lproj; path = TOCropViewController/en.lproj; sourceTree = "<group>"; };
 		8709298089DC90014F4AD7BDD92C22B0 /* DLPhotoPageView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DLPhotoPageView.h; sourceTree = "<group>"; };
 		872CD36E53CFF97CC46A9406BE34E0C8 /* DLPhotoTableViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DLPhotoTableViewController.m; sourceTree = "<group>"; };
 		87493652E29C479639719AE695979CBB /* DLPhotoCollection.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DLPhotoCollection.h; sourceTree = "<group>"; };
+		876FF74ED3F746FBF420CAC6ECC4A844 /* NSLayoutConstraint+PureLayout.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSLayoutConstraint+PureLayout.h"; path = "PureLayout/PureLayout/NSLayoutConstraint+PureLayout.h"; sourceTree = "<group>"; };
 		87C506391CB5439B9FCB49482E1FFD65 /* libSVProgressHUD.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libSVProgressHUD.a; path = libSVProgressHUD.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		88F7A0596AAF692CE5C47DFDFF59C3FF /* DLPhotoPicker.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = DLPhotoPicker.xcconfig; sourceTree = "<group>"; };
 		8944E0CEC14E56E91680EE18F49D9735 /* DLPhotoCollection.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DLPhotoCollection.m; sourceTree = "<group>"; };
-		8B2E57BC9B1398AEFA5DAA0C477D70FF /* SVProgressHUD+Extension.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SVProgressHUD+Extension.m"; sourceTree = "<group>"; };
+		89CA4F9FE55063E8FD6FDC4F641AB6ED /* da.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = da.lproj; path = TOCropViewController/da.lproj; sourceTree = "<group>"; };
+		8C00CDB5D0A42BD53BFFD654A462A597 /* NSLayoutConstraint+PureLayout.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSLayoutConstraint+PureLayout.m"; path = "PureLayout/PureLayout/NSLayoutConstraint+PureLayout.m"; sourceTree = "<group>"; };
 		8C2A02E9AA67D4F740A132D4351104D5 /* DLPhotoPicker-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "DLPhotoPicker-prefix.pch"; sourceTree = "<group>"; };
 		8CF8DF8E325FB508033336C8F5C3A359 /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; path = en.lproj; sourceTree = "<group>"; };
+		8DCE12401B47F8F3F4AA260C1E59A51C /* PureLayoutDefines.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PureLayoutDefines.h; path = PureLayout/PureLayout/PureLayoutDefines.h; sourceTree = "<group>"; };
 		8F1DB5272BB35D3660666B8BE4431016 /* es.lproj */ = {isa = PBXFileReference; includeInIndex = 1; path = es.lproj; sourceTree = "<group>"; };
 		905F5E611AE8BFC247ECCE96A99DCE35 /* libTOCropViewController.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libTOCropViewController.a; path = libTOCropViewController.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		929AC0188452F630D83F7454DF0F8128 /* PureLayout-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PureLayout-prefix.pch"; sourceTree = "<group>"; };
+		9321B68A277E9FBE7F935F4B04AB12AF /* ko.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = ko.lproj; path = TOCropViewController/ko.lproj; sourceTree = "<group>"; };
+		932CB04134C50449A4B23FC2A3AF40AF /* SVProgressHUD.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = SVProgressHUD.bundle; path = SVProgressHUD/SVProgressHUD.bundle; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		93FFAA0F1BD143B947C6517787C4FF06 /* ALView+PureLayout.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "ALView+PureLayout.h"; path = "PureLayout/PureLayout/ALView+PureLayout.h"; sourceTree = "<group>"; };
+		94BD82D31E3BCB3EB22A9051894D180B /* SVProgressHUD.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SVProgressHUD.xcconfig; sourceTree = "<group>"; };
 		95130FC21ED636AD897DA50779D673B6 /* DLPhotoPickerAccessDeniedView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DLPhotoPickerAccessDeniedView.m; sourceTree = "<group>"; };
 		96106D42E3F5065E5733C6F08013A29D /* DLPhotoScrollView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DLPhotoScrollView.m; sourceTree = "<group>"; };
-		96EAD6B8203C6E67A387826D741E8502 /* UIImage+CropRotate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+CropRotate.h"; path = "TOCropViewController/Models/UIImage+CropRotate.h"; sourceTree = "<group>"; };
 		97B7840FEEE9547581DC34A8C736F669 /* he.lproj */ = {isa = PBXFileReference; includeInIndex = 1; path = he.lproj; sourceTree = "<group>"; };
-		9AC0A14D2FE04364368BB9F52B39B306 /* fr.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = fr.lproj; path = TOCropViewController/fr.lproj; sourceTree = "<group>"; };
+		9A26ED1DB2301E306334D4CDE5A03081 /* TOCropOverlayView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TOCropOverlayView.m; path = TOCropViewController/Views/TOCropOverlayView.m; sourceTree = "<group>"; };
 		9B74A94F593E4A31D762C148F1BFE50C /* libPureLayout.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libPureLayout.a; path = libPureLayout.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9C3CC84F9FD8412E096394C86B136F50 /* NSArray+PureLayout.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSArray+PureLayout.h"; path = "PureLayout/PureLayout/NSArray+PureLayout.h"; sourceTree = "<group>"; };
+		9CBC05F331463C1FD1F4712C73040B3B /* id.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = id.lproj; path = TOCropViewController/id.lproj; sourceTree = "<group>"; };
 		9D00038357C52EE70CE5F66C50588376 /* DLPhotoAsset.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DLPhotoAsset.h; sourceTree = "<group>"; };
-		9D61DB3321A230AEBF17A388CAC635B6 /* PureLayout.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PureLayout.h; path = PureLayout/PureLayout/PureLayout.h; sourceTree = "<group>"; };
+		9D922BAF4FBD8CC6B1A4DE6125DBC170 /* SVRadialGradientLayer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVRadialGradientLayer.m; path = SVProgressHUD/SVRadialGradientLayer.m; sourceTree = "<group>"; };
 		9D9B4B9C8EFBFFA03D5A19EF10ADAB72 /* DLPhotoPageView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DLPhotoPageView.m; sourceTree = "<group>"; };
-		A4A3A772BFDA3A16C9D516DCAD9BFB7E /* UIImage+CropRotate.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImage+CropRotate.m"; path = "TOCropViewController/Models/UIImage+CropRotate.m"; sourceTree = "<group>"; };
+		9E3339474CB9589D162C9EF6DCA46466 /* DLProgressHud.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DLProgressHud.m; sourceTree = "<group>"; };
+		A14BFEF390DCED307F210F0980D44898 /* UIImage+DLPhotoPicker.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UIImage+DLPhotoPicker.h"; sourceTree = "<group>"; };
+		A402C0F1ED47EBCEC552C63228C11606 /* zh-Hans.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "zh-Hans.lproj"; path = "TOCropViewController/zh-Hans.lproj"; sourceTree = "<group>"; };
+		A47EC4A8140F7D220800D4C5A1C125E3 /* UICollectionView+DLPhotoPicker.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+DLPhotoPicker.m"; sourceTree = "<group>"; };
+		A590655252FF7EF58E14EBC93C098A62 /* es.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = es.lproj; path = TOCropViewController/es.lproj; sourceTree = "<group>"; };
 		A5994F4FD37B698362E693285DBCB364 /* DLPhotoTableViewCell.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DLPhotoTableViewCell.h; sourceTree = "<group>"; };
-		A7075FFB4C6C481F55FE19FE38F7164D /* TOCropToolbar.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TOCropToolbar.h; path = TOCropViewController/Views/TOCropToolbar.h; sourceTree = "<group>"; };
-		A80AFDDE25396EE0F521DA7BFB202B9A /* SVIndefiniteAnimatedView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVIndefiniteAnimatedView.h; path = SVProgressHUD/SVIndefiniteAnimatedView.h; sourceTree = "<group>"; };
+		A717BA1EB77E908F4C0F57B9D4EAD6A3 /* SVProgressHUD-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SVProgressHUD-dummy.m"; sourceTree = "<group>"; };
 		A8B336A61DEDB24319F75E1CBE58DB6F /* hu.lproj */ = {isa = PBXFileReference; includeInIndex = 1; path = hu.lproj; sourceTree = "<group>"; };
+		A91C3FBDA80ADE9FB62E02C260C86AA9 /* Base.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = Base.lproj; path = TOCropViewController/Base.lproj; sourceTree = "<group>"; };
 		A939C7E425EE4897853644D4A95002A2 /* nl-NL.lproj */ = {isa = PBXFileReference; includeInIndex = 1; path = "nl-NL.lproj"; sourceTree = "<group>"; };
-		A95CC3D8B1B5D0AB04782DAFB1A96966 /* PureLayout-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "PureLayout-prefix.pch"; sourceTree = "<group>"; };
+		ABB0AFC8B611F62E80394615BE68842A /* TOCropViewController-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "TOCropViewController-dummy.m"; sourceTree = "<group>"; };
 		AC263649EB192FAF69C5AEE5C63C0D92 /* DLPhotoBackgroundView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DLPhotoBackgroundView.h; sourceTree = "<group>"; };
+		AD28D52F3E83461C045CA386C1406896 /* TOCropOverlayView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TOCropOverlayView.h; path = TOCropViewController/Views/TOCropOverlayView.h; sourceTree = "<group>"; };
 		AD82F5338241B0A3AA3119007FB462AC /* fi.lproj */ = {isa = PBXFileReference; includeInIndex = 1; path = fi.lproj; sourceTree = "<group>"; };
 		AD88EF4AF455E1371E9126A2FA0D9749 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		AF8AB77146A55B58B79CB2DD9C7EB6AD /* Pods-DLPhotoPickerDemo-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DLPhotoPickerDemo-frameworks.sh"; sourceTree = "<group>"; };
-		B10BBF57C0C52383B1E487EAF159D738 /* TOCropToolbar.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TOCropToolbar.m; path = TOCropViewController/Views/TOCropToolbar.m; sourceTree = "<group>"; };
+		B11D3BC696EBECBB1E62C85B2ACA2AEC /* pt.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = pt.lproj; path = TOCropViewController/pt.lproj; sourceTree = "<group>"; };
+		B2EF1F9ECA1EDD38196D0B8A810BD7AE /* SVProgressAnimatedView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVProgressAnimatedView.m; path = SVProgressHUD/SVProgressAnimatedView.m; sourceTree = "<group>"; };
 		B44866AE91D5AEEFBF8D1455481FF2D8 /* DLPhotoCollectionSelectedView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DLPhotoCollectionSelectedView.h; sourceTree = "<group>"; };
-		B79ADFC8B29BF0D0627D1BC5AF227281 /* it.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = it.lproj; path = TOCropViewController/it.lproj; sourceTree = "<group>"; };
-		B91B272A96BD58963D3C360903AEC428 /* PureLayout+Internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "PureLayout+Internal.h"; path = "PureLayout/PureLayout/PureLayout+Internal.h"; sourceTree = "<group>"; };
+		B87FE90FCD0362BDF375FD6A80839327 /* TOCropViewController.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = TOCropViewController.xcconfig; sourceTree = "<group>"; };
 		BA67C3838D16CEE5E72E12DCF87AFF63 /* ja.lproj */ = {isa = PBXFileReference; includeInIndex = 1; path = ja.lproj; sourceTree = "<group>"; };
+		BA973247A52E67DDDE090B69886EC427 /* NSBundle+DLPhotoPicker.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+DLPhotoPicker.m"; sourceTree = "<group>"; };
+		BA97C1B2F16EED3B7DFD3FF90B3ECCE9 /* pl.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = pl.lproj; path = TOCropViewController/pl.lproj; sourceTree = "<group>"; };
+		BAADC3CFD8B1573D33E0AEB0235465A6 /* UICollectionView+DLPhotoPicker.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "UICollectionView+DLPhotoPicker.h"; sourceTree = "<group>"; };
 		BC14BB39F6BCC72DC3A263DE922A0C75 /* Pods-DLPhotoPickerDemo-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-DLPhotoPickerDemo-acknowledgements.plist"; sourceTree = "<group>"; };
 		BE26E00E6D9B6F536E78D4458AC38F2E /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.0.sdk/System/Library/Frameworks/AssetsLibrary.framework; sourceTree = DEVELOPER_DIR; };
 		BE7AE7BA364F2580DBDFEA1F91E4D0BE /* DLPhotoAsset.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DLPhotoAsset.m; sourceTree = "<group>"; };
 		BF58066C6E9ACB93A3B8D07C0B27C79C /* DLPhotoPageViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DLPhotoPageViewController.m; sourceTree = "<group>"; };
 		C075B505A2111432FB0D82CEC82ED524 /* zh-Hant.lproj */ = {isa = PBXFileReference; includeInIndex = 1; path = "zh-Hant.lproj"; sourceTree = "<group>"; };
 		C17C85D276DE07ACC4F74B3A38A169C0 /* AssetActivityProvider.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = AssetActivityProvider.h; sourceTree = "<group>"; };
-		C1F9A176C8AB44D457A24EC14A05ECD3 /* TOCropOverlayView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TOCropOverlayView.m; path = TOCropViewController/Views/TOCropOverlayView.m; sourceTree = "<group>"; };
-		C241CC24CA3915D7F1CB176F7E96C298 /* TOCropScrollView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TOCropScrollView.m; path = TOCropViewController/Views/TOCropScrollView.m; sourceTree = "<group>"; };
-		C28CE100DCB218ABE1990573453BD8E0 /* ja.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = ja.lproj; path = TOCropViewController/ja.lproj; sourceTree = "<group>"; };
 		C5B64749D5E42442E0BB9B5CBD4B95DC /* DLPhotoItemViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DLPhotoItemViewController.m; sourceTree = "<group>"; };
-		C69C120740AF8EE75070728B54196770 /* TOCropViewControllerTransitioning.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TOCropViewControllerTransitioning.m; path = TOCropViewController/Models/TOCropViewControllerTransitioning.m; sourceTree = "<group>"; };
-		C87E514F3359B1BAEA72E5559A8002E6 /* TOActivityCroppedImageProvider.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TOActivityCroppedImageProvider.m; path = TOCropViewController/Models/TOActivityCroppedImageProvider.m; sourceTree = "<group>"; };
+		C928E893E23C1B67FDB2DB403FF423B2 /* SVProgressHUD-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-prefix.pch"; sourceTree = "<group>"; };
 		C966246D4985599F888DE5E7DEE730D0 /* pt-PT.lproj */ = {isa = PBXFileReference; includeInIndex = 1; path = "pt-PT.lproj"; sourceTree = "<group>"; };
 		CA68FD29180B9145C769B6AB97A22872 /* DLPhotoCollectionViewLayout.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DLPhotoCollectionViewLayout.h; sourceTree = "<group>"; };
-		CD71C8FF3350CE5490022EC084E6DD42 /* NSIndexSet+DLPhotoPicker.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NSIndexSet+DLPhotoPicker.h"; sourceTree = "<group>"; };
-		CD8D8A938009F9DD68CCEE42EE2AA699 /* ko.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = ko.lproj; path = TOCropViewController/ko.lproj; sourceTree = "<group>"; };
-		CDF154BA9CCAE926C1BEEB8F9AA69751 /* NSDateFormatter+DLPhotoPicker.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NSDateFormatter+DLPhotoPicker.m"; sourceTree = "<group>"; };
-		CEF1FAAEEA64C628DBF6CAA950670D49 /* SVProgressAnimatedView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVProgressAnimatedView.m; path = SVProgressHUD/SVProgressAnimatedView.m; sourceTree = "<group>"; };
-		CFDEB396E114226081089D7C377CE8A2 /* TOCropViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TOCropViewController.h; path = TOCropViewController/TOCropViewController.h; sourceTree = "<group>"; };
 		D12BA5852A9657EA0BF84F86FFEEEA9D /* DLPhotoCollectionViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DLPhotoCollectionViewController.m; sourceTree = "<group>"; };
+		D1C2632948D65551D6267B8B3AE89EA7 /* TOCropView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TOCropView.h; path = TOCropViewController/Views/TOCropView.h; sourceTree = "<group>"; };
 		D1DA8B2FC44F6FB6384A253401333EA3 /* id.lproj */ = {isa = PBXFileReference; includeInIndex = 1; path = id.lproj; sourceTree = "<group>"; };
+		D27A36DDDA165DC5F5FCE53489A5962A /* PureLayout-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "PureLayout-dummy.m"; sourceTree = "<group>"; };
 		D3E6A595B73076DFB4674DAEDCFFAE5E /* DLPhotoSelectionButton.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DLPhotoSelectionButton.h; sourceTree = "<group>"; };
+		D58C91819077979464F400244D7B1F29 /* NSDateFormatter+DLPhotoPicker.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NSDateFormatter+DLPhotoPicker.m"; sourceTree = "<group>"; };
+		D5AD4B549AF1A076B016AF80295C9D0F /* NSNumberFormatter+DLPhotoPicker.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NSNumberFormatter+DLPhotoPicker.m"; sourceTree = "<group>"; };
+		D5E6E0810209B2CFE56F3E0A905F89BA /* NSBundle+DLPhotoPicker.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NSBundle+DLPhotoPicker.h"; sourceTree = "<group>"; };
 		D78E4F41300026E4F5DC549CCF123504 /* DLPhotoCollectionViewCell.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DLPhotoCollectionViewCell.m; sourceTree = "<group>"; };
 		D8D4B497685A6AE0EA121B4E14300C7E /* DLPhotoCollectionSelectedView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DLPhotoCollectionSelectedView.m; sourceTree = "<group>"; };
-		D9380C363952504B16B59C7C12338328 /* NSNumberFormatter+DLPhotoPicker.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NSNumberFormatter+DLPhotoPicker.h"; sourceTree = "<group>"; };
 		D93B5AD2DD7560CB0726CAB72A7D7614 /* DLPhotoPlayButton.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DLPhotoPlayButton.h; sourceTree = "<group>"; };
+		DA2B659D57827487DE2FCA228839DB33 /* TOCroppedImageAttributes.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TOCroppedImageAttributes.m; path = TOCropViewController/Models/TOCroppedImageAttributes.m; sourceTree = "<group>"; };
 		DB18083BEAB8B2B64D23EAA4F563C021 /* da.lproj */ = {isa = PBXFileReference; includeInIndex = 1; path = da.lproj; sourceTree = "<group>"; };
 		DB8B43339D1E319AA5DFC093F0066341 /* DLPhotoPicker.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DLPhotoPicker.h; sourceTree = "<group>"; };
-		DBCA842F6E687C7C394F4E584E607C41 /* TOCropView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TOCropView.m; path = TOCropViewController/Views/TOCropView.m; sourceTree = "<group>"; };
 		DD3B3B8E80286311D4DA71C820ED4948 /* DLPhotoPickerNoAssetsView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = DLPhotoPickerNoAssetsView.m; sourceTree = "<group>"; };
-		DF2EC0634D2EA0DF2150EDB6FF9DA2D5 /* SVProgressHUD.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = SVProgressHUD.bundle; path = SVProgressHUD/SVProgressHUD.bundle; sourceTree = "<group>"; };
+		E1EAB7F9E345A4525CA4D62359E3EEAA /* vi.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = vi.lproj; path = TOCropViewController/vi.lproj; sourceTree = "<group>"; };
 		E3BCBCA0F0C9589DBB287784BE0689CC /* DLPhotoPickerNoAssetsView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DLPhotoPickerNoAssetsView.h; sourceTree = "<group>"; };
-		E5A2BC0D68C41347CA8DF1DD309F3737 /* NSIndexSet+DLPhotoPicker.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NSIndexSet+DLPhotoPicker.m"; sourceTree = "<group>"; };
+		E510D62A341DBE4AAF80949D36291960 /* NSDateFormatter+DLPhotoPicker.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NSDateFormatter+DLPhotoPicker.h"; sourceTree = "<group>"; };
 		E7685D55F3FA21AE1C23F3D54F8B4456 /* ru.lproj */ = {isa = PBXFileReference; includeInIndex = 1; path = ru.lproj; sourceTree = "<group>"; };
 		E8126146434B8662487A18A10C67DBA9 /* DLPhotoItemViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DLPhotoItemViewController.h; sourceTree = "<group>"; };
-		E9A3F426A36C0D4A4BAAC883077D7FCE /* SVProgressHUD-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SVProgressHUD-prefix.pch"; sourceTree = "<group>"; };
+		E84D75FE0BCAD3C48BECE929F9982B10 /* TOCropScrollView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TOCropScrollView.h; path = TOCropViewController/Views/TOCropScrollView.h; sourceTree = "<group>"; };
 		ED0610941AF5CE78CA6EA2CEAC1F0DEA /* DLPhotoThumbnailStacks.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DLPhotoThumbnailStacks.h; sourceTree = "<group>"; };
 		EDC9F7291189F44E4E8234C5D0D126BD /* zh-Hans.lproj */ = {isa = PBXFileReference; includeInIndex = 1; path = "zh-Hans.lproj"; sourceTree = "<group>"; };
+		EDE17F5D2F174D29C88DDCBDAA3D6369 /* ALView+PureLayout.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "ALView+PureLayout.m"; path = "PureLayout/PureLayout/ALView+PureLayout.m"; sourceTree = "<group>"; };
 		EE16FE518897055B1A9CCB0E73FAFD3E /* AssetActivityProvider.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = AssetActivityProvider.m; sourceTree = "<group>"; };
 		EEEDA5F7092315F55FA4036BE6D0F205 /* pt.lproj */ = {isa = PBXFileReference; includeInIndex = 1; path = pt.lproj; sourceTree = "<group>"; };
-		EF01C16318A0195E3EECE33CB66A5FF0 /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVRadialGradientLayer.h; path = SVProgressHUD/SVRadialGradientLayer.h; sourceTree = "<group>"; };
 		EF090F0AA590049BD0731D8DD2722C57 /* DLPhotoManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DLPhotoManager.h; sourceTree = "<group>"; };
 		EF6DF30EA55B53C3B2CC0AF60B7DAFAB /* DLPhotoPicker.xcassets */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder.assetcatalog; path = DLPhotoPicker.xcassets; sourceTree = "<group>"; };
-		EF7835D164D4C11B7834E2D4A7C16548 /* NSLayoutConstraint+PureLayout.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSLayoutConstraint+PureLayout.m"; path = "PureLayout/PureLayout/NSLayoutConstraint+PureLayout.m"; sourceTree = "<group>"; };
-		F1D5AAD2C318AD79A7A21EB61F1BD820 /* SVIndefiniteAnimatedView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVIndefiniteAnimatedView.m; path = SVProgressHUD/SVIndefiniteAnimatedView.m; sourceTree = "<group>"; };
-		F2D48CD4643631F85509F3456C3A1E0E /* TOCroppedImageAttributes.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TOCroppedImageAttributes.m; path = TOCropViewController/Models/TOCroppedImageAttributes.m; sourceTree = "<group>"; };
-		F37AA32CC2200F9060F829458BFEEABA /* zh-Hant.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "zh-Hant.lproj"; path = "TOCropViewController/zh-Hant.lproj"; sourceTree = "<group>"; };
-		F40A91DD8962400C7842E90E43801098 /* TOCropViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TOCropViewController.m; path = TOCropViewController/TOCropViewController.m; sourceTree = "<group>"; };
-		F4935278CBC2EE12AA75CD12E3D3926E /* SVProgressAnimatedView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVProgressAnimatedView.h; path = SVProgressHUD/SVProgressAnimatedView.h; sourceTree = "<group>"; };
-		F553AECF4878FC82132D31ABF343FF1D /* id.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = id.lproj; path = TOCropViewController/id.lproj; sourceTree = "<group>"; };
-		F5B03E02EE1653F208B9DB6815638E4F /* UICollectionView+DLPhotoPicker.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "UICollectionView+DLPhotoPicker.m"; sourceTree = "<group>"; };
+		F000266C5CAA2A60E44583C71BBF6E02 /* TOCropScrollView.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TOCropScrollView.m; path = TOCropViewController/Views/TOCropScrollView.m; sourceTree = "<group>"; };
+		F2BA0E5BF99D003AB1992C77CF41117E /* TOCroppedImageAttributes.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TOCroppedImageAttributes.h; path = TOCropViewController/Models/TOCroppedImageAttributes.h; sourceTree = "<group>"; };
+		F386970313926FBBF2E9B194DD0E3CBD /* ar.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = ar.lproj; path = TOCropViewController/ar.lproj; sourceTree = "<group>"; };
+		F71DD15CCB9BB64A3D5AF286E495FBF6 /* PureLayout.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = PureLayout.xcconfig; sourceTree = "<group>"; };
 		F850CC6D6B3ED67C34510F903B327ADB /* es-MX.lproj */ = {isa = PBXFileReference; includeInIndex = 1; path = "es-MX.lproj"; sourceTree = "<group>"; };
 		F941ED4FF821E63DA52C492ED74E31C8 /* libDLPhotoPicker.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; name = libDLPhotoPicker.a; path = libDLPhotoPicker.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		FBCFE9CE6A039D560434A5B6B893AD2A /* DLPhotoPickerAccessDeniedView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = DLPhotoPickerAccessDeniedView.h; sourceTree = "<group>"; };
-		FFEF4BCB0FE1F9A43B4FDCD7D0A82B0E /* NSNumberFormatter+DLPhotoPicker.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "NSNumberFormatter+DLPhotoPicker.m"; sourceTree = "<group>"; };
+		FC51F61D5ADE6B2E3F11680EAEA229F7 /* SVRadialGradientLayer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVRadialGradientLayer.h; path = SVProgressHUD/SVRadialGradientLayer.h; sourceTree = "<group>"; };
+		FFFADCBDFDE92FE2471D9D419A6E62EF /* de.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = de.lproj; path = TOCropViewController/de.lproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -478,14 +480,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0DEC5CC7F9342E63DB21C9CDB615FC91 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				DF2EC0634D2EA0DF2150EDB6FF9DA2D5 /* SVProgressHUD.bundle */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
 		136FE949B9C4D1F5A5C0E80BB0F699C6 /* DLPhotoPicker */ = {
 			isa = PBXGroup;
 			children = (
@@ -517,6 +511,14 @@
 			);
 			name = Collection;
 			path = Collection;
+			sourceTree = "<group>";
+		};
+		2E3BD37CC04CDC2650BBFBC7E88011D1 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				932CB04134C50449A4B23FC2A3AF40AF /* SVProgressHUD.bundle */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		2E8A48B6D56D30236A6FAA646466B6DF /* PageView */ = {
@@ -554,44 +556,14 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
-		3EB0F9A3AF3C2A5C3EBAAA8F3CD7DE1C /* Support Files */ = {
+		3C61708A8C1DAE9BE3292B95D438803E /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				0AAAF403F9EFE383E81181806EE68591 /* PureLayout.xcconfig */,
-				4182891E06910D885A8FE4CDF40E65E3 /* PureLayout-dummy.m */,
-				A95CC3D8B1B5D0AB04782DAFB1A96966 /* PureLayout-prefix.pch */,
+				C2753EBF42C037114701C9C5633665B4 /* PureLayout */,
+				7AB57D4EC4D7FB49636F5048DD5AA04F /* SVProgressHUD */,
+				9307C5BBF8A0E64D4955B4817090F683 /* TOCropViewController */,
 			);
-			name = "Support Files";
-			path = "../Target Support Files/PureLayout";
-			sourceTree = "<group>";
-		};
-		4117908108313C65152558C02699744E /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				5E93D30C0A69BF7B016CA21FD0050A23 /* SVProgressHUD.xcconfig */,
-				64867D67F4829EC8561573F77D037686 /* SVProgressHUD-dummy.m */,
-				E9A3F426A36C0D4A4BAAC883077D7FCE /* SVProgressHUD-prefix.pch */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/SVProgressHUD";
-			sourceTree = "<group>";
-		};
-		478EF256BDFE1395001397FC7DD58B32 /* SVProgressHUD */ = {
-			isa = PBXGroup;
-			children = (
-				A80AFDDE25396EE0F521DA7BFB202B9A /* SVIndefiniteAnimatedView.h */,
-				F1D5AAD2C318AD79A7A21EB61F1BD820 /* SVIndefiniteAnimatedView.m */,
-				F4935278CBC2EE12AA75CD12E3D3926E /* SVProgressAnimatedView.h */,
-				CEF1FAAEEA64C628DBF6CAA950670D49 /* SVProgressAnimatedView.m */,
-				11BC7BFF4488204D4C977FB0790661DB /* SVProgressHUD.h */,
-				608904065077AC7AE03E6D5C4F083077 /* SVProgressHUD.m */,
-				EF01C16318A0195E3EECE33CB66A5FF0 /* SVRadialGradientLayer.h */,
-				2141F4B38BC19641DA34C54F122F00A0 /* SVRadialGradientLayer.m */,
-				0DEC5CC7F9342E63DB21C9CDB615FC91 /* Resources */,
-				4117908108313C65152558C02699744E /* Support Files */,
-			);
-			name = SVProgressHUD;
-			path = SVProgressHUD;
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		54563710DE1C398BE4F44C6FE7A7A6E2 /* Support Files */ = {
@@ -604,34 +576,6 @@
 			);
 			name = "Support Files";
 			path = "DLPhotoPickerDemo/Pods/Target Support Files/DLPhotoPicker";
-			sourceTree = "<group>";
-		};
-		5953203A0528BDAD09CDBD5A5B9EF516 /* TOCropViewController */ = {
-			isa = PBXGroup;
-			children = (
-				4146FF7A8F1484531978C88781FF3FF3 /* TOActivityCroppedImageProvider.h */,
-				C87E514F3359B1BAEA72E5559A8002E6 /* TOActivityCroppedImageProvider.m */,
-				74DA2EAD8519490137F62F6206A7CB1D /* TOCropOverlayView.h */,
-				C1F9A176C8AB44D457A24EC14A05ECD3 /* TOCropOverlayView.m */,
-				2C4E31E06F4B1E4638FCD8956010DFE6 /* TOCroppedImageAttributes.h */,
-				F2D48CD4643631F85509F3456C3A1E0E /* TOCroppedImageAttributes.m */,
-				0F9D55EC1785F0A33573B0C94FF01A1E /* TOCropScrollView.h */,
-				C241CC24CA3915D7F1CB176F7E96C298 /* TOCropScrollView.m */,
-				A7075FFB4C6C481F55FE19FE38F7164D /* TOCropToolbar.h */,
-				B10BBF57C0C52383B1E487EAF159D738 /* TOCropToolbar.m */,
-				2A6287928CBB065A40BBF257E72393B4 /* TOCropView.h */,
-				DBCA842F6E687C7C394F4E584E607C41 /* TOCropView.m */,
-				CFDEB396E114226081089D7C377CE8A2 /* TOCropViewController.h */,
-				F40A91DD8962400C7842E90E43801098 /* TOCropViewController.m */,
-				406FEB7E0A4AED125204CC0957ED3389 /* TOCropViewControllerTransitioning.h */,
-				C69C120740AF8EE75070728B54196770 /* TOCropViewControllerTransitioning.m */,
-				96EAD6B8203C6E67A387826D741E8502 /* UIImage+CropRotate.h */,
-				A4A3A772BFDA3A16C9D516DCAD9BFB7E /* UIImage+CropRotate.m */,
-				D92E344C9C4BCCFF3D32A72B8D65913F /* Resources */,
-				7960EF1DFC77BE92C4E65C7BBF458BDC /* Support Files */,
-			);
-			name = TOCropViewController;
-			path = TOCropViewController;
 			sourceTree = "<group>";
 		};
 		5D96E438862BF22BD86B596C945B6826 /* Resources */ = {
@@ -670,16 +614,22 @@
 			path = ThumbnailView;
 			sourceTree = "<group>";
 		};
-		7960EF1DFC77BE92C4E65C7BBF458BDC /* Support Files */ = {
+		7AB57D4EC4D7FB49636F5048DD5AA04F /* SVProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
-				7738DC422D6B668597AC665B8448DE11 /* ResourceBundle-TOCropViewControllerBundle-Info.plist */,
-				58571164A380371753C078CB10C7DDCB /* TOCropViewController.xcconfig */,
-				39680788E29CA3E5DF5F8643A9FA3ED8 /* TOCropViewController-dummy.m */,
-				4453DD6CF370837411DAD90D0A19A382 /* TOCropViewController-prefix.pch */,
+				0BE0BF161E73EE884ED6FF92A6B3D91A /* SVIndefiniteAnimatedView.h */,
+				0604E9AF53516D35F61977ED4410EF84 /* SVIndefiniteAnimatedView.m */,
+				1E98421D66431D3FFD7D2AD3E92E8959 /* SVProgressAnimatedView.h */,
+				B2EF1F9ECA1EDD38196D0B8A810BD7AE /* SVProgressAnimatedView.m */,
+				1711932A0AFA049FC003CC2A636C151A /* SVProgressHUD.h */,
+				799355CA3D3EFE037725C2B286294D40 /* SVProgressHUD.m */,
+				FC51F61D5ADE6B2E3F11680EAEA229F7 /* SVRadialGradientLayer.h */,
+				9D922BAF4FBD8CC6B1A4DE6125DBC170 /* SVRadialGradientLayer.m */,
+				2E3BD37CC04CDC2650BBFBC7E88011D1 /* Resources */,
+				CBBC0A5DED4772F9E417612E222144C4 /* Support Files */,
 			);
-			name = "Support Files";
-			path = "../Target Support Files/TOCropViewController";
+			name = SVProgressHUD;
+			path = SVProgressHUD;
 			sourceTree = "<group>";
 		};
 		7B890407E14CE5D9AD986684A31BB533 /* Model */ = {
@@ -702,10 +652,22 @@
 				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
 				2ED147A2EF504D55744503EE0C90D8C2 /* Development Pods */,
 				14B8B9B15ECBE87983FF987239AB2D7B /* Frameworks */,
-				9101615F9666DE5AAB52671B454E6EB5 /* Pods */,
+				3C61708A8C1DAE9BE3292B95D438803E /* Pods */,
 				D2C6D6F6CC306EFC366A3ABDE02EB9AE /* Products */,
 				9105F174EA9E31F3983887460EBE4C99 /* Targets Support Files */,
 			);
+			sourceTree = "<group>";
+		};
+		7DFD5AF05316DF612D72DC4B2D40084A /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				5D0AA520E40F8C85B40266F40B9D1446 /* ResourceBundle-TOCropViewControllerBundle-Info.plist */,
+				B87FE90FCD0362BDF375FD6A80839327 /* TOCropViewController.xcconfig */,
+				ABB0AFC8B611F62E80394615BE68842A /* TOCropViewController-dummy.m */,
+				445C1363AEDF43A176DF76F4F31C67E0 /* TOCropViewController-prefix.pch */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/TOCropViewController";
 			sourceTree = "<group>";
 		};
 		81648B8BB74BD6C14371DC8A334DCDC9 /* iOS */ = {
@@ -730,16 +692,6 @@
 			path = ../..;
 			sourceTree = "<group>";
 		};
-		9101615F9666DE5AAB52671B454E6EB5 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				98B6F00D2E067980634E44FB7A3A52A1 /* PureLayout */,
-				478EF256BDFE1395001397FC7DD58B32 /* SVProgressHUD */,
-				5953203A0528BDAD09CDBD5A5B9EF516 /* TOCropViewController */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 		9105F174EA9E31F3983887460EBE4C99 /* Targets Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -748,22 +700,33 @@
 			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
-		98B6F00D2E067980634E44FB7A3A52A1 /* PureLayout */ = {
+		9307C5BBF8A0E64D4955B4817090F683 /* TOCropViewController */ = {
 			isa = PBXGroup;
 			children = (
-				93FFAA0F1BD143B947C6517787C4FF06 /* ALView+PureLayout.h */,
-				84C2E4E1BFEA92206E16A4EE30CB90F8 /* ALView+PureLayout.m */,
-				25E89BB43E9A376DE014D0EE4A660938 /* NSArray+PureLayout.h */,
-				4C8B5E65D9E81CE53E9F927E79401E7C /* NSArray+PureLayout.m */,
-				560BD323FE21E3D6B0A1715DAC6F0C8E /* NSLayoutConstraint+PureLayout.h */,
-				EF7835D164D4C11B7834E2D4A7C16548 /* NSLayoutConstraint+PureLayout.m */,
-				9D61DB3321A230AEBF17A388CAC635B6 /* PureLayout.h */,
-				B91B272A96BD58963D3C360903AEC428 /* PureLayout+Internal.h */,
-				38937EB98E1C741B8EB4C6C4B613417D /* PureLayoutDefines.h */,
-				3EB0F9A3AF3C2A5C3EBAAA8F3CD7DE1C /* Support Files */,
+				0C896D88259C00DDAC4B521AE673B3B1 /* TOActivityCroppedImageProvider.h */,
+				6B5362D50D9155D0950FEBA924080F71 /* TOActivityCroppedImageProvider.m */,
+				AD28D52F3E83461C045CA386C1406896 /* TOCropOverlayView.h */,
+				9A26ED1DB2301E306334D4CDE5A03081 /* TOCropOverlayView.m */,
+				F2BA0E5BF99D003AB1992C77CF41117E /* TOCroppedImageAttributes.h */,
+				DA2B659D57827487DE2FCA228839DB33 /* TOCroppedImageAttributes.m */,
+				E84D75FE0BCAD3C48BECE929F9982B10 /* TOCropScrollView.h */,
+				F000266C5CAA2A60E44583C71BBF6E02 /* TOCropScrollView.m */,
+				3A4C8506644E976AF1D200F9AE5E4E5A /* TOCropToolbar.h */,
+				7B20EE48FF4D4950A71E930B618D110B /* TOCropToolbar.m */,
+				D1C2632948D65551D6267B8B3AE89EA7 /* TOCropView.h */,
+				3F7F09F9296C7443A9C4C89A202EDE4C /* TOCropView.m */,
+				41C0F18136E35D4A626841C47D977BDB /* TOCropViewController.h */,
+				777B67FEF620583FCE1C24CB22B3681C /* TOCropViewController.m */,
+				4E0C113C4705D081407C2A6393A3E160 /* TOCropViewController-Bridging-Header.h */,
+				647ACE7B4A122B4693CEB8F46F63498D /* TOCropViewControllerTransitioning.h */,
+				423E698C650F14E679418E73FA3D451D /* TOCropViewControllerTransitioning.m */,
+				4166A606D282BD2E69B453E3FDCD9CB9 /* UIImage+CropRotate.h */,
+				7343FD59FEC694465FB25D149A024A7C /* UIImage+CropRotate.m */,
+				F6636E2703C0F0D6965D33A8F3BC2E7A /* Resources */,
+				7DFD5AF05316DF612D72DC4B2D40084A /* Support Files */,
 			);
-			name = PureLayout;
-			path = PureLayout;
+			name = TOCropViewController;
+			path = TOCropViewController;
 			sourceTree = "<group>";
 		};
 		A3024CBF0C4558B36D18321DC420BF5A /* Controller */ = {
@@ -787,6 +750,35 @@
 				136FE949B9C4D1F5A5C0E80BB0F699C6 /* DLPhotoPicker */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		B004E5B666E037FD8A128EB75C974717 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				F71DD15CCB9BB64A3D5AF286E495FBF6 /* PureLayout.xcconfig */,
+				D27A36DDDA165DC5F5FCE53489A5962A /* PureLayout-dummy.m */,
+				929AC0188452F630D83F7454DF0F8128 /* PureLayout-prefix.pch */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/PureLayout";
+			sourceTree = "<group>";
+		};
+		C2753EBF42C037114701C9C5633665B4 /* PureLayout */ = {
+			isa = PBXGroup;
+			children = (
+				676E59928B1C704A8CD94A6CF3EFB63A /* ALView+PureLayout.h */,
+				EDE17F5D2F174D29C88DDCBDAA3D6369 /* ALView+PureLayout.m */,
+				9C3CC84F9FD8412E096394C86B136F50 /* NSArray+PureLayout.h */,
+				14FDD6FF6DDDCD03448081588C7B2EC8 /* NSArray+PureLayout.m */,
+				876FF74ED3F746FBF420CAC6ECC4A844 /* NSLayoutConstraint+PureLayout.h */,
+				8C00CDB5D0A42BD53BFFD654A462A597 /* NSLayoutConstraint+PureLayout.m */,
+				3CDE59C82DED7678C8E6443F697E67C9 /* PureLayout.h */,
+				4D34FEDDED6903658F7E4274FBC62229 /* PureLayout+Internal.h */,
+				8DCE12401B47F8F3F4AA260C1E59A51C /* PureLayoutDefines.h */,
+				B004E5B666E037FD8A128EB75C974717 /* Support Files */,
+			);
+			name = PureLayout;
+			path = PureLayout;
 			sourceTree = "<group>";
 		};
 		C5F552992B06C7A38F370B41C2251615 /* Pods-DLPhotoPickerDemo */ = {
@@ -822,6 +814,17 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		CBBC0A5DED4772F9E417612E222144C4 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				94BD82D31E3BCB3EB22A9051894D180B /* SVProgressHUD.xcconfig */,
+				A717BA1EB77E908F4C0F57B9D4EAD6A3 /* SVProgressHUD-dummy.m */,
+				C928E893E23C1B67FDB2DB403FF423B2 /* SVProgressHUD-prefix.pch */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/SVProgressHUD";
+			sourceTree = "<group>";
+		};
 		D2C6D6F6CC306EFC366A3ABDE02EB9AE /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -836,52 +839,30 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D92E344C9C4BCCFF3D32A72B8D65913F /* Resources */ = {
+		F6636E2703C0F0D6965D33A8F3BC2E7A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				50B17B0BD3855C2AF202AEB09390063E /* ar.lproj */,
-				6F5AE388EE086B199C7CFC65C6EA9D46 /* Base.lproj */,
-				7EAEC35DB92472CFCD02DDFE4CDC4318 /* da.lproj */,
-				6EE6B3592B57935C93C897769A61BC56 /* de.lproj */,
-				8538D50372C48E2E1480522B69FCEF2A /* en.lproj */,
-				659E6C63D9A63D746407F922AC93309A /* es.lproj */,
-				9AC0A14D2FE04364368BB9F52B39B306 /* fr.lproj */,
-				F553AECF4878FC82132D31ABF343FF1D /* id.lproj */,
-				B79ADFC8B29BF0D0627D1BC5AF227281 /* it.lproj */,
-				C28CE100DCB218ABE1990573453BD8E0 /* ja.lproj */,
-				CD8D8A938009F9DD68CCEE42EE2AA699 /* ko.lproj */,
-				314897788CE6CA711BB38DE34413A61A /* nl.lproj */,
-				182F94BEADFACFD1A915828B8C480F5A /* pl.lproj */,
-				037AF91E362A8C76576B9B5859285ECF /* pt.lproj */,
-				7DE3D5EF9618F0F0A89E1A559AF979CB /* ru.lproj */,
-				396887DC1ECF884BDF7E2879176A5BB0 /* tr.lproj */,
-				02BAE09A79361662DDF88AEBB976A866 /* vi.lproj */,
-				85905049D9E3FC9A6E6A14E381F7C468 /* zh-Hans.lproj */,
-				F37AA32CC2200F9060F829458BFEEABA /* zh-Hant.lproj */,
+				F386970313926FBBF2E9B194DD0E3CBD /* ar.lproj */,
+				A91C3FBDA80ADE9FB62E02C260C86AA9 /* Base.lproj */,
+				89CA4F9FE55063E8FD6FDC4F641AB6ED /* da.lproj */,
+				FFFADCBDFDE92FE2471D9D419A6E62EF /* de.lproj */,
+				869E248688556D68C24C028F47BFB2DE /* en.lproj */,
+				A590655252FF7EF58E14EBC93C098A62 /* es.lproj */,
+				3C4A0AA69D20D08EB2B914BACBEAEEA4 /* fr.lproj */,
+				9CBC05F331463C1FD1F4712C73040B3B /* id.lproj */,
+				32482DA1579C3B0490C998D97F51662C /* it.lproj */,
+				27C06D68977C7FB57AFFF7AB4B2451B1 /* ja.lproj */,
+				9321B68A277E9FBE7F935F4B04AB12AF /* ko.lproj */,
+				7C17D3E2E64A30FEF9698F7A42E669CD /* nl.lproj */,
+				BA97C1B2F16EED3B7DFD3FF90B3ECCE9 /* pl.lproj */,
+				B11D3BC696EBECBB1E62C85B2ACA2AEC /* pt.lproj */,
+				02A3E78E6DF3AEC458DE8C20BEA06CF1 /* ru.lproj */,
+				1C5A389D5B2556DC399D46B6850CEE21 /* tr.lproj */,
+				E1EAB7F9E345A4525CA4D62359E3EEAA /* vi.lproj */,
+				A402C0F1ED47EBCEC552C63228C11606 /* zh-Hans.lproj */,
+				0EFA538733A088C5BC8B9FEDAE8E503C /* zh-Hant.lproj */,
 			);
 			name = Resources;
-			sourceTree = "<group>";
-		};
-		DA223D20F738EA8B46D44DC498FB08AD /* Categories */ = {
-			isa = PBXGroup;
-			children = (
-				3AC696D27409B81DCEFBCFD62561EEC1 /* NSBundle+DLPhotoPicker.h */,
-				6BFDFC6F40CB8E4DA39B49DEBA979E8B /* NSBundle+DLPhotoPicker.m */,
-				5DF6D33BD0A010261E85271201F2D509 /* NSDateFormatter+DLPhotoPicker.h */,
-				CDF154BA9CCAE926C1BEEB8F9AA69751 /* NSDateFormatter+DLPhotoPicker.m */,
-				CD71C8FF3350CE5490022EC084E6DD42 /* NSIndexSet+DLPhotoPicker.h */,
-				E5A2BC0D68C41347CA8DF1DD309F3737 /* NSIndexSet+DLPhotoPicker.m */,
-				D9380C363952504B16B59C7C12338328 /* NSNumberFormatter+DLPhotoPicker.h */,
-				FFEF4BCB0FE1F9A43B4FDCD7D0A82B0E /* NSNumberFormatter+DLPhotoPicker.m */,
-				7305E4A1B6A2C6016404F9EF000C80FA /* SVProgressHUD+Extension.h */,
-				8B2E57BC9B1398AEFA5DAA0C477D70FF /* SVProgressHUD+Extension.m */,
-				07315DEF543CBCEA1F1E1D506AA1A6C3 /* UICollectionView+DLPhotoPicker.h */,
-				F5B03E02EE1653F208B9DB6815638E4F /* UICollectionView+DLPhotoPicker.m */,
-				0DB72A2D85BBF6F53393A492084FBA56 /* UIImage+DLPhotoPicker.h */,
-				4CA7973D0490CC6CBE8E8B7E5CD48DE4 /* UIImage+DLPhotoPicker.m */,
-			);
-			name = Categories;
-			path = Categories;
 			sourceTree = "<group>";
 		};
 		F76401D0A8FF4D5F26D052205D172E83 /* Localizations */ = {
@@ -933,7 +914,7 @@
 				EF090F0AA590049BD0731D8DD2722C57 /* DLPhotoManager.h */,
 				11AB4C9FFE61067C25BE3CE33BF1114A /* DLPhotoManager.m */,
 				DB8B43339D1E319AA5DFC093F0066341 /* DLPhotoPicker.h */,
-				DA223D20F738EA8B46D44DC498FB08AD /* Categories */,
+				FA47B37C1DFB48E2D46B2CDF9403F7C6 /* Categories */,
 				2EE382486C1A97F1C4E5622CAE4A9581 /* Common */,
 				A3024CBF0C4558B36D18321DC420BF5A /* Controller */,
 				7B890407E14CE5D9AD986684A31BB533 /* Model */,
@@ -943,48 +924,87 @@
 			path = DLPhotoPicker;
 			sourceTree = "<group>";
 		};
+		FA47B37C1DFB48E2D46B2CDF9403F7C6 /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				769D3627F516BED40E926C21598894C7 /* DLProgressHud.h */,
+				9E3339474CB9589D162C9EF6DCA46466 /* DLProgressHud.m */,
+				D5E6E0810209B2CFE56F3E0A905F89BA /* NSBundle+DLPhotoPicker.h */,
+				BA973247A52E67DDDE090B69886EC427 /* NSBundle+DLPhotoPicker.m */,
+				E510D62A341DBE4AAF80949D36291960 /* NSDateFormatter+DLPhotoPicker.h */,
+				D58C91819077979464F400244D7B1F29 /* NSDateFormatter+DLPhotoPicker.m */,
+				1D9658192DEF11513DE5319520AAEFCD /* NSIndexSet+DLPhotoPicker.h */,
+				11F935C6AE053D5AE1D75A1436206CB2 /* NSIndexSet+DLPhotoPicker.m */,
+				199BB0A55BB579733E9EDA605C713318 /* NSNumberFormatter+DLPhotoPicker.h */,
+				D5AD4B549AF1A076B016AF80295C9D0F /* NSNumberFormatter+DLPhotoPicker.m */,
+				BAADC3CFD8B1573D33E0AEB0235465A6 /* UICollectionView+DLPhotoPicker.h */,
+				A47EC4A8140F7D220800D4C5A1C125E3 /* UICollectionView+DLPhotoPicker.m */,
+				A14BFEF390DCED307F210F0980D44898 /* UIImage+DLPhotoPicker.h */,
+				70B57DF052F809455A3F902B72A0B1D9 /* UIImage+DLPhotoPicker.m */,
+			);
+			name = Categories;
+			path = Categories;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		17A1AE4D30FDB8B1C83C9B8EF57B70BB /* Headers */ = {
+		11E4055F8486061B45DBAD92470749DB /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8E482E32D958D8813E9547C0AC37BA92 /* AssetActivityProvider.h in Headers */,
-				DDD8D1CC04A3F160E8837CB5A7886C4B /* DLPhotoAsset.h in Headers */,
-				1034C59CF6E48F2512CE3E1B258A6BDB /* DLPhotoBackgroundView.h in Headers */,
-				A7B99DBF2DCD83CCBEF1DFF49DCB02CF /* DLPhotoBarButtonItem.h in Headers */,
-				FC080520156D2327FF19247EEC782E0C /* DLPhotoCheckmark.h in Headers */,
-				4D6CF781BFF74C7EB19C0B44A02D017D /* DLPhotoCollection.h in Headers */,
-				25A4B3862F4585E7C37934BD2312F303 /* DLPhotoCollectionSelectedView.h in Headers */,
-				4D4353F716087A46BB5710FA3D520E9F /* DLPhotoCollectionViewCell.h in Headers */,
-				B542B959458AAADBEA9E0F329A8D1508 /* DLPhotoCollectionViewController.h in Headers */,
-				2E29B784CF9FDC9EFDE382469B789D5E /* DLPhotoCollectionViewFooter.h in Headers */,
-				A84C0D0AF847C452F9F19E737EA1AB5B /* DLPhotoCollectionViewLayout.h in Headers */,
-				965375C7D93702574C426DD4DBE8625F /* DLPhotoItemViewController.h in Headers */,
-				7650E0ACC71FD458E1235FD295EA7062 /* DLPhotoManager.h in Headers */,
-				FBA1B48740D9D812EEDB544E203B9C45 /* DLPhotoPageView.h in Headers */,
-				F1B652C8D8E8454C93D7EDE57D22FC38 /* DLPhotoPageViewController.h in Headers */,
-				545FBB9B8544A5EE331D676A4DF26D94 /* DLPhotoPicker.h in Headers */,
-				F3D3202FAF9F3ECBC7557EC58C21DB5F /* DLPhotoPickerAccessDeniedView.h in Headers */,
-				0B797AE10F5F6250F91A4B105FE38D7E /* DLPhotoPickerDefines.h in Headers */,
-				D539C31024CB9A17B8719D0347294FB6 /* DLPhotoPickerNoAssetsView.h in Headers */,
-				869E36EECA8D07D40B669FCA42982C16 /* DLPhotoPickerViewController.h in Headers */,
-				11B27A8810BADA9C26A4FC8301B6E6C1 /* DLPhotoPlayButton.h in Headers */,
-				913A7F4D48D8486965A4A59DAF0B11DB /* DLPhotoScrollView.h in Headers */,
-				DE88068E73541BDC6249C5FD9B76560F /* DLPhotoSelectionButton.h in Headers */,
-				66136C6FAD6F1BD12914604022B0268B /* DLPhotoTableViewCell.h in Headers */,
-				190627654CA0C204663FCDA7BD341DD0 /* DLPhotoTableViewController.h in Headers */,
-				24AC409C5BF8C1C0B444B70D69B0DF94 /* DLPhotoThumbnailOverlay.h in Headers */,
-				7164643046DCF52F6FCAE5169909A50F /* DLPhotoThumbnailStacks.h in Headers */,
-				870A4872BE263CF9F49AD6C28481CAB1 /* DLPhotoThumbnailView.h in Headers */,
-				09F8ABF20220282B04D7092285FFBEBE /* NSBundle+DLPhotoPicker.h in Headers */,
-				7EBF1629A3A9711E7DABBA03EBB65F96 /* NSDateFormatter+DLPhotoPicker.h in Headers */,
-				2F44DD50E78CA53AC9D37299DE2C961E /* NSIndexSet+DLPhotoPicker.h in Headers */,
-				C82B539B880C26BD20D0ACE35D259FF6 /* NSNumberFormatter+DLPhotoPicker.h in Headers */,
-				FA4C0E360C328E2D909B305704F6AB2F /* SVProgressHUD+Extension.h in Headers */,
-				AB37CA3984C708F7591EACACE97E5C68 /* UICollectionView+DLPhotoPicker.h in Headers */,
-				6457113D35E6D87455D38D50378B6FB4 /* UIImage+DLPhotoPicker.h in Headers */,
+				02B5CB07D862FB81454F1A79FEC8ECEF /* TOActivityCroppedImageProvider.h in Headers */,
+				52F3C758D0297C7D5D1FB40BC853A459 /* TOCropOverlayView.h in Headers */,
+				3BEFCC40C880DD8BC4C3620F0F7FE7A2 /* TOCroppedImageAttributes.h in Headers */,
+				9EBC6521A070ACBFEB7AC6AEDD9A77E4 /* TOCropScrollView.h in Headers */,
+				487770CB0B34E93FE6F38700D889541D /* TOCropToolbar.h in Headers */,
+				0A8C8100C6B4539A452807416B5A26A3 /* TOCropView.h in Headers */,
+				3C4ED5F7A52105F062ED5BFA38D0F27F /* TOCropViewController-Bridging-Header.h in Headers */,
+				2202BDA7F924459FB9B21D211FF00928 /* TOCropViewController.h in Headers */,
+				D1A5B3EBF1BDFDEDB49A6160FCDC9510 /* TOCropViewControllerTransitioning.h in Headers */,
+				E3EFE479BAB186316A6BC768EAE5E78E /* UIImage+CropRotate.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5B29902ADFB93B646917535D1019AF23 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0EE2BEA6E78110B21E2325A4399BA2DD /* AssetActivityProvider.h in Headers */,
+				A3A9089059BB880B274CD13C8B8EAB0C /* DLPhotoAsset.h in Headers */,
+				44EAC532A2A2E4DA3616B199BA113C68 /* DLPhotoBackgroundView.h in Headers */,
+				F2908E17191590A5EC6712FAB3529C63 /* DLPhotoBarButtonItem.h in Headers */,
+				A7EB0359D534A1A6E07410E77F1839BF /* DLPhotoCheckmark.h in Headers */,
+				52E002A77AABC6986DCFCE7249F9ED6C /* DLPhotoCollection.h in Headers */,
+				07C9EA2C3D165DDF8A626D6786E61B96 /* DLPhotoCollectionSelectedView.h in Headers */,
+				00063E81476AF58D1B19C64C53124106 /* DLPhotoCollectionViewCell.h in Headers */,
+				05B6B39726E736CAAB1750B6135DD364 /* DLPhotoCollectionViewController.h in Headers */,
+				6A89685DA8818D257453FC81EBAC4346 /* DLPhotoCollectionViewFooter.h in Headers */,
+				39A7CC58A058CE3FDBCD8DB51D76B7A3 /* DLPhotoCollectionViewLayout.h in Headers */,
+				DF7B31455B3ADFBEAB78B2ECBC6954F5 /* DLPhotoItemViewController.h in Headers */,
+				8F77E7070B803805641E8F5CB0B42CFE /* DLPhotoManager.h in Headers */,
+				9B406558A01FAFBEC0FB93187167B44F /* DLPhotoPageView.h in Headers */,
+				EAD1750C6E3854250248504229B2C63E /* DLPhotoPageViewController.h in Headers */,
+				07F936F499606A1806848B1621612BD6 /* DLPhotoPicker.h in Headers */,
+				BFF50117217BB8FE4764DFDAEF772B97 /* DLPhotoPickerAccessDeniedView.h in Headers */,
+				68C726FFEB71ADEC2E588ABB300F16D5 /* DLPhotoPickerDefines.h in Headers */,
+				00FFC89D36CA30419192466DF207D994 /* DLPhotoPickerNoAssetsView.h in Headers */,
+				07B1EFA5577B157A7616133046FB6EF6 /* DLPhotoPickerViewController.h in Headers */,
+				947620E8B130B313E5A3D0E54CA8831C /* DLPhotoPlayButton.h in Headers */,
+				674D01DB8D5C2C9804A3E8C5C39683A0 /* DLPhotoScrollView.h in Headers */,
+				475EE594E9E3B30921574B6B90757E12 /* DLPhotoSelectionButton.h in Headers */,
+				0E79D1F7C231A22C41994507A96808B7 /* DLPhotoTableViewCell.h in Headers */,
+				3317C5D61B0F6B07AAE492F114B1BD02 /* DLPhotoTableViewController.h in Headers */,
+				64E681ADFA78F1488AF360EB13A2749E /* DLPhotoThumbnailOverlay.h in Headers */,
+				899609DEE51C61BB2E0A2B586DE732EB /* DLPhotoThumbnailStacks.h in Headers */,
+				61F30E7C882F10AF1801F7370EB2005E /* DLPhotoThumbnailView.h in Headers */,
+				9F2B020B7E67B869978E7BC9D426C83B /* DLProgressHud.h in Headers */,
+				0BFD5DF4C5E8E43224F55800C494D6E7 /* NSBundle+DLPhotoPicker.h in Headers */,
+				38AABED3061CE41D43A6007BE1BAAEA3 /* NSDateFormatter+DLPhotoPicker.h in Headers */,
+				39A5EE9568282119319350885F6D08F7 /* NSIndexSet+DLPhotoPicker.h in Headers */,
+				8EB6EE23A4157848AD0EEF0FBFEA95B2 /* NSNumberFormatter+DLPhotoPicker.h in Headers */,
+				BE53729782CBF76B4040868D7605BF6D /* UICollectionView+DLPhotoPicker.h in Headers */,
+				B40141345177906CF423BA4E4B5D53E5 /* UIImage+DLPhotoPicker.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1009,22 +1029,6 @@
 				3429AB9535B8238B16747F6D14EAD4FE /* PureLayout+Internal.h in Headers */,
 				E75C11B4BEE787A3EE0E00AF031BDA2F /* PureLayout.h in Headers */,
 				AC38D502D4212E459A7F7D49AD9063CB /* PureLayoutDefines.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DADD19D20239D9E5E16AAA623524FB5D /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3AADC396C1395B5C1C172BCE84075538 /* TOActivityCroppedImageProvider.h in Headers */,
-				351A87A67C6AC9DC8DEBE25A32C77A47 /* TOCropOverlayView.h in Headers */,
-				9AC47550FDA71ACCAAC47581178B7D4E /* TOCroppedImageAttributes.h in Headers */,
-				4184BFDDD071F3D3C70A394DFB1EAC1C /* TOCropScrollView.h in Headers */,
-				E759720594F58025EA5A4C2B3B2F7ACE /* TOCropToolbar.h in Headers */,
-				766E2C2349464111D3F530A536E52473 /* TOCropView.h in Headers */,
-				84774B3B037980D0CF294366FC7A4B2E /* TOCropViewController.h in Headers */,
-				B97D51F6DE60C3D95CEF6174EE0800BA /* TOCropViewControllerTransitioning.h in Headers */,
-				F756072C08C1AE901C6F8F6CD72D1951 /* UIImage+CropRotate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1054,7 +1058,7 @@
 			buildPhases = (
 				29FBCABF1143EBA9E0AC83977780685F /* Sources */,
 				6B8FA43181A0A1C695117FE16C36F335 /* Frameworks */,
-				DADD19D20239D9E5E16AAA623524FB5D /* Headers */,
+				11E4055F8486061B45DBAD92470749DB /* Headers */,
 			);
 			buildRules = (
 			);
@@ -1107,9 +1111,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = AF9F2E2D6BB916F027B78F7F162003A1 /* Build configuration list for PBXNativeTarget "DLPhotoPicker" */;
 			buildPhases = (
-				DCC3B41F6CA0D6177D8A7571D8009DE0 /* Sources */,
+				627B9C25E01C84B5D006478DACF3B603 /* Sources */,
 				93D38D244A2E47E7A6D9EE655CF2E47E /* Frameworks */,
-				17A1AE4D30FDB8B1C83C9B8EF57B70BB /* Headers */,
+				5B29902ADFB93B646917535D1019AF23 /* Headers */,
 			);
 			buildRules = (
 			);
@@ -1268,6 +1272,47 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		627B9C25E01C84B5D006478DACF3B603 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D8B8BE867F638F49C5F022DD90DBBF39 /* AssetActivityProvider.m in Sources */,
+				2FDF1E12DA6C6BD2AD14A6C739C20CC0 /* DLPhotoAsset.m in Sources */,
+				F315E87D47AC9FEA1B5C2BA0A96440CA /* DLPhotoBackgroundView.m in Sources */,
+				C08B615A0CD23BC2E536428A064F15AE /* DLPhotoBarButtonItem.m in Sources */,
+				DF38403D24751FBAE60F792EE58A81E7 /* DLPhotoCheckmark.m in Sources */,
+				B0AC0ADEF7AE7AD2ED37C3A42A44E8A6 /* DLPhotoCollection.m in Sources */,
+				E1C4E10734EF74D2E7ACE66887B25E8B /* DLPhotoCollectionSelectedView.m in Sources */,
+				F0F0CAC448A7F12B29F119C336779B50 /* DLPhotoCollectionViewCell.m in Sources */,
+				1225A7A2DA1036F287967B21E9105A8C /* DLPhotoCollectionViewController.m in Sources */,
+				0F70D90AEAC4BF8BE4018F771D270431 /* DLPhotoCollectionViewFooter.m in Sources */,
+				5A385AC6B8C207E9376D8140C4C87295 /* DLPhotoCollectionViewLayout.m in Sources */,
+				BAFE0F7FC935D8ECFA702341B7A045C7 /* DLPhotoItemViewController.m in Sources */,
+				E6920033BE6727DFE0122CE280A6100E /* DLPhotoManager.m in Sources */,
+				BBDA9EEDA269DA2628177E9B0BBF5A5D /* DLPhotoPageView.m in Sources */,
+				70D276A26B8C0EAFE6A239F9E55D50C0 /* DLPhotoPageViewController.m in Sources */,
+				2B5AAB3F493DCE488867E7B71157E6DC /* DLPhotoPicker-dummy.m in Sources */,
+				DFC6A53C12B852FF694AF711D9B6EACF /* DLPhotoPickerAccessDeniedView.m in Sources */,
+				EA6C9C68E51F35C1C50F6A8655376AE8 /* DLPhotoPickerNoAssetsView.m in Sources */,
+				5EE2F20B08A9FB9300BD0639B650B143 /* DLPhotoPickerViewController.m in Sources */,
+				7D3A98C9864D3FFA7C71996AA98832DD /* DLPhotoPlayButton.m in Sources */,
+				DF011461B79FDB70F03673F2D99F7312 /* DLPhotoScrollView.m in Sources */,
+				EFA8833D40E32B68292B32D0D2837CBC /* DLPhotoSelectionButton.m in Sources */,
+				3C147C1F6740D2B6D80C83228383A0BB /* DLPhotoTableViewCell.m in Sources */,
+				F3A7322A2AE892E158AE8985ECEA8023 /* DLPhotoTableViewController.m in Sources */,
+				0D626DCA2417343BA9CF05400C25E6EC /* DLPhotoThumbnailOverlay.m in Sources */,
+				1C8333051B488E4DD329F3BB935018A3 /* DLPhotoThumbnailStacks.m in Sources */,
+				ACBF85A381F598974D90A95B0D590A8C /* DLPhotoThumbnailView.m in Sources */,
+				5B5933F955F6BFEB6B99488A7BE76C28 /* DLProgressHud.m in Sources */,
+				E274DE93C9B00131ED26C757822B7729 /* NSBundle+DLPhotoPicker.m in Sources */,
+				B2CB7B16275FE12EDCA280FBB92CDF0A /* NSDateFormatter+DLPhotoPicker.m in Sources */,
+				07232F78D431DFCDEC1C37202506EBA3 /* NSIndexSet+DLPhotoPicker.m in Sources */,
+				0A65D95FC1F16823D9EFAA2784E458A2 /* NSNumberFormatter+DLPhotoPicker.m in Sources */,
+				79D23E3AA0FCCE5306AD0856E57D0AE6 /* UICollectionView+DLPhotoPicker.m in Sources */,
+				73DB5F88A7CA14F6F8F5225C9988EC53 /* UIImage+DLPhotoPicker.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7D72471383DA75A5E28EEC58A1640803 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1284,47 +1329,6 @@
 				D4994CEC993A3CBB9C3F3A45B115B22C /* SVProgressHUD-dummy.m in Sources */,
 				C43CEA6BDA6CD9BECB0713842E240757 /* SVProgressHUD.m in Sources */,
 				AB9EB58BE47E9C232EA3D44665A969F5 /* SVRadialGradientLayer.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		DCC3B41F6CA0D6177D8A7571D8009DE0 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				43D6CDA3206FFFC368C68F6873C36E43 /* AssetActivityProvider.m in Sources */,
-				9760005A22BBE4C54FA7C67BB4AC02BA /* DLPhotoAsset.m in Sources */,
-				F5842CA7A0AA0C3868CDA82D648F0227 /* DLPhotoBackgroundView.m in Sources */,
-				4638EB85ED827AA4ED096729AC8FE0C8 /* DLPhotoBarButtonItem.m in Sources */,
-				C2CD17C46FAD0B02E423BC1775B34C39 /* DLPhotoCheckmark.m in Sources */,
-				1137BF83ACAD60C7599A94D1AF79FDEA /* DLPhotoCollection.m in Sources */,
-				7F6844410B65770185BF29D595349395 /* DLPhotoCollectionSelectedView.m in Sources */,
-				DBFF7EBFC0BB1ABE99B49701576971CD /* DLPhotoCollectionViewCell.m in Sources */,
-				DD416593E25AD19173BFFA2BF057BA9F /* DLPhotoCollectionViewController.m in Sources */,
-				AA96C07194A94DAF2B62B45A251F9C1B /* DLPhotoCollectionViewFooter.m in Sources */,
-				722359638E2E8A34521CEC77EAFEAFF6 /* DLPhotoCollectionViewLayout.m in Sources */,
-				E8DA4F9AF6D941EBAAEA9D69E6D019DF /* DLPhotoItemViewController.m in Sources */,
-				0BD10285163ACD06F1340FB06571061B /* DLPhotoManager.m in Sources */,
-				A23DE62B1408D729A05C4FCB494B3D82 /* DLPhotoPageView.m in Sources */,
-				E64754882C3E7E1C12138E4854B9CD33 /* DLPhotoPageViewController.m in Sources */,
-				B8CF0B76D3E683FCA79DC3FC853C8824 /* DLPhotoPicker-dummy.m in Sources */,
-				5269387597089B5FCCEA59F7AFF97150 /* DLPhotoPickerAccessDeniedView.m in Sources */,
-				DCB3D13EE493E917AB8C5C9C43B00157 /* DLPhotoPickerNoAssetsView.m in Sources */,
-				B774D29AEA5A534832F34BCA43C6DEF9 /* DLPhotoPickerViewController.m in Sources */,
-				6CEB306DD62B332180DD4ADED9D09543 /* DLPhotoPlayButton.m in Sources */,
-				2079F48BAD5F3B92C550AF941CAD81FC /* DLPhotoScrollView.m in Sources */,
-				DCAE9B3D2ED97E0D3CFE03ED3B3C8627 /* DLPhotoSelectionButton.m in Sources */,
-				7EE6A91877F3D0DF2230811D0CE89907 /* DLPhotoTableViewCell.m in Sources */,
-				728490CEFE717E46E2C4306AC12C106F /* DLPhotoTableViewController.m in Sources */,
-				A8FFFCDE7CDDBB4EC9BDE2511CE82DFD /* DLPhotoThumbnailOverlay.m in Sources */,
-				1D7E312682EF319C7EDC5A6C7A0F6931 /* DLPhotoThumbnailStacks.m in Sources */,
-				29DD4889C2A0FC2EA9FDB61EC5345FFC /* DLPhotoThumbnailView.m in Sources */,
-				DA560C3AB4FB6B7B7E12CCC1EDBADB3D /* NSBundle+DLPhotoPicker.m in Sources */,
-				C4362F633D78BEB5CE4994253C245A67 /* NSDateFormatter+DLPhotoPicker.m in Sources */,
-				B1390794C9D861C70D987139A88663E9 /* NSIndexSet+DLPhotoPicker.m in Sources */,
-				1F8D501FD1B3BE5C048FCF03FA716A16 /* NSNumberFormatter+DLPhotoPicker.m in Sources */,
-				FB0156B2AA0C2BE13D517BAD3968008A /* SVProgressHUD+Extension.m in Sources */,
-				D2B953A1E4A6F6ED8AFC5724AE876E8E /* UICollectionView+DLPhotoPicker.m in Sources */,
-				EB649484B9890135F10F92EE215209F1 /* UIImage+DLPhotoPicker.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1433,7 +1437,7 @@
 		};
 		02D1E43132FB00715A73913BABD37A97 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 58571164A380371753C078CB10C7DDCB /* TOCropViewController.xcconfig */;
+			baseConfigurationReference = B87FE90FCD0362BDF375FD6A80839327 /* TOCropViewController.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -1502,7 +1506,7 @@
 		};
 		2930E99F6A3BB612DE698AC666D1DBF7 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 58571164A380371753C078CB10C7DDCB /* TOCropViewController.xcconfig */;
+			baseConfigurationReference = B87FE90FCD0362BDF375FD6A80839327 /* TOCropViewController.xcconfig */;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/TOCropViewController";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1519,7 +1523,7 @@
 		};
 		2B34C1353CC1C8450C5137D89A7F16DE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 58571164A380371753C078CB10C7DDCB /* TOCropViewController.xcconfig */;
+			baseConfigurationReference = B87FE90FCD0362BDF375FD6A80839327 /* TOCropViewController.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -1559,7 +1563,7 @@
 		};
 		67DC409E2D27857D52ABA92EAD5BBDA3 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 58571164A380371753C078CB10C7DDCB /* TOCropViewController.xcconfig */;
+			baseConfigurationReference = B87FE90FCD0362BDF375FD6A80839327 /* TOCropViewController.xcconfig */;
 			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/TOCropViewController";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1616,7 +1620,7 @@
 		};
 		7DA082125C28888140EFF2C45FA650CB /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5E93D30C0A69BF7B016CA21FD0050A23 /* SVProgressHUD.xcconfig */;
+			baseConfigurationReference = 94BD82D31E3BCB3EB22A9051894D180B /* SVProgressHUD.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -1639,7 +1643,7 @@
 		};
 		BC7CEBA47C8DC88E133DF13D5F73DBBD /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5E93D30C0A69BF7B016CA21FD0050A23 /* SVProgressHUD.xcconfig */;
+			baseConfigurationReference = 94BD82D31E3BCB3EB22A9051894D180B /* SVProgressHUD.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -1662,7 +1666,7 @@
 		};
 		CA9FF170A3670BA2690F8C0CED046DD2 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0AAAF403F9EFE383E81181806EE68591 /* PureLayout.xcconfig */;
+			baseConfigurationReference = F71DD15CCB9BB64A3D5AF286E495FBF6 /* PureLayout.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -1752,7 +1756,7 @@
 		};
 		F13C6C2D0029B745BA85B77105E33F9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0AAAF403F9EFE383E81181806EE68591 /* PureLayout.xcconfig */;
+			baseConfigurationReference = F71DD15CCB9BB64A3D5AF286E495FBF6 /* PureLayout.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";

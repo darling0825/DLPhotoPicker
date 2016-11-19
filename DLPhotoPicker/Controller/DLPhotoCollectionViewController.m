@@ -23,7 +23,7 @@
 #import "DLPhotoPageViewController.h"
 #import "DLPhotoItemViewController.h"
 #import "AssetActivityProvider.h"
-#import "SVProgressHUD+Extension.h"
+#import "DLProgressHud.h"
 
 NSString * const DLPhotoCollectionViewCellIdentifier = @"DLPhotoCollectionViewCellIdentifier";
 NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionViewFooterIdentifier";
@@ -187,7 +187,7 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
 
 - (void)resetAssetsAndReload
 {
-    [SVProgressHUD showActivity];
+    [DLProgressHud showActivity];
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
@@ -197,7 +197,7 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
             
             [self reloadData];
             
-            [SVProgressHUD dismiss];
+            [DLProgressHud dismiss];
             
             self.didLoadAssets = YES;
         });
@@ -790,13 +790,12 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
             for (AssetActivityProvider *provider in items) {
                 [provider cleanup];
             }
-            [SVProgressHUD dismiss];
+            [DLProgressHud dismiss];
             strongSelf.activityVC.completionWithItemsHandler = nil;
         };
     }
     else {
         [self.activityVC setCompletionHandler:^(NSString *activityType, BOOL completed) {
-            typeof(self) __strong strongSelf = weakSelf;
             NSLog(@">>> Activity Type selected: %@", activityType);
             if (completed) {
                 NSLog(@">>> Activity(%@) was performed.", activityType);
@@ -811,7 +810,7 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
             for (AssetActivityProvider *provider in items) {
                 [provider cleanup];
             }
-            [SVProgressHUD dismiss];
+            [DLProgressHud dismiss];
         }];
     }
     
@@ -839,7 +838,7 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     }
     
     dispatch_async(dispatch_get_main_queue(), ^(void){
-        [SVProgressHUD showActivity];
+        [DLProgressHud showActivity];
     });
 }
 
