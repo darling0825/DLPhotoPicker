@@ -795,6 +795,9 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
         };
     }
     else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        
         [self.activityVC setCompletionHandler:^(NSString *activityType, BOOL completed) {
             NSLog(@">>> Activity Type selected: %@", activityType);
             if (completed) {
@@ -812,6 +815,7 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
             }
             [DLProgressHud dismiss];
         }];
+#pragma clang diagnostic pop
     }
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad){

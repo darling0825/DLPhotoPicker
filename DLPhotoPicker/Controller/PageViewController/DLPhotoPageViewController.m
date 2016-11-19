@@ -317,6 +317,8 @@
         };
     }
     else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
         [self.activityVC setCompletionHandler:^(NSString *activityType, BOOL completed) {
             NSLog(@">>> Activity Type selected: %@", activityType);
             if (completed) {
@@ -331,6 +333,7 @@
             
             [assetProvider cleanup];
         }];
+#pragma clang diagnostic pop
     }
     
     
