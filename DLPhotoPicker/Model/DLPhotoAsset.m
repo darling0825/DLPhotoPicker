@@ -18,6 +18,7 @@
 @property (nonatomic, strong) NSDictionary *phAssetInfo;
 
 @property (nonatomic, strong) UIImage *originImage;
+@property (nonatomic, strong) NSData *originImageData;
 @property (nonatomic, strong) UIImage *thumbnailImage;
 @property (nonatomic, strong) UIImage *previewImage;
 
@@ -442,6 +443,53 @@
     }
 }
 
+- (NSData *)originImageData {
+    @autoreleasepool {
+        if (_originImageData) {
+            return _originImageData;
+        }
+        
+        __block NSData *resultImageData;
+        
+        //  image after edited
+        PHImageRequestOptions *originRequestOptions = [[PHImageRequestOptions alloc] init];
+        originRequestOptions.version = PHImageRequestOptionsVersionCurrent;
+        originRequestOptions.networkAccessAllowed = YES;
+        originRequestOptions.synchronous = YES;
+        
+        //sync requests are automatically processed this way regardless of the specified mode
+        //originRequestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+        
+        originRequestOptions.progressHandler = ^(double progress, NSError *__nullable error, BOOL *stop, NSDictionary *__nullable info){
+            dispatch_main_async_safe(^{
+                
+            });
+        };
+        
+        [[[DLPhotoManager sharedInstance] phCachingImageManager] requestImageDataForAsset:self.phAsset
+                                                                                  options:originRequestOptions
+                                                                            resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info)
+        {
+            @autoreleasepool {
+                // 排除取消，错误，低清图三种情况，即已经获取到了高清图时，把这张高清图缓存到 _originImage 中
+                BOOL downloadFinined = ![[info objectForKey:PHImageCancelledKey] boolValue] &&
+                ![info objectForKey:PHImageErrorKey] &&
+                ![[info objectForKey:PHImageResultIsDegradedKey] boolValue] && imageData;
+                
+                if (downloadFinined) {
+                    resultImageData = imageData;
+                }
+            }
+        }];
+        
+        // 不能及时释放内存
+        //_originImageData = resultImageData;
+        
+        //return resultImageData ? resultImageData : [self originImageData];
+        return resultImageData;
+    }
+}
+
 /**
  *  synchronous：    指定请求是否同步执行。
  *  resizeMode：     对请求的图像怎样缩放。有三种选择：None，不缩放；Fast，尽快地提供接近或稍微大于要求的尺寸；Exact，精准提供要求的尺寸。
@@ -528,6 +576,49 @@
                 }
             })
             return 0;
+        }
+    }
+}
+
+- (NSInteger)requestOriginImageDataWithCompletion:(void (^)(NSData *, NSDictionary *))completion
+                              withProgressHandler:(PHAssetImageProgressHandler)phProgressHandler
+{
+    @autoreleasepool {
+        if (_originImageData) {
+            // 如果已经有缓存的图片则直接拿缓存的图片
+            dispatch_main_async_safe(^{
+                if (completion) {
+                    completion(_originImageData, nil);
+                }
+            })
+            return 0;
+        } else {
+            
+            PHImageRequestOptions *originRequestOptions = [[PHImageRequestOptions alloc] init];
+            // 允许访问网络
+            originRequestOptions.version = PHImageRequestOptionsVersionCurrent;
+            originRequestOptions.networkAccessAllowed = YES;
+            originRequestOptions.progressHandler = phProgressHandler;
+            self.imageRequestID = [[[DLPhotoManager sharedInstance] phCachingImageManager]
+                                   requestImageDataForAsset:self.phAsset
+                                   options:originRequestOptions
+                                   resultHandler:^(NSData * _Nullable imageData, NSString * _Nullable dataUTI, UIImageOrientation orientation, NSDictionary * _Nullable info)
+                                   {
+                                       @autoreleasepool {
+                                           // 排除取消，错误，低清图三种情况，即已经获取到了高清图时，把这张高清图缓存到 _originImage 中
+                                           BOOL downloadFinined = ![[info objectForKey:PHImageCancelledKey] boolValue] &&
+                                           ![info objectForKey:PHImageErrorKey] &&
+                                           ![[info objectForKey:PHImageResultIsDegradedKey] boolValue];
+                                           
+                                           if (downloadFinined) {
+                                               //_originImage = result;
+                                               if (completion) {
+                                                   completion(imageData, info);
+                                               }
+                                           }
+                                       }
+                                   }];
+            return self.imageRequestID;
         }
     }
 }
@@ -877,6 +968,33 @@
 {
     NSFileCoordinator *fileCoordinator = [[NSFileCoordinator alloc] initWithFilePresenter:nil];
     [fileCoordinator coordinateWritingItemAtURL:[NSURL fileURLWithPath:filePath] options:NSFileCoordinatorWritingForReplacing error:nil byAccessor:^(NSURL * _Nonnull accessorUrl) {
+        [self requestOriginImageDataWithCompletion:^(NSData *data, NSDictionary *info) {
+            NSError *error = [info objectForKey:PHImageErrorKey];
+            if (error){
+                if (completionHandler) {
+                    completionHandler(NO, error);
+                }
+            }else{
+                if (data) {
+                    [data writeToFile:accessorUrl.path atomically:YES];
+                    if (progressHandler) {
+                        progressHandler(1.0);
+                    }
+                }
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    if (completionHandler) {
+                        completionHandler(data != nil, nil);
+                    }
+                });
+            }
+        } withProgressHandler:^(double progress, NSError * _Nullable error, BOOL * _Nonnull stop, NSDictionary * _Nullable info) {
+            if (progressHandler) {
+                progressHandler(progress);
+            }
+        }];
+
+        /*
         [self requestOriginImageWithCompletion:^(UIImage *image, NSDictionary *info) {
             NSError *error = [info objectForKey:PHImageErrorKey];
             if (error){
@@ -905,6 +1023,7 @@
                 progressHandler(progress);
             }
         }];
+         */
     }];
 }
 

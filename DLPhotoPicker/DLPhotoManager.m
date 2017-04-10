@@ -13,6 +13,7 @@ static NSString * const AdjustmentFormatIdentifier = @"com.darlingcoder.DLPhotoP
 static NSString * const AdjustmentFormatVersion = @"1.0";
 
 typedef void (^AddImageToCollectionBlock)(UIImage *, PHAssetCollection *);
+typedef void (^AddImageDataToCollectionBlock)(NSData *, PHAssetCollection *);
 typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
 
 @interface DLPhotoManager()
@@ -449,6 +450,54 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
     }
 }
 
+- (void)saveImageData:(NSData *)data
+              toAlbum:(NSString *)albumName
+           completion:(void(^)(BOOL success))completion
+              failure:(void(^)(NSError *error))failure
+{
+    //  find album
+    BOOL albumWasFound = NO;
+    PHAssetCollection *savedAssetCollection = nil;
+    for (PHFetchResult *fetchResult in self.fetchResults){
+        if (albumWasFound) {
+            break;
+        }
+        
+        for (PHAssetCollection *assetCollection in fetchResult){
+            // Compare the names of the albums
+            if ([albumName isEqualToString:assetCollection.localizedTitle]) {
+                
+                // Target album is found
+                albumWasFound = YES;
+                savedAssetCollection = assetCollection;
+                break;
+            }
+        }
+    }
+    
+    //  a block to add assets to a album
+    AddImageDataToCollectionBlock addAssetsBlock = [self _addImageDataBlockWithCompletion:completion failure:failure];
+    
+    if (!albumName.length) {
+        //  add asset to default collection
+        addAssetsBlock(data, nil);
+    }else if (albumWasFound) {
+        //  add asset
+        addAssetsBlock(data, savedAssetCollection);
+    }else{
+        //  create a new album
+        [self createAlbumWithName:albumName resultBlock:^(DLPhotoCollection *collection) {
+            if (collection) {
+                //  add asset to new collection
+                addAssetsBlock(data, collection.assetCollection);
+            }else{
+                //  add asset to default collection
+                addAssetsBlock(data, nil);
+            }
+        } failureBlock:failure];
+    }
+}
+
 - (void)saveVideo:(NSURL *)videoUrl
           toAlbum:(NSString *)albumName
        completion:(void(^)(BOOL success))completion
@@ -681,6 +730,47 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
             }else{
                 // only saved to CameraRoll
                 [PHAssetChangeRequest creationRequestForAssetFromImage:image];
+            }
+            
+        } completionHandler:^(BOOL success, NSError * _Nullable error) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (completion) {
+                    if (success) {
+                        completion(YES);
+                    }else{
+                        completion(NO);
+                    }
+                }
+                
+                if (error && failure) {
+                    failure(error);
+                }
+            });
+        }];
+    };
+}
+
+- (AddImageDataToCollectionBlock)_addImageDataBlockWithCompletion:(void(^)(BOOL))completion
+                                                          failure:(void(^)(NSError *))failure
+{
+    return ^(NSData *data, PHAssetCollection *assetCollection){
+        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+            if (assetCollection) {
+                // saved to assetCollection and CameraRoll
+                //PHAssetChangeRequest *assetChangeRequest = [PHAssetChangeRequest creationRequestForAssetFromImage:image];
+                
+                PHAssetResourceRequestOptions *options = [PHAssetResourceRequestOptions new];
+                PHAssetCreationRequest *request = [PHAssetCreationRequest creationRequestForAsset];
+                [request addResourceWithType:PHAssetResourceTypePhoto data:data options:options];
+                
+                PHAssetCollectionChangeRequest *assetCollectionChangeRequest = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:assetCollection];
+                [assetCollectionChangeRequest addAssets:@[request.placeholderForCreatedAsset]];
+                
+            }else{
+                // only saved to CameraRoll
+//                [PHAssetChangeRequest creationRequestForAssetFromImage:image];
+                PHAssetResourceCreationOptions *options = [PHAssetResourceCreationOptions new];
+                [[PHAssetCreationRequest creationRequestForAsset] addResourceWithType:PHAssetResourceTypePhoto data:data options:options];
             }
             
         } completionHandler:^(BOOL success, NSError * _Nullable error) {

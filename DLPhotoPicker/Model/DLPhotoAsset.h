@@ -90,6 +90,7 @@ typedef NS_ENUM(NSInteger, DLPhotoMediaType) {
  *  @return Asset 的原图
  */
 - (UIImage *)originImage;
+- (NSData *)originImageData NS_AVAILABLE_IOS(8.0);
 - (AVAsset *)originVideoAsset;
 
 
@@ -106,8 +107,10 @@ typedef NS_ENUM(NSInteger, DLPhotoMediaType) {
  *  @return 返回请求图片的请求 id
  */
 
-- (NSInteger)requestOriginImageWithCompletion:(void (^)(UIImage *image, NSDictionary *info))completion withProgressHandler:(PHAssetImageProgressHandler)phProgressHandler;
-
+- (NSInteger)requestOriginImageWithCompletion:(void (^)(UIImage *image, NSDictionary *info))completion
+                          withProgressHandler:(PHAssetImageProgressHandler)phProgressHandler;
+- (NSInteger)requestOriginImageDataWithCompletion:(void (^)(NSData *, NSDictionary *))completion
+                              withProgressHandler:(PHAssetImageProgressHandler)phProgressHandler NS_AVAILABLE_IOS(8.0);
 /**
  *  异步请求 AVAsset
  *
