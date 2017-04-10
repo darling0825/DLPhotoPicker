@@ -455,46 +455,57 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
            completion:(void(^)(BOOL success))completion
               failure:(void(^)(NSError *error))failure
 {
-    //  find album
-    BOOL albumWasFound = NO;
-    PHAssetCollection *savedAssetCollection = nil;
-    for (PHFetchResult *fetchResult in self.fetchResults){
-        if (albumWasFound) {
-            break;
-        }
+    if (UsePhotoKit) {
         
-        for (PHAssetCollection *assetCollection in fetchResult){
-            // Compare the names of the albums
-            if ([albumName isEqualToString:assetCollection.localizedTitle]) {
-                
-                // Target album is found
-                albumWasFound = YES;
-                savedAssetCollection = assetCollection;
+        //  find album
+        BOOL albumWasFound = NO;
+        PHAssetCollection *savedAssetCollection = nil;
+        for (PHFetchResult *fetchResult in self.fetchResults){
+            if (albumWasFound) {
                 break;
             }
-        }
-    }
-    
-    //  a block to add assets to a album
-    AddImageDataToCollectionBlock addAssetsBlock = [self _addImageDataBlockWithCompletion:completion failure:failure];
-    
-    if (!albumName.length) {
-        //  add asset to default collection
-        addAssetsBlock(data, nil);
-    }else if (albumWasFound) {
-        //  add asset
-        addAssetsBlock(data, savedAssetCollection);
-    }else{
-        //  create a new album
-        [self createAlbumWithName:albumName resultBlock:^(DLPhotoCollection *collection) {
-            if (collection) {
-                //  add asset to new collection
-                addAssetsBlock(data, collection.assetCollection);
-            }else{
-                //  add asset to default collection
-                addAssetsBlock(data, nil);
+            
+            for (PHAssetCollection *assetCollection in fetchResult){
+                // Compare the names of the albums
+                if ([albumName isEqualToString:assetCollection.localizedTitle]) {
+                    
+                    // Target album is found
+                    albumWasFound = YES;
+                    savedAssetCollection = assetCollection;
+                    break;
+                }
             }
-        } failureBlock:failure];
+        }
+        
+        //  a block to add assets to a album
+        AddImageDataToCollectionBlock addAssetsBlock = [self _addImageDataBlockWithCompletion:completion failure:failure];
+        
+        if (!albumName.length) {
+            //  add asset to default collection
+            addAssetsBlock(data, nil);
+        }else if (albumWasFound) {
+            //  add asset
+            addAssetsBlock(data, savedAssetCollection);
+        }else{
+            //  create a new album
+            [self createAlbumWithName:albumName resultBlock:^(DLPhotoCollection *collection) {
+                if (collection) {
+                    //  add asset to new collection
+                    addAssetsBlock(data, collection.assetCollection);
+                }else{
+                    //  add asset to default collection
+                    addAssetsBlock(data, nil);
+                }
+            } failureBlock:failure];
+        }
+    }else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+        [self.assetsLibrary writeImageDataToSavedPhotosAlbum:data metadata:nil
+                                             completionBlock:[self _resultBlockOfAddingToAlbum:albumName
+                                                                                    completion:completion
+                                                                                       failure:failure]];
+#pragma clang diagnostic pop
     }
 }
 

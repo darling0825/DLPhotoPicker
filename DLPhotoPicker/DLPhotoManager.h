@@ -137,7 +137,7 @@ typedef NS_ENUM(NSInteger, DLAuthorizationStatus) {
 - (void)saveImageData:(NSData *)data
               toAlbum:(NSString *)albumName
            completion:(void(^)(BOOL success))completion
-              failure:(void(^)(NSError *error))failure NS_AVAILABLE_IOS(8.0);;
+              failure:(void(^)(NSError *error))failure;
 
 //  save video
 - (void)saveVideo:(NSURL *)videoUrl
