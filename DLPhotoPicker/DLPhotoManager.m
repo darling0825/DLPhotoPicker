@@ -770,7 +770,7 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
                 // saved to assetCollection and CameraRoll
                 //PHAssetChangeRequest *assetChangeRequest = [PHAssetChangeRequest creationRequestForAssetFromImage:image];
                 
-                PHAssetResourceRequestOptions *options = [PHAssetResourceRequestOptions new];
+                PHAssetResourceCreationOptions *options = [PHAssetResourceCreationOptions new];
                 PHAssetCreationRequest *request = [PHAssetCreationRequest creationRequestForAsset];
                 [request addResourceWithType:PHAssetResourceTypePhoto data:data options:options];
                 
