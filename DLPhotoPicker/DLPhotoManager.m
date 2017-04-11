@@ -768,8 +768,6 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
         [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
             if (assetCollection) {
                 // saved to assetCollection and CameraRoll
-                //PHAssetChangeRequest *assetChangeRequest = [PHAssetChangeRequest creationRequestForAssetFromImage:image];
-                
                 PHAssetResourceCreationOptions *options = [PHAssetResourceCreationOptions new];
                 PHAssetCreationRequest *request = [PHAssetCreationRequest creationRequestForAsset];
                 [request addResourceWithType:PHAssetResourceTypePhoto data:data options:options];
@@ -779,7 +777,6 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
                 
             }else{
                 // only saved to CameraRoll
-//                [PHAssetChangeRequest creationRequestForAssetFromImage:image];
                 PHAssetResourceCreationOptions *options = [PHAssetResourceCreationOptions new];
                 [[PHAssetCreationRequest creationRequestForAsset] addResourceWithType:PHAssetResourceTypePhoto data:data options:options];
             }
