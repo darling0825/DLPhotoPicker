@@ -189,16 +189,16 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
 {
     [DLProgressHud showActivity];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0 * NSEC_PER_SEC), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         
         self.assets = [[[DLPhotoManager sharedInstance] assetsForPhotoCollection:self.photoCollection] mutableCopy];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             
-            [self reloadData];
-            
             [DLProgressHud dismiss];
-            
+
+            [self reloadData];
+
             self.didLoadAssets = YES;
         });
         
@@ -1046,8 +1046,10 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter
                                        withReuseIdentifier:DLPhotoCollectionViewFooterIdentifier
                                               forIndexPath:indexPath];
-    [footer bind:self.photoCollection];
-    
+    if (self.assets.count > 0) {
+        [footer bind:self.photoCollection];
+    }
+
     self.footer = footer;
     
     return footer;
