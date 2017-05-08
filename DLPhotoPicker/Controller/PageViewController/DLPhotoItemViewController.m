@@ -182,7 +182,8 @@ NSString * const DLPhotoPickerDidExitSelectModeNotification = @"DLPhotoPickerDid
             [self showRequestImageError:error title:nil];
         }
         else{
-            [self.scrollView bind:self.asset image:image requestInfo:info];
+            BOOL isDegraded = [info[PHImageResultIsDegradedKey] boolValue];
+            [self.scrollView bind:self.asset image:image isDegraded:isDegraded];
         }
     } withProgressHandler:^(double progress, NSError * _Nullable error, BOOL * _Nonnull stop, NSDictionary * _Nullable info) {
         dispatch_async(dispatch_get_main_queue(), ^{
@@ -205,7 +206,7 @@ NSString * const DLPhotoPickerDidExitSelectModeNotification = @"DLPhotoPickerDid
                 [self showRequestVideoError:error title:title];
             }
             else{
-                [self.scrollView bind:asset requestInfo:info];
+                [self.scrollView bind:asset];
             }
         });
     } withProgressHandler:^(double progress, NSError * _Nullable error, BOOL * _Nonnull stop, NSDictionary * _Nullable info) {

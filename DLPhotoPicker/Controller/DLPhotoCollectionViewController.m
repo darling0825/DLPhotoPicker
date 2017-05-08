@@ -188,13 +188,21 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
 - (void)resetAssetsAndReload
 {
     [DLProgressHud showActivity];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.0 * NSEC_PER_SEC), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        
+
+    /*
+     *  delay 0.1 second
+     *
+     *  fix occasional crash in swift environment
+     *
+     *  Terminating app due to uncaught exception 'NSInvalidArgumentException',
+     *  reason: 'attempt to scroll to invalid index path
+     */
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+
         self.assets = [[[DLPhotoManager sharedInstance] assetsForPhotoCollection:self.photoCollection] mutableCopy];
-        
+
         dispatch_async(dispatch_get_main_queue(), ^{
-            
+
             [DLProgressHud dismiss];
 
             [self reloadData];

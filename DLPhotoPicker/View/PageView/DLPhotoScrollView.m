@@ -30,6 +30,7 @@
 #import "DLPhotoAsset.h"
 #import "NSBundle+DLPhotoPicker.h"
 #import "UIImage+DLPhotoPicker.h"
+#import "DLTiledImageView.h"
 
 NSString * const DLPhotoScrollViewDidTapNotification = @"DLPhotoScrollViewDidTapNotification";
 NSString * const DLPhotoScrollViewPlayerWillPlayNotification = @"DLPhotoScrollViewPlayerWillPlayNotification";
@@ -49,7 +50,8 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
 
 @property (nonatomic, assign) CGFloat perspectiveZoomScale;
 
-@property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) DLTiledImageView *imageView;
+@property (nonatomic, strong) UIImageView *bgImageView;
 
 @property (nonatomic, strong) UIProgressView *progressView;
 @property (nonatomic, strong) UIActivityIndicatorView *activityView;
@@ -99,11 +101,16 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
 
 - (void)setupViews
 {
-    UIImageView *imageView = [UIImageView new];
+    UIImageView *bgImageView = [UIImageView new];
+    bgImageView.contentMode               = UIViewContentModeScaleAspectFit;
+    self.bgImageView = bgImageView;
+    [self addSubview:bgImageView];
+    [self sendSubviewToBack:bgImageView];
+
+    DLTiledImageView *imageView = [DLTiledImageView new];
     imageView.isAccessibilityElement    = YES;
     imageView.accessibilityTraits       = UIAccessibilityTraitImage;
     imageView.contentMode               = UIViewContentModeScaleAspectFit;
-
     self.imageView = imageView;
     [self addSubview:imageView];
     
@@ -282,25 +289,25 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
 
 #pragma mark - Bind asset image
 
-- (void)bind:(DLPhotoAsset *)asset image:(UIImage *)image requestInfo:(NSDictionary *)info
+- (void)bind:(DLPhotoAsset *)asset image:(UIImage *)image isDegraded:(BOOL)isDegraded
 {
     self.asset = asset;
     self.imageView.accessibilityLabel = asset.accessibilityLabel;
     self.playButton.hidden = !asset.isVideo;
     
-    BOOL isDegraded = [info[PHImageResultIsDegradedKey] boolValue];
-    
     if (self.image == nil || !isDegraded)
     {
         BOOL zoom = (!self.image);
         self.image = image;
-        self.imageView.image = image;
-        
-        if (isDegraded && info != nil)
+
+        if (isDegraded) {
             [self mimicProgress];
-        else
+            self.bgImageView.image = image;
+        }else {
             [self setProgress:1];
-        
+            self.imageView.image = image;
+        }
+
         [self setNeedsUpdateConstraints];
         [self updateConstraintsIfNeeded];
         
@@ -312,7 +319,7 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
 
 #pragma mark - Bind player item
 
-- (void)bind:(AVAsset *)asset requestInfo:(NSDictionary *)info
+- (void)bind:(AVAsset *)asset
 {
     [self unbindPlayerItem];
     

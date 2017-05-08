@@ -37,6 +37,7 @@ extern NSString * const DLPhotoScrollViewDidZoomNotification;
 
 
 @class DLPhotoAsset;
+@class DLTiledImageView;
 
 @interface DLPhotoScrollView : UIScrollView
 
@@ -45,7 +46,7 @@ extern NSString * const DLPhotoScrollViewDidZoomNotification;
 @property (nonatomic, strong, readonly) UIImage *image;
 @property (nonatomic, strong, readonly) AVPlayer *player;
 
-@property (nonatomic, strong, readonly) UIImageView *imageView;
+@property (nonatomic, strong, readonly) DLTiledImageView *imageView;
 @property (nonatomic, strong, readonly) DLPhotoPlayButton *playButton;
 @property (nonatomic, strong, readonly) DLPhotoBarButtonItem *selectionButton;
 
@@ -56,8 +57,8 @@ extern NSString * const DLPhotoScrollViewDidZoomNotification;
 
 - (void)reloadView;
 
-- (void)bind:(DLPhotoAsset *)asset image:(UIImage *)image requestInfo:(NSDictionary *)info;
-- (void)bind:(AVAsset *)asset requestInfo:(NSDictionary *)info;
+- (void)bind:(DLPhotoAsset *)asset image:(UIImage *)image isDegraded:(BOOL)isDegraded;
+- (void)bind:(AVAsset *)asset;
 
 - (void)updateZoomScalesAndZoom:(BOOL)zoom;
 

@@ -67,6 +67,10 @@
 		5977D99A1C93C39F005C0A4B /* libPureLayout.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPureLayout.a; path = "Pods/../build/Debug-iphoneos/libPureLayout.a"; sourceTree = "<group>"; };
 		5977D99C1C93C3A2005C0A4B /* libSVProgressHUD.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libSVProgressHUD.a; path = "Pods/../build/Debug-iphoneos/libSVProgressHUD.a"; sourceTree = "<group>"; };
 		5977D99E1C93C3A5005C0A4B /* libTOCropViewController.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libTOCropViewController.a; path = "Pods/../build/Debug-iphoneos/libTOCropViewController.a"; sourceTree = "<group>"; };
+		59C787E31EC03899009B5FB4 /* DLTiledImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLTiledImageView.h; sourceTree = "<group>"; };
+		59C787E41EC03899009B5FB4 /* DLTiledImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLTiledImageView.m; sourceTree = "<group>"; };
+		59C787E51EC03899009B5FB4 /* DLTiledLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLTiledLayer.h; sourceTree = "<group>"; };
+		59C787E61EC03899009B5FB4 /* DLTiledLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLTiledLayer.m; sourceTree = "<group>"; };
 		59E3EDE21DDD661A00249019 /* DLProgressHud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DLProgressHud.h; sourceTree = "<group>"; };
 		59E3EDE31DDD661A00249019 /* DLProgressHud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DLProgressHud.m; sourceTree = "<group>"; };
 		59E3EDE41DDD661A00249019 /* NSBundle+DLPhotoPicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+DLPhotoPicker.h"; sourceTree = "<group>"; };
@@ -247,6 +251,17 @@
 			path = DLPhotoPickerDemoUITests;
 			sourceTree = "<group>";
 		};
+		59C787E21EC03899009B5FB4 /* TiledImageView */ = {
+			isa = PBXGroup;
+			children = (
+				59C787E31EC03899009B5FB4 /* DLTiledImageView.h */,
+				59C787E41EC03899009B5FB4 /* DLTiledImageView.m */,
+				59C787E51EC03899009B5FB4 /* DLTiledLayer.h */,
+				59C787E61EC03899009B5FB4 /* DLTiledLayer.m */,
+			);
+			path = TiledImageView;
+			sourceTree = "<group>";
+		};
 		59E3EDE01DDD661A00249019 /* DLPhotoPicker */ = {
 			isa = PBXGroup;
 			children = (
@@ -351,6 +366,7 @@
 		59E3EE231DDD661A00249019 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				59C787E21EC03899009B5FB4 /* TiledImageView */,
 				59E3EE241DDD661A00249019 /* Cell */,
 				59E3EE291DDD661A00249019 /* Collection */,
 				59E3EE321DDD661A00249019 /* DLPhotoBackgroundView.h */,
