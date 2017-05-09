@@ -22,6 +22,8 @@
 - (instancetype)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
     if (self) {
+        
+        self.backgroundColor = [UIColor clearColor];
 
         DLTiledLayer *layer = (DLTiledLayer *)self.layer;
         DLTiledLayer.fadeDuration = 1.0;
