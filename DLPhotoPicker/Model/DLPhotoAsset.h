@@ -169,8 +169,6 @@ typedef NS_ENUM(NSInteger, DLPhotoMediaType) {
 /**
  *  Save asset to a file
  *
- *  @param url The file to save.
- *
  *  @return Success or not.
  */
 - (BOOL)writeOriginImageToFile:(NSString *)filePath;
