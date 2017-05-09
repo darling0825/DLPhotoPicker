@@ -714,9 +714,12 @@
                                          if (downloadFinined) {
                                              _avAsset = asset;
                                          }
-                                         if (completion) {
-                                             completion(asset, audioMix, info);
-                                         }
+
+                                         dispatch_main_async_safe(^{
+                                             if (completion) {
+                                                 completion(asset, audioMix, info);
+                                             }
+                                         })
                                      }];
             return self.avAssetRequestID;
         }

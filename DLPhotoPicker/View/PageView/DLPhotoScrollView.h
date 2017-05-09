@@ -53,15 +53,21 @@ extern NSString * const DLPhotoScrollViewDidZoomNotification;
 - (void)startActivityAnimating;
 - (void)stopActivityAnimating;
 
+//
 - (void)setProgress:(CGFloat)progress;
 
+//
 - (void)reloadView;
 
+//旋转后更新
+- (void)updateViewAfterRotate;
+
+//
 - (void)bind:(DLPhotoAsset *)asset image:(UIImage *)image isDegraded:(BOOL)isDegraded;
 - (void)bind:(AVAsset *)asset;
 
-- (void)updateZoomScalesAndZoom:(BOOL)zoom;
 
+//
 - (void)playVideo;
 - (void)pauseVideo;
 

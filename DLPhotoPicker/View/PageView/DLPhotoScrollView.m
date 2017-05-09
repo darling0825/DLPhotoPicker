@@ -49,6 +49,7 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
 @property (nonatomic, assign) BOOL didLoadPlayerItem;
 
 @property (nonatomic, assign) CGFloat perspectiveZoomScale;
+@property (nonatomic, assign) CGFloat initialScale;
 
 @property (nonatomic, strong) DLTiledImageView *imageView;
 @property (nonatomic, strong) UIImageView *bgImageView;
@@ -58,9 +59,8 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
 @property (nonatomic, strong) DLPhotoPlayButton *playButton;
 @property (nonatomic, strong) DLPhotoBarButtonItem *selectionButton;
 
-@property (nonatomic, assign) BOOL shouldUpdateConstraints;
+@property (nonatomic, assign) BOOL isFirstZoom;
 @property (nonatomic, assign) BOOL didSetupConstraints;
-@property (nonatomic, assign) BOOL isInitialZoom;
 
 @end
 
@@ -74,8 +74,7 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
     
     if (self)
     {
-        _shouldUpdateConstraints            = YES;
-        _isInitialZoom                      = NO;
+        self.isFirstZoom                    = YES;
         self.allowsSelection                = NO;
         self.showsVerticalScrollIndicator   = YES;
         self.showsHorizontalScrollIndicator = YES;
@@ -97,15 +96,33 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
     [self removePlayerRateObserver];
 }
 
+- (void)layoutSubviews {
+    [super layoutSubviews];
+
+    [self updateImageViewConstraints];
+
+    if (!self.didSetupConstraints) {
+        [self autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
+        [self updateProgressConstraints];
+        [self updateActivityConstraints];
+        [self updateButtonsConstraints];
+        [self updateSelectionButtonIfNeeded];
+
+        self.didSetupConstraints = YES;
+    }
+}
+
 #pragma mark - Setup
 
 - (void)setupViews
 {
-    UIImageView *bgImageView = [UIImageView new];
-    bgImageView.contentMode               = UIViewContentModeScaleAspectFit;
+    UIImageView *bgImageView = [[UIImageView alloc] initWithFrame:self.bounds];
+    bgImageView.contentMode = UIViewContentModeScaleAspectFit;
+    bgImageView.backgroundColor = [UIColor clearColor];
     self.bgImageView = bgImageView;
     [self addSubview:bgImageView];
     [self sendSubviewToBack:bgImageView];
+
 
     DLTiledImageView *imageView = [DLTiledImageView new];
     imageView.isAccessibilityElement    = YES;
@@ -113,7 +130,8 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
     imageView.contentMode               = UIViewContentModeScaleAspectFit;
     self.imageView = imageView;
     [self addSubview:imageView];
-    
+
+
     UIProgressView *progressView =
     [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleDefault];
     self.progressView = progressView;
@@ -142,30 +160,51 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
     [self addSubview:self.selectionButton];
 }
 
+#pragma mark - 编辑之后重新读取
 - (void)reloadView
 {
     self.image = nil;
     self.imageView.image = nil;
+    self.bgImageView.image = nil;
+}
+
+#pragma mark - 旋转后更新
+- (void)updateViewAfterRotate {
+    CGSize imageSize = self.assetSize;
+
+    [self updateZoomScales: imageSize];
+    [self zoomToInitialScale];
 }
 
 #pragma mark - Update auto layout constraints
 
-- (void)updateConstraints
-{
-    [super updateConstraints];
-    if (!self.didSetupConstraints)
-    {
-        [self updateSelectionButtonIfNeeded];
-        [self autoPinEdgesToSuperviewEdgesWithInsets:UIEdgeInsetsZero];
-        [self updateProgressConstraints];
-        [self updateActivityConstraints];
-        [self updateButtonsConstraints];
-        
-        self.didSetupConstraints = YES;
+- (void)updateImageViewConstraints {
+
+    if (self.asset == nil) {
+        return;
     }
 
-    [self updateContentFrame];
-    [self updateContentInset];
+    // center the image as it becomes smaller than the size of the screen
+    CGSize boundsSize = self.bounds.size;
+    CGSize imageSize = self.assetSize;
+
+    CGRect frameToCenter = CGRectMake(0.0, 0.0,
+                                      imageSize.width * self.zoomScale,
+                                      imageSize.height * self.zoomScale);
+
+    // center vertically
+    frameToCenter.origin.y = CGRectGetHeight(frameToCenter) < boundsSize.height ? (boundsSize.height - CGRectGetHeight(frameToCenter)) / 2 : 0;
+
+    // center horizontally
+    frameToCenter.origin.x = CGRectGetWidth(frameToCenter) < boundsSize.width ? (boundsSize.width - CGRectGetWidth(frameToCenter)) / 2 : 0;
+
+    self.bgImageView.frame = frameToCenter;
+    self.imageView.frame = frameToCenter;
+
+    // to handle the interaction between CATiledLayer and high resolution screens, we need to manually set the
+    // tiling view's contentScaleFactor to 1.0. (If we omitted this, it would be 2.0 on high resolution screens,
+    // which would cause the CATiledLayer to ask us for tiles of the wrong scales.)
+    self.imageView.contentScaleFactor = 1.0;
 }
 
 - (void)updateSelectionButtonIfNeeded
@@ -184,12 +223,6 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
         [self.progressView autoConstrainAttribute:ALAttributeTrailing toAttribute:ALAttributeTrailing ofView:self.superview withMultiplier:1 relation:NSLayoutRelationEqual];
         [self.progressView autoConstrainAttribute:ALAttributeBottom toAttribute:ALAttributeBottom ofView:self.superview withMultiplier:1 relation:NSLayoutRelationEqual];
     }];
-    
-//    [NSLayoutConstraint autoSetPriority:UILayoutPriorityDefaultHigh forConstraints:^{
-//        [self.progressView autoConstrainAttribute:ALAttributeLeading toAttribute:ALAttributeLeading ofView:self.imageView withMultiplier:1 relation:NSLayoutRelationGreaterThanOrEqual];
-//        [self.progressView autoConstrainAttribute:ALAttributeTrailing toAttribute:ALAttributeTrailing ofView:self.imageView withMultiplier:1 relation:NSLayoutRelationLessThanOrEqual];
-//        [self.progressView autoConstrainAttribute:ALAttributeBottom toAttribute:ALAttributeBottom ofView:self.imageView withMultiplier:1 relation:NSLayoutRelationLessThanOrEqual];
-//    }];
 }
 
 - (void)updateActivityConstraints
@@ -211,25 +244,6 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
     }];
 }
 
-- (void)updateContentFrame
-{
-    CGFloat w = self.zoomScale * self.assetSize.width;
-    CGFloat h = self.zoomScale * self.assetSize.height;
-
-    self.imageView.frame = CGRectMake(0, 0, w, h);
-}
-
-- (void)updateContentInset{
-    CGSize imageViewSize = self.imageView.frame.size;
-    CGSize scrollViewSize = self.bounds.size;
-    
-    CGFloat verticalPadding = imageViewSize.height < scrollViewSize.height ? (scrollViewSize.height - imageViewSize.height) / 2 : 0;
-    CGFloat horizontalPadding = imageViewSize.width < scrollViewSize.width ? (scrollViewSize.width - imageViewSize.width) / 2 : 0;
-    
-    self.contentInset = UIEdgeInsetsMake(verticalPadding, horizontalPadding, verticalPadding, horizontalPadding);
-}
-
-
 #pragma mark - Start/stop loading animation
 
 - (void)startActivityAnimating
@@ -245,7 +259,6 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
     [self.activityView stopAnimating];
     [self postPlayerWillPauseNotification];
 }
-
 
 #pragma mark - Set progress
 
@@ -291,29 +304,84 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
 
 - (void)bind:(DLPhotoAsset *)asset image:(UIImage *)image isDegraded:(BOOL)isDegraded
 {
+    //
     self.asset = asset;
-    self.imageView.accessibilityLabel = asset.accessibilityLabel;
-    self.playButton.hidden = !asset.isVideo;
-    
-    if (self.image == nil || !isDegraded)
-    {
-        BOOL zoom = (!self.image);
-        self.image = image;
+    self.image = image;
 
-        if (isDegraded) {
-            [self mimicProgress];
-            self.bgImageView.image = image;
-        }else {
-            [self setProgress:1];
-            self.imageView.image = image;
-        }
-
-        [self setNeedsUpdateConstraints];
-        [self updateConstraintsIfNeeded];
-        
-        [self updateZoomScalesAndZoom:zoom];
-        [self updateContentInset];
+    //fix bug: 正在播放视频时, 会有请求的预览图生成, 会再次执行到这里, 导致playButton显示
+    if (self.player) {
+        self.playButton.hidden = YES;
+    }else {
+        self.playButton.hidden = !asset.isVideo;
     }
+
+    // get scale
+    [self updateZoomScales:self.assetSize];
+
+    __block CGRect imageRect = CGRectMake(0, 0,
+                                  self.assetSize.width * self.initialScale,
+                                  self.assetSize.height * self.initialScale);
+
+    //
+    __weak typeof(self) weakself = self;
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+
+        __strong __typeof(weakself) strongSelf = weakself;
+        
+        UIImage *bgImage = nil;
+        /*
+         * Degraded 图片大小与imageView 大小不符, 加载也会很慢
+         * 所有图片都经处理后再加载
+         */
+        //if (!isDegraded) {
+            UIGraphicsBeginImageContext(imageRect.size);
+            CGContextRef ctx = UIGraphicsGetCurrentContext();
+            CGContextSaveGState(ctx);
+
+            CGContextTranslateCTM(ctx, imageRect.origin.x, imageRect.origin.y);
+            CGContextTranslateCTM(ctx, 0.0, imageRect.size.height);
+            CGContextScaleCTM(ctx, 1.0, -1.0);
+            CGContextTranslateCTM(ctx, -imageRect.origin.x, -imageRect.origin.y);
+            CGContextDrawImage(ctx, imageRect, image.CGImage);
+            CGContextRestoreGState(ctx);
+
+            bgImage = UIGraphicsGetImageFromCurrentImageContext();
+            UIGraphicsEndImageContext();
+        //}
+
+        CGSize boundsSize = strongSelf.bounds.size;
+
+        // center vertically
+        imageRect.origin.y = CGRectGetHeight(imageRect) < boundsSize.height ?
+        (boundsSize.height - CGRectGetHeight(imageRect)) / 2 : 0;
+
+        // center horizontally
+        imageRect.origin.x = CGRectGetWidth(imageRect) < boundsSize.width ?
+        (boundsSize.width - CGRectGetWidth(imageRect)) / 2 : 0;
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+
+            strongSelf.bgImageView.frame = imageRect;
+            strongSelf.bgImageView.image = bgImage;
+
+            if (isDegraded) {
+                [strongSelf mimicProgress];
+            }else {
+                [strongSelf setProgress:1];
+
+                strongSelf.imageView.frame = imageRect;
+                strongSelf.imageView.image = image;
+            }
+            
+            [strongSelf zoomToInitialScale];
+
+            //fix bug: 某些图片缩放不正常, 导致加载缓慢
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 0.1 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
+                [strongSelf zoomToInitialScale];
+            });
+        });
+    });
 }
 
 
@@ -350,27 +418,35 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
 }
 
 #pragma mark - Upate zoom scales
-- (void)updateZoomScalesAndZoom:(BOOL)zoom
-{
-    if (!self.asset)
-        return;
-    
-    CGSize assetSize    = [self assetSize];
+- (void)updateZoomScales:(CGSize)imageSize {
+
+    CGSize assetSize    = imageSize;
     CGSize boundsSize   = self.bounds.size;
-    
+
     /**
      *  Fix bug: Do not get assetSize.
      */
     if (CGSizeEqualToSize(assetSize, CGSizeZero)) {
         assetSize = boundsSize;
     }
-    
+
     CGFloat xScale = boundsSize.width / assetSize.width;    //scale needed to perfectly fit the image width-wise
     CGFloat yScale = boundsSize.height / assetSize.height;  //scale needed to perfectly fit the image height-wise
-    
-    CGFloat minScale = MIN(xScale, yScale);
-    CGFloat maxScale = 3.0 * minScale;
-    
+
+
+    /*
+     xScale < yScale : 宽图
+     xScale > yScale : 长图
+     min(xScale, yScale) : 全部显示
+     max(xScale, yScale) : 全屏显示, 原图大小
+     perspectiveZoomScale: 全屏显示, 原图大小
+     */
+    CGFloat minScale = MIN(xScale, yScale); //全部显示
+    CGFloat maxScale = 5.0 * MAX(xScale, yScale); //原图的5倍
+
+    // update perspective zoom scale
+    self.perspectiveZoomScale = MAX(xScale, yScale);
+
     if (self.asset.mediaType == DLPhotoMediaTypeVideo)
     {
         self.minimumZoomScale = minScale;
@@ -381,25 +457,20 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
         self.minimumZoomScale = minScale;
         self.maximumZoomScale = maxScale;
     }
-    
-    // update perspective zoom scale
-    self.perspectiveZoomScale = MAX(xScale, yScale);
-    
-    if (zoom){
-         [self zoomToInitialScale];
+
+    // image sacle
+    self.initialScale = minScale;
+    if ([self canPerspectiveZoom]) {
+        self.initialScale = self.perspectiveZoomScale;
     }
 }
+
 
 #pragma mark - Zoom
 
 - (void)zoomToInitialScale
 {
-    self.isInitialZoom = YES;
-    if ([self canPerspectiveZoom])
-        [self zoomToPerspectiveZoomScaleAnimated:NO];
-    else
-        [self zoomToMinimumZoomScaleAnimated:NO];
-
+    [self setZoomScale:self.initialScale animated:NO];
 }
 
 - (void)zoomToMinimumZoomScaleAnimated:(BOOL)animated
@@ -407,22 +478,17 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
     [self setZoomScale:self.minimumZoomScale animated:animated];
 }
 
+- (void)zoomToPerspectiveZoomScaleAnimated:(BOOL)animated;
+{
+    [self setZoomScale:self.perspectiveZoomScale animated:animated];
+}
+
 - (void)zoomToMaximumZoomScaleWithGestureRecognizer:(UITapGestureRecognizer *)recognizer
 {
     CGRect zoomRect = [self zoomRectWithScale:self.maximumZoomScale withCenter:[recognizer locationInView:recognizer.view]];
-    
-    self.shouldUpdateConstraints = NO;
-    
+
     [UIView animateWithDuration:0.3 animations:^{
         [self zoomToRect:zoomRect animated:NO];
-        
-        /*
-        CGRect frame = self.imageView.frame;
-        frame.origin.x = 0;
-        frame.origin.y = 0;
-        
-        self.imageView.frame = frame;
-         */
     }];
 }
 
@@ -477,22 +543,13 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
     
     CGRect zoomRect;
     
-    zoomRect.size.height = self.imageView.frame.size.height / scale;
-    zoomRect.size.width  = self.imageView.frame.size.width  / scale;
+    zoomRect.size.height = self.frame.size.height / scale;
+    zoomRect.size.width  = self.frame.size.width  / scale;
     
     zoomRect.origin.x    = center.x - ((zoomRect.size.width / 2.0));
     zoomRect.origin.y    = center.y - ((zoomRect.size.height / 2.0));
     
     return zoomRect;
-}
-
-
-- (void)zoomToPerspectiveZoomScaleAnimated:(BOOL)animated;
-{
-//    CGRect zoomRect = [self zoomRectWithScale:self.perspectiveZoomScale];
-//    [self zoomToRect:zoomRect animated:animated];
-//    
-    [self setZoomScale:self.perspectiveZoomScale animated:animated];
 }
 
 //- (CGRect)zoomRectWithScale:(CGFloat)scale
@@ -549,31 +606,21 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
     return self.imageView;
 }
 
-- (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view
-{
-    self.shouldUpdateConstraints = YES;
-}
-
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView
 {
-    if (self.isInitialZoom) {
-        self.isInitialZoom = NO;
+    if (self.isFirstZoom) {
+        self.isFirstZoom = NO;
     }else {
         [[NSNotificationCenter defaultCenter] postNotificationName:DLPhotoScrollViewDidZoomNotification object:nil];
     }
     
     [self setScrollEnabled:(self.zoomScale != self.perspectiveZoomScale)];
-    
-    if (self.shouldUpdateConstraints)
-    {
-        [self setNeedsUpdateConstraints];
-        [self updateConstraintsIfNeeded];
-    }
-    
+
     /**
      *  set the photo in the middle of screen
      */
-    [self updateContentInset];
+    [self setNeedsLayout];
+    [self layoutIfNeeded];
 }
 
 

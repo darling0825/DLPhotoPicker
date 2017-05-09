@@ -70,8 +70,7 @@ NSString * const DLPhotoPickerDidExitSelectModeNotification = @"DLPhotoPickerDid
     [self setupViews];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self setupScrollViewButtons];
     [self requestAssetImage];
@@ -84,22 +83,6 @@ NSString * const DLPhotoPickerDidExitSelectModeNotification = @"DLPhotoPickerDid
     [self cancelRequestAsset];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    [self.scrollView updateZoomScalesAndZoom:YES];
-}
-
-- (void)viewWillLayoutSubviews
-{
-    [super viewWillLayoutSubviews];
-    
-    [self.view layoutIfNeeded];
-    
-    [self.scrollView setNeedsUpdateConstraints];
-    [self.scrollView updateConstraintsIfNeeded];
-}
-
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
 // iOS >= 8
 - (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
@@ -107,7 +90,7 @@ NSString * const DLPhotoPickerDidExitSelectModeNotification = @"DLPhotoPickerDid
     [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
 
     [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
-        [self.scrollView updateZoomScalesAndZoom:YES];
+        [self.scrollView updateViewAfterRotate];
     } completion:nil];
 }
 
@@ -117,7 +100,7 @@ NSString * const DLPhotoPickerDidExitSelectModeNotification = @"DLPhotoPickerDid
 {
     [super willAnimateRotationToInterfaceOrientation:toInterfaceOrientation duration:duration];
     
-    [self.scrollView updateZoomScalesAndZoom:YES];
+    [self.scrollView updateViewAfterRotate];
 }
 
 #endif
@@ -175,21 +158,33 @@ NSString * const DLPhotoPickerDidExitSelectModeNotification = @"DLPhotoPickerDid
 - (void)requestAssetImage
 {
     [self.scrollView setProgress:0];
-    
-    [self.asset requestPreviewImageWithCompletion:^(UIImage *image, NSDictionary *info) {
-        NSError *error = [info objectForKey:PHImageErrorKey];
-        if (error){
-            [self showRequestImageError:error title:nil];
-        }
-        else{
-            BOOL isDegraded = [info[PHImageResultIsDegradedKey] boolValue];
-            [self.scrollView bind:self.asset image:image isDegraded:isDegraded];
-        }
-    } withProgressHandler:^(double progress, NSError * _Nullable error, BOOL * _Nonnull stop, NSDictionary * _Nullable info) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.scrollView setProgress:progress];
-        });
-    }];
+
+    __weak typeof(self) weakself = self;
+
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self.asset requestPreviewImageWithCompletion:^(UIImage *image, NSDictionary *info) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                NSError *error = [info objectForKey:PHImageErrorKey];
+
+                __strong __typeof(weakself) strongSelf = weakself;
+
+                if (error){
+                    [strongSelf showRequestImageError:error title:nil];
+                }
+                else{
+                    BOOL isDegraded = [info[PHImageResultIsDegradedKey] boolValue];
+                    [strongSelf.scrollView bind:strongSelf.asset image:image isDegraded:isDegraded];
+                }
+            });
+        } withProgressHandler:^(double progress, NSError * _Nullable error, BOOL * _Nonnull stop, NSDictionary * _Nullable info) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+
+                __strong __typeof(weakself) strongSelf = weakself;
+
+                [strongSelf.scrollView setProgress:progress];
+            });
+        }];
+    });
 }
 
 #pragma mark - Request player item
@@ -200,7 +195,7 @@ NSString * const DLPhotoPickerDidExitSelectModeNotification = @"DLPhotoPickerDid
     
     [self.asset requestOriginAVAssetWithCompletion:^(AVAsset *asset, AVAudioMix *audioMix, NSDictionary *info) {
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSError *error   = [info objectForKey:PHImageErrorKey];
+            NSError *error  = [info objectForKey:PHImageErrorKey];
             NSString *title = DLPhotoPickerLocalizedString(@"Cannot Play Stream Video", nil);
             if (error){
                 [self showRequestVideoError:error title:title];
@@ -210,9 +205,11 @@ NSString * const DLPhotoPickerDidExitSelectModeNotification = @"DLPhotoPickerDid
             }
         });
     } withProgressHandler:^(double progress, NSError * _Nullable error, BOOL * _Nonnull stop, NSDictionary * _Nullable info) {
+        /*
         dispatch_async(dispatch_get_main_queue(), ^{
             //do nothing
         });
+         */
     }];
 }
 
