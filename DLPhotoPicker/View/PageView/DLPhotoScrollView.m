@@ -446,6 +446,13 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
 
     // update perspective zoom scale
     self.perspectiveZoomScale = MAX(xScale, yScale);
+ 
+    //
+    if (xScale >= 2.6 * yScale) {
+        maxScale = xScale * 0.99;//竖长图
+    }else if (yScale >= 5.0 * xScale){
+        maxScale = yScale * 0.99;//横长图
+    }
 
     if (self.asset.mediaType == DLPhotoMediaTypeVideo)
     {
