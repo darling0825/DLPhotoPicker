@@ -536,7 +536,7 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
             [self zoomToMinimumZoomScaleAnimated:YES];
         }
     }else{
-        if (self.zoomScale < self.maximumZoomScale){
+        if (self.zoomScale < self.maximumZoomScale / 2){
             [self zoomToMaximumZoomScaleWithGestureRecognizer:recognizer];
         }else{
             [self zoomToMinimumZoomScaleAnimated:YES];
