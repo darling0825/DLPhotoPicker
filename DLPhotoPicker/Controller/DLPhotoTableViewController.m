@@ -48,6 +48,29 @@ ALAssetsLibraryChangeObserver, DLPhotoCollectionViewControllerDelegate>
     [self fetchPhotoCollectionAndReload];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(applicationWillEnterForeground:)
+                                                 name:UIApplicationWillEnterForegroundNotification
+                                               object:nil];
+
+    [self setupPhotoCollection];
+    [self.tableView reloadData];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)applicationWillEnterForeground:(NSNotification *)notification {
+    [self fetchPhotoCollectionAndReload];
+}
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     self.photoCollections = nil;
