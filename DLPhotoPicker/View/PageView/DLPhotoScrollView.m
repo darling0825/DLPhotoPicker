@@ -321,6 +321,8 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
     __block CGRect imageRect = CGRectMake(0, 0,
                                   self.assetSize.width * self.initialScale,
                                   self.assetSize.height * self.initialScale);
+ 
+    CGSize boundsSize = self.bounds.size;
 
     //
     __weak typeof(self) weakself = self;
@@ -349,8 +351,6 @@ NSString * const DLPhotoScrollViewDidZoomNotification = @"DLPhotoScrollViewDidZo
             bgImage = UIGraphicsGetImageFromCurrentImageContext();
             UIGraphicsEndImageContext();
         //}
-
-        CGSize boundsSize = strongSelf.bounds.size;
 
         // center vertically
         imageRect.origin.y = CGRectGetHeight(imageRect) < boundsSize.height ?
