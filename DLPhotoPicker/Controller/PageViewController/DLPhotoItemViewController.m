@@ -93,8 +93,9 @@ NSString * const DLPhotoPickerDidExitSelectModeNotification = @"DLPhotoPickerDid
         [self.scrollView updateViewAfterRotate];
     } completion:nil];
 }
+#endif
 
-#elif __IPHONE_OS_VERSION_MIN_REQUIRED >= __IPHONE_6_0
+#if __IPHONE_OS_VERSION_MIN_REQUIRED <= __IPHONE_7_0
 // iOS <= 7
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
