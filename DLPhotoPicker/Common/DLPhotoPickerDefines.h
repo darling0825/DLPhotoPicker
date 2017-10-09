@@ -53,7 +53,7 @@ NSLocalizedStringFromTableInBundle((key), @"DLPhotoPicker", [NSBundle assetPicke
 
 
 /** 适配*/
-#define UsePhotoKit             __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_8_0
+#define UsePhotoKit             NSFoundationVersionNumber >= NSFoundationVersionNumber_iOS_8_0
 
 #define DLiOS_5_OR_LATER        ([[[UIDevice currentDevice] systemVersion] floatValue] >= 5.0)
 #define DLiOS_6_OR_LATER        ([[[UIDevice currentDevice] systemVersion] floatValue] >= 6.0)
