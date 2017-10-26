@@ -93,7 +93,7 @@
         /**
          *  Fix Bug: [self.alAsset defaultRepresentation] == nil
          */
-        CGSize dimensions;
+        CGSize dimensions = CGSizeZero;
         if ([self.alAsset defaultRepresentation]) {
             dimensions = [[self.alAsset defaultRepresentation] dimensions];
         }
