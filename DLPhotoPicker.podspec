@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name                  = 'DLPhotoPicker'
-  s.version               = '1.2.0'
+  s.version               = '1.2.1'
   s.summary               = 'iOS control that allows picking or displaying photos and videos from user\'s photo library.'
 
   s.description           = <<-DESC
