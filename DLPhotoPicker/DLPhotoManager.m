@@ -535,8 +535,12 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
         
         //  a block to add assets to a album
         AddVideoToCollectionBlock addVideoBlock = [self _addVideoBlockWithCompletion:completion failure:failure];
-        
-        if (savedAssetCollection) {
+
+        if (!albumName.length) {
+            //  add asset to default collection
+            addVideoBlock(videoUrl, nil);
+        }
+        else if (savedAssetCollection) {
             //  add asset
             addVideoBlock(videoUrl, savedAssetCollection);
         }else{
@@ -767,7 +771,7 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
     return ^(NSData *data, PHAssetCollection *assetCollection){
         [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
             if (assetCollection) {
-                // saved to assetCollection and CameraRoll
+                // saved to assetCollection
                 PHAssetResourceCreationOptions *options = [PHAssetResourceCreationOptions new];
                 PHAssetCreationRequest *request = [PHAssetCreationRequest creationRequestForAsset];
                 [request addResourceWithType:PHAssetResourceTypePhoto data:data options:options];
@@ -804,10 +808,16 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
 {
     return ^(NSURL *videoUrl, PHAssetCollection *assetCollection){
         [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-            
-            PHAssetChangeRequest *assetChangeRequest = [PHAssetChangeRequest creationRequestForAssetFromVideoAtFileURL:videoUrl];
-            PHAssetCollectionChangeRequest *assetCollectionChangeRequest = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:assetCollection];
-            [assetCollectionChangeRequest addAssets:@[assetChangeRequest.placeholderForCreatedAsset]];
+            if (assetCollection) {
+                // saved to assetCollection
+                PHAssetChangeRequest *assetChangeRequest = [PHAssetChangeRequest creationRequestForAssetFromVideoAtFileURL:videoUrl];
+                PHAssetCollectionChangeRequest *assetCollectionChangeRequest = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:assetCollection];
+                [assetCollectionChangeRequest addAssets:@[assetChangeRequest.placeholderForCreatedAsset]];
+            }else {
+                // only saved to CameraRoll
+                PHAssetResourceCreationOptions *options = [PHAssetResourceCreationOptions new];
+                [[PHAssetCreationRequest creationRequestForAsset] addResourceWithType:PHAssetResourceTypeVideo fileURL:videoUrl options:options];
+            }
             
         } completionHandler:^(BOOL success, NSError * _Nullable error) {
             dispatch_async(dispatch_get_main_queue(), ^{
