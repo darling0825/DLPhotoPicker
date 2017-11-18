@@ -131,7 +131,8 @@
             case PHAssetCollectionSubtypeSmartAlbumSlomoVideos:
                 imageName = @"BadgeSlomo";
                 break;
-                
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0
             case PHAssetCollectionSubtypeSmartAlbumScreenshots:
                 imageName = @"BadgeScreenshots";
                 break;
@@ -139,6 +140,7 @@
             case PHAssetCollectionSubtypeSmartAlbumSelfPortraits:
                 imageName = @"BadgeSelfPortraits";
                 break;
+#endif
                 
             default:
                 imageName = nil;

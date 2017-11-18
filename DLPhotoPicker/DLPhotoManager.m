@@ -121,6 +121,7 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
           [NSNumber numberWithInt:PHAssetCollectionSubtypeAlbumCloudShared]];
         
         // Add iOS 9's new albums
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0
         if ([[PHAsset new] respondsToSelector:@selector(sourceType)])
         {
             NSMutableArray *subtypes = [NSMutableArray arrayWithArray:_assetCollectionSubtypes];
@@ -129,6 +130,7 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
             
             _assetCollectionSubtypes = [NSArray arrayWithArray:subtypes];
         }
+#endif
     }
     return _assetCollectionSubtypes;
 }
@@ -769,20 +771,33 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
                                                           failure:(void(^)(NSError *))failure
 {
     return ^(NSData *data, PHAssetCollection *assetCollection){
+
+        __block PHObjectPlaceholder *placeholderAsset = nil;
+
         [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
             if (assetCollection) {
                 // saved to assetCollection
+                PHAssetChangeRequest *assetChangeRequest = [PHAssetChangeRequest creationRequestForAssetFromImage:[UIImage imageWithData:data]];
+                PHAssetCollectionChangeRequest *assetCollectionChangeRequest = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:assetCollection];
+                [assetCollectionChangeRequest addAssets:@[assetChangeRequest.placeholderForCreatedAsset]];
+
+                /*
                 PHAssetResourceCreationOptions *options = [PHAssetResourceCreationOptions new];
                 PHAssetCreationRequest *request = [PHAssetCreationRequest creationRequestForAsset];
                 [request addResourceWithType:PHAssetResourceTypePhoto data:data options:options];
                 
                 PHAssetCollectionChangeRequest *assetCollectionChangeRequest = [PHAssetCollectionChangeRequest changeRequestForAssetCollection:assetCollection];
                 [assetCollectionChangeRequest addAssets:@[request.placeholderForCreatedAsset]];
-                
+                 */
             }else{
                 // only saved to CameraRoll
+
+                PHAssetChangeRequest *assetChangeRequest = [PHAssetChangeRequest creationRequestForAssetFromImage:[UIImage imageWithData:data]];
+                placeholderAsset = assetChangeRequest.placeholderForCreatedAsset;
+                /*
                 PHAssetResourceCreationOptions *options = [PHAssetResourceCreationOptions new];
                 [[PHAssetCreationRequest creationRequestForAsset] addResourceWithType:PHAssetResourceTypePhoto data:data options:options];
+                 */
             }
             
         } completionHandler:^(BOOL success, NSError * _Nullable error) {
@@ -807,6 +822,9 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
                                                   failure:(void(^)(NSError *))failure
 {
     return ^(NSURL *videoUrl, PHAssetCollection *assetCollection){
+
+        __block PHObjectPlaceholder *placeholderAsset = nil;
+
         [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
             if (assetCollection) {
                 // saved to assetCollection
@@ -815,8 +833,12 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
                 [assetCollectionChangeRequest addAssets:@[assetChangeRequest.placeholderForCreatedAsset]];
             }else {
                 // only saved to CameraRoll
+                PHAssetChangeRequest *assetChangeRequest = [PHAssetChangeRequest creationRequestForAssetFromVideoAtFileURL:videoUrl];
+                placeholderAsset = assetChangeRequest.placeholderForCreatedAsset;
+                /*
                 PHAssetResourceCreationOptions *options = [PHAssetResourceCreationOptions new];
                 [[PHAssetCreationRequest creationRequestForAsset] addResourceWithType:PHAssetResourceTypeVideo fileURL:videoUrl options:options];
+                 */
             }
             
         } completionHandler:^(BOOL success, NSError * _Nullable error) {
@@ -922,8 +944,12 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
 - (void)requestContentEditing:(DLPhotoAsset *)asset
                    completion:(void (^)(UIImage *image, PHContentEditingInput *contentEditingInput, NSDictionary *info))completion
 {
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_1
     if ([asset.phAsset canPerformEditOperation:PHAssetEditOperationContent] &&
         !(asset.phAsset.mediaSubtypes & PHAssetMediaSubtypePhotoLive))
+#else
+        if ([asset.phAsset canPerformEditOperation:PHAssetEditOperationContent])
+#endif
     {
         PHContentEditingInputRequestOptions *options = [[PHContentEditingInputRequestOptions alloc] init];
         [options setNetworkAccessAllowed:YES];
@@ -1292,10 +1318,12 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
             if (!self.showsEmptyAlbums){
                 PHFetchOptions *options = [PHFetchOptions new];
                 options.predicate = self.assetsFetchOptions.predicate;
-                
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0
                 if ([options respondsToSelector:@selector(setFetchLimit:)]){
                     options.fetchLimit = 1;
                 }
+#endif
                 
                 NSInteger count = [self __countOfAssetsForCollection:assetCollection FetchedWithOptions:options];
                 
