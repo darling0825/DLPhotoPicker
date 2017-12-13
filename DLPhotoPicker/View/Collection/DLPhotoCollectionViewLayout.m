@@ -28,10 +28,18 @@
 
 @implementation DLPhotoCollectionViewLayout
 
-- (instancetype)initWithContentSize:(CGSize)contentSize traitCollection:(UITraitCollection *)traits
+- (instancetype)initWithContentSize:(CGSize)contentSize
+                     safeAreaInsets:(UIEdgeInsets)safeAreaInsets
+                    traitCollection:(UITraitCollection *)traits
 {
     if (self = [super init])
     {
+        CGFloat width = contentSize.width;
+        CGFloat offset = 0.0;
+        if (@available(iOS 11.0, *)) {
+            width -= (safeAreaInsets.left + safeAreaInsets.left);
+            offset = safeAreaInsets.left;
+        }
         CGFloat scale = traits.displayScale;
         NSInteger numberOfColumns = [self numberOfColumnsForTraitCollection:traits];
         CGFloat onePixel = (scale == 3.0) ? (2.0 / scale) : (1.0 / scale);
@@ -44,7 +52,7 @@
         CGFloat spaces  = self.minimumInteritemSpacing * (numberOfColumns - 1);
         
         // item length (in pixel)
-        CGFloat length  = (scale * (contentSize.width - spaces)) / numberOfColumns;
+        CGFloat length  = (scale * (width - spaces)) / numberOfColumns;
         
         // remaining spaces (in pixel) after rounding the length to integer
         CGFloat insets  = (length - floor(length)) * numberOfColumns;
@@ -70,7 +78,7 @@
         // item length (in point, 2 decimal)
         length  = floorf(length / scale * 100) / 100;
         
-        self.sectionInset = UIEdgeInsetsMake(0, left, 0, right);
+        self.sectionInset = UIEdgeInsetsMake(0, left + offset, 0, right + offset);
         self.itemSize = CGSizeMake(length, length);
         
         self.footerReferenceSize = CGSizeMake(contentSize.width, floor(length * 2/3));

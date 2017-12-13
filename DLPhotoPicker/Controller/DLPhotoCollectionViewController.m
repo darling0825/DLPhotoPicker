@@ -140,7 +140,7 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     [self removeNotificationObserver];
 }
 
-#pragma mark
+#pragma mark -
 - (void)setupViews
 {
     //self.extendedLayoutIncludesOpaqueBars = YES;
@@ -577,8 +577,8 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
 {
     UITraitCollection *trait = self.traitCollection;
     CGSize contentSize = self.view.bounds.size;
-    UICollectionViewLayout *layout = [[DLPhotoCollectionViewLayout alloc] initWithContentSize:contentSize traitCollection:trait];
-    
+    UICollectionViewLayout *layout = [[DLPhotoCollectionViewLayout alloc] initWithContentSize:contentSize safeAreaInsets:self.view.safeAreaInsets traitCollection:trait];
+
     if ([self.picker.delegate respondsToSelector:@selector(pickerController:collectionViewLayoutForContentSize:traitCollection:)]) {
         layout = [self.picker.delegate pickerController:self.picker collectionViewLayoutForContentSize:contentSize traitCollection:trait];
     }
