@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import <Photos/Photos.h>
-#import <AssetsLibrary/AssetsLibrary.h>
 
 typedef NS_ENUM(NSInteger, DLPhotoMediaType) {
     DLPhotoMediaTypeUnknown         = 0,

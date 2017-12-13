@@ -29,8 +29,7 @@ NSString * const DLPhotoCollectionViewCellIdentifier = @"DLPhotoCollectionViewCe
 NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionViewFooterIdentifier";
 
 
-@interface DLPhotoCollectionViewController ()
-<PHPhotoLibraryChangeObserver, ALAssetsLibraryChangeObserver>
+@interface DLPhotoCollectionViewController () <PHPhotoLibraryChangeObserver>
 
 @property (nonatomic, strong) NSMutableArray *assets;
 @property (nonatomic, assign) BOOL didLoadAssets;
@@ -380,56 +379,6 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
             [self.delegate collectionViewController:self photoLibraryDidChangeForPhotoCollection:self.photoCollection];
         }
     });
-}
-
-- (void)assetsLibraryChanged:(NSNotification *)notification
-{
-    /*
-     *
-    __weak typeof(self) weakSelf = self;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        __strong typeof(self) strongSelf = weakSelf;
-
-        NSDictionary *info = [notification userInfo];
-        NSSet *updatedAssets = [info objectForKey:ALAssetLibraryUpdatedAssetsKey];
-        NSSet *updatedAssetGroup = [info objectForKey:ALAssetLibraryUpdatedAssetGroupsKey];
-        NSSet *deletedAssetGroup = [info objectForKey:ALAssetLibraryDeletedAssetGroupsKey];
-        NSSet *insertedAssetGroup = [info objectForKey:ALAssetLibraryInsertedAssetGroupsKey];
-        
-         NSLog(@"---------------------");
-         NSLog(@"      updated assets:%@", updatedAssets);
-         NSLog(@" updated asset group:%@", updatedAssetGroup);
-         NSLog(@" deleted asset group:%@", deletedAssetGroup);
-         NSLog(@"inserted asset group:%@", insertedAssetGroup);
-         NSLog(@"---------------------");
-         
-        if(info == nil){
-            //All Clear
-            [strongSelf setupAssets];
-            return;
-        }
-        
-        if(info.count == 0){
-            return;
-        }
-        
-        if (updatedAssets.count >0){
-            for (NSURL *assetUrl in updatedAssets) {
-                [[[DLPhotoManager sharedInstance] assetsLibrary] assetForURL:assetUrl resultBlock:^(ALAsset *asset) {
-                    if (asset) {
-                        DLPhotoAsset *newAsset = [[DLPhotoAsset alloc] initWithAsset:asset];
-                        NSUInteger index = [strongSelf indexOfAsset:newAsset inAssets:strongSelf.assets];
-                        if (index < self.assets.count) {
-                            [strongSelf.assets replaceObjectAtIndex:index withObject:newAsset];
-                        }
-                    }
-                } failureBlock:^(NSError *error) {
-                    NSLog(@">>> %@",error);
-                }];
-            }
-        }
-    });
-     */
 }
 
 /*

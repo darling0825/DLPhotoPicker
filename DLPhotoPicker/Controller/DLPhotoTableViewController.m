@@ -19,8 +19,7 @@
 static NSString *cellIdentifier = @"CellIdentifier";
 
 @interface DLPhotoTableViewController ()
-<PHPhotoLibraryChangeObserver, UIAlertViewDelegate, UITextFieldDelegate,
-ALAssetsLibraryChangeObserver, DLPhotoCollectionViewControllerDelegate>
+<PHPhotoLibraryChangeObserver, UIAlertViewDelegate, UITextFieldDelegate, DLPhotoCollectionViewControllerDelegate>
 
 @property (nonatomic, strong)DLPhotoCollection *selectedPhotoCollection;
 @property (nonatomic, weak)DLPhotoCollectionViewController *photoCollectionViewController;
@@ -243,33 +242,6 @@ ALAssetsLibraryChangeObserver, DLPhotoCollectionViewControllerDelegate>
     return [queryDict copy];
 }
 
-- (NSUInteger)indexOfAssetGroup:(DLPhotoCollection *)group inGroups:(NSArray *)groups
-{
-    NSString *targetGroupId = [group.assetGroup valueForProperty:ALAssetsGroupPropertyPersistentID];
-    __block NSUInteger index = NSNotFound;
-    [groups enumerateObjectsUsingBlock:^(DLPhotoCollection *obj, NSUInteger idx, BOOL *stop) {
-        NSString *gid = [obj.assetGroup valueForProperty:ALAssetsGroupPropertyPersistentID];
-        if ([gid isEqualToString:targetGroupId]){
-            index = idx;
-            *stop = YES;
-        }
-        
-    }];
-    return index;
-}
-
-- (DLPhotoCollection *)assetForAssetGroupId:(NSString *)targetGroupId inGroups:(NSArray *)groups
-{
-    __block DLPhotoCollection *collection = nil;
-    [groups enumerateObjectsUsingBlock:^(DLPhotoCollection *obj, NSUInteger idx, BOOL *stop) {
-        NSString *gid = [obj.assetGroup valueForProperty:ALAssetsGroupPropertyPersistentID];
-        if ([gid isEqualToString:targetGroupId]){
-            collection = obj;
-            *stop = YES;
-        }
-    }];
-    return collection;
-}
 
 #pragma mark - Key-Value observer
 - (void)addKeyValueObserver

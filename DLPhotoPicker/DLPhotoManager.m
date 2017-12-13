@@ -19,7 +19,6 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
 @interface DLPhotoManager()
 
 @property (nonatomic, strong) PHCachingImageManager *phCachingImageManager;
-@property (nonatomic, strong) ALAssetsLibrary *assetsLibrary;
 
 @property (nonatomic, strong) dispatch_semaphore_t semaphore;
 
@@ -53,15 +52,9 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
 - (void)setDefaults
 {
     _phCachingImageManager          = [PHCachingImageManager new];
-    _assetsLibrary                  = [ALAssetsLibrary new];
     _showsEmptyAlbums               = YES;
     
     _semaphore = dispatch_semaphore_create(1);
-    
-    /**
-     *  开启 Photo Stream 容易导致 exception
-     */
-    //[ALAssetsLibrary disableSharedPhotoStreamsSupport];
 }
 
 #pragma mark - setter
@@ -201,29 +194,6 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
             }
         });
     }];
-}
-
-- (void)checkAuthorizationStatus_BeforeiOS8
-{
-    ALAuthorizationStatus status = [ALAssetsLibrary authorizationStatus];
-    switch (status)
-    {
-        case ALAuthorizationStatusNotDetermined:
-            [self requestAuthorizationStatus_AfteriOS8];
-            break;
-        case ALAuthorizationStatusRestricted:
-        case ALAuthorizationStatusDenied:
-        {
-            [self showAccessDenied];
-            break;
-        }
-        case ALAuthorizationStatusAuthorized:
-        default:
-        {
-            [self checkAuthorizationSuccess];
-            break;
-        }
-    }
 }
 
 - (void)requestAuthorizationStatus_BeforeiOS8
@@ -692,58 +662,6 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
     };
 }
 
-- (ALAssetsLibraryAssetForURLResultBlock)_addAssetUrlBlockWithGroup:(ALAssetsGroup *)group
-                                                           assetURL:(NSURL *)assetUrl
-                                                         completion:(void(^)(BOOL success))completion
-                                                            failure:(void(^)(NSError *error))failure
-{
-    return ^(ALAsset *asset) {
-        // Add photo to the target album
-        if ([group addAsset:asset]) {
-            // Run the completion block if the asset was added successfully
-            if (completion) {
-                completion(YES);
-            }
-        }
-        
-        // |-addAsset:| may fail (return NO) if the group is not editable,
-        //   or if the asset could not be added to the group.
-        else {
-            NSString *message = [NSString stringWithFormat:@"ALAssetsGroup failed to add asset: %@.", asset];
-            if (failure) {
-                failure([NSError errorWithDomain:@"ALAssetsLibrary"
-                                            code:0
-                                        userInfo:@{NSLocalizedDescriptionKey : message}]);
-            }
-        }
-    };
-}
-
-- (ALAssetsLibraryAssetForURLResultBlock)_removeAssetUrlBlockWithAssetURL:(NSURL *)assetUrl
-                                                               completion:(void(^)(BOOL success))completion
-                                                                  failure:(void(^)(NSError *error))failure
-{
-    return ^(ALAsset *asset) {
-        if(asset.isEditable) {
-            [asset setImageData:nil metadata:nil completionBlock:^(NSURL *assetUrl, NSError *error) {
-                if (assetUrl && completion) {
-                    completion(YES);
-                }
-                if (error && failure) {
-                    failure(error);
-                }
-            }];
-        }else{
-            NSString *message = [NSString stringWithFormat:@"ALAssetsGroup failed to remove asset: %@.", asset];
-            if (failure) {
-                failure([NSError errorWithDomain:@"ALAsset"
-                                            code:0
-                                        userInfo:@{NSLocalizedDescriptionKey : message}]);
-            }
-        }
-    };
-}
-
 
 #pragma mark - Photo Edit
 - (void)requestContentEditing:(DLPhotoAsset *)asset
@@ -857,49 +775,6 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
     }
 }
 
-- (void)getAlbumsFromDevice_BeforeiOS8
-{
-    NSMutableArray *albumsArray = [[NSMutableArray alloc] init];
-    __weak typeof(self) weakSelf = self;
-    [_assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupAll usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (group) {
-            /**
-             *  allPhotos: Get all photos assets in the assets group.
-             *  allVideos: Get all video assets in the assets group.
-             *  allAssets: Get all assets in the group.
-             */
-            [group setAssetsFilter:[ALAssetsFilter allAssets]];
-            
-            if (!strongSelf.showsEmptyAlbums && group.numberOfAssets <= 0) {
-                ;
-            }else{
-                DLPhotoCollection *collection = [[DLPhotoCollection alloc] initWithAssetCollection:group];
-                NSInteger groupType = [[group valueForProperty:ALAssetsGroupPropertyType] integerValue];
-                if(groupType == ALAssetsGroupSavedPhotos){
-                    [albumsArray insertObject:collection atIndex:0];
-                }
-                else{
-                    [albumsArray addObject:collection];
-                }
-            }
-            
-        } else {
-            if ([albumsArray count] > 0) {
-                strongSelf.photoCollections = [NSMutableArray arrayWithArray:albumsArray];
-                // 把所有的相册储存完毕，可以展示相册列表
-                [strongSelf getAlbumsCompletion:YES];
-            } else {
-                // 没有任何有资源的相册，输出提示
-                [strongSelf showNoAssets];
-            }
-        }
-    } failureBlock:^(NSError *error) {
-        NSLog(@">>>Asset group not found!\n");
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        [strongSelf getAlbumsCompletion:NO];
-    }];
-}
 
 #pragma mark - fetch asset
 - (NSArray *)assetsForPhotoCollection:(DLPhotoCollection *)photoCollection
@@ -974,12 +849,12 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
 }
 
 #pragma mark - register change observer
-- (void)registerChangeObserver:(id<PHPhotoLibraryChangeObserver,ALAssetsLibraryChangeObserver>)observer
+- (void)registerChangeObserver:(id<PHPhotoLibraryChangeObserver>)observer
 {
     [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:observer];
 }
 
-- (void)unregisterChangeObserver:(id<PHPhotoLibraryChangeObserver,ALAssetsLibraryChangeObserver>)observer
+- (void)unregisterChangeObserver:(id<PHPhotoLibraryChangeObserver>)observer
 {
     [[PHPhotoLibrary sharedPhotoLibrary] unregisterChangeObserver:observer];
 }

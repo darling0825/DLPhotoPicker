@@ -9,9 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <Photos/Photos.h>
-#import <AssetsLibrary/AssetsLibrary.h>
-#import "DLPhotoCollection.h"
 #import "DLPhotoAsset.h"
+#import "DLPhotoCollection.h"
 
 
 typedef NS_ENUM(NSInteger, DLAuthorizationStatus) {
@@ -22,26 +21,13 @@ typedef NS_ENUM(NSInteger, DLAuthorizationStatus) {
 };
 
 
-
-@protocol ALAssetsLibraryChangeObserver <NSObject>
-@optional
--(void)assetsLibraryChanged:(NSNotification *)notification;
-
-@end
-
-
-
 @interface DLPhotoManager : NSObject
-
 
 @property (nonatomic, strong) NSArray *photoCollections;
 @property (nonatomic, strong) NSArray *fetchResults;
 
 
-
-
 + (instancetype)sharedInstance;
-
 
 
 /**
@@ -215,8 +201,8 @@ typedef NS_ENUM(NSInteger, DLAuthorizationStatus) {
  *
  *  @param observer observer
  */
-- (void)registerChangeObserver:(id<PHPhotoLibraryChangeObserver,ALAssetsLibraryChangeObserver>)observer;
-- (void)unregisterChangeObserver:(id<PHPhotoLibraryChangeObserver,ALAssetsLibraryChangeObserver>)observer;
+- (void)registerChangeObserver:(id<PHPhotoLibraryChangeObserver>)observer;
+- (void)unregisterChangeObserver:(id<PHPhotoLibraryChangeObserver>)observer;
 
 /**
  *  PHImageManager start or stop caching image

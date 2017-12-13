@@ -30,7 +30,6 @@
 - (void)reloadData;
 
 /**
- *  iOS 7 or below
  *  Call this method after receive notification of ALAssetsLibraryChangedNotification
  */
 - (void)resetAssetsAndReload;

@@ -41,7 +41,7 @@
 
 
 @interface DLPhotoPageViewController ()
-<UIPageViewControllerDataSource, UIPageViewControllerDelegate, PHPhotoLibraryChangeObserver, ALAssetsLibraryChangeObserver, TOCropViewControllerDelegate>
+<UIPageViewControllerDataSource, UIPageViewControllerDelegate, PHPhotoLibraryChangeObserver, TOCropViewControllerDelegate>
 
 @property (nonatomic, assign, getter = isStatusBarHidden) BOOL statusBarHidden;
 
@@ -187,11 +187,6 @@
         //  update toolbar
         [self updateToolbar];
     });
-}
-
-- (void)assetsLibraryChanged:(NSNotification *)notification
-{
-    // do nothing
 }
 
 #pragma mark - Update title

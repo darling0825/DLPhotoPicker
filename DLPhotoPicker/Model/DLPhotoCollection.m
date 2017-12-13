@@ -19,9 +19,6 @@
     if (self) {
         if ([assetCollection isKindOfClass:[PHAssetCollection class]]) {
             _assetCollection = assetCollection;
-        }else if ([assetCollection isKindOfClass:[ALAssetsGroup class]]){
-            _assetGroup = assetCollection;
-        }else{
         }
     }
     return self;
