@@ -46,17 +46,20 @@
 
 - (void)drawRect:(CGRect)rect {
     if (self.image) {
-        CGContextRef ctx = UIGraphicsGetCurrentContext();
-        CGContextSaveGState(ctx);
 
-        CGRect rect = self.bounds;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            CGContextRef ctx = UIGraphicsGetCurrentContext();
+            CGContextSaveGState(ctx);
 
-        CGContextTranslateCTM(ctx, rect.origin.x, rect.origin.y);
-        CGContextTranslateCTM(ctx, 0.0, rect.size.height);
-        CGContextScaleCTM(ctx, 1.0, -1.0);
-        CGContextTranslateCTM(ctx, -rect.origin.x, -rect.origin.y);
-        CGContextDrawImage(ctx, rect, self.image.CGImage);
-        CGContextRestoreGState(ctx);
+            CGRect rect = self.bounds;
+
+            CGContextTranslateCTM(ctx, rect.origin.x, rect.origin.y);
+            CGContextTranslateCTM(ctx, 0.0, rect.size.height);
+            CGContextScaleCTM(ctx, 1.0, -1.0);
+            CGContextTranslateCTM(ctx, -rect.origin.x, -rect.origin.y);
+            CGContextDrawImage(ctx, rect, self.image.CGImage);
+            CGContextRestoreGState(ctx);
+        });
     }
 }
 

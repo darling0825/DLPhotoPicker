@@ -125,8 +125,10 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
         if ([[PHAsset new] respondsToSelector:@selector(sourceType)])
         {
             NSMutableArray *subtypes = [NSMutableArray arrayWithArray:_assetCollectionSubtypes];
-            [subtypes insertObject:[NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumSelfPortraits] atIndex:4];
-            [subtypes insertObject:[NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumScreenshots] atIndex:10];
+            if (@available(iOS 9.0, *)) {
+                [subtypes insertObject:[NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumSelfPortraits] atIndex:4];
+                [subtypes insertObject:[NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumScreenshots] atIndex:10];
+            }
             
             _assetCollectionSubtypes = [NSArray arrayWithArray:subtypes];
         }
@@ -150,20 +152,12 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
 - (void)checkAuthorizationStatus:(void(^)(DLAuthorizationStatus status))completion
 {
     self.checkAuthorizationCompletion = completion;
-    if (UsePhotoKit) {
-        [self checkAuthorizationStatus_AfteriOS8];
-    }else{
-        [self checkAuthorizationStatus_BeforeiOS8];
-    }
+    [self checkAuthorizationStatus_AfteriOS8];
 }
 
 - (void)requestAuthorization
 {
-    if (UsePhotoKit) {
-        [self requestAuthorizationStatus_AfteriOS8];
-    }else{
-        [self requestAuthorizationStatus_BeforeiOS8];
-    }
+    [self requestAuthorizationStatus_AfteriOS8];
 }
 
 - (void)checkAuthorizationStatus_AfteriOS8
@@ -284,21 +278,17 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
 - (void)favoriteAsset:(DLPhotoAsset *)photoAsset
            completion:(void(^)(BOOL success, NSError *error))completion
 {
-    if (UsePhotoKit) {
-        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-            PHAssetChangeRequest *request = [PHAssetChangeRequest changeRequestForAsset:photoAsset.phAsset];
-            [request setFavorite:!photoAsset.phAsset.favorite];
-            
-        } completionHandler:^(BOOL success, NSError *error) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (completion) {
-                    completion(success, error);
-                }
-            });
-        }];
-    }else{
-        //  do nothimg
-    }
+    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+        PHAssetChangeRequest *request = [PHAssetChangeRequest changeRequestForAsset:photoAsset.phAsset];
+        [request setFavorite:!photoAsset.phAsset.favorite];
+
+    } completionHandler:^(BOOL success, NSError *error) {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (completion) {
+                completion(success, error);
+            }
+        });
+    }];
 }
 
 #pragma mark - create album
@@ -306,78 +296,50 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
                 resultBlock:(void(^)(DLPhotoCollection *collection))completion
                failureBlock:(void(^)(NSError *error))failure
 {
-    if (UsePhotoKit) {
-        __block NSString *localIdentifier = nil;
-        
-        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-            PHAssetCollectionChangeRequest *assetCollectionChangeRequest = [PHAssetCollectionChangeRequest creationRequestForAssetCollectionWithTitle:albumName];
-            localIdentifier = assetCollectionChangeRequest.placeholderForCreatedAssetCollection.localIdentifier;
-            
-        } completionHandler:^(BOOL success, NSError *error){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (success) {
-                    PHAssetCollection *assetCollection = [[PHAssetCollection fetchAssetCollectionsWithLocalIdentifiers:@[localIdentifier] options:nil] firstObject];
-                    DLPhotoCollection *collection = [[DLPhotoCollection alloc] initWithAssetCollection:assetCollection];
-                    completion(collection);
-                }else{
-                    completion(nil);
-                }
-                
-                if (error && failure) {
-                    failure(error);
-                }
-            });
-        }];
-        
-    }else{
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        [self.assetsLibrary addAssetsGroupAlbumWithName:albumName resultBlock:^(ALAssetsGroup *group) {
-            if (completion) {
-                if (group) {
-                    DLPhotoCollection *collection = [[DLPhotoCollection alloc] initWithAssetCollection:group];
-                    completion(collection);
-                }else{
-                    completion(nil);
-                }
+    __block NSString *localIdentifier = nil;
+
+    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+        PHAssetCollectionChangeRequest *assetCollectionChangeRequest = [PHAssetCollectionChangeRequest creationRequestForAssetCollectionWithTitle:albumName];
+        localIdentifier = assetCollectionChangeRequest.placeholderForCreatedAssetCollection.localIdentifier;
+
+    } completionHandler:^(BOOL success, NSError *error){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (success) {
+                PHAssetCollection *assetCollection = [[PHAssetCollection fetchAssetCollectionsWithLocalIdentifiers:@[localIdentifier] options:nil] firstObject];
+                DLPhotoCollection *collection = [[DLPhotoCollection alloc] initWithAssetCollection:assetCollection];
+                completion(collection);
+            }else{
+                completion(nil);
             }
-        } failureBlock:^(NSError *error) {
+
             if (error && failure) {
                 failure(error);
             }
-        }];
-    }
-#pragma clang diagnostic pop
+        });
+    }];
 }
 
 - (void)removeAlbum:(DLPhotoCollection *)photoCollection
         resultBlock:(void(^)(BOOL success))completion
        failureBlock:(void(^)(NSError *error))failure
 {
-    if (UsePhotoKit) {
-        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-            [PHAssetCollectionChangeRequest deleteAssetCollections:@[photoCollection.assetCollection]];
-        } completionHandler:^(BOOL success, NSError *error){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (completion) {
-                    if (success) {
-                        completion(YES);
-                    }else{
-                        completion(NO);
-                    }
+    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+        [PHAssetCollectionChangeRequest deleteAssetCollections:@[photoCollection.assetCollection]];
+    } completionHandler:^(BOOL success, NSError *error){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (completion) {
+                if (success) {
+                    completion(YES);
+                }else{
+                    completion(NO);
                 }
-                
-                if (error && failure) {
-                    failure(error);
-                }
-            });
-        }];
-    }else{
-        /**
-         *  http://stackoverflow.com/questions/11054860/alassetslibrary-delete-alassetsgroup-alasset/11058934#11058934
-         *  This is not possible using any documented API. Only the photos app can delete Albums.
-         */
-    }
+            }
+
+            if (error && failure) {
+                failure(error);
+            }
+        });
+    }];
 }
 
 #pragma mark - save/remove image
@@ -397,58 +359,46 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
        completion:(void(^)(BOOL success))completion
           failure:(void(^)(NSError *error))failure
 {
-    if (UsePhotoKit) {
-        //  find album
-        BOOL albumWasFound = NO;
-        PHAssetCollection *savedAssetCollection = nil;
-        for (PHFetchResult *fetchResult in self.fetchResults){
-            if (albumWasFound) {
+    //  find album
+    BOOL albumWasFound = NO;
+    PHAssetCollection *savedAssetCollection = nil;
+    for (PHFetchResult *fetchResult in self.fetchResults){
+        if (albumWasFound) {
+            break;
+        }
+
+        for (PHAssetCollection *assetCollection in fetchResult){
+            // Compare the names of the albums
+            if ([albumName isEqualToString:assetCollection.localizedTitle]) {
+
+                // Target album is found
+                albumWasFound = YES;
+                savedAssetCollection = assetCollection;
                 break;
             }
-            
-            for (PHAssetCollection *assetCollection in fetchResult){
-                // Compare the names of the albums
-                if ([albumName isEqualToString:assetCollection.localizedTitle]) {
-                    
-                    // Target album is found
-                    albumWasFound = YES;
-                    savedAssetCollection = assetCollection;
-                    break;
-                }
-            }
         }
-        
-        //  a block to add assets to a album
-        AddImageToCollectionBlock addAssetsBlock = [self _addImageBlockWithCompletion:completion failure:failure];
-        
-        if (!albumName.length) {
-            //  add asset to default collection
-            addAssetsBlock(image, nil);
-        }else if (albumWasFound) {
-            //  add asset
-            addAssetsBlock(image, savedAssetCollection);
-        }else{
-            //  create a new album
-            [self createAlbumWithName:albumName resultBlock:^(DLPhotoCollection *collection) {
-                if (collection) {
-                    //  add asset to new collection
-                    addAssetsBlock(image, collection.assetCollection);
-                }else{
-                    //  add asset to default collection
-                    addAssetsBlock(image, nil);
-                }
-            } failureBlock:failure];
-        }
-        
+    }
+
+    //  a block to add assets to a album
+    AddImageToCollectionBlock addAssetsBlock = [self _addImageBlockWithCompletion:completion failure:failure];
+
+    if (!albumName.length) {
+        //  add asset to default collection
+        addAssetsBlock(image, nil);
+    }else if (albumWasFound) {
+        //  add asset
+        addAssetsBlock(image, savedAssetCollection);
     }else{
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        [self.assetsLibrary writeImageToSavedPhotosAlbum:image.CGImage
-                                             orientation:(ALAssetOrientation)image.imageOrientation
-                                         completionBlock:[self _resultBlockOfAddingToAlbum:albumName
-                                                                                completion:completion
-                                                                                   failure:failure]];
-#pragma clang diagnostic pop
+        //  create a new album
+        [self createAlbumWithName:albumName resultBlock:^(DLPhotoCollection *collection) {
+            if (collection) {
+                //  add asset to new collection
+                addAssetsBlock(image, collection.assetCollection);
+            }else{
+                //  add asset to default collection
+                addAssetsBlock(image, nil);
+            }
+        } failureBlock:failure];
     }
 }
 
@@ -457,57 +407,46 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
            completion:(void(^)(BOOL success))completion
               failure:(void(^)(NSError *error))failure
 {
-    if (UsePhotoKit) {
-        
-        //  find album
-        BOOL albumWasFound = NO;
-        PHAssetCollection *savedAssetCollection = nil;
-        for (PHFetchResult *fetchResult in self.fetchResults){
-            if (albumWasFound) {
+    //  find album
+    BOOL albumWasFound = NO;
+    PHAssetCollection *savedAssetCollection = nil;
+    for (PHFetchResult *fetchResult in self.fetchResults){
+        if (albumWasFound) {
+            break;
+        }
+
+        for (PHAssetCollection *assetCollection in fetchResult){
+            // Compare the names of the albums
+            if ([albumName isEqualToString:assetCollection.localizedTitle]) {
+
+                // Target album is found
+                albumWasFound = YES;
+                savedAssetCollection = assetCollection;
                 break;
             }
-            
-            for (PHAssetCollection *assetCollection in fetchResult){
-                // Compare the names of the albums
-                if ([albumName isEqualToString:assetCollection.localizedTitle]) {
-                    
-                    // Target album is found
-                    albumWasFound = YES;
-                    savedAssetCollection = assetCollection;
-                    break;
-                }
+        }
+    }
+
+    //  a block to add assets to a album
+    AddImageDataToCollectionBlock addAssetsBlock = [self _addImageDataBlockWithCompletion:completion failure:failure];
+
+    if (!albumName.length) {
+        //  add asset to default collection
+        addAssetsBlock(data, nil);
+    }else if (albumWasFound) {
+        //  add asset
+        addAssetsBlock(data, savedAssetCollection);
+    }else{
+        //  create a new album
+        [self createAlbumWithName:albumName resultBlock:^(DLPhotoCollection *collection) {
+            if (collection) {
+                //  add asset to new collection
+                addAssetsBlock(data, collection.assetCollection);
+            }else{
+                //  add asset to default collection
+                addAssetsBlock(data, nil);
             }
-        }
-        
-        //  a block to add assets to a album
-        AddImageDataToCollectionBlock addAssetsBlock = [self _addImageDataBlockWithCompletion:completion failure:failure];
-        
-        if (!albumName.length) {
-            //  add asset to default collection
-            addAssetsBlock(data, nil);
-        }else if (albumWasFound) {
-            //  add asset
-            addAssetsBlock(data, savedAssetCollection);
-        }else{
-            //  create a new album
-            [self createAlbumWithName:albumName resultBlock:^(DLPhotoCollection *collection) {
-                if (collection) {
-                    //  add asset to new collection
-                    addAssetsBlock(data, collection.assetCollection);
-                }else{
-                    //  add asset to default collection
-                    addAssetsBlock(data, nil);
-                }
-            } failureBlock:failure];
-        }
-    }else {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        [self.assetsLibrary writeImageDataToSavedPhotosAlbum:data metadata:nil
-                                             completionBlock:[self _resultBlockOfAddingToAlbum:albumName
-                                                                                    completion:completion
-                                                                                       failure:failure]];
-#pragma clang diagnostic pop
+        } failureBlock:failure];
     }
 }
 
@@ -516,52 +455,42 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
        completion:(void(^)(BOOL success))completion
           failure:(void(^)(NSError *error))failure
 {
-    if (UsePhotoKit) {
-        //  find album
-        PHAssetCollection *savedAssetCollection = nil;
-        for (PHFetchResult *fetchResult in self.fetchResults){
-            if (savedAssetCollection) {
+    //  find album
+    PHAssetCollection *savedAssetCollection = nil;
+    for (PHFetchResult *fetchResult in self.fetchResults){
+        if (savedAssetCollection) {
+            break;
+        }
+
+        for (PHAssetCollection *assetCollection in fetchResult){
+            // Compare the names of the albums
+            if ([albumName compare:assetCollection.localizedTitle] == NSOrderedSame) {
+
+                // Target album is found
+                savedAssetCollection = assetCollection;
                 break;
             }
-            
-            for (PHAssetCollection *assetCollection in fetchResult){
-                // Compare the names of the albums
-                if ([albumName compare:assetCollection.localizedTitle] == NSOrderedSame) {
-                    
-                    // Target album is found
-                    savedAssetCollection = assetCollection;
-                    break;
-                }
-            }
         }
-        
-        //  a block to add assets to a album
-        AddVideoToCollectionBlock addVideoBlock = [self _addVideoBlockWithCompletion:completion failure:failure];
+    }
 
-        if (!albumName.length) {
-            //  add asset to default collection
-            addVideoBlock(videoUrl, nil);
-        }
-        else if (savedAssetCollection) {
-            //  add asset
-            addVideoBlock(videoUrl, savedAssetCollection);
-        }else{
-            //  create a new album
-            [self createAlbumWithName:albumName resultBlock:^(DLPhotoCollection *collection) {
-                if (collection) {
-                    //  add asset
-                    addVideoBlock(videoUrl, collection.assetCollection);
-                }
-            } failureBlock:failure];
-        }
+    //  a block to add assets to a album
+    AddVideoToCollectionBlock addVideoBlock = [self _addVideoBlockWithCompletion:completion failure:failure];
+
+    if (!albumName.length) {
+        //  add asset to default collection
+        addVideoBlock(videoUrl, nil);
+    }
+    else if (savedAssetCollection) {
+        //  add asset
+        addVideoBlock(videoUrl, savedAssetCollection);
     }else{
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        [self.assetsLibrary writeVideoAtPathToSavedPhotosAlbum:videoUrl
-                                               completionBlock:[self _resultBlockOfAddingToAlbum:albumName
-                                                                                      completion:completion
-                                                                                         failure:failure]];
-#pragma clang diagnostic pop
+        //  create a new album
+        [self createAlbumWithName:albumName resultBlock:^(DLPhotoCollection *collection) {
+            if (collection) {
+                //  add asset
+                addVideoBlock(videoUrl, collection.assetCollection);
+            }
+        } failureBlock:failure];
     }
 }
 
@@ -569,38 +498,27 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
          completion:(void(^)(BOOL success))completion
             failure:(void(^)(NSError *error))failure
 {
-    if (UsePhotoKit) {
-        [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-            NSMutableArray *deleteAssets = [NSMutableArray arrayWithCapacity:photoAssets.count];
-            for (DLPhotoAsset *asset in photoAssets) {
-                [deleteAssets addObject:asset.phAsset];
+    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
+        NSMutableArray *deleteAssets = [NSMutableArray arrayWithCapacity:photoAssets.count];
+        for (DLPhotoAsset *asset in photoAssets) {
+            [deleteAssets addObject:asset.phAsset];
+        }
+        [PHAssetChangeRequest deleteAssets:deleteAssets];
+    } completionHandler:^(BOOL success, NSError *error){
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if (completion) {
+                if (success) {
+                    completion(YES);
+                }else{
+                    completion(NO);
+                }
             }
-            [PHAssetChangeRequest deleteAssets:deleteAssets];
-        } completionHandler:^(BOOL success, NSError *error){
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (completion) {
-                    if (success) {
-                        completion(YES);
-                    }else{
-                        completion(NO);
-                    }
-                }
-                
-                if (error && failure) {
-                    failure(error);
-                }
-            });
-        }];
-    }else{
-        /**
-         *  can not work
-         */
 
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        [self removeAssetURL:photoAssets resultBlock:completion failureBlock:failure];
-#pragma clang diagnostic pop
-    }
+            if (error && failure) {
+                failure(error);
+            }
+        });
+    }];
 }
 
 - (void)saveImageData:(NSData *)imageData
@@ -609,126 +527,41 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
            completion:(void(^)(BOOL success))completion
               failure:(void(^)(NSError *error))failure
 {
-    if (UsePhotoKit) {
-        //  find album
-        BOOL albumWasFound = NO;
-        PHAssetCollection *savedAssetCollection = nil;
-        for (PHFetchResult *fetchResult in self.fetchResults){
-            if (albumWasFound) {
-                break;
-            }
-            
-            for (PHAssetCollection *assetCollection in fetchResult){
-                // Compare the names of the albums
-                if ([albumName compare:assetCollection.localizedTitle] == NSOrderedSame) {
-                    
-                    // Target album is found
-                    albumWasFound = YES;
-                    savedAssetCollection = assetCollection;
-                    break;
-                }
-            }
-        }
-        
-        //  a block to add assets to a album
-        AddImageToCollectionBlock addAssetsBlock = [self _addImageBlockWithCompletion:completion failure:failure];
-        
-        UIImage *image = [UIImage imageWithData:imageData];
+    //  find album
+    BOOL albumWasFound = NO;
+    PHAssetCollection *savedAssetCollection = nil;
+    for (PHFetchResult *fetchResult in self.fetchResults){
         if (albumWasFound) {
-            //  add asset
-            addAssetsBlock(image, savedAssetCollection);
-        }else{
-            //  create a new album
-            [self createAlbumWithName:albumName resultBlock:^(DLPhotoCollection *collection) {
-                if (collection) {
-                    //  add asset
-                    addAssetsBlock(image, collection.assetCollection);
-                }
-            } failureBlock:failure];
+            break;
         }
-    }else{
-        [self.assetsLibrary writeImageDataToSavedPhotosAlbum:imageData
-                                                    metadata:metadata
-                                             completionBlock:[self _resultBlockOfAddingToAlbum:albumName
-                                                                                    completion:completion
-                                                                                       failure:failure]];
-    }
-}
 
-- (void)addAssetURL:(NSURL *)assetUrl
-            toAlbum:(NSString *)albumName
-        resultBlock:(void(^)(BOOL success))completion
-       failureBlock:(void(^)(NSError *error))failure
-{
-    if (UsePhotoKit) {
-        //  do nothing
-    }else{
-        
-        typeof(self) __weak weakSelf = self;
-        __block BOOL albumWasFound = NO;
-        
-        //search all photo albums in the library
-        [self.assetsLibrary enumerateGroupsWithTypes:ALAssetsGroupAlbum usingBlock:^(ALAssetsGroup *group, BOOL *stop) {
+        for (PHAssetCollection *assetCollection in fetchResult){
             // Compare the names of the albums
-            if ([albumName compare: [group valueForProperty:ALAssetsGroupPropertyName]] == NSOrderedSame) {
-                
+            if ([albumName compare:assetCollection.localizedTitle] == NSOrderedSame) {
+
                 // Target album is found
                 albumWasFound = YES;
-                
-                ALAssetsLibraryAssetForURLResultBlock assetForURLResultBlock =
-                [weakSelf _addAssetUrlBlockWithGroup:group
-                                            assetURL:assetUrl
-                                          completion:completion
-                                             failure:failure];
-                
-                //get a hold of the photo's asset instance
-                [self.assetsLibrary assetForURL:assetUrl
-                                    resultBlock:assetForURLResultBlock
-                                   failureBlock:failure];
-                
-                
-                // Album was found, bail out of the method
-                *stop = YES;
+                savedAssetCollection = assetCollection;
+                break;
             }
-            
-            //如果不存在该相册创建
-            if (group == nil && albumWasFound == NO){
-                typeof(self) __strong strongSelf = weakSelf;
-                
-                // code that always creates an album on iOS 7.x.x but fails
-                // in certain situations such as if album has been deleted
-                // previously on iOS 8.x.
-                [strongSelf.assetsLibrary addAssetsGroupAlbumWithName:albumName resultBlock:^(ALAssetsGroup *group){
-                     
-                    ALAssetsLibraryAssetForURLResultBlock assetForURLResultBlock =
-                    [weakSelf _addAssetUrlBlockWithGroup:group assetURL:assetUrl completion:completion failure:failure];
-                    
-                    //get a hold of the photo's asset instance
-                    [self.assetsLibrary assetForURL:assetUrl
-                                        resultBlock:assetForURLResultBlock
-                                       failureBlock:failure];
-                     
-                 } failureBlock:failure];
+        }
+    }
+
+    //  a block to add assets to a album
+    AddImageToCollectionBlock addAssetsBlock = [self _addImageBlockWithCompletion:completion failure:failure];
+
+    UIImage *image = [UIImage imageWithData:imageData];
+    if (albumWasFound) {
+        //  add asset
+        addAssetsBlock(image, savedAssetCollection);
+    }else{
+        //  create a new album
+        [self createAlbumWithName:albumName resultBlock:^(DLPhotoCollection *collection) {
+            if (collection) {
+                //  add asset
+                addAssetsBlock(image, collection.assetCollection);
             }
         } failureBlock:failure];
-    }
-}
-
-//  can not work
-- (void)removeAssetURL:(NSArray<DLPhotoAsset *> *)photoAssets
-        resultBlock:(void(^)(BOOL success))completion
-       failureBlock:(void(^)(NSError *error))failure
-{
-    if (UsePhotoKit) {
-        //  do nothing
-    }else{
-        for (DLPhotoAsset *asset in photoAssets) {
-            ALAssetsLibraryAssetForURLResultBlock assetForURLResultBlock =
-            [self _removeAssetUrlBlockWithAssetURL:asset.url completion:completion failure:failure];
-            [self.assetsLibrary assetForURL:asset.url
-                                resultBlock:assetForURLResultBlock
-                               failureBlock:failure];
-        }
     }
 }
 
@@ -911,46 +744,20 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
     };
 }
 
-- (ALAssetsLibraryWriteImageCompletionBlock)_resultBlockOfAddingToAlbum:(NSString *)albumName
-                                                             completion:(void(^)(BOOL success))completion
-                                                                failure:(void(^)(NSError *error))failure
-{
-    return ^(NSURL *assetURL, NSError *error) {
-        // Run the completion block for writing image to saved
-        //   photos album
-        //if (completion) completion(assetURL, error);
-        
-        // If an error occured, do not try to add the asset to
-        //   the custom photo album
-        if (error != nil) {
-            if (failure) failure(error);
-            return;
-        }
-        
-        if (albumName == nil) {
-            if (completion) completion(YES);
-            return;
-        }
-        
-        // Add the asset to the custom photo album
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        [self addAssetURL:assetURL toAlbum:albumName resultBlock:completion failureBlock:failure];
-#pragma clang diagnostic pop
-    };
-}
 
 #pragma mark - Photo Edit
 - (void)requestContentEditing:(DLPhotoAsset *)asset
                    completion:(void (^)(UIImage *image, PHContentEditingInput *contentEditingInput, NSDictionary *info))completion
 {
-#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_1
-    if ([asset.phAsset canPerformEditOperation:PHAssetEditOperationContent] &&
-        !(asset.phAsset.mediaSubtypes & PHAssetMediaSubtypePhotoLive))
-#else
-        if ([asset.phAsset canPerformEditOperation:PHAssetEditOperationContent])
-#endif
-    {
+    BOOL canEdit = NO;
+    if (@available(iOS 9.1, *)) {
+        canEdit = [asset.phAsset canPerformEditOperation:PHAssetEditOperationContent] &&
+        !(asset.phAsset.mediaSubtypes & PHAssetMediaSubtypePhotoLive);
+    }else {
+        canEdit = [asset.phAsset canPerformEditOperation:PHAssetEditOperationContent];
+    }
+
+    if (canEdit){
         PHContentEditingInputRequestOptions *options = [[PHContentEditingInputRequestOptions alloc] init];
         [options setNetworkAccessAllowed:YES];
         [options setCanHandleAdjustmentData:^BOOL(PHAdjustmentData *adjustmentData) {
@@ -1015,12 +822,7 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
 - (void)fetchPhotoCollection:(void(^)(BOOL success))completion
 {
     self.fetchCollectionCompletion = completion;
-    if (UsePhotoKit) {
-        [self getAlbumsFromDevice];
-    }
-    else{
-        [self getAlbumsFromDevice_BeforeiOS8];
-    }
+    [self getAlbumsFromDevice];
 }
 
 - (void)getAlbumsFromDevice
@@ -1104,61 +906,22 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
 {
     NSMutableArray *photoAssets = [[NSMutableArray alloc] initWithCapacity:photoCollection.count];
     
-    if (UsePhotoKit) {
-        PHFetchResult *fetchResult = [PHAsset fetchAssetsInAssetCollection:photoCollection.assetCollection
-                                                                   options:self.assetsFetchOptions];
-        
-        for (PHAsset *asset in fetchResult) {
-            DLPhotoAsset *phAsset = [[DLPhotoAsset alloc] initWithAsset:asset];
-            [photoAssets addObject:phAsset];
-        }
-        
-        photoCollection.fetchResult = fetchResult;
+    PHFetchResult *fetchResult = [PHAsset fetchAssetsInAssetCollection:photoCollection.assetCollection
+                                                               options:self.assetsFetchOptions];
+
+    for (PHAsset *asset in fetchResult) {
+        DLPhotoAsset *phAsset = [[DLPhotoAsset alloc] initWithAsset:asset];
+        [photoAssets addObject:phAsset];
     }
-    else{
-        /*
-         __block NSUInteger photoCount = 0;
-         __block NSUInteger videoCount = 0;
-         */
-        
-        ALAssetsGroup *assetGroup = photoCollection.assetGroup;
-        if (assetGroup) {
-            [assetGroup enumerateAssetsWithOptions:NSEnumerationConcurrent usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
-                if (result) {
-                    /*
-                     NSString *type = [result valueForProperty:ALAssetPropertyType];
-                     if ([type isEqualToString:ALAssetTypePhoto]){
-                     photoCount++;
-                     }else if ([type isEqualToString:ALAssetTypeVideo] ){
-                     videoCount++;
-                     }
-                     */
-                    DLPhotoAsset *asset = [[DLPhotoAsset alloc] initWithAsset:result];
-                    // Add @synchronized to fix a crash bug
-                    @synchronized(photoAssets) {
-                        [photoAssets addObject:asset];
-                    }
-                } else {
-                    // finished
-                    
-                    [photoAssets sortUsingComparator:^NSComparisonResult(DLPhotoAsset *obj1, DLPhotoAsset *obj2) {
-                        return [obj1.createDate compare:obj2.createDate];
-                    }];
-                }
-            }];
-        }
-    }
+
+    photoCollection.fetchResult = fetchResult;
+
     return photoAssets;
 }
 
 - (NSUInteger)assetCountOfPhotoCollection:(DLPhotoCollection *)photoCollection
 {
-    if (UsePhotoKit) {
-        return [[PHAsset fetchAssetsInAssetCollection:photoCollection.assetCollection options:self.assetsFetchOptions] count];
-    }else{
-        [photoCollection.assetGroup setAssetsFilter:[ALAssetsFilter allAssets]];
-        return photoCollection.assetGroup.numberOfAssets;
-    }
+    return [[PHAsset fetchAssetsInAssetCollection:photoCollection.assetCollection options:self.assetsFetchOptions] count];
 }
 
 #pragma mark - poster images
@@ -1166,142 +929,82 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
                               thumbnailSize:(CGSize)thumbnailSize
                                       count:(NSUInteger)count
 {
-    if (UsePhotoKit) {
-        PHFetchOptions *options = [PHFetchOptions new];
-        options.predicate       = self.assetsFetchOptions.predicate; // aligned specified predicate
-        options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
-        
-        PHFetchResult *result   = [PHAsset fetchKeyAssetsInAssetCollection:photoCollection.assetCollection options:options];
-        
-        NSUInteger location     = 0;
-        NSUInteger length       = (result.count < count) ? result.count : count;
-        NSArray *assets         = [self __itemsFromFetchResult:result range:NSMakeRange(location, length)];
-        
-        NSMutableArray *images  = [NSMutableArray arrayWithCapacity:length];
-        
-        for (PHAsset *asset in assets) {
-            DLPhotoAsset *photoAsset = [[DLPhotoAsset alloc] initWithAsset:asset];
-            [photoAsset requestThumbnailImageWithSize:thumbnailSize completion:^(UIImage *image, NSDictionary *info) {
-                if (image) {
-                    [images addObject:image];
-                }
-            }];
-        }
-        return images;
-    }
-    else{
-        NSMutableArray *images = [NSMutableArray array];
-        CGImageRef cgPosterImage = photoCollection.assetGroup.posterImage;
-        if (cgPosterImage) {
-            UIImage *posterImage = [[UIImage alloc] initWithCGImage:cgPosterImage];
-            
-            if (posterImage) {
-                [images addObject:posterImage];
+    PHFetchOptions *options = [PHFetchOptions new];
+    options.predicate       = self.assetsFetchOptions.predicate; // aligned specified predicate
+    options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
+
+    PHFetchResult *result   = [PHAsset fetchKeyAssetsInAssetCollection:photoCollection.assetCollection options:options];
+
+    NSUInteger location     = 0;
+    NSUInteger length       = (result.count < count) ? result.count : count;
+    NSArray *assets         = [self __itemsFromFetchResult:result range:NSMakeRange(location, length)];
+
+    NSMutableArray *images  = [NSMutableArray arrayWithCapacity:length];
+
+    for (PHAsset *asset in assets) {
+        DLPhotoAsset *photoAsset = [[DLPhotoAsset alloc] initWithAsset:asset];
+        [photoAsset requestThumbnailImageWithSize:thumbnailSize completion:^(UIImage *image, NSDictionary *info) {
+            if (image) {
+                [images addObject:image];
             }
-        }
-        return images;
+        }];
     }
-    
-    return nil;
+    return images;
 }
 
 - (NSArray *)posterAssetsForPhotoCollection:(DLPhotoCollection *)photoCollection count:(NSUInteger)count
 {
-    if (UsePhotoKit) {
-        PHFetchOptions *options = [PHFetchOptions new];
-        options.predicate       = self.assetsFetchOptions.predicate; // aligned specified predicate
-        options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
-        
-        PHFetchResult *result   = [PHAsset fetchKeyAssetsInAssetCollection:photoCollection.assetCollection options:options];
-        
-        NSUInteger location     = 0;
-        NSUInteger length       = (result.count < count) ? result.count : count;
-        NSArray *assets         = [self __itemsFromFetchResult:result range:NSMakeRange(location, length)];
-        
-        NSMutableArray *photoAssets = [NSMutableArray arrayWithCapacity:length];
-        for (PHAsset *asset in assets) {
-            DLPhotoAsset *phAsset = [[DLPhotoAsset alloc] initWithAsset:asset];
-            [photoAssets addObject:phAsset];
-        }
-        
-        return photoAssets;
+    PHFetchOptions *options = [PHFetchOptions new];
+    options.predicate       = self.assetsFetchOptions.predicate; // aligned specified predicate
+    options.sortDescriptors = @[[NSSortDescriptor sortDescriptorWithKey:@"creationDate" ascending:YES]];
+
+    PHFetchResult *result   = [PHAsset fetchKeyAssetsInAssetCollection:photoCollection.assetCollection options:options];
+
+    NSUInteger location     = 0;
+    NSUInteger length       = (result.count < count) ? result.count : count;
+    NSArray *assets         = [self __itemsFromFetchResult:result range:NSMakeRange(location, length)];
+
+    NSMutableArray *photoAssets = [NSMutableArray arrayWithCapacity:length];
+    for (PHAsset *asset in assets) {
+        DLPhotoAsset *phAsset = [[DLPhotoAsset alloc] initWithAsset:asset];
+        [photoAssets addObject:phAsset];
     }
-    else{
-        __block NSUInteger length = (photoCollection.count < count) ? photoCollection.count : count;
-        NSMutableArray *photoAssets = [NSMutableArray arrayWithCapacity:length];
-        [photoCollection.assetGroup enumerateAssetsWithOptions:NSEnumerationReverse
-                                                    usingBlock:^(ALAsset *result, NSUInteger index, BOOL *stop) {
-                                                        if (result) {
-                                                            length--;
-                                                            DLPhotoAsset *asset = [[DLPhotoAsset alloc] initWithAsset:result];
-                                                            [photoAssets addObject:asset];
-                                                        }
-                                                        
-                                                        if (length == 0) {
-                                                            *stop = YES;
-                                                        }
-                                                    }];
-        return photoAssets;
-    }
-    
-    return nil;
+
+    return photoAssets;
 }
 
 #pragma mark - register change observer
 - (void)registerChangeObserver:(id<PHPhotoLibraryChangeObserver,ALAssetsLibraryChangeObserver>)observer
 {
-    if (UsePhotoKit) {
-        [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:observer];
-    }else{
-        [[NSNotificationCenter defaultCenter] addObserver:observer
-                                                 selector:@selector(assetsLibraryChanged:)
-                                                     name:ALAssetsLibraryChangedNotification
-                                                   object:nil];
-    }
+    [[PHPhotoLibrary sharedPhotoLibrary] registerChangeObserver:observer];
 }
 
 - (void)unregisterChangeObserver:(id<PHPhotoLibraryChangeObserver,ALAssetsLibraryChangeObserver>)observer
 {
-    if (UsePhotoKit) {
-        [[PHPhotoLibrary sharedPhotoLibrary] unregisterChangeObserver:observer];
-    }else{
-        [[NSNotificationCenter defaultCenter] removeObserver:observer name:ALAssetsLibraryChangedNotification object:nil];
-    }
+    [[PHPhotoLibrary sharedPhotoLibrary] unregisterChangeObserver:observer];
 }
 
 
-#pragma mark - caching images (iOS 8 or later)
+#pragma mark - caching images
 - (void)startCachingImagesForAssets:(DLPhotoAsset *)asset targetSize:(CGSize)targetSize
 {
-    if (UsePhotoKit) {
-        [self.phCachingImageManager startCachingImagesForAssets:@[asset.phAsset]
-                                                     targetSize:targetSize
-                                                    contentMode:PHImageContentModeAspectFill
-                                                        options:self.thumbnailRequestOptions];
-    }else{
-        
-    }
+    [self.phCachingImageManager startCachingImagesForAssets:@[asset.phAsset]
+                                                 targetSize:targetSize
+                                                contentMode:PHImageContentModeAspectFill
+                                                    options:self.thumbnailRequestOptions];
 }
 
 - (void)stopCachingImagesForAssets:(DLPhotoAsset *)asset targetSize:(CGSize)targetSize
 {
-    if (UsePhotoKit) {
-        [self.phCachingImageManager stopCachingImagesForAssets:@[asset.phAsset]
-                                                    targetSize:targetSize
-                                                   contentMode:PHImageContentModeAspectFill
-                                                       options:self.thumbnailRequestOptions];
-    }else{
-        
-    }
+    [self.phCachingImageManager stopCachingImagesForAssets:@[asset.phAsset]
+                                                targetSize:targetSize
+                                               contentMode:PHImageContentModeAspectFill
+                                                   options:self.thumbnailRequestOptions];
 }
 
 - (void)stopCachingImagesForAllAssets
 {
-    if (UsePhotoKit) {
-        [self.phCachingImageManager stopCachingImagesForAllAssets];
-    }else{
-        
-    }
+    [self.phCachingImageManager stopCachingImagesForAllAssets];
 }
 
 #pragma mark - Private Method
@@ -1321,7 +1024,9 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0
                 if ([options respondsToSelector:@selector(setFetchLimit:)]){
-                    options.fetchLimit = 1;
+                    if (@available(iOS 9.0, *)) {
+                        options.fetchLimit = 1;
+                    }
                 }
 #endif
                 
@@ -1365,120 +1070,86 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
 
 - (UIImage *)originImage:(DLPhotoAsset *)photoAsset
 {
+    __block UIImage *resultImage;
+
     @autoreleasepool {
-        __block UIImage *resultImage;
-        
-        if (UsePhotoKit) {
-            
-            @autoreleasepool {
-                
-                //  image after edited
-                PHImageRequestOptions *originRequestOptions = [[PHImageRequestOptions alloc] init];
-                originRequestOptions.version = PHImageRequestOptionsVersionCurrent;
-                originRequestOptions.networkAccessAllowed = YES;
-                originRequestOptions.synchronous = YES;
-                
-                //sync requests are automatically processed this way regardless of the specified mode
-                //originRequestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
-                
-                originRequestOptions.progressHandler = ^(double progress, NSError *__nullable error, BOOL *stop, NSDictionary *__nullable info){
-                    dispatch_main_async_safe(^{
-                        
-                    });
-                };
-                
-                /*
-                 Printing description of info:
-                 {
-                 PHImageResultDeliveredImageFormatKey = 9999;
-                 PHImageResultIsDegradedKey = 0;
-                 PHImageResultIsInCloudKey = 0;
-                 PHImageResultIsPlaceholderKey = 0;
-                 PHImageResultWantedImageFormatKey = 9999;
-                 }
-                 */
-                
-                [[[DLPhotoManager sharedInstance] phCachingImageManager] requestImageForAsset:photoAsset.phAsset
-                                                                                   targetSize:PHImageManagerMaximumSize
-                                                                                  contentMode:PHImageContentModeDefault
-                                                                                      options:originRequestOptions
-                                                                                resultHandler:^(UIImage *result, NSDictionary *info) {
-                                                                                    
-                                                                                    @autoreleasepool {
-                                                                                        
-                                                                                        // 排除取消，错误，低清图三种情况，即已经获取到了高清图时，把这张高清图缓存到 _originImage 中
-                                                                                        BOOL downloadFinined = ![[info objectForKey:PHImageCancelledKey] boolValue] &&
-                                                                                        ![info objectForKey:PHImageErrorKey] &&
-                                                                                        ![[info objectForKey:PHImageResultIsDegradedKey] boolValue] && result;
-                                                                                        
-                                                                                        if (downloadFinined) {
-                                                                                            resultImage = result;
-                                                                                        }
-                                                                                    }
-                                                                                }];
-            }
-            
-            /*
-             if ([self.phAsset canPerformEditOperation:PHAssetEditOperationContent] &&
-             !(self.phAsset.mediaSubtypes & PHAssetMediaSubtypePhotoLive))
-             {
-             PHContentEditingInputRequestOptions *options = [[PHContentEditingInputRequestOptions alloc] init];
-             options.networkAccessAllowed = YES;
-             options.canHandleAdjustmentData = ^BOOL(PHAdjustmentData *adjustmentData) { return YES; };
-             
-             //  We synchronously have the asset
-             dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
-             
-             [self.phAsset requestContentEditingInputWithOptions:options
-             completionHandler:^(PHContentEditingInput *contentEditingInput, NSDictionary *info) {
-             
-             
-             //http://www.cnblogs.com/crazypebble/p/5259641.html
-             
-             NSURL *url = [contentEditingInput fullSizeImageURL];
-             NSData *imageData = [NSData dataWithContentsOfURL:url];
-             resultImage = [[UIImage alloc] initWithData:imageData];
-             
-             dispatch_semaphore_signal(semaphore);
-             
-             }];
-             
-             dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
-             }
-             */
-            
-        } else {
-            
-            CGImageRef fullResolutionImageRef = [[photoAsset.alAsset defaultRepresentation] fullResolutionImage];
-            /*
-             *通过 fullResolutionImage 获取到的的高清图实际上并不带上在照片应用中使用“编辑”处理的效果，
-             *需要额外在 AlAssetRepresentation 中获取这些信息
-             */
-            NSString *adjustment = [[[photoAsset.alAsset defaultRepresentation] metadata] objectForKey:@"AdjustmentXMP"];
-            if (adjustment) {
-                // 如果有在照片应用中使用“编辑”效果，则需要获取这些编辑后的滤镜，手工叠加到原图中
-                NSData *xmpData = [adjustment dataUsingEncoding:NSUTF8StringEncoding];
-                CIImage *tempImage = [CIImage imageWithCGImage:fullResolutionImageRef];
-                
-                NSError *error;
-                NSArray *filterArray = [CIFilter filterArrayFromSerializedXMP:xmpData
-                                                             inputImageExtent:tempImage.extent
-                                                                        error:&error];
-                CIContext *context = [CIContext contextWithOptions:nil];
-                if (filterArray && !error) {
-                    for (CIFilter *filter in filterArray) {
-                        [filter setValue:tempImage forKey:kCIInputImageKey];
-                        tempImage = [filter outputImage];
-                    }
-                    fullResolutionImageRef = [context createCGImage:tempImage fromRect:[tempImage extent]];
-                }
-            }
-            // 生成最终返回的 UIImage，同时把图片的 orientation 也补充上去
-            resultImage = [UIImage imageWithCGImage:fullResolutionImageRef scale:[[photoAsset.alAsset defaultRepresentation] scale] orientation:(UIImageOrientation)[[photoAsset.alAsset defaultRepresentation] orientation]];
-        }
-        
-        //return resultImage ? resultImage : [self originImage:photoAsset];
-        return resultImage;
+
+        //  image after edited
+        PHImageRequestOptions *originRequestOptions = [[PHImageRequestOptions alloc] init];
+        originRequestOptions.version = PHImageRequestOptionsVersionCurrent;
+        originRequestOptions.networkAccessAllowed = YES;
+        originRequestOptions.synchronous = YES;
+
+        //sync requests are automatically processed this way regardless of the specified mode
+        //originRequestOptions.deliveryMode = PHImageRequestOptionsDeliveryModeHighQualityFormat;
+
+        originRequestOptions.progressHandler = ^(double progress, NSError *__nullable error, BOOL *stop, NSDictionary *__nullable info){
+            dispatch_main_async_safe(^{
+
+            });
+        };
+
+        /*
+         Printing description of info:
+         {
+         PHImageResultDeliveredImageFormatKey = 9999;
+         PHImageResultIsDegradedKey = 0;
+         PHImageResultIsInCloudKey = 0;
+         PHImageResultIsPlaceholderKey = 0;
+         PHImageResultWantedImageFormatKey = 9999;
+         }
+         */
+
+        [[[DLPhotoManager sharedInstance] phCachingImageManager] requestImageForAsset:photoAsset.phAsset
+                                                                           targetSize:PHImageManagerMaximumSize
+                                                                          contentMode:PHImageContentModeDefault
+                                                                              options:originRequestOptions
+                                                                        resultHandler:^(UIImage *result, NSDictionary *info) {
+
+                                                                            @autoreleasepool {
+
+                                                                                // 排除取消，错误，低清图三种情况，即已经获取到了高清图时，把这张高清图缓存到 _originImage 中
+                                                                                BOOL downloadFinined = ![[info objectForKey:PHImageCancelledKey] boolValue] &&
+                                                                                ![info objectForKey:PHImageErrorKey] &&
+                                                                                ![[info objectForKey:PHImageResultIsDegradedKey] boolValue] && result;
+
+                                                                                if (downloadFinined) {
+                                                                                    resultImage = result;
+                                                                                }
+                                                                            }
+                                                                        }];
     }
+
+    /*
+     if ([self.phAsset canPerformEditOperation:PHAssetEditOperationContent] &&
+     !(self.phAsset.mediaSubtypes & PHAssetMediaSubtypePhotoLive))
+     {
+     PHContentEditingInputRequestOptions *options = [[PHContentEditingInputRequestOptions alloc] init];
+     options.networkAccessAllowed = YES;
+     options.canHandleAdjustmentData = ^BOOL(PHAdjustmentData *adjustmentData) { return YES; };
+
+     //  We synchronously have the asset
+     dispatch_semaphore_t semaphore = dispatch_semaphore_create(0);
+
+     [self.phAsset requestContentEditingInputWithOptions:options
+     completionHandler:^(PHContentEditingInput *contentEditingInput, NSDictionary *info) {
+
+
+     //http://www.cnblogs.com/crazypebble/p/5259641.html
+
+     NSURL *url = [contentEditingInput fullSizeImageURL];
+     NSData *imageData = [NSData dataWithContentsOfURL:url];
+     resultImage = [[UIImage alloc] initWithData:imageData];
+
+     dispatch_semaphore_signal(semaphore);
+
+     }];
+
+     dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);
+     }
+     */
+
+    return resultImage;
 }
+
 @end

@@ -30,40 +30,18 @@
 //  override
 - (BOOL)isEqual:(DLPhotoCollection *)object
 {
-    if (UsePhotoKit) {
-        return [self.assetCollection.localIdentifier isEqual:object.assetCollection.localIdentifier];
-    }else{
-        return [self.url isEqual:object.url];
-    }
+    return [self.assetCollection.localIdentifier isEqual:object.assetCollection.localIdentifier];
 }
 
 - (NSString *)description
 {
-    if (UsePhotoKit) {
-        return [NSString stringWithFormat:@"%@{%@}",self.title,self.assetCollection.localIdentifier];
-    }else{
-        return [NSString stringWithFormat:@"%@{%@}",self.title,self.url];
-    }
+    return [NSString stringWithFormat:@"%@{%@}",self.title,self.assetCollection.localIdentifier];
 }
 
 #pragma mark - Accessers
 - (NSString *)title
 {
-    if (UsePhotoKit) {
-        return self.assetCollection.localizedTitle;
-    }else{
-        return [self.assetGroup valueForProperty:ALAssetsGroupPropertyName];
-    }
-}
-
-- (NSURL *)url
-{
-    if (UsePhotoKit) {
-        // no url
-        return nil;
-    }else{
-        return [self.assetGroup valueForProperty:ALAssetsGroupPropertyURL];
-    }
+    return self.assetCollection.localizedTitle;
 }
 
 - (NSUInteger)count
@@ -73,80 +51,65 @@
 
 - (NSUInteger)countOfAssetsWithVideoType
 {
-    if (UsePhotoKit) {
-        return [self.fetchResult countOfAssetsWithMediaType:PHAssetMediaTypeVideo];
-    }else{
-        [self.assetGroup setAssetsFilter:[ALAssetsFilter allVideos]];
-        return self.assetGroup.numberOfAssets;
-    }
-    return 0;
+    return [self.fetchResult countOfAssetsWithMediaType:PHAssetMediaTypeVideo];
 }
 
 - (NSUInteger)countOfAssetsWithImageType
 {
-    if (UsePhotoKit) {
-        return [self.fetchResult countOfAssetsWithMediaType:PHAssetMediaTypeImage];
-    }else{
-        [self.assetGroup setAssetsFilter:[ALAssetsFilter allPhotos]];
-        return self.assetGroup.numberOfAssets;
-    }
-    return 0;
+    return [self.fetchResult countOfAssetsWithMediaType:PHAssetMediaTypeImage];
 }
 
 - (UIImage *)badgeImage
 {
     NSString *imageName;
-    
-    if (UsePhotoKit) {
-        switch (self.assetCollection.assetCollectionSubtype)
-        {
-            case PHAssetCollectionSubtypeSmartAlbumUserLibrary:
-                imageName = @"BadgeAllPhotos";
-                break;
-                
-            case PHAssetCollectionSubtypeSmartAlbumPanoramas:
-                imageName = @"BadgePanorama";
-                break;
-                
-            case PHAssetCollectionSubtypeSmartAlbumVideos:
-                imageName = @"BadgeVideo";
-                break;
-                
-            case PHAssetCollectionSubtypeSmartAlbumFavorites:
-                imageName = @"BadgeFavorites";
-                break;
-                
-            case PHAssetCollectionSubtypeSmartAlbumTimelapses:
-                imageName = @"BadgeTimelapse";
-                break;
-                
-            case PHAssetCollectionSubtypeSmartAlbumRecentlyAdded:
-                imageName = @"BadgeLastImport";
-                break;
-                
-            case PHAssetCollectionSubtypeSmartAlbumBursts:
-                imageName = @"BadgeBurst";
-                break;
-                
-            case PHAssetCollectionSubtypeSmartAlbumSlomoVideos:
-                imageName = @"BadgeSlomo";
-                break;
+    PHAssetCollectionSubtype type = self.assetCollection.assetCollectionSubtype;
+        switch (type) {
+        case PHAssetCollectionSubtypeSmartAlbumUserLibrary:
+            imageName = @"BadgeAllPhotos";
+            break;
+
+        case PHAssetCollectionSubtypeSmartAlbumPanoramas:
+            imageName = @"BadgePanorama";
+            break;
+
+        case PHAssetCollectionSubtypeSmartAlbumVideos:
+            imageName = @"BadgeVideo";
+            break;
+
+        case PHAssetCollectionSubtypeSmartAlbumFavorites:
+            imageName = @"BadgeFavorites";
+            break;
+
+        case PHAssetCollectionSubtypeSmartAlbumTimelapses:
+            imageName = @"BadgeTimelapse";
+            break;
+
+        case PHAssetCollectionSubtypeSmartAlbumRecentlyAdded:
+            imageName = @"BadgeLastImport";
+            break;
+
+        case PHAssetCollectionSubtypeSmartAlbumBursts:
+            imageName = @"BadgeBurst";
+            break;
+
+        case PHAssetCollectionSubtypeSmartAlbumSlomoVideos:
+            imageName = @"BadgeSlomo";
+            break;
+
+        default:
+            imageName = nil;
+            break;
+    }
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0
-            case PHAssetCollectionSubtypeSmartAlbumScreenshots:
-                imageName = @"BadgeScreenshots";
-                break;
-                
-            case PHAssetCollectionSubtypeSmartAlbumSelfPortraits:
-                imageName = @"BadgeSelfPortraits";
-                break;
-#endif
-                
-            default:
-                imageName = nil;
-                break;
+    if (@available(iOS 9.0, *)) {
+        if (type == PHAssetCollectionSubtypeSmartAlbumScreenshots) {
+            imageName = @"BadgeScreenshots";
+        }else if (type == PHAssetCollectionSubtypeSmartAlbumSelfPortraits) {
+            imageName = @"BadgeSelfPortraits";
         }
     }
+#endif
     
     if (imageName){
         return [[UIImage assetImageNamed:imageName] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
@@ -158,28 +121,22 @@
 
 - (BOOL)isSmartAlbum
 {
-    if (UsePhotoKit) {
-        return self.assetCollection.assetCollectionType == PHAssetCollectionTypeSmartAlbum &&
-        self.assetCollection.assetCollectionSubtype != PHAssetCollectionSubtypeSmartAlbumAllHidden;
-    }
-    return NO;
+    return self.assetCollection.assetCollectionType == PHAssetCollectionTypeSmartAlbum &&
+    self.assetCollection.assetCollectionSubtype != PHAssetCollectionSubtypeSmartAlbumAllHidden;
 }
 
 - (BOOL)deletable
 {
-    if (UsePhotoKit) {
-        /**
-        PHCollectionEditOperationDeleteContent    = 1, // Delete things it contains
-        PHCollectionEditOperationRemoveContent    = 2, // Remove things it contains, they're not deleted from the library
-        PHCollectionEditOperationAddContent       = 3, // Add image
-        PHCollectionEditOperationCreateContent    = 4, // Create new things, or duplicate them from others in the same container
-        PHCollectionEditOperationRearrangeContent = 5, // Change the order of things
-        PHCollectionEditOperationDelete           = 6, // Deleting of the container, not the content
-        PHCollectionEditOperationRename           = 7, // Renaming of the container, not the content
-         */
-        return [self.assetCollection canPerformEditOperation:PHCollectionEditOperationRemoveContent];
-    }
-    return NO;
+    /**
+    PHCollectionEditOperationDeleteContent    = 1, // Delete things it contains
+    PHCollectionEditOperationRemoveContent    = 2, // Remove things it contains, they're not deleted from the library
+    PHCollectionEditOperationAddContent       = 3, // Add image
+    PHCollectionEditOperationCreateContent    = 4, // Create new things, or duplicate them from others in the same container
+    PHCollectionEditOperationRearrangeContent = 5, // Change the order of things
+    PHCollectionEditOperationDelete           = 6, // Deleting of the container, not the content
+    PHCollectionEditOperationRename           = 7, // Renaming of the container, not the content
+     */
+    return [self.assetCollection canPerformEditOperation:PHCollectionEditOperationRemoveContent];
 }
 
 @end

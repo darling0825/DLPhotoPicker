@@ -108,12 +108,10 @@ ALAssetsLibraryChangeObserver, DLPhotoCollectionViewControllerDelegate>
                                                       target:self
                                                       action:@selector(clickAddAlbumAction:)];
         
-        if (UsePhotoKit) {
-            self.navigationItem.rightBarButtonItem =
-            [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
-                                                          target:self
-                                                          action:@selector(clickEditAlbumAction:)];
-        }
+        self.navigationItem.rightBarButtonItem =
+        [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
+                                                      target:self
+                                                      action:@selector(clickEditAlbumAction:)];
     }else{
     }
 }
@@ -222,137 +220,6 @@ ALAssetsLibraryChangeObserver, DLPhotoCollectionViewControllerDelegate>
             (!selectedPhotoCollectionIsExist || strongSelf.selectedPhotoCollection.count == 0)){
             //back to tableview
             [strongSelf.navigationController popViewControllerAnimated:YES];
-        }
-        else{
-        }
-    });
-}
-
-// <= iOS 7
-- (void)assetsLibraryChanged:(NSNotification *)notification
-{
-    //recheck here
-    if(![notification.name isEqualToString:ALAssetsLibraryChangedNotification]){
-        return ;
-    }
-    __weak typeof(self) weakSelf = self;
-    dispatch_async(dispatch_get_main_queue(), ^{
-        __strong typeof(self) strongSelf = weakSelf;
-        
-        NSDictionary *info = [notification userInfo];
-        //NSSet *updatedAssets = [info objectForKey:ALAssetLibraryUpdatedAssetsKey];
-        NSSet *updatedAssetGroup = [info objectForKey:ALAssetLibraryUpdatedAssetGroupsKey];
-        NSSet *deletedAssetGroup = [info objectForKey:ALAssetLibraryDeletedAssetGroupsKey];
-        NSSet *insertedAssetGroup = [info objectForKey:ALAssetLibraryInsertedAssetGroupsKey];
-        
-        /*
-        NSLog(@"---------------------");
-        NSLog(@"      updated assets:%@", updatedAssets);
-        NSLog(@" updated asset group:%@", updatedAssetGroup);
-        NSLog(@" deleted asset group:%@", deletedAssetGroup);
-        NSLog(@"inserted asset group:%@", insertedAssetGroup);
-        NSLog(@"---------------------");
-        */
-        if(info == nil){
-            //All Clear
-            [strongSelf fetchPhotoCollectionAndReload];
-            
-            if (strongSelf.photoCollectionViewController) {
-                //back to tableview
-                [strongSelf.navigationController popViewControllerAnimated:YES];
-            }
-            
-            return;
-        }
-        
-        if(info.count == 0){
-            return;
-        }
-        
-        
-        BOOL currentAssetsGroupIsInDeletedAssetGroup = NO;
-        BOOL currentAssetsGroupIsInUpdatedAssetGroup = NO;
-        NSString *currentAssetGroupId = [self.selectedPhotoCollection.assetGroup valueForProperty:ALAssetsGroupPropertyPersistentID];
-        
-        if (deletedAssetGroup.count > 0){
-            for (NSURL *groupUrl in deletedAssetGroup) {
-                NSDictionary *queryDictionInURL = [strongSelf queryStringToDictionaryOfNSURL:groupUrl];
-                NSString *groupId = queryDictionInURL[@"id"];
-                DLPhotoCollection *collection = [strongSelf assetForAssetGroupId:groupId inGroups:self.photoCollections];
-                if (collection) {
-                    [strongSelf removeObjectFromPhotoCollectionsAtIndex:[strongSelf.photoCollections indexOfObject:collection]];
-                }
-                
-                //
-                if (!currentAssetsGroupIsInDeletedAssetGroup && [groupId isEqualToString:currentAssetGroupId]){
-                    currentAssetsGroupIsInDeletedAssetGroup = YES;
-                }
-            }
-        }
-        if (insertedAssetGroup.count > 0){
-            for (NSURL *groupUrl in insertedAssetGroup) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-                [[[DLPhotoManager sharedInstance] assetsLibrary] groupForURL:groupUrl resultBlock:^(ALAssetsGroup *group) {
-                    if (group) {
-                        DLPhotoCollection *newCollection = [[DLPhotoCollection alloc] initWithAssetCollection:group];
-                        [strongSelf insertObject:newCollection inPhotoCollectionsAtIndex:strongSelf.photoCollections.count-1];
-                    }
-                } failureBlock:^(NSError *error) {
-                    NSLog(@">>> %@",error);
-                }];
-#pragma clang diagnostic pop
-            }
-        }
-        if (updatedAssetGroup.count >0){
-            for (NSURL *groupUrl in updatedAssetGroup) {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-                NSDictionary *queryDictionInURL = [strongSelf queryStringToDictionaryOfNSURL:groupUrl];
-                NSString *groupId = queryDictionInURL[@"id"];
-                
-                [[[DLPhotoManager sharedInstance] assetsLibrary] groupForURL:groupUrl resultBlock:^(ALAssetsGroup *group) {
-                    if (group) {
-                        DLPhotoCollection *newCollection = [[DLPhotoCollection alloc] initWithAssetCollection:group];
-                        NSUInteger index = [strongSelf indexOfAssetGroup:newCollection
-                                                          inGroups:strongSelf.photoCollections];
-                        if (index < self.photoCollections.count) {
-                            [strongSelf replaceObjectInPhotoCollectionsAtIndex:index withObject:newCollection];
-                        }
-                    }else{
-                        /**
-                         *  Assets that are modified use the ALAssetLibraryUpdatedAssetsKey key. 
-                         *  Assets that are inserted or deleted use the ALAssetLibraryUpdatedAssetGroupsKey key for the asset group that contains the asset.
-                         *  Assets and asset groups that have no strong references are omitted from the notification’s user information dictionary.
-                         *
-                         *  https://developer.apple.com/library/ios/documentation/AssetsLibrary/Reference/ALAssetsLibrary_Class/index.html#//apple_ref/doc/constant_group/Notification_Keys
-                         *  http://stackoverflow.com/questions/14191331/ios-6-0-1-alassetslibrarychangednotification-trying-to-understand-whats-being
-                         */
-                        
-                        DLPhotoCollection *collection = [strongSelf assetForAssetGroupId:groupId inGroups:strongSelf.photoCollections];
-                        if (collection) {
-                            [self removeObjectFromPhotoCollectionsAtIndex:[strongSelf.photoCollections indexOfObject:collection]];
-                        }
-                    }
-                } failureBlock:^(NSError *error) {
-                    NSLog(@">>> %@",error);
-                }];
-#pragma clang diagnostic pop
-                
-                //
-                if (!currentAssetsGroupIsInUpdatedAssetGroup && [groupId isEqualToString:currentAssetGroupId]){
-                    currentAssetsGroupIsInUpdatedAssetGroup = YES;
-                }
-            }
-        }
-        
-        if (strongSelf.photoCollectionViewController &&
-            (currentAssetsGroupIsInDeletedAssetGroup || strongSelf.selectedPhotoCollection.count == 0)){
-            //back to tableview
-            [strongSelf.navigationController popViewControllerAnimated:YES];
-        }
-        else if(currentAssetsGroupIsInUpdatedAssetGroup){
-            [strongSelf.photoCollectionViewController resetAssetsAndReload];
         }
         else{
         }

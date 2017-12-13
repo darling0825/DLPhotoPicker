@@ -93,14 +93,6 @@ typedef NS_ENUM(NSInteger, DLAuthorizationStatus) {
  */
 - (PHCachingImageManager *)phCachingImageManager NS_AVAILABLE_IOS(8.0);
 
-/**
- *  PHCachingImageManager
- *  only iOS 8 or below
- */
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-- (ALAssetsLibrary *)assetsLibrary NS_DEPRECATED_IOS(4_0, 7_0, "Use Photos framework instead");
-#pragma clang diagnostic pop
 
 /**
  *  checkAuthorizationStatus
@@ -124,7 +116,7 @@ typedef NS_ENUM(NSInteger, DLAuthorizationStatus) {
 //  remove album
 - (void)removeAlbum:(DLPhotoCollection *)photoCollection
         resultBlock:(void(^)(BOOL success))completion
-        failureBlock:(void(^)(NSError *error))failure NS_AVAILABLE_IOS(8.0);
+        failureBlock:(void(^)(NSError *error))failure;
 
 /**
  *  save image
@@ -145,32 +137,16 @@ typedef NS_ENUM(NSInteger, DLAuthorizationStatus) {
        completion:(void(^)(BOOL success))completion
           failure:(void(^)(NSError *error))failure;
 
-//  iOS 8 or later
+
 - (void)removeAsset:(NSArray<DLPhotoAsset *> *)photoAssets
          completion:(void(^)(BOOL success))completion
-            failure:(void(^)(NSError *error))failure NS_AVAILABLE_IOS(8.0);
+            failure:(void(^)(NSError *error))failure;
 
-//  iOS 7 or below
 - (void)saveImageData:(NSData *)imageData
               toAlbum:(NSString *)albumName
              metadata:(NSDictionary *)metadata
            completion:(void(^)(BOOL success))completion
-              failure:(void(^)(NSError *error))failure NS_DEPRECATED_IOS(4_0, 7_0, "Use saveImage:toAlbum:completion:failure: instead");
-//  iOS 7 or below
-- (void)addAssetURL:(NSURL *)assetUrl
-            toAlbum:(NSString *)albumName
-        resultBlock:(void(^)(BOOL success))completion
-       failureBlock:(void(^)(NSError *error))failure NS_DEPRECATED_IOS(4_0, 7_0, "Use saveImage:toAlbum:completion:failure: instead");
-
-
-/**
- *  can not work
- *  iOS 7 or below
- */
-- (void)removeAssetURL:(NSArray<DLPhotoAsset *> *)photoAssets
-           resultBlock:(void(^)(BOOL success))completion
-          failureBlock:(void(^)(NSError *error))failure NS_DEPRECATED_IOS(4_0, 7_0, "Use saveImage:toAlbum:completion:failure: instead");
-
+              failure:(void(^)(NSError *error))failure;
 
 /**
  *  Photo edit
@@ -184,7 +160,7 @@ typedef NS_ENUM(NSInteger, DLAuthorizationStatus) {
 - (void)saveContentEditing:(DLPhotoAsset *)asset
                      image:(UIImage *)image
        contentEditingInput:(PHContentEditingInput *)contentEditingInput
-     adjustmentDescription:(NSData *)adjustmentDescription NS_AVAILABLE_IOS(8.0);
+     adjustmentDescription:(NSData *)adjustmentDescription;
 
 
 
@@ -249,9 +225,9 @@ typedef NS_ENUM(NSInteger, DLAuthorizationStatus) {
  *  @param asset      DLPhotoAsset
  *  @param targetSize CGSize
  */
-- (void)startCachingImagesForAssets:(DLPhotoAsset *)asset targetSize:(CGSize)targetSize NS_AVAILABLE_IOS(8.0);
-- (void)stopCachingImagesForAssets:(DLPhotoAsset *)asset targetSize:(CGSize)targetSize NS_AVAILABLE_IOS(8.0);
-- (void)stopCachingImagesForAllAssets NS_AVAILABLE_IOS(8.0);
+- (void)startCachingImagesForAssets:(DLPhotoAsset *)asset targetSize:(CGSize)targetSize;
+- (void)stopCachingImagesForAssets:(DLPhotoAsset *)asset targetSize:(CGSize)targetSize;
+- (void)stopCachingImagesForAllAssets;
 
 // for test
 - (UIImage *)originImage:(DLPhotoAsset *)photoAsset;

@@ -577,7 +577,11 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
 {
     UITraitCollection *trait = self.traitCollection;
     CGSize contentSize = self.view.bounds.size;
-    UICollectionViewLayout *layout = [[DLPhotoCollectionViewLayout alloc] initWithContentSize:contentSize safeAreaInsets:self.view.safeAreaInsets traitCollection:trait];
+    UIEdgeInsets safeAreaInsets = UIEdgeInsetsZero;
+    if (@available(iOS 11.0, *)) {
+        safeAreaInsets = self.view.safeAreaInsets;
+    }
+    UICollectionViewLayout *layout = [[DLPhotoCollectionViewLayout alloc] initWithContentSize:contentSize safeAreaInsets:safeAreaInsets traitCollection:trait];
 
     if ([self.picker.delegate respondsToSelector:@selector(pickerController:collectionViewLayoutForContentSize:traitCollection:)]) {
         layout = [self.picker.delegate pickerController:self.picker collectionViewLayoutForContentSize:contentSize traitCollection:trait];
@@ -658,9 +662,6 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     UIBarButtonItem *deleteButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemTrash target:self action:@selector(photoDeleteAction:)];
     
     NSArray *toolItems = @[shareButton, self.toolbarSpace, toCopyButton, self.toolbarSpace, deleteButton];
-    if (!(UsePhotoKit)) {
-        toolItems = @[shareButton, self.toolbarSpace, toCopyButton];
-    }
     
     for (UITabBarItem *item in toolItems) {
         item.enabled = NO;

@@ -370,33 +370,24 @@
 
 - (void)photoEditAction:(UIBarButtonItem *)sender
 {
-    if (UsePhotoKit) {
-        
-        [[DLPhotoManager sharedInstance] requestContentEditing:self.asset completion:^(UIImage *image, PHContentEditingInput *contentEditingInput, NSDictionary *info) {
-            
-            if (image) {
-                self.contentEditingInput = contentEditingInput;
-                
-                TOCropViewController *cropController = [[TOCropViewController alloc] initWithImage:image];
-                cropController.delegate = self;
-                
-                // Uncomment this to test out locked aspect ratio sizes
-                // cropController.defaultAspectRatio = TOCropViewControllerAspectRatioSquare;
-                // cropController.aspectRatioLocked = YES;
-                
-                // Uncomment this to place the toolbar at the top of the view controller
-                // cropController.toolbarPosition = TOCropViewControllerToolbarPositionTop;
-                
-                [self.navigationController presentViewController:cropController animated:YES completion:nil];
-            }
-        }];
-        
-    }else{
-        UIImage *image = [self.asset originImage];
-        TOCropViewController *cropController = [[TOCropViewController alloc] initWithImage:image];
-        cropController.delegate = self;
-        [self.navigationController presentViewController:cropController animated:YES completion:nil];
-    }
+    [[DLPhotoManager sharedInstance] requestContentEditing:self.asset completion:^(UIImage *image, PHContentEditingInput *contentEditingInput, NSDictionary *info) {
+
+        if (image) {
+            self.contentEditingInput = contentEditingInput;
+
+            TOCropViewController *cropController = [[TOCropViewController alloc] initWithImage:image];
+            cropController.delegate = self;
+
+            // Uncomment this to test out locked aspect ratio sizes
+            // cropController.defaultAspectRatio = TOCropViewControllerAspectRatioSquare;
+            // cropController.aspectRatioLocked = YES;
+
+            // Uncomment this to place the toolbar at the top of the view controller
+            // cropController.toolbarPosition = TOCropViewControllerToolbarPositionTop;
+
+            [self.navigationController presentViewController:cropController animated:YES completion:nil];
+        }
+    }];
 }
 
 - (void)photoFavoriteAction:(UIBarButtonItem *)sender
@@ -490,31 +481,13 @@
     //  dismiss crop View
     [cropViewController dismissAnimatedFromParentViewController:self withCroppedImage:image toView:nil toFrame:viewFrame setup:nil completion:^{
 
-        if (UsePhotoKit) {
-            // Create a PHAdjustmentData object that describes the filter that was applied.
-            NSData *data =
-            [[NSString stringWithFormat:@"%@-%ld",NSStringFromCGRect(cropRect),(long)angle] dataUsingEncoding:NSUTF8StringEncoding];
-            
-            [[DLPhotoManager sharedInstance] saveContentEditing:self.asset
-                                                          image:image
-                                            contentEditingInput:self.contentEditingInput
-                                          adjustmentDescription:data];
-        }else{
-            
-            //  Saved to default album
-            [[DLPhotoManager sharedInstance] saveImage:image toAlbum:nil completion:^(BOOL success) {
+        // Create a PHAdjustmentData object that describes the filter that was applied.
+        NSData *data = [[NSString stringWithFormat:@"%@-%ld",NSStringFromCGRect(cropRect),(long)angle] dataUsingEncoding:NSUTF8StringEncoding];
 
-                [DLProgressHud showSuccessStatus:DLPhotoPickerLocalizedString(@"Saved to default album.",nil)];
-                
-                //  dismiss after 2 second
-                dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC);
-                dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                    [DLProgressHud dismiss];
-                });
-            } failure:^(NSError *error) {
-                
-            }];
-        }
+        [[DLPhotoManager sharedInstance] saveContentEditing:self.asset
+                                                      image:image
+                                        contentEditingInput:self.contentEditingInput
+                                      adjustmentDescription:data];
     }];
 }
 
