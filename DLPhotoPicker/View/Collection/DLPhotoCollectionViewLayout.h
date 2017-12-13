@@ -28,6 +28,6 @@
 
 @interface DLPhotoCollectionViewLayout : UICollectionViewFlowLayout
 
-- (instancetype)initWithContentSize:(CGSize)contentSize traitCollection:(UITraitCollection *)traits;
+- (instancetype)initWithContentSize:(CGSize)contentSize safeAreaInsets:(UIEdgeInsets)safeAreaInsets traitCollection:(UITraitCollection *)traits;
 
 @end
