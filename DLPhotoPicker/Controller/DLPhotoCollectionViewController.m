@@ -73,9 +73,6 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     
     [self updateNavigationTitle];
     
-    [self registerChangeObserver];
-    [self addNotificationObserver];
-    
     [self resetCachedAssetImages];
     
     [self resetAssetsAndReload];
@@ -90,6 +87,9 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
             [self editAction:nil];
         }
     }
+
+    [self registerChangeObserver];
+    [self addNotificationObserver];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -103,6 +103,9 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
 {
     [super viewWillDisappear:animated];
     [self.navigationController setToolbarHidden:YES animated:YES];
+
+    [self unregisterChangeObserver];
+    [self removeNotificationObserver];
 }
 
 - (void)viewWillLayoutSubviews
@@ -133,11 +136,6 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     _popoverController = nil;
 }
 
-- (void)dealloc
-{
-    [self unregisterChangeObserver];
-    [self removeNotificationObserver];
-}
 
 #pragma mark -
 - (void)setupViews

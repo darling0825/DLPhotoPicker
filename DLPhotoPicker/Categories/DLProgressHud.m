@@ -24,6 +24,7 @@
     [SVProgressHUD setForegroundColor:[UIColor grayColor]];
     [SVProgressHUD setBackgroundColor:[UIColor clearColor]];
     [SVProgressHUD setDefaultMaskType:SVProgressHUDMaskTypeNone];
+    [SVProgressHUD setDefaultAnimationType:SVProgressHUDAnimationTypeFlat];
     [SVProgressHUD showSuccessWithStatus:status];
 }
 

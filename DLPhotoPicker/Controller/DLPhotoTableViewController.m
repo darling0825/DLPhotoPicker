@@ -41,9 +41,7 @@ static NSString *cellIdentifier = @"CellIdentifier";
 
     [self setupViews];
     [self setupButtons];
-    
-    [self registerChangeObserver];
-    [self addKeyValueObserver];
+
     [self fetchPhotoCollectionAndReload];
 }
 
@@ -55,6 +53,9 @@ static NSString *cellIdentifier = @"CellIdentifier";
                                                  name:UIApplicationWillEnterForegroundNotification
                                                object:nil];
 
+    [self registerChangeObserver];
+    [self addKeyValueObserver];
+
     [self setupPhotoCollection];
     [self.tableView reloadData];
 }
@@ -63,6 +64,9 @@ static NSString *cellIdentifier = @"CellIdentifier";
     [super viewWillDisappear:animated];
 
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+
+    [self unregisterChangeObserver];
+    [self removeKeyValueObserver];
 }
 
 - (void)applicationWillEnterForeground:(NSNotification *)notification {
@@ -75,12 +79,6 @@ static NSString *cellIdentifier = @"CellIdentifier";
     self.photoCollections = nil;
     self.selectedPhotoCollection = nil;
     self.photoCollectionViewController = nil;
-}
-
-- (void)dealloc
-{
-    [self unregisterChangeObserver];
-    [self removeKeyValueObserver];
 }
 
 #pragma mark -
