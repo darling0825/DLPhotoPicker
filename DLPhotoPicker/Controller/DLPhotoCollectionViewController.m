@@ -74,9 +74,7 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
     [self updateNavigationTitle];
     
     [self resetCachedAssetImages];
-    
-    [self resetAssetsAndReload];
-}
+    }
 
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -90,6 +88,7 @@ NSString * const DLPhotoCollectionViewFooterIdentifier = @"DLPhotoCollectionView
 
     [self registerChangeObserver];
     [self addNotificationObserver];
+    [self resetAssetsAndReload];
 }
 
 -(void)viewDidAppear:(BOOL)animated
