@@ -30,6 +30,8 @@
         layer.levelsOfDetail = 4;
         layer.levelsOfDetailBias = 5;
         layer.tileSize = CGSizeMake(256, 256);
+
+        layer.delegate = self;
     }
     return self;
 }
@@ -44,9 +46,10 @@
     [self setNeedsDisplay];
 }
 
-- (void)drawRect:(CGRect)rect {
+- (void)drawLayer:(CALayer *)layer inContext:(CGContextRef)ctx {
     if (self.image) {
 
+        /*
         __block CGRect rect = CGRectZero;
         if (![NSThread isMainThread]) {
             dispatch_sync(dispatch_get_main_queue(), ^{
@@ -55,9 +58,12 @@
         }else {
             rect = self.bounds;
         }
+         */
+
+        CGRect rect = layer.bounds;
 
         //
-        CGContextRef ctx = UIGraphicsGetCurrentContext();
+        //CGContextRef ctx = UIGraphicsGetCurrentContext();
         CGContextSaveGState(ctx);
         CGContextTranslateCTM(ctx, rect.origin.x, rect.origin.y);
         CGContextTranslateCTM(ctx, 0.0, rect.size.height);

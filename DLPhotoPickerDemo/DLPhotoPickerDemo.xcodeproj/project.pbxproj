@@ -473,7 +473,6 @@
 				595178A91C7C225D00000BDE /* Sources */,
 				595178AA1C7C225D00000BDE /* Frameworks */,
 				595178AB1C7C225D00000BDE /* Resources */,
-				074C344496E109104A86D6DF /* [CP] Embed Pods Frameworks */,
 				7EE85EE0771FD6A2473CF330 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -592,21 +591,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		074C344496E109104A86D6DF /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DLPhotoPickerDemo/Pods-DLPhotoPickerDemo-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		7EE85EE0771FD6A2473CF330 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -614,13 +598,15 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-DLPhotoPickerDemo/Pods-DLPhotoPickerDemo-resources.sh",
-				$PODS_CONFIGURATION_BUILD_DIR/DLPhotoPicker/DLPhotoPicker.bundle,
+				"${PODS_CONFIGURATION_BUILD_DIR}/DLPhotoPicker/DLPhotoPicker.bundle",
 				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
-				$PODS_CONFIGURATION_BUILD_DIR/TOCropViewController/TOCropViewControllerBundle.bundle,
+				"${PODS_CONFIGURATION_BUILD_DIR}/TOCropViewController/TOCropViewControllerBundle.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/DLPhotoPicker.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/SVProgressHUD.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/TOCropViewControllerBundle.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
