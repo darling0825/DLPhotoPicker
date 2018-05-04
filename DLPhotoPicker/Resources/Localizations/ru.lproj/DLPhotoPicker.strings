@@ -57,3 +57,7 @@
 "Please select not more than %ld items." = "Please select not more than %ld items.";
 "Saved to default album." = "Saved to default album.";
 
+/* Create new album, 20180504 */
+"New Album" = "New Album";
+"Enter a name for this album." = "Enter a name for this album.";
+"Title" = "Title";

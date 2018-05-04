@@ -56,3 +56,8 @@
 "Attention" = "注意";
 "Please select not more than %ld items." = "请选择 %ld 个以下的项目.";
 "Saved to default album." = "已保存到默認相冊";
+
+/* Create new album, 20180504 */
+"New Album" = "新增相簿";
+"Enter a name for this album." = "輸入此相簿的名稱。";
+"Title" = "標題";

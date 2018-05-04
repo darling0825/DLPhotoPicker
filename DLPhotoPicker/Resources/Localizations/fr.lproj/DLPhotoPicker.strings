@@ -49,11 +49,15 @@
 "OK" = "OK";
 
 /*New Add*/
-"Select All" = "Select All";
-"Deselect All" = "Deselect All";
-"Copy to" = "Copy to";
-"Select Item" = "Select Item";
+"Select All" = "Tout sélectionner";
+"Deselect All" = "Désélectionner tout";
+"Copy to" = "Copier";
+"Select Item" = "Sélectionner un article";
 "Attention" = "Attention";
-"Please select not more than %ld items." = "Please select not more than %ld items.";
-"Saved to default album." = "Saved to default album.";
+"Please select not more than %ld items." = "Veuillez ne pas sélectionner plus de %ld articles.";
+"Saved to default album." = "Enregistré dans l'album par défaut.";
 
+/* Create new album, 20180504 */
+"New Album" = "Nouvel album";
+"Enter a name for this album." = "Entrez un nom pour cet album.";
+"Title" = "Titre";

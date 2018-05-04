@@ -49,10 +49,15 @@
 "OK" = "OK";
 
 /*New Add*/
-"Select All" = "Select All";
-"Deselect All" = "Deselect All";
-"Copy to" = "Copy to";
-"Select Item" = "Select Item";
-"Attention" = "Attention";
-"Please select not more than %ld items." = "Please select not more than %ld items.";
-"Saved to default album." = "Saved to default album.";
+"Select All" = "すべて選択";
+"Deselect All" = "すべて選択解除";
+"Copy to" = "コピー先";
+"Select Item" = "アイテムを選択";
+"Attention" = "注意";
+"Please select not more than %ld items." = "％ld項目以下を選択してください。";
+"Saved to default album." = "デフォルトのアルバムに保存されます。";
+
+/* Create new album, 20180504 */
+"New Album" = "新しいアルバム";
+"Enter a name for this album." = "このアルバムの名前を入力してください。";
+"Title" = "タイトル";
