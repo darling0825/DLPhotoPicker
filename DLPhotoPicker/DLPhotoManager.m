@@ -96,7 +96,6 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
          */
         _assetCollectionSubtypes =
         @[[NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumUserLibrary],
-          [NSNumber numberWithInt:PHAssetCollectionSubtypeAlbumMyPhotoStream],
           [NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumRecentlyAdded],
           [NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumFavorites],
           [NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumPanoramas],
@@ -106,26 +105,55 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
           [NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumBursts],
           [NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumAllHidden],
           [NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumGeneric],
-          [NSNumber numberWithInt:PHAssetCollectionSubtypeAlbumRegular],
-          [NSNumber numberWithInt:PHAssetCollectionSubtypeAlbumSyncedAlbum],
           [NSNumber numberWithInt:PHAssetCollectionSubtypeAlbumSyncedEvent],
           [NSNumber numberWithInt:PHAssetCollectionSubtypeAlbumSyncedFaces],
           [NSNumber numberWithInt:PHAssetCollectionSubtypeAlbumImported],
+          [NSNumber numberWithInt:PHAssetCollectionSubtypeAlbumRegular],
+          [NSNumber numberWithInt:PHAssetCollectionSubtypeAlbumMyPhotoStream],
+          [NSNumber numberWithInt:PHAssetCollectionSubtypeAlbumSyncedAlbum],
           [NSNumber numberWithInt:PHAssetCollectionSubtypeAlbumCloudShared]];
-        
-        // Add iOS 9's new albums
+
+
+        // Add others
+        NSMutableArray *subtypes = [NSMutableArray arrayWithArray:_assetCollectionSubtypes];
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_0
+        if (@available(iOS 10.0, *)) {
+            /*『最近删除』相册*/
+            //[subtypes addObject:[NSNumber numberWithInt:1000000201]];
+        }
+#endif
+
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_9_0
         if ([[PHAsset new] respondsToSelector:@selector(sourceType)])
         {
-            NSMutableArray *subtypes = [NSMutableArray arrayWithArray:_assetCollectionSubtypes];
             if (@available(iOS 9.0, *)) {
                 [subtypes insertObject:[NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumSelfPortraits] atIndex:4];
-                [subtypes insertObject:[NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumScreenshots] atIndex:10];
+                [subtypes insertObject:[NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumScreenshots] atIndex:7];
             }
-            
-            _assetCollectionSubtypes = [NSArray arrayWithArray:subtypes];
         }
 #endif
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_2
+        if (@available(iOS 10.2, *)) {
+            [subtypes insertObject:[NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumDepthEffect] atIndex:8];
+        }
+#endif
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_10_3
+        if (@available(iOS 10.3, *)) {
+            [subtypes insertObject:[NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumLivePhotos] atIndex:5];
+        }
+#endif
+
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= __IPHONE_11_0
+        if (@available(iOS 11.0, *)) {
+            [subtypes insertObject:[NSNumber numberWithInt:PHAssetCollectionSubtypeSmartAlbumAnimated] atIndex:6];
+        }
+#endif
+
+        _assetCollectionSubtypes = [NSArray arrayWithArray:subtypes];
+
     }
     return _assetCollectionSubtypes;
 }
@@ -757,15 +785,15 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
     {
         PHAssetCollectionSubtype subtype = subtypeNumber.integerValue;
         PHAssetCollectionType type = [self __assetCollectionTypeOfSubtype:subtype];
-        
+
         PHFetchResult *fetchResult =
         [PHAssetCollection fetchAssetCollectionsWithType:type
                                                  subtype:subtype
                                                  options:self.assetCollectionFetchOptions];
-        
+
         [fetchResults addObject:fetchResult];
     }
-    
+
     self.fetchResults = fetchResults;
     
     if (fetchResults.count > 0) {
@@ -904,12 +932,12 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
                     }
                 }
 #endif
-                
+
                 NSInteger count = [self __countOfAssetsForCollection:assetCollection FetchedWithOptions:options];
-                
+
                 showsAssetCollection = (count > 0);
             }
-            
+
             if (showsAssetCollection){
                 DLPhotoCollection *photoCollection = [[DLPhotoCollection alloc] initWithAssetCollection:assetCollection];
                 photoCollection.fetchResult = fetchResult;
