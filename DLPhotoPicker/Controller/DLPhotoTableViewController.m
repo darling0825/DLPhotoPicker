@@ -88,6 +88,7 @@ static NSString *cellIdentifier = @"CellIdentifier";
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     self.tableView.estimatedRowHeight = DLPhotoCollectionThumbnailSize.height + self.tableView.layoutMargins.top + self.tableView.layoutMargins.bottom;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.cellLayoutMarginsFollowReadableWidth = NO;
     
     [self.tableView registerClass:[DLPhotoTableViewCell class] forCellReuseIdentifier:cellIdentifier];
 }
