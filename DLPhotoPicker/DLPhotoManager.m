@@ -775,7 +775,9 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
 {
     PHFetchResult *fetchResult = [PHAsset fetchAssetsWithOptions:self.assetsFetchOptions];
     if (fetchResult.count <= 0) {
-        [self showNoAssets];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self showNoAssets];
+        });
         return;
     }
     
