@@ -777,6 +777,7 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
     if (fetchResult.count <= 0) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self showNoAssets];
+            [self getAlbumsCompletion:NO];
         });
         return;
     }
@@ -798,11 +799,7 @@ typedef void (^AddVideoToCollectionBlock)(NSURL *, PHAssetCollection *);
 
     self.fetchResults = fetchResults;
     
-    if (fetchResults.count > 0) {
-        [self getAlbumsCompletion:YES];
-    }else{
-        [self getAlbumsCompletion:NO];
-    }
+    [self getAlbumsCompletion:fetchResults.count > 0];
 }
 
 
