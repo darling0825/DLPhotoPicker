@@ -17,4 +17,6 @@
  */
 @property (nonatomic, strong) NSMutableArray *photoCollections;
 
+@property (nonatomic, assign) BOOL showsLeftCancelButton;
+
 @end

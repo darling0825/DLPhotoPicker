@@ -72,6 +72,7 @@ NSString * const DLPhotoPickerSelectedAssetsDidChangeNotification = @"DLPhotoPic
 - (void)setupInit
 {
     _showsNumberOfAssets                    = YES;
+    _showsLeftCancelButton                  = NO;
     _showsCancelButton                      = YES;
     _hidesBottomBarWhenPushedInAssetView    = YES;
     _selectedAssets                         = [@[] mutableCopy];
@@ -196,6 +197,7 @@ NSString * const DLPhotoPickerSelectedAssetsDidChangeNotification = @"DLPhotoPic
 - (void)getAlbumsSuccess
 {
     DLPhotoTableViewController *albumTableViewController = [[DLPhotoTableViewController alloc] init];
+    albumTableViewController.showsLeftCancelButton = self.showsLeftCancelButton;
     albumTableViewController.navigationItem.title = self.navigationTitle;;
 
     [self pushViewController:albumTableViewController animated:NO];

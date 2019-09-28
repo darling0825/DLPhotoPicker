@@ -101,15 +101,33 @@ static NSString *cellIdentifier = @"CellIdentifier";
                                                       target:self
                                                       action:@selector(clickCancelSelectAction:)];
     }else if (self.picker.pickerType == DLPhotoPickerTypeDisplay){
-        self.navigationItem.leftBarButtonItem =
-        [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
-                                                      target:self
-                                                      action:@selector(clickAddAlbumAction:)];
-        
-        self.navigationItem.rightBarButtonItem =
-        [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
-                                                      target:self
-                                                      action:@selector(clickEditAlbumAction:)];
+        if (self.showsLeftCancelButton) {
+            UIBarButtonItem *add =
+            [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                          target:self
+                                                          action:@selector(clickAddAlbumAction:)];
+            
+            UIBarButtonItem *edit =
+            [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
+                                                          target:self
+                                                          action:@selector(clickEditAlbumAction:)];
+            self.navigationItem.rightBarButtonItems = @[add, edit];
+            
+            self.navigationItem.leftBarButtonItem =
+            [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemCancel
+                                                          target:self
+                                                          action:@selector(clickLeftCancelAction:)];
+        }else {
+            self.navigationItem.leftBarButtonItem =
+            [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd
+                                                          target:self
+                                                          action:@selector(clickAddAlbumAction:)];
+            
+            self.navigationItem.rightBarButtonItem =
+            [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemEdit
+                                                          target:self
+                                                          action:@selector(clickEditAlbumAction:)];
+        }
     }else{
     }
 }
@@ -288,6 +306,11 @@ static NSString *cellIdentifier = @"CellIdentifier";
 }
 
 #pragma mark - Button Action
+-(void)clickLeftCancelAction:(UIBarButtonItem *)sender
+{
+    [self.picker dismissViewControllerAnimated:YES completion:nil];
+}
+
 -(void)clickCancelSelectAction:(UIBarButtonItem *)sender
 {
     if ([self.picker.delegate respondsToSelector:@selector(pickerControllerDidCancel:)]){

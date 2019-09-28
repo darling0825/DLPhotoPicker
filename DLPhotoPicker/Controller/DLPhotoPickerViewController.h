@@ -47,6 +47,7 @@ typedef NS_ENUM(NSInteger, DLPhotoPickerType) {
  *  set this property’s value to `NO`.
  */
 @property (nonatomic, assign) BOOL showsCancelButton;
+@property (nonatomic, assign) BOOL showsLeftCancelButton;
 
 /**
  *  Determines whether or not the empty albums is shown in the album list.

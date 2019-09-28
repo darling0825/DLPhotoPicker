@@ -156,6 +156,7 @@
 - (IBAction)clickPhotoDisplayAction:(id)sender {
     DLPhotoPickerViewController *picker = [[DLPhotoPickerViewController alloc] init];
     picker.delegate = self;
+    picker.showsLeftCancelButton = YES;
     picker.showsNumberOfAssets = YES;
     picker.navigationTitle = NSLocalizedString(@"Albums", nil);
     picker.pickerType = DLPhotoPickerTypeDisplay;

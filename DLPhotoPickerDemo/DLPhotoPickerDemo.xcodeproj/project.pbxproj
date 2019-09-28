@@ -513,7 +513,7 @@
 				TargetAttributes = {
 					595178AC1C7C225D00000BDE = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = 93XLKGTF68;
+						DevelopmentTeam = ET492SNZM9;
 					};
 					5977D9831C93BEFD005C0A4B = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -526,6 +526,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 				ar,
@@ -597,7 +598,7 @@
 			files = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-DLPhotoPickerDemo/Pods-DLPhotoPickerDemo-resources.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-DLPhotoPickerDemo/Pods-DLPhotoPickerDemo-resources.sh",
 				"${PODS_CONFIGURATION_BUILD_DIR}/DLPhotoPicker/DLPhotoPicker.bundle",
 				"${PODS_ROOT}/SVProgressHUD/SVProgressHUD/SVProgressHUD.bundle",
 				"${PODS_CONFIGURATION_BUILD_DIR}/TOCropViewController/TOCropViewControllerBundle.bundle",
@@ -610,7 +611,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-DLPhotoPickerDemo/Pods-DLPhotoPickerDemo-resources.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DLPhotoPickerDemo/Pods-DLPhotoPickerDemo-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		85D129996BA5FBFC5B00856F /* [CP] Check Pods Manifest.lock */ = {
@@ -762,7 +763,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -809,7 +810,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -823,11 +824,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
-				DEVELOPMENT_TEAM = 93XLKGTF68;
+				DEVELOPMENT_TEAM = ET492SNZM9;
 				INFOPLIST_FILE = DLPhotoPickerDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.darlingcoder.DLPhotoPickerDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lz.DLPhotoPickerDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -838,11 +839,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = "Brand Assets";
-				DEVELOPMENT_TEAM = 93XLKGTF68;
+				DEVELOPMENT_TEAM = ET492SNZM9;
 				INFOPLIST_FILE = DLPhotoPickerDemo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.darlingcoder.DLPhotoPickerDemo;
+				PRODUCT_BUNDLE_IDENTIFIER = com.lz.DLPhotoPickerDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
