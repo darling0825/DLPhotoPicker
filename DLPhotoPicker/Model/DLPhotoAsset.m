@@ -149,6 +149,8 @@
                 url = [_phAssetInfo objectForKey:@"PHImageFileURLKey"];
             }
         }];
+    } else {
+        url = [_phAssetInfo objectForKey:@"PHImageFileURLKey"];
     }
     
     return url;
